@@ -1,49 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <script src="phaser.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <link rel="stylesheet" href="./css/game.css">
+    <script src="./lib/phaser.js"></script>
+    <title>The South Border</title>
 </head>
+
 <body>
-    <script>
-        
-        const config = {
-            type: Phaser.AUTO,
-            width: 800,
-            height: 600,
-            scene:{
-                preload: preload,
-                create: create,
-                update: update
-            }
-        };
-        
-        function preload ()
-        {
-            this.load.image("mapa","assets/mapa.png");
-        }
-
-        function create ()
-        {
-            this.add.image(300,300,"mapa");
-        }
-
-        function update ()
-        {
-        }
-    
-        var game=new Phaser.game(config);
-    </script>
-<h1>The South Border</h1>
-<h2>Zorro Cósmico</h2>
-<p>Eres un forastero que quiere llegar a la frontera sur de América durante el salvaje oeste.
+    <script src="./src/game.js" type="module"></script>
+    <h1>The South Border</h1>
+    <h2>Zorro Cósmico</h2>
+    <p>Eres un forastero que quiere llegar a la frontera sur de América durante el salvaje oeste.
     ¿Podrás derrotar al jefe que te espera, o podrán las fuerzas del estado atraparte?</p>
-<h3>Integrantes:</h3>
-<ul>
-    <li>Adrián de Miguel Cerezo</li>
-    <li>Adrián Erustes Martín</li>
-    <li>Nacho</li>
-    <li>Aryan Guerrero</li>
-</ul>
-<a href="https://github.com/AdrianDeMiguelCerezo/PVLI">Enlace a repositorio de github</a>
+    <h3>Integrantes:</h3>
+    <ul>
+        <li>Adrián de Miguel Cerezo</li>
+        <li>Adrián Erustes Martín</li>
+        <li>Ignacio Ligero Martín</li>
+        <li>Aryan Guerrero</li>
+    </ul>
+    <a href="https://github.com/AdrianDeMiguelCerezo/PVLI">Enlace a repositorio de github</a>
 </body>
+
 </html>
