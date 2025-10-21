@@ -53,7 +53,7 @@ function create ()
 		// 	blendMode: 'ADD'
 		// });
 
-		var logo = this.add.image(400, 300, 'map');
+		var logo = this.add.image(100, 100, 'map');
 
 		// logo.setVelocity(100, 200);
 		// logo.setBounce(1, 1);
