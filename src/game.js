@@ -1,3 +1,5 @@
+import CombatUI from './scenes/combatui.js';
+
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
  * la clase Game de Phaser, encargada de crear e iniciar el juego.
@@ -10,7 +12,7 @@ let config = {
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
-	scene: [{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
+	scene: [CombatUI],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
 												//objeto formado por el método preload y create definidos más abajo en 
 												//este mismo archivo
 	physics: { 
