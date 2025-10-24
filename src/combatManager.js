@@ -15,37 +15,58 @@ TURNO1:2,
 }
     
 export default class CombatManager extends Phaser.Events.EventEmitter{
-    constructor(enemies=[],player=null,CombatUI=null){
-        super(enemies,player,CombatUI)
+    /**
+     * 
+     * @param {number} turn 
+     * @param {*} enemies 
+     * @param {*} player 
+     * @param {*} CombatUI 
+     */
+    
+    constructor(turn=0,enemies=[],player=null,CombatUI=null){
+        this.turn=turn;
+        this.enemies=enemies;
+        this.player=player;
+        this.CombatUI=CombatUI;
     }
     
-    Execute(objetivo) { //el combatManager ejecuta la habilidad y le pasa quien la esta casteando.
-
-        switch (objetivoEnum) {
-            
-            case Target.SELF: //lo aplico sobre mi
-                me.Hit(damage);
-                me.apply();
-                break;
-            case Target.ENEMY: // lo aplico sobre un objetivo que me pasan (de la clase personaje)
-                objetivo = GetSelectedTarget();
-                objetivo.Hit(damage);
-                objetivo.apply();
-                break;
-            case Target.RND_ENEMY: // lo aplico sobre un objetivo random de los enemigos
-                objetivo = this.enemies[Math.floor(Math.random * this.enemies.length)];
-                objetivo.Hit(damage);
-                objetivo.apply();
-                break;
-            case Target.ALL_ENEMIES: // lo aplico sobre todos los enemigos
-                for (e in enemies) {
-                    e.Hit(damage)
-                    e.apply()
-                }
-                break;
+    useAbility(key,accions){
+        if(accions>=key.accions){
+            objetivo;
+            switch(key.Target){
+                case Target.ENEMY:
+                    objetivo=CombatUI.chooseEnemy();
+                    break;
+                case Target.SELF:
+                    objetivo=this.player;
+                    break;
+                case Target.RND_ENEMY:
+                    objetivo=enemies[Math.floor(Math.random()*this.enemies.length)];
+                    break;
+                case Target.ALL_ENEMIES:
+                    objetivo=this.enemies;
+                    break;
+            }
+            this.Execute(key,objetivo);
         }
-
-
-
+    }
+    useAbilityEnemy(key,enemy){
+        objetivo;
+            switch(key.Target){
+                case Target.ENEMY:
+                    objetivo=player;
+                    break;
+                case Target.SELF:
+                    objetivo=enemy;
+                    break;
+                case Target.ALL_ENEMIES:
+                    objetivo=this.enemies;
+                    break;
+            }
+            this.Execute(key,objetivo);
+    }
+    Execute(key,objetivo) {
+        objetivo.Hit(key,damage);
+        objetivo.apply(key,turns);
     }
 }
