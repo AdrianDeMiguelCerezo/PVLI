@@ -3,23 +3,23 @@ import CombatUI from "./scenes/combatui.js"
 import Jugador from "./jugador.js"
 
 const Target = {
-SELF:'SELF',
-ENEMY:'ENEMY',
-RND_ENEMY:'RND_ENEMY',
-ALL_ENEMIES:'ALL_ENEMIES'
+SELF:0,
+ENEMY:1,
+RND_ENEMY:2,
+ALL_ENEMIES:3
 }
 const Tipo = {
-ACTIVA:'ACTIVA',
-PASIVA:'PASIVA',
-TURNO1:'TURNO1',
+ACTIVA:0,
+PASIVA:1,
+TURNO1:2,
 }
     
 export default class CombatManager extends Phaser.Events.EventEmitter{
-    constructor(turn=0,enemies=[],player=null,CombatUI=null){
-        super(turn,enemies,player,CombatUI)
+    constructor(enemies=[],player=null,CombatUI=null){
+        super(enemies,player,CombatUI)
     }
     
-    Execute(me,objetivoEnum) { //el combatManager ejecuta la habilidad y le pasa quien la esta casteando.
+    Execute(objetivo) { //el combatManager ejecuta la habilidad y le pasa quien la esta casteando.
 
         switch (objetivoEnum) {
             
