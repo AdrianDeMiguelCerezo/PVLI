@@ -22,7 +22,7 @@ export default class CombatManager extends Phaser.Events.EventEmitter{
     Execute(me,objetivoEnum) { //el combatManager ejecuta la habilidad y le pasa quien la esta casteando.
 
         switch (objetivoEnum) {
-            //
+            
             case Target.SELF: //lo aplico sobre mi
                 me.Hit(damage);
                 me.apply();
