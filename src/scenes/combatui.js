@@ -1,8 +1,8 @@
 //UI del combate
 export default class CombatUI extends Phaser.Scene {
     constructor(){
-        super();
-   }
+        super({key:'CombatUI'});
+    }
 
    preload(){
 
