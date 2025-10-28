@@ -3,7 +3,10 @@ import Enemy from '../ Enemy.js'
 import CombatManager from '../combatManager.js'
 
 //UI del combate
+
+import CombatManager from './combatManager.js'
 export default class CombatUI extends Phaser.Scene {
+
 
     /**
      * 
@@ -60,7 +63,7 @@ export default class CombatUI extends Phaser.Scene {
     //establece interaccion
     boton.setInteractive();
     boton.on('pointerdown', ()=>{
-        console.log(message);
+        console.log(this.enemies);
     })
    }
 }

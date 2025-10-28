@@ -22,19 +22,11 @@ export default class CombatManager {
      * @param {*} CombatUI 
      */
     
-    constructor(turn=0,enemies=[],player=null,CombatUI=null){
+    constructor(turn=0,enemies,player=null,CombatUI=null){
         this.turn=turn;
         this.enemies=enemies;
         this.player=player;
         this.CombatUI = CombatUI;
-        this.enemies[3]='h'
-    }
-    Coutear(cosa) {
-        console.log(this.caca)
-    }
-    useAbility(key,accions){
-        if(accions>=key.accions){
-            objetivo;
             switch(key.Target){
                 case Target.ENEMY:
                     objetivo=CombatUI.chooseEnemy();
@@ -43,32 +35,9 @@ export default class CombatManager {
                     objetivo=this.player;
                     break;
                 case Target.RND_ENEMY:
-                    objetivo=enemies[Math.floor(Math.random()*this.enemies.length)];
-                    break;
-                case Target.ALL_ENEMIES:
-                    objetivo=this.enemies;
-                    break;
-            }
-            this.Execute(key,objetivo);
-        }
+
     }
-    useAbilityEnemy(key,enemy){
-        objetivo;
-            switch(key.Target){
-                case Target.ENEMY:
-                    objetivo=player;
-                    break;
-                case Target.SELF:
-                    objetivo=enemy;
-                    break;
-                case Target.ALL_ENEMIES:
-                    objetivo=this.enemies;
-                    break;
-            }
-            this.Execute(key,objetivo);
-    }
-    Execute(key,objetivo) {
-        objetivo.Hit(key,damage);
-        objetivo.apply(key,turns);
-    }
+
+    
+    
 }
