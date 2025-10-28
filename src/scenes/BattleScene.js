@@ -34,10 +34,6 @@ export default class BattleScene extends Phaser.Scene
 
 	}
 
-	init() {
-
-	}
-
 	create() {
 
 	}
