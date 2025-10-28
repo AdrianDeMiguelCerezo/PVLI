@@ -1,8 +1,10 @@
+import Enemy from '../ Enemy.js'
 
 import CombatManager from '../combatManager.js'
 
 //UI del combate
 export default class CombatUI extends Phaser.Scene {
+
     /**
      * 
      * @param {number} turn -turno
@@ -12,7 +14,10 @@ export default class CombatUI extends Phaser.Scene {
      */
     constructor(){
         super({ key: 'CombatUI' });
-        this.enemies = ['a', 'b', 'c'];
+        /**
+         * @type {Enemy}
+         */
+        this.enemies
         this.player = null;
         this.caca = 'pfpfppfpfffpffpff'
         this.CombatManager = new CombatManager(0,this.enemies,this.player,this)
