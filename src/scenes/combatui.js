@@ -1,7 +1,21 @@
+
+import CombatManager from '../combatManager.js'
+
 //UI del combate
 export default class CombatUI extends Phaser.Scene {
+    /**
+     * 
+     * @param {number} turn -turno
+     * @param {*} enemies 
+     * @param {*} player 
+     * @param {CombatManager}CombatManager 
+     */
     constructor(){
-        super({key:'CombatUI'});
+        super({ key: 'CombatUI' });
+        this.enemies = ['a', 'b', 'c'];
+        this.player = null;
+        this.caca = 'pfpfppfpfffpffpff'
+        this.CombatManager = new CombatManager(0,this.enemies,this.player,this)
     }
 
    preload(){
@@ -27,6 +41,9 @@ export default class CombatUI extends Phaser.Scene {
     let botonItems =  this.uiButton(fondoUI.x + 180, fondoUI.y+40, 'Items');
     let botonHuir =  this.uiButton(fondoUI.x + 125, fondoUI.y+70, 'Huir');
 
+       console.log(this.enemies)
+       this.CombatManager.Coutear("enemies")
+       console.log('pito')
    }
    //creacion botones
    uiButton(x, y, message){

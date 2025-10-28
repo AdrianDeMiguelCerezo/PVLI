@@ -1,6 +1,5 @@
 //Logica del combate
 import CombatUI from "./scenes/combatui.js"
-import Jugador from "./jugador.js"
 
 const Target = {
 SELF:0,
@@ -14,7 +13,7 @@ PASIVA:1,
 TURNO1:2,
 }
     
-export default class CombatManager extends Phaser.Events.EventEmitter{
+export default class CombatManager {
     /**
      * 
      * @param {number} turn 
@@ -27,9 +26,12 @@ export default class CombatManager extends Phaser.Events.EventEmitter{
         this.turn=turn;
         this.enemies=enemies;
         this.player=player;
-        this.CombatUI=CombatUI;
+        this.CombatUI = CombatUI;
+        this.enemies[3]='h'
     }
-    
+    Coutear(cosa) {
+        console.log(this.caca)
+    }
     useAbility(key,accions){
         if(accions>=key.accions){
             objetivo;
