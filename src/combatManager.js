@@ -14,28 +14,19 @@ TURNO1:2,
 }
     
 export default class CombatManager {
+
     /**
      * 
-     * @param {number} turn 
-     * @param {*} enemies 
-     * @param {*} player 
-     * @param {*} CombatUI 
+     * @param {any} turn
+     * @param {any} enemies
+     * @param {any} player
+     * @param {any} combatInfo
      */
-    
-    constructor(turn=0,enemies,player=null,CombatUI=null){
+    constructor(turn=0,enemies,player=null,combatInfo){
         this.turn=turn;
         this.enemies=enemies;
         this.player=player;
-        this.CombatUI = CombatUI;
-            switch(key.Target){
-                case Target.ENEMY:
-                    objetivo=CombatUI.chooseEnemy();
-                    break;
-                case Target.SELF:
-                    objetivo=this.player;
-                    break;
-                case Target.RND_ENEMY:
-
+           
     }
 
     
