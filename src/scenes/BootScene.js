@@ -10,14 +10,22 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('node', 'assets/Node.png')
         this.load.image('map', 'assets/MapTemplate.png')
         this.load.image('malo', 'assets/malo.png')
-        this.load.image('player', 'player.png')
+        this.load.image('player', 'assets/player.png')
     }
     create() {
 
         this.uiButton(100, 400, "Go to Map", 'Map')
-        this.uiButton(100, 200, "Go to BattleScene", 'BattleScene')
+        this.uiButton(100, 200, "Go to BattleScene", 'BattleScene',['malo','malo','player'])
     }
-    uiButton(x, y, message,sceneKey) {
+    /**
+     * 
+     * @param {number} x
+     * @param {number} y
+     * @param {string} message
+     * @param {string} sceneKey
+     * @param {any} paramsInit
+     */
+    uiButton(x, y, message,sceneKey,paramsInit) {
         //crea el texto del boton con la posicion y el texto
         let botonFondo = this.add.rectangle(x, y, 100, 25, 0x15C6CC).setOrigin(0, 0);
         let boton = this.add.text(x, y, message);
@@ -26,7 +34,7 @@ export default class BootScene extends Phaser.Scene {
         //establece interaccion
         boton.setInteractive();
         boton.on('pointerdown', () => {
-            this.scene.start(sceneKey);
+            this.scene.start(sceneKey,paramsInit);
         })
     }
 };
