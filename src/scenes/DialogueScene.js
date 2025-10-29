@@ -1,4 +1,4 @@
-import DialogText from "./dialog_plugin.js";
+import DialogText from "../dialog_plugin.js";
 
 export default class DialogueScene extends Phaser.Scene {
 	/**
