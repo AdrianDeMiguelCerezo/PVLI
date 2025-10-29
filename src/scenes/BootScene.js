@@ -14,8 +14,8 @@ export default class BootScene extends Phaser.Scene {
     }
     create() {
 
-        this.uiButton(100, 300, "Test. Click para volver al mapa.", 'Map')
-        this.uiButton(100, 300, "Test. Click para volver al mapa.", 'BattleScene')
+        this.uiButton(100, 400, "Go to Map", 'Map')
+        this.uiButton(100, 200, "Go to BattleScene", 'BattleScene')
     }
     uiButton(x, y, message,sceneKey) {
         //crea el texto del boton con la posicion y el texto
