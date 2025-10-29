@@ -70,8 +70,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             this.updateTint();
         });
         this.on('pointerup', () => {
-            if(this.state==State.OPEN){
-                
+            if (this.state == State.OPEN) {
+
                 this.setState(State.CURRENT);
 
                 this.openNearbyNodes();

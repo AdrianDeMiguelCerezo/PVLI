@@ -1,5 +1,5 @@
 
-export default class Player extends sprite //no hecha
+export default class Player extends Phaser.GameObjects.Sprite //no hecha
 {
     /**
      * 

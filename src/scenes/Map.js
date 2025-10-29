@@ -26,7 +26,7 @@ export default class Map extends Phaser.Scene{
 
 
         new MapNode(this, 100, 100, 'node', 'Test', 0.2, 0, 2, 'node1');   // CURRENT
-        new MapNode(this, 200, 120, 'node', 'Test', 0.2, 0, 0, 'node2');
+        new MapNode(this, 200, 120, 'node', 'BattleScene', 0.2, 0, 0, 'node2');
         new MapNode(this, 150, 200, 'node', 'Test', 0.2, 0, 0, 'node3');
         new MapNode(this, 80, 250, 'node', 'Test', 0.2, 0, 1, 'node4');
         new MapNode(this, 250, 250, 'node', 'Test', 0.2, 0, 1, 'node5');
