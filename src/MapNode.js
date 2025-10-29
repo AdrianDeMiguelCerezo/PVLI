@@ -7,13 +7,13 @@ const NodeType={
 const State={
     OPEN:0,
     LOCKED:1,
-    CURRENT:2,
-    PERMALOCKED:3
+    CURRENT:2
 }
+
 
 export default class MapNode extends Phaser.GameObjects.Sprite{
 
-    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,radius=200){
+    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,radius=200){
         super(scene,x,y,texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -24,6 +24,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.nodeType=nodeType;
         this.state=state;
         this.radius=radius;
+        this.visited=visited;
 
         if (!scene.nodes) scene.nodes = [];
         scene.nodes.push(this);
@@ -47,6 +48,20 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             this.scene.registry.set('nodeStates', nodeStates);
         }
 
+        if (!this.scene.registry.has('nodeVisited')) {
+            this.scene.registry.set('nodeVisited', {});
+        }
+        const nodeVisited = this.scene.registry.get('nodeVisited');
+
+        if (typeof nodeVisited[this.id] !== 'undefined') {
+            this.visited = nodeVisited[this.id];
+        } 
+        else {
+            nodeVisited[this.id] = this.visited;
+            this.scene.registry.set('nodeVisited', nodeVisited);
+        }
+        
+
         this.updateTint();
         this.on('pointerover', () => {
             if(this.state==State.OPEN)this.setTintFill(0xffffff);
@@ -60,8 +75,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                 this.setState(State.CURRENT);
 
                 this.openNearbyNodes();
-
-                scene.scene.start(this.targetScene); 
+                console.log(nodeVisited[this.id])
+                if(nodeVisited[this.id]==false){
+                    
+                    scene.scene.start(this.targetScene);
+                }
+                 
                     
             }
         });
@@ -76,12 +95,19 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.scene.registry.set('nodeStates', nodeStates);
     }
 
+    setVisited() {
+
+        const nodeVisited = this.scene.registry.get('nodeVisited') || false;
+        nodeVisited[this.id] = true;
+        this.scene.registry.set('nodeVisited', nodeVisited);
+    }
+    
+
     updateTint() {
         this.clearTint();
         if (this.state === State.LOCKED) this.setTintFill(0x555555);
         else if (this.state === State.OPEN) this.setTintFill(0x000000);
         else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
-        else if(this.state===State.PERMALOCKED)this.setTintFill(0x8b0000);
     }
 
      openNearbyNodes() {
@@ -98,24 +124,22 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
 
             if (dist <= this.radius) {
                 if (other.state === State.LOCKED) {
-                other.state = State.OPEN;
-                other.updateTint();
-                nodeStates[other.id] = other.state;
-                }
-                else if(other.state===State.CURRENT){
-                    other.state = State.PERMALOCKED;
+                    other.state = State.OPEN;
                     other.updateTint();
                     nodeStates[other.id] = other.state;
+                }
+                else if(other.state===State.CURRENT){
+                    other.state = State.OPEN;
+                    other.updateTint();
+                    nodeStates[other.id] = other.state;
+                    other.setVisited();
                 
                 }
             }
             else{
-                if(other.state!==State.PERMALOCKED){
-                    other.state=State.LOCKED;
-                    other.updateTint();
-                    nodeStates[other.id] = other.state;
-                }
-                
+                other.state=State.LOCKED;
+                other.updateTint();
+                nodeStates[other.id] = other.state;  
             }
         }
 

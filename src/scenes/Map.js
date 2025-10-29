@@ -16,6 +16,10 @@ export default class Map extends Phaser.Scene{
             this.registry.set('nodeStates', {});
         }
 
+        if(!this.registry.has('nodeVisited')){
+            this.registry.set('nodeVisited',{});
+        }
+
         this.nodes = [];
 
         this.add.image(0, 0, 'map').setOrigin(0);
