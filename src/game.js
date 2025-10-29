@@ -1,5 +1,6 @@
 import CombatUI from './scenes/combatui.js';
 import Map from './scenes/Map.js';
+import Test from './scenes/Test.js';
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -13,7 +14,7 @@ let config = {
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
-	scene: [Map,CombatUI],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
+	scene: [Map,CombatUI,Test],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
 												//objeto formado por el método preload y create definidos más abajo en 
 												//este mismo archivo
 	physics: { 
@@ -34,7 +35,6 @@ function preload (){
 		//this.load.image('sky', 'assets/skies/space.png');
 		//this.load.image('logo', 'assets/sprites/phaser3-logo.png');
 		//this.load.image('red', 'assets/particles/red.png');
-		
 		//Cargamos los assets desde nuestra raiz del proyecto
 		this.load.image('map', 'assets/mapa.png');
 }
