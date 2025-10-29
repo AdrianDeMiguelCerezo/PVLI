@@ -1,5 +1,6 @@
 import Map from './scenes/Map.js';
 import Test from './scenes/Test.js';
+import BattleScene from './scenes/BattleScene.js'
 
 /**
  * Inicio del juego en Phaser. Creamos el archivo de configuración del juego y creamos
@@ -13,7 +14,7 @@ let config = {
 	scale: {
 		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
 	},
-	scene: [Map,Test],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
+	scene: [Map, Test, BattleScene],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
 												//objeto formado por el método preload y create definidos más abajo en 
 												//este mismo archivo
 	physics: { 
@@ -55,7 +56,7 @@ function create ()
 		// 	blendMode: 'ADD'
 		// });
 
-		var logo = this.add.image(100, 100, 'map');
+		//var logo = this.add.image(100, 100, 'map');
 
 		// logo.setVelocity(100, 200);
 		// logo.setBounce(1, 1);

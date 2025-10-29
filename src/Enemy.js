@@ -1,17 +1,23 @@
+import StatusEffect from './StatusEffect.js'
 
 /**
  * Representa un enemigo en la escena del combate
  */
 export default class Enemy extends Phaser.GameObjects.Sprite {
-    constructor(key, scene)
+    constructor(key, scene, image)
     {
 
-        super(scene,0,0, null)
+        super(scene,0,0, image)
 
         this.key = key;
         this.Hp = key.Hp
         this.sigHabilidad = 0; //poner entero random entre 0 y el numero de habilidads.
         this.turno = 0;
+        /**
+         * Guarda todos sus StatusEffects
+         * @type {StatusEffects}
+         */
+        this.efectos = null;
 
     }
     /**

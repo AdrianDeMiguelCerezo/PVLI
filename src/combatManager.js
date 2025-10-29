@@ -17,7 +17,7 @@ export default class CombatManager {
 
     /**
      * 
-     * @param {any} turn
+     * @param {number} turn
      * @param {any} enemies
      * @param {any} player
      * @param {any} combatInfo
