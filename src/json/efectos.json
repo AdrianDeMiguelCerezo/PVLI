@@ -1,0 +1,56 @@
+{
+  "QUEMADO": {
+    "name": "Quemado",
+    "isParalysis": false,
+    "diffHealth": 0,
+    "diffHealthPercent": -5,
+    "diffDmgPercent": 0,
+    "diffDefensePercent": 0,
+    "duration": 3
+  },
+  "VENENO": {
+    "name": "Envenenado",
+    "isParalysis": false,
+    "diffHealth": 0,
+    "diffHealthPercent": -2,
+    "diffDmgPercent": 0,
+    "diffDefensePercent": 0,
+    "duration": -2
+  },
+  "HAMBRIENTO_1": {
+    "name": "Hambriento 1",
+    "isParalysis": false,
+    "diffHealth": 0,
+    "diffHealthPercent": 0,
+    "diffDmgPercent": -30,
+    "diffDefensePercent": -30,
+    "duration": -2
+  },
+  "PARALIZADO": {
+    "name": "Paralizado",
+    "isParalysis": true,
+    "diffHealth": 0,
+    "diffHealthPercent": 0,
+    "diffDmgPercent": 0,
+    "diffDefensePercent": 0,
+    "duration": 2
+  },
+  "DEF_MAS": {
+    "name": "Def+",
+    "isParalysis": false,
+    "diffHealth": 0,
+    "diffHealthPercent": 0,
+    "diffDmgPercent": 0,
+    "diffDefensePercent": 30,
+    "duration": 2
+  },
+  "ATQ_MENOS": {
+    "name": "Att-",
+    "isParalysis": false,
+    "diffHealth": 0,
+    "diffHealthPercent": 0,
+    "diffDmgPercent": -30,
+    "diffDefensePercent": 0,
+    "duration": 2
+  }
+}

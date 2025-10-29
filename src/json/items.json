@@ -1,0 +1,72 @@
+{
+  "VENDA": {
+    "nombre": "Venda",
+    "descripcion": "Cura bastante HP. Solo fuera de combate.",
+    "usedInCombat": false,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "MEJUNJE_EXTRANO": {
+    "nombre": "Mejunje extraño",
+    "descripcion": "Comestible. Quita 20 de hambre y no restaura SP.",
+    "usedInCombat": false,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "RACION_SECA": {
+    "nombre": "Ración seca",
+    "descripcion": "Comestible. -20 hambre, restaura muy poco SP.",
+    "usedInCombat": false,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "CERVEZA": {
+    "nombre": "Cerveza",
+    "descripcion": "Comestible. +5 hambre, recupera bajo SP.",
+    "usedInCombat": false,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "POTI_HP_MINI": {
+    "nombre": "Poción de salud (mini)",
+    "descripcion": "Cura poca HP.",
+    "usedInCombat": true,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "POTI_SP_MEDIA": {
+    "nombre": "Poción de SP (pequeña)",
+    "descripcion": "Restaura SP media.",
+    "usedInCombat": true,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "ANTIDOTO": {
+    "nombre": "Antídoto",
+    "descripcion": "Cura veneno.",
+    "usedInCombat": true,
+    "usedOutOfCombat": true,
+    "habilidades": []
+  },
+  "DARDO_ENVENENADO": {
+    "nombre": "Dardo envenenado",
+    "descripcion": "Aplica veneno.",
+    "usedInCombat": true,
+    "usedOutOfCombat": false,
+    "habilidades": ["DARDO_VENENO"]
+  },
+  "COCTEL_MOLOTOV": {
+    "nombre": "Molotov",
+    "descripcion": "Aplica quemado.",
+    "usedInCombat": true,
+    "usedOutOfCombat": false,
+    "habilidades": ["MOLOTOV"]
+  },
+  "ARTEFACTO_BRILLANTE": {
+    "nombre": "Extraño coso que brilla",
+    "descripcion": "Paraliza durante 2 turnos.",
+    "usedInCombat": true,
+    "usedOutOfCombat": false,
+    "habilidades": ["PARALIZADOR"]
+  }
+}

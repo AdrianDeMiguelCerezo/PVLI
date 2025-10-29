@@ -1,0 +1,32 @@
+{
+  "REVOLVER_OXIDADO": {
+    "nombre": "Revólver oxidado",
+    "descripcion": "Viejo pero útil.",
+    "tipoEquipamiento": "ARMA",
+    "habilidades": ["ATQ_BASICO", "DISPARO_PRECISO"],
+    "crit_damage": 150,
+    "crit_chance": 10,
+    "damage": 5,
+    "defense": 0
+  },
+  "CHAQUETA_PIEL": {
+    "nombre": "Chaqueta de piel",
+    "descripcion": "Abriga y protege algo.",
+    "tipoEquipamiento": "PECHERA",
+    "habilidades": [],
+    "crit_damage": 0,
+    "crit_chance": 0,
+    "damage": 0,
+    "defense": 8
+  },
+  "PANTALONES_REFORZADOS": {
+    "nombre": "Pantalones reforzados",
+    "descripcion": "Con placas interiores.",
+    "tipoEquipamiento": "PANTALONES",
+    "habilidades": [],
+    "crit_damage": 0,
+    "crit_chance": 0,
+    "damage": 0,
+    "defense": 5
+  }
+}

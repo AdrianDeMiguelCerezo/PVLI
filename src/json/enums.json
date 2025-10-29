@@ -1,0 +1,5 @@
+{
+  "TipoEquipamiento": ["ARMA", "PECHERA", "PANTALONES"],
+  "Target": ["SELF", "ENEMY", "RNDENEMY", "ALLENEMIES"],
+  "TipoHabilidad": ["ACTIVA", "PASIVA", "TURNO1"]
+}

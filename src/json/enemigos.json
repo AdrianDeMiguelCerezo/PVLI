@@ -1,0 +1,22 @@
+{
+  "BANDIDO_COMUN": {
+    "name": "Bandido común",
+    "HpMax": 60,
+    "habilidades": ["ATQ_BASICO", "ATQ_BASICO", "ATQ_BASICO"]
+  },
+  "SOLDADO_ESTADO": {
+    "name": "Soldado del estado",
+    "HpMax": 85,
+    "habilidades": ["ATQ_BASICO", "ATQ_BASICO", "ATQ_BASICO"]
+  },
+  "ASALTANTE_MADRUGADOR": {
+    "name": "Asaltante madrugador",
+    "HpMax": 50,
+    "habilidades": ["ATQ_BASICO", "ATQ_BASICO", "DARDO_VENENO"]
+  },
+  "MUJER_DESCONFIADA": {
+    "name": "Mujer desconfiada",
+    "HpMax": 70,
+    "habilidades": ["ATQ_MENOR", "ATQ_BASICO", "ATQ_BASICO"]
+  }
+}
