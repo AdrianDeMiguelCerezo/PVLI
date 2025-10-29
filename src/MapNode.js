@@ -78,9 +78,10 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
 
     updateTint() {
         this.clearTint();
-        if (this.state === State.LOCKED||this.state===State.PERMALOCKED) this.setTintFill(0x555555);
+        if (this.state === State.LOCKED) this.setTintFill(0x555555);
         else if (this.state === State.OPEN) this.setTintFill(0x000000);
         else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
+        else if(this.state===State.PERMALOCKED)this.setTintFill(0x8b0000);
     }
 
      openNearbyNodes() {
@@ -107,6 +108,14 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                     nodeStates[other.id] = other.state;
                 
                 }
+            }
+            else{
+                if(other.state!==State.PERMALOCKED){
+                    other.state=State.LOCKED;
+                    other.updateTint();
+                    nodeStates[other.id] = other.state;
+                }
+                
             }
         }
 
