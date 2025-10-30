@@ -1,27 +1,23 @@
-
-export default class Player extends Phaser.GameObjects.Sprite //no hecha
+import PlayerData from './PlayerData.js'
+export default class Player extends Phaser.GameObjects.Image //no hecha
 {
     /**
-     * 
-     * @param {any} name
-     * @param {any} HP
-     * @param {any} HPMax
-     * @param {any} habilidades
-     * @param {any} estados
-     * @param {any} SP
-     * @param {any} SPMax
-     * @param {any} critDMG
-     * @param {any} critRate
-     * @param {any} dinero
-     * @param {any} hambre
-     * @param {any} atacar
-     * @param {any} defender
-     * @param {any} huir
-     * @param {any} arma
-     * @param {any} pechera
-     * @param {any} pantalones
+     * referencia al objeto con la info del player
+     * @type {PlayerData}
      */
-    constructor(name = "", HP = 0, HPMax = 0, habilidades = [], estados = [], SP = 0, SPMax = 0, critDMG = 0, critRate = 0, dinero = 0, hambre = 0, atacar, defender, huir, arma, pechera, pantalones) {
-    
+    player;
+
+    /**
+     * 
+     * @param {PlayerData} player
+     * @param {Phaser.Scene} scene
+     * @param {number} x
+     * @param {number} y
+     * @param {string} texture
+     */
+    constructor(player, scene, x, y, texture)
+    {
+        super(scene, x, y, texture);
+        this.player = player;
     }
 }

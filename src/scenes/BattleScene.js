@@ -65,15 +65,15 @@ export default class BattleScene extends Phaser.Scene {
         }
 
         //fondo ui
-        let fondoUI = this.add.rectangle(100, 400, 600, 200, 0xB7B7B7);
+        let fondoUI = this.add.rectangle(50, 400, 700, 200, 0xB7B7B7);
         fondoUI.setOrigin(0, 0);
-        this.add.rectangle(fondoUI.getCenter().x, 400, 10, 200, 0x1F4D4F).setOrigin(0, 0);
+        this.add.rectangle(fondoUI.x+200, 400, 10, 200, 0x1F4D4F).setOrigin(0, 0);
         //botones generales
-        let botonAtacar = this.uiButton(fondoUI.x + 10, fondoUI.y + 10, 'Atacar');
-        let botonDefender = this.uiButton(fondoUI.x + 180, fondoUI.y + 10, 'Defender');
-        let botonHabilidades = this.uiButton(fondoUI.x + 10, fondoUI.y + 40, 'Habilidades');
-        let botonItems = this.uiButton(fondoUI.x + 180, fondoUI.y + 40, 'Items');
-        let botonHuir = this.uiButton(fondoUI.x + 125, fondoUI.y + 70, 'Huir');
+        let botonAtacar = this.uiButton(fondoUI.x + 10, fondoUI.y + 15, 'Atacar');
+        let botonDefender = this.uiButton(fondoUI.x + 10, fondoUI.y + 50, 'Defender');
+        let botonHabilidades = this.uiButton(fondoUI.x + 10, fondoUI.y + 85, 'Habilidades');
+        let botonItems = this.uiButton(fondoUI.x + 10, fondoUI.y + 120, 'Items');
+        let botonHuir = this.uiButton(fondoUI.x + 10, fondoUI.y + 155, 'Huir');
 
 
         this.events.on("select_skill", this.OnSelectSkill, this);
