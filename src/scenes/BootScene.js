@@ -9,12 +9,14 @@ export default class BootScene extends Phaser.Scene {
     preload() {
         this.load.image('node', 'assets/Node.png')
         this.load.image('map', 'assets/MapTemplate.png')
+        this.load.image('fondo', 'assets/fondoPlaceHolderDialogos.png');
         this.load.image('malo', 'assets/malo.png')
         this.load.image('player', 'assets/player.png')
     }
     create() {
 
         this.uiButton(100, 400, "Go to Map", 'Map')
+        this.uiButton(100, 300, "Go to DialogueScene", 'DialogueScene')
         this.uiButton(100, 200, "Go to BattleScene", 'BattleScene',['malo','malo','player'])
     }
     /**
