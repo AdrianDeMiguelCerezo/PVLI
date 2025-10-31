@@ -79,18 +79,35 @@ export default class BattleScene extends Phaser.Scene {
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { console.log("Under construction") });
         let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
+        this.descriptionTextbox = this.add.text(0, 0, "", {
+            fontFamily: 'Arial',
+            fontSize: '21px',
+            color: '#ffffff',
+            align: 'center',
+            fixedWidth: 0,
+            backgroundColor: '#fadd87'
+        }).setOrigin(0, 1).setVisible(false);
 
-        this.events.on("select_skill", this.OnSelectSkill, this);
-        this.events.on("select_target", this.OnSelectTarget, this);
-        this.scene.events.on('use_skill', this.OnUseSkill);
+        this.events.on("select_skill", this.OnSelectSkill(), this);
+        this.events.on("select_target", this.OnSelectTarget(), this);
+        
 
 
     }
-    OnUseSkill(key) {
+    OnSelectSkill() {
         
     }
     OnSelectTarget(skillKey) {
 
     }
+    ShowTextbox(x,y,text){
+        this.descriptionTextbox.x = x;
+        this.descriptionTextbox.y = y;
+        this.descriptionTextbox.text = text;
+        this.descriptionTextbox.setVisible(true);
+    }
+    HideTextbox() {
 
+        this.descriptionTextbox.setVisible(false);
+    }
 }

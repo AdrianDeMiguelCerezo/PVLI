@@ -1,7 +1,7 @@
 
 export default class MenuButton extends Phaser.GameObjects.Text {
     constructor(scene, x, y, skillKey, pointerDownAction) {
-        this.canBeClicked = true;
+        
         if (!!pointerDownAction) {
             super(scene, x, y, skillKey,
                 {
@@ -42,11 +42,15 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             this.on('pointerdown', () => {
                 if (this.canBeClicked) this.scene.events.emit("use_skill", skillKey);
             })
+            this.on('pointerdown', () => {
+                if (this.canBeClicked) this.scene.events.emit("use_skill", skillKey);
+            })
         }
+        this.canBeClicked = true;
         this.scene.events.on('use_skill', function () { this.canBeClicked = false });
         this.scene.events.on('select_skill', function () { this.canBeClicked = true });
 
     }
 
-
+    
 }
