@@ -20,7 +20,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             //establece interaccion
             this.setInteractive();
             this.on('pointerdown', () => {
-                pointerDownAction();
+                if (this.canBeClicked) pointerDownAction();
             })
         }
         else {
@@ -40,13 +40,13 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             //establece interaccion
             this.setInteractive();
             this.on('pointerdown', () => {
-                this.scene.events.emit("use_skill", skillKey);
+                if (this.canBeClicked) this.scene.events.emit("use_skill", skillKey);
             })
         }
         this.scene.events.on('use_skill', function () { this.canBeClicked = false });
         this.scene.events.on('select_skill', function () { this.canBeClicked = true });
-        
+
     }
 
-    
+
 }
