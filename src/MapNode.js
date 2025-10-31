@@ -75,7 +75,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                 this.setState(State.CURRENT);
 
                 this.openNearbyNodes();
-                console.log(nodeVisited[this.id])
+
                 if(nodeVisited[this.id]==false){
                     
                     scene.scene.start(this.targetScene);
@@ -104,10 +104,15 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
     
 
     updateTint() {
+        const nodeVisited = this.scene.registry.get('nodeVisited');
         this.clearTint();
-        if (this.state === State.LOCKED) this.setTintFill(0x555555);
-        else if (this.state === State.OPEN) this.setTintFill(0x000000);
-        else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
+        if(nodeVisited[this.id]==true&&this.state!==State.CURRENT) this.setTintFill(0x8b0000);
+        else{
+             if (this.state === State.LOCKED) this.setTintFill(0x555555);
+            else if (this.state === State.OPEN) this.setTintFill(0x000000);
+            else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
+        }
+       
     }
 
      openNearbyNodes() {
