@@ -22,13 +22,25 @@ export default class CombatManager {
      * @param {any} player
      * @param {any} combatInfo
      */
-    constructor(turn=0,enemies,player=null,combatInfo){
+    constructor(turn = 0, enemies, player = null, battleScene) {
+        
         this.turn=turn;
         this.enemies=enemies;
-        this.player=player;
-           
+        this.player = player;
+        this.battleScene = battleScene;
+
+        this.battleScene.events.on("use_skill", this.Use_Skill, this)
+        this.battleScene.events.on("target_selected", this.Target_Selected, this)
+        
     }
 
-    
-    
+    Use_Skill(skillKey) {
+        console.log(skillKey)
+    }
+
+    Target_Selected(index, skillKey) {
+
+    }
+
+
 }

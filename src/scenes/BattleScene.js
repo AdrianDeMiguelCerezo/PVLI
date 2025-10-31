@@ -55,6 +55,7 @@ export default class BattleScene extends Phaser.Scene {
 
         this.habilidades = this.cache.json.get('habilidades');
 
+        this.combatManager = new CombatManager(0,this.enemies,this.player,this);
 
 
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");

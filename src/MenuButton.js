@@ -39,9 +39,10 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             //establece interaccion
             this.setInteractive();
             this.on('pointerdown', () => {
-                console.log(scene.habilidades[skillKey].descripcion)
+                this.scene.events.emit("use_skill", skillKey);
             })
         }
+        this.scene.events.on('use_skill', function () { console.log("menubutton") });
     }
 
 
