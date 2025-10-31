@@ -81,11 +81,14 @@ export default class BattleScene extends Phaser.Scene {
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
             fontFamily: 'Arial',
-            fontSize: '21px',
-            color: '#ffffff',
+            fontSize: '15px',
+            color: '#000000',
             align: 'center',
             fixedWidth: 0,
-            backgroundColor: '#fadd87'
+            backgroundColor: '#fadd87',
+            padding: {
+                x: 3
+            }
         }).setOrigin(0, 1).setVisible(false);
 
         this.events.on("select_skill", this.OnSelectSkill);

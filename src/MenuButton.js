@@ -4,21 +4,23 @@ export default class MenuButton extends Phaser.GameObjects.Text {
     
     
     constructor(scene, x, y, skillKey, pointerDownAction) {
-        
-        if (!!pointerDownAction) {
-            super(scene, x, y, skillKey,
-                {
-                    fontFamily: 'Arial',
-                    fontSize: '25px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fixedWidth: 0,
-                    backgroundColor: '#2d2d2d'
+        super(scene, x, y, " ",
+            {
+                fontFamily: 'Arial',
+                fontSize: '25px',
+                color: '#000000',
+                align: 'center',
+                fixedWidth: 0,
+                backgroundColor: '#707070',
+                padding: {
+                    x: 5
                 }
-            )
-
+            },
+        )
+        if (!!pointerDownAction)//undefined == false
+        {
+            this.text = skillKey;
             scene.add.existing(this);
-
 
             //establece interaccion
             this.setInteractive();
@@ -28,17 +30,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             
         }
         else {
-            super(scene, x, y, scene.habilidades[skillKey].nombre,
-                {
-                    fontFamily: 'Arial',
-                    fontSize: '25px',
-                    color: '#ffffff',
-                    align: 'center',
-                    fixedWidth: 0,
-                    backgroundColor: '#2d2d2d'
-                },
-            )
-            
+            this.text = scene.habilidades[skillKey].nombre;
             scene.add.existing(this);
 
             //establece interaccion
