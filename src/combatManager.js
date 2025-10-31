@@ -37,8 +37,12 @@ export default class CombatManager {
     Use_Skill(skillKey) {
         console.log(skillKey)
     }
-
-    Target_Selected(index, skillKey) {
+    /**
+     * 
+     * @param {Enemy} enemy
+     * @param {string} skillKey
+     */
+    Target_Selected(enemy, skillKey) {
 
     }
 

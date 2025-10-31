@@ -55,7 +55,7 @@ export default class BattleScene extends Phaser.Scene {
 
         this.habilidades = this.cache.json.get('habilidades');
 
-        this.combatManager = new CombatManager(0,this.enemies,this.player,this);
+        this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
 
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");
@@ -88,21 +88,26 @@ export default class BattleScene extends Phaser.Scene {
             backgroundColor: '#fadd87'
         }).setOrigin(0, 1).setVisible(false);
 
-        this.events.on("select_skill", this.OnSelectSkill(), this);
-        this.events.on("select_target", this.OnSelectTarget(), this);
-        
+        this.events.on("select_skill", this.OnSelectSkill);
+        this.events.on("select_target", this.OnSelectTarget);
+
 
 
     }
+    update() {
+        if (this.descriptionTextbox.visible)
+        {
+            this.descriptionTextbox.x = this.input.activePointer.x;
+            this.descriptionTextbox.y = this.input.activePointer.y;
+        }
+    }
     OnSelectSkill() {
-        
+
     }
     OnSelectTarget(skillKey) {
 
     }
-    ShowTextbox(x,y,text){
-        this.descriptionTextbox.x = x;
-        this.descriptionTextbox.y = y;
+    ShowTextbox(x, y, text) {
         this.descriptionTextbox.text = text;
         this.descriptionTextbox.setVisible(true);
     }
