@@ -6,6 +6,8 @@ import StatusEffect from './StatusEffect.js'
 export default class Enemy extends Phaser.GameObjects.Image {
     constructor(key, scene, image)
     {
+        
+
         console.log(image)
         super(scene,100,100, image)
 
@@ -19,7 +21,17 @@ export default class Enemy extends Phaser.GameObjects.Image {
          */
         this.efectos = [];
 
+        //clikar enemigos para apuntar
+        this.canBeClicked = false;
+        this.setInteractive();
+        this.on('pointerdown', () => {
+            this.scene.events.emit("target_selected", skillKey);
+        })
+        this.scene.events.on('target_selected', function () {this.canBeClicked = false })
     }
+
+
+
     /**
      * Setea la textura.
      * @param {Phaser.Textures.Texture} texture
