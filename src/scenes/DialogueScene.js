@@ -8,20 +8,13 @@ export default class DialogueScene extends Phaser.Scene {
 	 * 
 	 */
 	constructor() {
-		super({ key: 'base' });
+		super({ key: 'DialogueScene' });
+	}
+
+	init() {
 		this.dialogos = ["dialogo 1", "dialogo 2", "dialogo 3"];
 		this.index = 0;
-
 	}
-
-	/**
-	 * Cargamos todos los assets que vamos a necesitar
-	 */
-	preload(){
-		this.load.image('fondo', 'assets/fondoPlaceHolderDialogos.png');
-
-	}
-	
 	create() {
 		this.add.image(0, 0, 'fondo').setOrigin(0, 0);
 
