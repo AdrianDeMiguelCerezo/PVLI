@@ -82,12 +82,12 @@ export default class BattleScene extends Phaser.Scene {
 
         this.events.on("select_skill", this.OnSelectSkill, this);
         this.events.on("select_target", this.OnSelectTarget, this);
-
+        this.scene.events.on('use_skill', this.OnUseSkill);
 
 
     }
-    OnSelectSkill() {
-
+    OnUseSkill(key) {
+        
     }
     OnSelectTarget(skillKey) {
 
