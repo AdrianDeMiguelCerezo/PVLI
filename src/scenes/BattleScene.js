@@ -60,13 +60,10 @@ export default class BattleScene extends Phaser.Scene {
 
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");
 
-        // player = new Player() //hago que un nuevo gameObject player se cree aquí para el combate, ergo hago dos clases player, o le paso un player ya creado antes, pero que no se veía en pantalla porque patata?
 
-        for (let i = 0; i < this.enemies.length; i++) {
-            //enemies[i].setTexture(this.enemies[i].key)
-            this.enemies[i].setCoords(300, 100 + 100 * i)
-            this.add.existing(this.enemies[i])
-        }
+
+        //Para que cuando toque elegir enemigos los enemigos, todo menois lo enemigos se ponga más oscuro, primero se colocan en la escena todos los objetos no enemigos, 
+        //luego el rectángulo oscuro que ocupa la pantalla, y luego los enemigos.
 
         //fondo ui
         let fondoUI = this.add.rectangle(50, 400, 700, 200, 0xB7B7B7);
@@ -91,15 +88,27 @@ export default class BattleScene extends Phaser.Scene {
             }
         }).setOrigin(0, 1).setVisible(false);
 
-        this.events.on("select_skill", this.OnSelectSkill);
-        this.events.on("select_target", this.OnSelectTarget);
+        /**
+         * Rectángulo negro translúcido que tapa todo a la hora de elegir target
+         */
+        this.blackFullRect = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, '#000000', 0.5).setOrigin(0, 0).setVisible(false);
+
+
+        for (let i = 0; i < this.enemies.length; i++) {
+            //enemies[i].setTexture(this.enemies[i].key)
+            this.enemies[i].setCoords(600+30*i, 100+350*i/this.enemies.length)
+            this.add.existing(this.enemies[i])
+        }
+
+        this.events.on("select_skill", this.OnSelectSkill,this);
+        this.events.on("select_target", this.OnSelectTarget,this);
+        this.events.on("target_selected", this.OnTargetSelected,this);
 
 
 
     }
     update() {
-        if (this.descriptionTextbox.visible)
-        {
+        if (this.descriptionTextbox.visible) {
             this.descriptionTextbox.x = this.input.activePointer.x;
             this.descriptionTextbox.y = this.input.activePointer.y;
         }
@@ -107,9 +116,14 @@ export default class BattleScene extends Phaser.Scene {
     OnSelectSkill() {
 
     }
-    OnSelectTarget(skillKey) {
 
+    OnSelectTarget(skillKey) {
+        this.blackFullRect.setVisible(true)
     }
+    OnTargetSelected() {
+        this.blackFullRect.setVisible(false)
+    }
+
     ShowTextbox(x, y, text) {
         this.descriptionTextbox.text = text;
         this.descriptionTextbox.setVisible(true);

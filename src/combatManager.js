@@ -1,5 +1,6 @@
 //Logica del combate
-import CombatUI from "./scenes/combatui.js"
+
+import Enemy from "./Enemy.js";
 
 const Target = {
 SELF:0,
@@ -13,7 +14,7 @@ PASIVA:1,
 TURNO1:2,
 }
     
-export default class CombatManager {
+export default class CombatManager extends Phaser.Events.EventEmitter {
 
     /**
      * 
@@ -21,29 +22,39 @@ export default class CombatManager {
      * @param {any} enemies
      * @param {any} player
      * @param {any} combatInfo
+     * @param {Phaser.Scene} battleScene
      */
     constructor(turn = 0, enemies, player = null, battleScene) {
-        
-        this.turn=turn;
+
+        super();
+
+        this.turn = turn;
+        /**@type {Enemy}*/
         this.enemies=enemies;
         this.player = player;
-        this.battleScene = battleScene;
 
-        this.battleScene.events.on("use_skill", this.Use_Skill, this)
-        this.battleScene.events.on("target_selected", this.Target_Selected, this)
+        /**
+         * @type {Phaser.Scene}
+         */
+        this.scene = battleScene;
+
+        this.scene.events.on("use_skill", this.Use_Skill, this)
+        this.scene.events.on("target_selected", this.Target_Selected, this)
         
     }
-
+    /**
+     * @param {string} skillKey
+     */
     Use_Skill(skillKey) {
         console.log(skillKey)
+        this.scene.events.emit("select_target",skillKey)
     }
     /**
-     * 
      * @param {Enemy} enemy
      * @param {string} skillKey
      */
     Target_Selected(enemy, skillKey) {
-
+        console.log(enemy , "\nSkill:" ,skillKey)
     }
 
 

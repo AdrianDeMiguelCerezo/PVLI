@@ -4,6 +4,18 @@ import StatusEffect from './StatusEffect.js'
  * Representa un enemigo en la escena del combate
  */
 export default class Enemy extends Phaser.GameObjects.Image {
+
+    /**
+     * @description Guarda la última habilidad que ha pasado el select_target para poder devolverla en el evento target_selected
+     */
+    skillKey;
+
+    /**
+     * 
+     * @param {any} key
+     * @param {any} scene
+     * @param {any} image
+     */
     constructor(key, scene, image)
     {
         
@@ -25,10 +37,10 @@ export default class Enemy extends Phaser.GameObjects.Image {
         this.canBeClicked = false;
         this.setInteractive();
         this.on('pointerdown', () => {
-            if(this.canBeClicked) this.scene.events.emit("target_selected", this,skillKey);
+            if(this.canBeClicked) this.scene.events.emit("target_selected", this, this.skillKey);
         })
-        this.scene.events.on('target_selected', function () { this.canBeClicked = false })
-        this.scene.events.on('select_target', function () { this.canBeClicked = true })
+        this.scene.events.on('target_selected', ()=> { this.canBeClicked = false })
+        this.scene.events.on('select_target', (skillKey)=> { this.canBeClicked = true,this.skillKey=skillKey })
     }
 
 
