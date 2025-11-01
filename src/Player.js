@@ -9,7 +9,7 @@ export default class Player extends Phaser.GameObjects.Image //no hecha
 
     /**
      * 
-     * @param {PlayerData} player
+     * @param {PlayerData} playerData
      * @param {Phaser.Scene} scene
      * @param {number} x
      * @param {number} y
@@ -18,6 +18,6 @@ export default class Player extends Phaser.GameObjects.Image //no hecha
     constructor(player, scene, x, y, texture)
     {
         super(scene, x, y, texture);
-        this.player = player;
+        this.playerData = playerData;
     }
 }

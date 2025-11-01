@@ -1,8 +1,8 @@
 
 
 export default class MenuButton extends Phaser.GameObjects.Text {
-    
-    
+
+
     constructor(scene, x, y, skillKey, pointerDownAction) {
         super(scene, x, y, " ",
             {
@@ -25,12 +25,22 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             //establece interaccion
             this.setInteractive();
             this.on('pointerdown',
-                () =>
-                {
-                if (this.canBeClicked) pointerDownAction();
+                () => {
+                    if (this.canBeClicked) {
+                        pointerDownAction();
+                        this.preFX.clear();
+                    }
                 }
             )
-            
+            this.on('pointerover', () => {
+                if (this.canBeClicked) {
+                    this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 1)
+                }
+            })
+            this.on('pointerout', () =>
+            {
+                this.preFX.clear()
+            })
         }
         else {
             this.text = scene.habilidades[skillKey].nombre;
@@ -40,22 +50,29 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             this.setInteractive();
 
             this.on('pointerdown', () => {
-                if (this.canBeClicked) this.scene.events.emit("use_skill", skillKey);
+                if (this.canBeClicked) {
+                    this.scene.events.emit("use_skill", skillKey);
+                    this.preFX.clear();
+                }
             })
-            this.on('pointerover', (pointer) => {
-                if (this.canBeClicked) this.scene.ShowTextbox(pointer.x,pointer.y,this.scene.habilidades[skillKey].descripcion);
+            this.on('pointerover', () => {
+                if (this.canBeClicked) {
+                    this.scene.ShowTextbox(this.scene.habilidades[skillKey].descripcion);
+                    this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 1)
+                }
             })
             this.on('pointerout', () => {
                 if (this.canBeClicked) this.scene.HideTextbox();
+                this.preFX.clear()
             })
         }
         this.canBeClicked = true;
         this.scene.events.on('use_skill', () => { this.canBeClicked = false; this.scene.HideTextbox() });
-        this.scene.events.on('select_skill', ()=> { this.canBeClicked = true });
-        this.scene.events.on('select_target', ()=> { this.canBeClicked = false });
-        this.scene.events.on('target_selected', ()=> { this.canBeClicked = true});
+        this.scene.events.on('select_skill', () => { this.canBeClicked = true });
+        this.scene.events.on('select_target', () => { this.canBeClicked = false });
+        this.scene.events.on('target_selected', () => { this.canBeClicked = true });
 
     }
 
-    
+
 }

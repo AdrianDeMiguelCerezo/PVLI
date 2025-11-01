@@ -37,10 +37,23 @@ export default class Enemy extends Phaser.GameObjects.Image {
         this.canBeClicked = false;
         this.setInteractive();
         this.on('pointerdown', () => {
-            if(this.canBeClicked) this.scene.events.emit("target_selected", this, this.skillKey);
+            if (this.canBeClicked) {
+
+                this.scene.events.emit("target_selected", this, this.skillKey)
+                this.preFX.clear();
+            }
         })
         this.scene.events.on('target_selected', ()=> { this.canBeClicked = false })
-        this.scene.events.on('select_target', (skillKey)=> { this.canBeClicked = true,this.skillKey=skillKey })
+        this.scene.events.on('select_target', (skillKey) => { this.canBeClicked = true; this.skillKey = skillKey; })
+
+        this.on('pointerout', () => {
+            this.preFX.clear()
+        })
+        this.on('pointerover', () => {
+            if (this.canBeClicked) {
+                this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 0)
+            }
+        })
     }
 
 

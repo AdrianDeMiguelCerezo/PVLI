@@ -76,6 +76,13 @@ export default class BattleScene extends Phaser.Scene {
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { console.log("Under construction") });
         let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
+        this.menuHabilidades = this.add.container(fondoUI.x + 210, fondoUI.y);
+
+        //for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
+
+        //}
+        
+
         this.descriptionTextbox = this.add.text(0, 0, "", {
             fontFamily: 'Arial',
             fontSize: '15px',
@@ -124,7 +131,7 @@ export default class BattleScene extends Phaser.Scene {
         this.blackFullRect.setVisible(false)
     }
 
-    ShowTextbox(x, y, text) {
+    ShowTextbox(text) {
         this.descriptionTextbox.text = text;
         this.descriptionTextbox.setVisible(true);
     }
