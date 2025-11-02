@@ -61,7 +61,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             this.scene.registry.set('nodeVisited', nodeVisited);
         }
         
-
+        if(this.state===State.CURRENT)this.setVisited();
         this.updateTint();
         this.on('pointerover', () => {
             if(this.state==State.OPEN)this.setTintFill(0xffffff);
