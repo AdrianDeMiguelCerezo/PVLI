@@ -22,9 +22,9 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
      * @param {any} enemies
      * @param {any} player
      * @param {any} combatInfo
-     * @param {Phaser.Scene} battleScene
+     * @param {Phaser.Scene} scene
      */
-    constructor(turn = 0, enemies, player = null, battleScene) {
+    constructor(turn = 0, enemies, player = null, scene) {
 
         super();
 
@@ -36,7 +36,7 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
         /**
          * @type {Phaser.Scene}
          */
-        this.scene = battleScene;
+        this.scene = scene;
 
         this.scene.events.on("use_skill", this.Use_Skill, this)
         this.scene.events.on("target_selected", this.Target_Selected, this)

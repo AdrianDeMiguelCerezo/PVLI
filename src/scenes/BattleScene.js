@@ -3,6 +3,7 @@ import CombatManager from '../combatManager.js'
 import Enemy from '../Enemy.js'
 import Player from '../Player.js'
 import MenuButton from '../MenuButton.js'
+import Menu from '../Menu.js'
 
 export default class BattleScene extends Phaser.Scene {
     /**
@@ -76,7 +77,7 @@ export default class BattleScene extends Phaser.Scene {
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { console.log("Under construction") });
         let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
-        this.menuHabilidades = this.add.container(fondoUI.x + 210, fondoUI.y);
+        this.menuHabilidades = new Menu(this,fondoUI.x + 210, fondoUI.y,490,200,0x888888,1,1)
 
         //for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
 
