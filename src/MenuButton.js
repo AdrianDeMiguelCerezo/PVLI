@@ -12,7 +12,8 @@ export default class MenuButton extends Phaser.GameObjects.Text {
      * @param {any} skillKey
      * @param {any} pointerDownAction
      */
-    constructor(scene, x, y, skillKey, pointerDownAction, fontSize = 25, fixedWidth = 0, backgroundColor = '#707070') {
+    constructor(scene, x, y, skillKey, pointerDownAction, fontSize = 21, fixedWidth = 0, backgroundColor = '#707070') {
+        console.log(arguments)
         super(scene, x, y, " ",
             {
                 fontFamily: 'Arial',
@@ -84,5 +85,6 @@ export default class MenuButton extends Phaser.GameObjects.Text {
 
     }
 
+    
 
 }

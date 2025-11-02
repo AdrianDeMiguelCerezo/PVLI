@@ -67,7 +67,7 @@ export default class Menu extends Phaser.GameObjects.Container {
             else {
                 let i = 0;
                 let found = false;
-                while (i < this.rows && !found) {found = !this.positions[i][column];i++;}
+                while (i < this.rows && !found) { found = !this.positions[i][column]; i++; }
                 i--; j--;
                 if (!this.positions[i][column]) { this._AddButton(button, i, column) }
                 else { button.destroy(); }
@@ -83,7 +83,7 @@ export default class Menu extends Phaser.GameObjects.Container {
                 else { button.destroy(); }
             }
             else {
-                this.positions[row][column].destroy();
+                if (this.positions[row][column]) { this.positions[row][column].destroy(); }
                 this._AddButton(button, row, column)
 
             }
@@ -103,11 +103,11 @@ export default class Menu extends Phaser.GameObjects.Container {
         this.add(button);
 
 
-        button.style.fixedWidth = (this.width - 2 * this.SBMEAB - (this.columns - 1) * this.SBB) / this.columns;
-        console.log('fixedWidth: ',button.style.fixedWidth);
+        button.setFixedSize((this.width - 2 * this.SBMEAB - (this.columns - 1) * this.SBB) / this.columns, 0)
+        console.log('fixedWidth: ', button.style.fixedWidth);
         //console.log(this.SBMEAB, '+ (', this.width, ' - ', this.SBMEAB, ' - ', button.style.fixedWidth, ') * ', column, ' / ', this.columns, ' + ',this.SBB,' * ',column)
-        button.x = this.SBMEAB + (this.width - this.SBMEAB - button.style.fixedWidth) * column/ this.columns + this.SBB * column;
-        
+        button.x = this.SBMEAB + (button.style.fixedWidth + this.SBB) * column;
+
         button.y = this.SBMEAB + (this.height - this.SBMEAB) * row / this.rows;
         console.log(button.x)
         console.log(button.y)

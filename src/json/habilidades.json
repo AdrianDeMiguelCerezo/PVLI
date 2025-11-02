@@ -1,72 +1,82 @@
 {
-  "ATQ_BASICO": {
-    "nombre": "Ataque básico",
-    "descripcion": "Un golpe sencillo con el arma.",
-    "coste": 0,
-    "damage": 12,
-    "efecto": null,
-    "duraciónEfecto": 0,
-    "tipo": "ACTIVA",
-    "objetivo": "ENEMY"
-  },
-  "DEFENDER": {
-    "nombre": "Defender",
-    "descripcion": "Aumenta tu defensa este turno.",
-    "coste": 0,
-    "damage": 0,
-    "efecto": "DEF_MAS",
-    "duraciónEfecto": 1,
-    "tipo": "ACTIVA",
-    "objetivo": "SELF"
-  },
-  "HUIR": {
-    "nombre": "Huir",
-    "descripcion": "Escapas del combate al empezar tu siguiente turno.",
-    "coste": 0,
-    "damage": 0,
-    "efecto": null,
-    "duraciónEfecto": 0,
-    "tipo": "ACTIVA",
-    "objetivo": "SELF"
-  },
-  "DISPARO_PRECISO": {
-    "nombre": "Disparo preciso",
-    "descripcion": "Disparo bien apuntado que puede asestar crítico.",
-    "coste": 10,
-    "damage": 22,
-    "efecto": null,
-    "duraciónEfecto": 0,
-    "tipo": "ACTIVA",
-    "objetivo": "ENEMY"
-  },
-  "MOLOTOV": {
-    "nombre": "Cóctel molotov",
-    "descripcion": "Prende fuego al objetivo.",
-    "coste": 8,
-    "damage": 10,
-    "efecto": "QUEMADO",
-    "duraciónEfecto": 3,
-    "tipo": "ACTIVA",
-    "objetivo": "ENEMY"
-  },
-  "DARDO_VENENO": {
-    "nombre": "Dardo envenenado",
-    "descripcion": "Envenena al enemigo.",
-    "coste": 6,
-    "damage": 6,
-    "efecto": "VENENO",
-    "duraciónEfecto": -2,
-    "tipo": "ACTIVA",
-    "objetivo": "ENEMY"
-  },
-  "PARALIZADOR": {
-    "nombre": "Extraño artefacto brillante",
-    "descripcion": "Paraliza a un enemigo durante 2 turnos.",
-    "coste": 12,
-    "damage": 0,
-    "efecto": "PARALIZADO",
-    "duraciónEfecto": 2,
-    "tipo": "ACTIVA",
-    "objetivo": "ENEMY"
-  }
+    "ATQ_BASICO": {
+        "nombre": "Ataque básico",
+        "descripcion": "Un golpe sencillo con el arma.",
+        "coste": 0,
+        "damage": 12,
+        "efecto": null,
+        "duraciónEfecto": 0,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    },
+    "DEFENDER": {
+        "nombre": "Defender",
+        "descripcion": "Aumenta tu defensa este turno.",
+        "coste": 0,
+        "damage": 0,
+        "efecto": "DEF+",
+        "duraciónEfecto": 1,
+        "tipo": "ACTIVA",
+        "objetivo": "SELF"
+    },
+    "HUIR": {
+        "nombre": "Huir",
+        "descripcion": "Escapas del combate al empezar tu siguiente turno.",
+        "coste": 0,
+        "damage": 0,
+        "efecto": null,
+        "duraciónEfecto": 0,
+        "tipo": "ACTIVA",
+        "objetivo": "SELF"
+    },
+    "DISPARO_MULTIPLE": {
+        "nombre": "Disparo múltiple",
+        "descripcion": "Haces 20 de daño a todos los enemigos",
+        "coste": 10,
+        "damage": 20,
+        "efecto": null,
+        "duraciónEfecto": 0,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    },
+    "GRITO_BATALLA": {
+        "nombre": "Grito de batalla",
+        "descripcion": "+Att durante 3 turnos",
+        "coste": 10,
+        "damage": 0,
+        "efecto": "ATQ+",
+        "duraciónEfecto": 3,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    },
+    "MOLOTOV": {
+        "nombre": "Cóctel molotov",
+        "descripcion": "Prende fuego al objetivo.",
+        "coste": 8,
+        "damage": 10,
+        "efecto": "QUEMADO",
+        "duraciónEfecto": 3,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    },
+    "DARDO_VENENO": {
+        "nombre": "Dardo envenenado",
+        "descripcion": "Envenena al enemigo.",
+        "coste": 6,
+        "damage": 6,
+        "efecto": "VENENO",
+        "duraciónEfecto": -2,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    },
+    "PARALIZADOR": {
+        "nombre": "Extraño artefacto brillante",
+        "descripcion": "Paraliza a un enemigo durante 2 turnos.",
+        "coste": 12,
+        "damage": 0,
+        "efecto": "PARALIZADO",
+        "duraciónEfecto": 2,
+        "tipo": "ACTIVA",
+        "objetivo": "ENEMY"
+    }
 }
