@@ -111,7 +111,7 @@ export default class BattleScene extends Phaser.Scene {
 
         for (let i = 0; i < this.enemies.length; i++) {
             //enemies[i].setTexture(this.enemies[i].key)
-            this.enemies[i].setCoords(600+30*i, 100+350*i/this.enemies.length)
+            this.enemies[i].setCoords(600+30*i, 240-70*(this.enemies.length/2-i))
             this.add.existing(this.enemies[i])
         }
 

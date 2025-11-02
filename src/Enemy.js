@@ -1,9 +1,10 @@
 import StatusEffect from './StatusEffect.js'
+import HealthBar from './HealthBar.js'
 
 /**
  * Representa un enemigo en la escena del combate
  */
-export default class Enemy extends Phaser.GameObjects.Image {
+export default class Enemy extends Phaser.GameObjects.Container {
 
     /**
      * @description Guarda la última habilidad que ha pasado el select_target para poder devolverla en el evento target_selected
@@ -19,9 +20,12 @@ export default class Enemy extends Phaser.GameObjects.Image {
     constructor(key, scene, image)
     {
         
+        super(scene,100,100)
 
-        console.log(image)
-        super(scene,100,100, image)
+        this.image = new Phaser.GameObjects.Image(scene, 0, 0, image).setOrigin(0, 0);
+        this.add(this.image)
+
+
 
         this.key = key;
         this.Hp = key.Hp
@@ -33,25 +37,29 @@ export default class Enemy extends Phaser.GameObjects.Image {
          */
         this.efectos = [];
 
+        this.healthBar = new HealthBar(scene, -10, 0, 100, 18);
+        this.add(this.healthBar);
+        this.healthBar.draw();
+
         //clikar enemigos para apuntar
         this.canBeClicked = false;
-        this.setInteractive();
+        this.setInteractive(new Phaser.Geom.Rectangle(0,0,this.image.width,this.image.height),Phaser.Geom.Rectangle.Contains);
         this.on('pointerdown', () => {
             if (this.canBeClicked) {
 
                 this.scene.events.emit("target_selected", this, this.skillKey)
-                this.preFX.clear();
+                this.image.preFX.clear();
             }
         })
         this.scene.events.on('target_selected', ()=> { this.canBeClicked = false })
         this.scene.events.on('select_target', (skillKey) => { this.canBeClicked = true; this.skillKey = skillKey; })
 
         this.on('pointerout', () => {
-            this.preFX.clear()
+            this.image.preFX.clear()
         })
         this.on('pointerover', () => {
             if (this.canBeClicked) {
-                this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 0)
+                this.image.preFX.addGlow('0xfaf255', 1, 1, false, 1, 0)
             }
         })
     }
