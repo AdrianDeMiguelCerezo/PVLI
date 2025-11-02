@@ -72,8 +72,8 @@ export default class BattleScene extends Phaser.Scene {
         let fondoUI = this.add.rectangle(25, 400, 750, 200, 0xB7B7B7);
         fondoUI.setOrigin(0, 0);
         this.add.rectangle(fondoUI.x + 200, 400, 10, 200, 0x1F4D4F).setOrigin(0, 0);
-        this.menuHabilidades = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3)
-        this.menuItems = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3)
+        this.menuHabilidades = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
+        this.menuItems = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
 
         //botones generales
         let botonAtacar = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 15, 'ATQ_BASICO');
@@ -126,8 +126,9 @@ export default class BattleScene extends Phaser.Scene {
     }
     update() {
         if (this.descriptionTextbox.visible) {
-            this.descriptionTextbox.x = this.input.activePointer.x;
-            this.descriptionTextbox.y = this.input.activePointer.y;
+            this.descriptionTextbox.x = Math.min(this.input.activePointer.x + this.descriptionTextbox.width, this.sys.game.canvas.width) - this.descriptionTextbox.width;
+            this.descriptionTextbox.y = Math.max(this.input.activePointer.y - this.descriptionTextbox.height, 0) + this.descriptionTextbox.height;
+            
         }
         
     }
