@@ -77,7 +77,9 @@ export default class BattleScene extends Phaser.Scene {
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { console.log("Under construction") });
         let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
-        this.menuHabilidades = new Menu(this,fondoUI.x + 210, fondoUI.y,490,200,0x888888,1,1)
+        this.menuHabilidades = new Menu(this, fondoUI.x + 210, fondoUI.y, 490, 200, 0x999999, 5, 3)
+
+      
 
         //for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
 
@@ -112,6 +114,9 @@ export default class BattleScene extends Phaser.Scene {
         this.events.on("select_target", this.OnSelectTarget,this);
         this.events.on("target_selected", this.OnTargetSelected,this);
 
+        let q = this.input.keyboard.addKey('Q');
+
+        q.on('down', () => { this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, 'ATQ_BASICO')) });
 
 
     }
@@ -120,6 +125,7 @@ export default class BattleScene extends Phaser.Scene {
             this.descriptionTextbox.x = this.input.activePointer.x;
             this.descriptionTextbox.y = this.input.activePointer.y;
         }
+        
     }
     OnSelectSkill() {
 

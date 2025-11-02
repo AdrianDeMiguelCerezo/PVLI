@@ -12,15 +12,15 @@ export default class MenuButton extends Phaser.GameObjects.Text {
      * @param {any} skillKey
      * @param {any} pointerDownAction
      */
-    constructor(scene, x, y, skillKey, pointerDownAction, fontSize = 25, backgroundColor = 0x707070) {
+    constructor(scene, x, y, skillKey, pointerDownAction, fontSize = 25, fixedWidth = 0, backgroundColor = '#707070') {
         super(scene, x, y, " ",
             {
                 fontFamily: 'Arial',
-                fontSize: 25,
+                fontSize: fontSize,
                 color: '#000000',
                 align: 'center',
-                fixedWidth: 0,
-                backgroundColor: '#707070',
+                fixedWidth: fixedWidth,
+                backgroundColor: backgroundColor,
                 padding: {
                     x: 5
                 }
@@ -50,6 +50,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             {
                 this.preFX.clear()
             })
+            
         }
         else {
             this.text = scene.habilidades[skillKey].nombre;
