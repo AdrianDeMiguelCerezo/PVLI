@@ -124,7 +124,10 @@ export default class BattleScene extends Phaser.Scene {
         this.events.on("target_selected", this.OnTargetSelected, this);
 
         let q = this.input.keyboard.addKey('Q');
-        q.on('down', () => {return this.OnDeleteEnemy(this.enemies[0])}, this);
+        q.on('down', () => { return this.OnDeleteEnemy(this.enemies[0]) }, this);
+
+        let e = this.input.keyboard.addKey('E');
+        e.on('down', () => { console.log(this); this.enemies[1].Hp -= 20; this.RedrawEnemies() }, this);
 
 
     }
@@ -163,7 +166,7 @@ export default class BattleScene extends Phaser.Scene {
     }
     RedrawEnemies() {
         for (let i = 0; i < this.enemiesTam; i++) {
-            this.enemies[i].setCoords(550 + 25 * i, 240 - 80 * (this.enemiesTam / 2 - i))
+            this.enemies[i].updateEnemy(550 + 25 * i, 240 - 80 * (this.enemiesTam / 2 - i))
         }
     }
     OnSelectTarget(skillKey) {

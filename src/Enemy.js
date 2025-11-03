@@ -37,7 +37,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
          */
         this.efectos = [];
 
-        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18);
+        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18,100,2);
         this.add(this.healthBar);
         this.healthBar.draw();
 
@@ -72,6 +72,6 @@ export default class Enemy extends Phaser.GameObjects.Container {
      */
     //setTexture(texture) { this.texture = texture }
 
-    setCoords(x, y) { this.x = x; this.y = y; }
+    updateEnemy(x, y) { this.x = x; this.y = y; this.healthBar.value = this.Hp; }
 
 }

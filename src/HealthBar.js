@@ -1,12 +1,12 @@
 export default class HealthBar extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, barWidth, barHeight,borderThickness=2) {
+    constructor(scene, x, y, barWidth, barHeight,initialValue,borderThickness=2) {
         super(scene,x-barWidth/2, y)
 
         this.bar = new Phaser.GameObjects.Graphics(scene);
 
         this.borderThickness=borderThickness
-        this.value = 100;
+        this.value = initialValue;
         this.p = (barWidth-2*borderThickness) / 100;
         this.barHeight = barHeight
         this.barWidth = barWidth
@@ -26,18 +26,6 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         this.add(this.bar);
         this.add(this.text);
-    }
-
-    decrease(amount) {
-        this.value -= amount;
-
-        if (this.value < 0) {
-            this.value = 0;
-        }
-
-        this.draw();
-
-        return (this.value === 0);
     }
 
     draw() {
