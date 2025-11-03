@@ -14,7 +14,7 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('BANDIDO_COMUN', 'assets/bandido.png')
         this.load.image('player', 'assets/player.png')
         this.load.json('habilidades', 'src/json/habilidades.json');
-        this.load.json('enemigos', 'src/json/enemigos.json');
+        this.load.json('enemigos', 'src/json/enemigos.json'); 
     }
     create() {
 
