@@ -28,7 +28,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
 
 
         this.key = key;
-        this.Hp = key.Hp
+        this.Hp = this.scene.jsonEnemigos[key].HpMax;
         this.sigHabilidad = 0; //poner entero random entre 0 y el numero de habilidads.
         this.turno = 0;
         /**

@@ -54,7 +54,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             
         }
         else {
-            this.text = scene.habilidades[skillKey].nombre;
+            this.text = scene.jsonHabilidades[skillKey].nombre;
             scene.add.existing(this);
 
             //establece interaccion
@@ -68,7 +68,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             })
             this.on('pointerover', () => {
                 if (this.canBeClicked) {
-                    this.scene.ShowTextbox(this.scene.habilidades[skillKey].descripcion);
+                    this.scene.ShowTextbox(this.scene.jsonHabilidades[skillKey].descripcion);
                     this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 1)
                 }
             })

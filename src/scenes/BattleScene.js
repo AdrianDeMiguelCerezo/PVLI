@@ -30,7 +30,7 @@ export default class BattleScene extends Phaser.Scene {
      * 
      * @type {object}
      */
-    habilidades;
+    jsonHabilidades;
     constructor() {
         super({ key: 'BattleScene' })
         this.enemies = [];
@@ -60,7 +60,8 @@ export default class BattleScene extends Phaser.Scene {
 
     create() {
 
-        this.habilidades = this.cache.json.get('habilidades');
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEnemigos = this.cache.json.get('enemigos');
 
         this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
