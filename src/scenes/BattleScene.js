@@ -34,7 +34,7 @@ export default class BattleScene extends Phaser.Scene {
     constructor() {
         super({ key: 'BattleScene' })
         this.enemies = [];
-
+        
     }
 
     /**
@@ -43,10 +43,14 @@ export default class BattleScene extends Phaser.Scene {
      */
     init(enemyKeys) {
 
-
+        /** Tamaño del array de enemigos
+         * @type {number}
+         */
+        this.enemiesTam = 0
         for (let i = 0; i < enemyKeys.length; i++) {
             console.log(enemyKeys)
             this.enemies[i] = new Enemy(enemyKeys[i], this, enemyKeys[i])
+            this.enemiesTam++;
         }
 
         this.player = new Player(new PlayerData(), this, 200, 200, "player")
@@ -82,14 +86,14 @@ export default class BattleScene extends Phaser.Scene {
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
         let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
-        
-        
-      
+
+
+
 
         for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
-            this.menuHabilidades.AddButton(new MenuButton(this,0,0,this.player.playerData.habilidades[i]))
+            this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
         }
-        
+
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
             fontFamily: 'Arial',
@@ -109,18 +113,18 @@ export default class BattleScene extends Phaser.Scene {
         this.blackFullRect = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, '#000000', 0.5).setOrigin(0, 0).setVisible(false);
 
 
-        for (let i = 0; i < this.enemies.length; i++) {
-            //enemies[i].setTexture(this.enemies[i].key)
-            this.enemies[i].setCoords(600+30*i, 240-70*(this.enemies.length/2-i))
+        for (let i = 0; i < this.enemiesTam; i++) {
             this.add.existing(this.enemies[i])
         }
 
-        this.events.on("select_skill", this.OnSelectSkill,this);
-        this.events.on("select_target", this.OnSelectTarget,this);
-        this.events.on("target_selected", this.OnTargetSelected,this);
+        this.RedrawEnemies();
 
-        //let q = this.input.keyboard.addKey('Q');
-        //q.on('down', () => { this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, 'ATQ_BASICO')) });
+        this.events.on("select_skill", this.OnSelectSkill, this);
+        this.events.on("select_target", this.OnSelectTarget, this);
+        this.events.on("target_selected", this.OnTargetSelected, this);
+
+        let q = this.input.keyboard.addKey('Q');
+        q.on('down', () => {return this.OnDeleteEnemy(this.enemies[0])}, this);
 
 
     }
@@ -135,7 +139,33 @@ export default class BattleScene extends Phaser.Scene {
     OnSelectSkill() {
 
     }
-
+    /**
+     * 
+     * @param {Enemy} enemy
+     */
+    OnDeleteEnemy(enemy) {
+        let i = 0;
+        let encontrado = false;
+        while (i < this.enemiesTam && !encontrado) {
+            encontrado = this.enemies[i] === enemy;
+            i++;
+        }
+        if (encontrado) {
+            enemy.destroy();
+            for (i; i < this.enemiesTam; i++) {
+                this.enemies[i-1]=this.enemies[i]
+            }
+            this.enemies[this.enemiesTam] = null;
+            this.enemiesTam--;
+        }
+        console.log(this)
+        this.RedrawEnemies();
+    }
+    RedrawEnemies() {
+        for (let i = 0; i < this.enemiesTam; i++) {
+            this.enemies[i].setCoords(550 + 25 * i, 240 - 80 * (this.enemiesTam / 2 - i))
+        }
+    }
     OnSelectTarget(skillKey) {
         this.blackFullRect.setVisible(true)
     }
