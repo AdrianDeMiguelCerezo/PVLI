@@ -17,7 +17,10 @@ export default class Map extends Phaser.Scene{
 
         this.nodes = [];
 
-        this.add.image(0, 0, 'map').setOrigin(0);
+        this.add.image(0, 0, 'map').setOrigin(0).setDepth(0);
+
+        this.graphics = this.add.graphics();
+        this.graphics.setDepth(1);
 
 
         new MapNode(this, 100, 100, 'node', 'Test', 0.2, 0, 2, 'node1');   // CURRENT
@@ -62,5 +65,38 @@ export default class Map extends Phaser.Scene{
         new MapNode(this, 250, 520, 'node', 'Test', 0.2, 0, 1, 'node34');
         new MapNode(this, 350, 550, 'node', 'Test', 0.2, 0, 1, 'node35');
 
+        for (const n of this.nodes) n.setDepth(2);
+
+        this.drawConnections();
+
+    }
+
+    update(){
+        this.drawConnections();
+    }
+
+    drawConnections(){
+        if (!this.nodes || this.nodes.length === 0) return;
+
+        this.graphics.clear();
+        this.graphics.lineStyle(4, 0xffffff, 0.8);
+
+        // Find the current node
+        const currentNode = this.nodes.find(n => n.state === 2); //CURRENT
+        if (!currentNode) return;
+
+        // Draw line to all nearby OPEN nodes
+        for (const other of this.nodes) {
+            if (other === currentNode) continue;
+            if (other.state === 0 || other.state === 2) { //OPEN or CURRENT
+                const dist = Phaser.Math.Distance.Between(currentNode.x, currentNode.y, other.x, other.y);
+                if (dist <= currentNode.radius) {
+                    this.graphics.beginPath();
+                    this.graphics.moveTo(currentNode.x, currentNode.y);
+                    this.graphics.lineTo(other.x, other.y);
+                    this.graphics.strokePath();
+                }
+            }
+        }
     }
 }
