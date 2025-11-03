@@ -1,28 +1,31 @@
 export default class HealthBar extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, barWidth, barHeight) {
-        super(scene,x, y)
+    constructor(scene, x, y, barWidth, barHeight,borderThickness=2) {
+        super(scene,x-barWidth/2, y)
 
         this.bar = new Phaser.GameObjects.Graphics(scene);
 
+        this.borderThickness=borderThickness
         this.value = 100;
-        this.p = barWidth / 100;
+        this.p = (barWidth-2*borderThickness) / 100;
         this.barHeight = barHeight
         this.barWidth = barWidth
         this.draw();
 
-        this.text = new Phaser.GameObjects.Text(scene, this.barWidth/ 2, this.barHeight / 2, "",
+        this.text = new Phaser.GameObjects.Text(scene, this.borderThickness, this.borderThickness, this.value,
             {
 
                 fontFamily: 'Arial',
-                fontSize: this.barHeight-5,
+                fontSize: this.barHeight-2*this.borderThickness,
                 color: '#000000',
                 align: 'center',
+                fixedWidth: this.barWidth-2*this.borderThickness
                
             }
         )
 
         this.add(this.bar);
+        this.add(this.text);
     }
 
     decrease(amount) {
@@ -47,18 +50,15 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         //  Health
 
         this.bar.fillStyle(0xffffff);
-        this.bar.fillRect(2, 2, this.barWidth-4, this.barHeight-4);
+        this.bar.fillRect(this.borderThickness, this.borderThickness, this.barWidth-2*this.borderThickness, this.barHeight-2*this.borderThickness);
 
-        if (this.value < 30) {
+        
             this.bar.fillStyle(0xff0000);
-        }
-        else {
-            this.bar.fillStyle(0x00ff00);
-        }
+        
 
         var d = Math.floor(this.p * this.value);
 
-        this.bar.fillRect(2, 2, d, this.barHeight - 4);
+        this.bar.fillRect(this.borderThickness, this.borderThickness, d, this.barHeight - 2*this.borderThickness);
     }
 
 }
