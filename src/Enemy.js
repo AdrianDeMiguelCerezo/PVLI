@@ -37,9 +37,12 @@ export default class Enemy extends Phaser.GameObjects.Container {
          */
         this.efectos = [];
 
-        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18,this.hp,2);
+        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18, this.hp, 2);
+
+        this.scene.add.existing(this.healthBar)
         this.add(this.healthBar);
-        this.healthBar.draw();
+        
+        
 
         this.Pompa = new Phaser.GameObjects.Image(scene, -50, 0, 'neutro').setOrigin(0, 0);
         this.add(this.Pompa);
@@ -75,7 +78,9 @@ export default class Enemy extends Phaser.GameObjects.Container {
      */
     //setTexture(texture) { this.texture = texture }
 
-    updateEnemy(x, y) { this.x = x; this.y = y; this.healthBar.value = this.hp; this.healthBar.draw(); }
+    updateEnemy(x, y) {
+        this.x = x; this.y = y; this.healthBar.targetValue = this.hp;
+    }
 
     /**
      * Cambia la pompa cuando en acorde a su intención
