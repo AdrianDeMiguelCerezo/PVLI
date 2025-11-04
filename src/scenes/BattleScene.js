@@ -46,7 +46,7 @@ export default class BattleScene extends Phaser.Scene {
         this.jsonHabilidades = this.cache.json.get('habilidades');
         this.jsonEnemigos = this.cache.json.get('enemigos');
 
-        /** Tamaño del array de enemigos
+        /** Tamaï¿½o del array de enemigos
          * @type {number}
          */
         this.enemiesTam = 0
@@ -73,8 +73,8 @@ export default class BattleScene extends Phaser.Scene {
 
 
 
-        //Para que cuando toque elegir enemigos los enemigos, todo menois lo enemigos se ponga más oscuro, primero se colocan en la escena todos los objetos no enemigos, 
-        //luego el rectángulo oscuro que ocupa la pantalla, y luego los enemigos.
+        //Para que cuando toque elegir enemigos los enemigos, todo menois lo enemigos se ponga mï¿½s oscuro, primero se colocan en la escena todos los objetos no enemigos, 
+        //luego el rectï¿½ngulo oscuro que ocupa la pantalla, y luego los enemigos.
 
         //fondo ui
         let fondoUI = this.add.rectangle(25, 400, 750, 200, 0xB7B7B7);
@@ -112,7 +112,7 @@ export default class BattleScene extends Phaser.Scene {
         }).setOrigin(0, 1).setVisible(false);
 
         /**
-         * Rectángulo negro translúcido que tapa todo a la hora de elegir target
+         * Rectï¿½ngulo negro translï¿½cido que tapa todo a la hora de elegir target
          */
         this.blackFullRect = this.add.rectangle(0, 0, this.game.config.width, this.game.config.height, '#000000', 0.5).setOrigin(0, 0).setVisible(false);
 
@@ -170,7 +170,7 @@ export default class BattleScene extends Phaser.Scene {
     }
     RedrawEnemies() {
         for (let i = 0; i < this.enemiesTam; i++) {
-            this.enemies[i].updateEnemy(550 + 25 * i, 220- 85 * (this.enemiesTam / 2 - i))
+            this.enemies[i].updateEnemy(500 + 35 * i, 220- 85 * (this.enemiesTam / 2 - i))
         }
     }
     OnSelectTarget(skillKey) {
