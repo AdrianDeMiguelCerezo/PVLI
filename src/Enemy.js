@@ -7,7 +7,7 @@ import HealthBar from './HealthBar.js'
 export default class Enemy extends Phaser.GameObjects.Container {
 
     /**
-     * @description Guarda la última habilidad que ha pasado el select_target para poder devolverla en el evento target_selected
+     * @description Guarda la ï¿½ltima habilidad que ha pasado el select_target para poder devolverla en el evento target_selected
      */
     skillKey;
 
@@ -41,6 +41,9 @@ export default class Enemy extends Phaser.GameObjects.Container {
         this.add(this.healthBar);
         this.healthBar.draw();
 
+        this.Pompa = new Phaser.GameObjects.Image(scene, -50, 0, 'neutro').setOrigin(0, 0);
+        this.add(this.Pompa);
+
         //clikar enemigos para apuntar
         this.canBeClicked = false;
         this.setInteractive(new Phaser.Geom.Rectangle(0,0,this.image.width,this.image.height),Phaser.Geom.Rectangle.Contains);
@@ -73,5 +76,13 @@ export default class Enemy extends Phaser.GameObjects.Container {
     //setTexture(texture) { this.texture = texture }
 
     updateEnemy(x, y) { this.x = x; this.y = y; this.healthBar.value = this.hp; this.healthBar.draw(); }
+
+    /**
+     * Cambia la pompa cuando en acorde a su intenciÃ³n
+     * @param {Phaser.Textures.Texture} newTexture 
+     */
+    cambiaPompa(newTexture){
+        this.Pompa.setTexture(newTexture);
+    }
 
 }
