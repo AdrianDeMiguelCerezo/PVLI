@@ -13,7 +13,7 @@ const State={
 
 export default class MapNode extends Phaser.GameObjects.Sprite{
 
-    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,radius=200){
+    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,radius=120){
         super(scene,x,y,texture)
         /**
          * Guarda la escena que carga al entrar al nodo
