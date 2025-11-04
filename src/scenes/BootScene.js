@@ -7,14 +7,19 @@ export default class BootScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('node', 'assets/Node.png')
-        this.load.image('map', 'assets/MapTemplate.png')
+        this.load.image('node', 'assets/Node.png');
+        this.load.image('map', 'assets/MapTemplate.png');
         this.load.image('fondo', 'assets/fondoPlaceHolderDialogos.png');
-        this.load.image('malo', 'assets/malo.png')
-        this.load.image('BANDIDO_COMUN', 'assets/bandido.png')
-        this.load.image('player', 'assets/player.png')
+        this.load.image('malo', 'assets/malo.png');
+        this.load.image('BANDIDO_COMUN', 'assets/bandido.png');
+        this.load.image('player', 'assets/player.png');
+        this.load.image('espada','assets/Espada.png');
+        this.load.image('dobleEspada','assets/DobleEspada.png');
+        this.load.image('bufo','assets/Bufo.png');
+        this.load.image('debufo','assets/Debufo.png');
+        this.load.image('neutral','assets/Neutral.png');
         this.load.json('habilidades', 'src/json/habilidades.json');
-        this.load.json('enemigos', 'src/json/enemigos.json'); 
+        this.load.json('enemigos', 'src/json/enemigos.json');
     }
     create() {
 
