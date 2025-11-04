@@ -1,4 +1,26 @@
-h1 {
-	color: red;
+* {
+	color: 0x454545;
 	text-align: center;
+	
+}
+
+body{
+	background-color: bisque;
+}
+
+ul {
+	list-style-type: none;
+}
+
+#phaser-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  border: 2px solid white;
 }

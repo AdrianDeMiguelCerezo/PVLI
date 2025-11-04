@@ -16,8 +16,10 @@ let config = {
 	width:  800,
 	height: 600,
 	pixelArt: true,
+	parent:'phaser-container',
 	scale: {
-		autoCenter: Phaser.Scale.CENTER_HORIZONTALLY
+		mode: Phaser.Scale.FIT,
+		autoCenter: Phaser.Scale.CENTER_BOTH
 	},
 	scene: [MainMenu,BootScene,Map, Test, BattleScene, DialogueScene, GameOver],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
 												//objeto formado por el método preload y create definidos más abajo en 
