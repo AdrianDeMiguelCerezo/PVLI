@@ -30,18 +30,21 @@ export default class BattleScene extends Phaser.Scene {
      * 
      * @type {object}
      */
-    habilidades;
+    jsonHabilidades;
     constructor() {
         super({ key: 'BattleScene' })
         this.enemies = [];
         
-    }
+    } 
 
     /**
      * Array de Keys de los enemigos del combate
      * @param {string} enemyKeys
      */
     init(enemyKeys) {
+
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEnemigos = this.cache.json.get('enemigos');
 
         /** Tamaño del array de enemigos
          * @type {number}
@@ -60,7 +63,8 @@ export default class BattleScene extends Phaser.Scene {
 
     create() {
 
-        this.habilidades = this.cache.json.get('habilidades');
+
+        
 
         this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
@@ -127,7 +131,7 @@ export default class BattleScene extends Phaser.Scene {
         q.on('down', () => { return this.OnDeleteEnemy(this.enemies[0]) }, this);
 
         let e = this.input.keyboard.addKey('E');
-        e.on('down', () => { console.log(this); this.enemies[1].Hp -= 20; this.RedrawEnemies() }, this);
+        e.on('down', () => { console.log(this); this.enemies[1].hp -= 20; this.RedrawEnemies() }, this);
 
 
     }
@@ -166,7 +170,7 @@ export default class BattleScene extends Phaser.Scene {
     }
     RedrawEnemies() {
         for (let i = 0; i < this.enemiesTam; i++) {
-            this.enemies[i].updateEnemy(550 + 25 * i, 240 - 80 * (this.enemiesTam / 2 - i))
+            this.enemies[i].updateEnemy(550 + 25 * i, 220- 85 * (this.enemiesTam / 2 - i))
         }
     }
     OnSelectTarget(skillKey) {

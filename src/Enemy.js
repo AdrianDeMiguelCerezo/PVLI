@@ -28,7 +28,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
 
 
         this.key = key;
-        this.Hp = key.Hp
+        this.hp = this.scene.jsonEnemigos[key].HpMax;
         this.sigHabilidad = 0; //poner entero random entre 0 y el numero de habilidads.
         this.turno = 0;
         /**
@@ -37,7 +37,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
          */
         this.efectos = [];
 
-        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18,100,2);
+        this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18,this.hp,2);
         this.add(this.healthBar);
         this.healthBar.draw();
 
@@ -72,6 +72,6 @@ export default class Enemy extends Phaser.GameObjects.Container {
      */
     //setTexture(texture) { this.texture = texture }
 
-    updateEnemy(x, y) { this.x = x; this.y = y; this.healthBar.value = this.Hp; }
+    updateEnemy(x, y) { this.x = x; this.y = y; this.healthBar.value = this.hp; this.healthBar.draw(); }
 
 }
