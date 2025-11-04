@@ -1,0 +1,22 @@
+{
+    "dialogo1": [
+        { "text": "dialogo1" },
+        { "text": "dialogo 2" },
+        {
+            "text": "dialogo3",
+            "options": [
+                { "text": "opcion 1 (ir a combate)", "action": "startCombat" },
+                { "text": "opcion 2 (continuar dialogo)", "action": "nextDialogue" },
+                { "text": "opcion 3 (saltar mas dialogo)", "action": "jumpDialogue", "jump": 1 },
+                { "text": "opcion 4 (volver al mapa)", "action": "goToMap" }
+            ]
+        },
+        { 
+            "text": "dialogo4", 
+            "options": [
+                {"text": "ir a mapa", "action": "goToMap"}
+            ] 
+        },
+        { "text": "dialogo5" }
+    ]
+}
