@@ -27,8 +27,9 @@ export default class DialogText{
 		this.padding = opts.padding || 32;
 		this.closeBtnColor = opts.closeBtnColor || 'darkgoldenrod';
 		this.dialogSpeed = opts.dialogSpeed || 3;
-		this.fontSize = opts.fontSize || 24
+		this.fontSize = opts.fontSize || 24;
 		this.fontFamily = opts.fontFamily || undefined
+		this.posY = opts.posY || 100;
 		// se usa para animar el texto
 		this.eventCounter = 0;
 		
@@ -103,7 +104,7 @@ export default class DialogText{
 
 	// Consigue el alto del juego (en funcion del tamaño de la escena) 
 	_getGameHeight() {
-		return this.scene.sys.game.config.height;
+		return this.scene.sys.game.config.height - this.posY;
 	}
 
 	// Calcula las dimensiones y pos de la ventana en funcion del tamaño de la pantalla de juego
