@@ -45,7 +45,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     preUpdate(t, dt) {
         
         if (this.actualValue != this.targetValue) {
-            this.actualValue = Math.floor(this.actualValue + (this.targetValue - this.actualValue) / (dt))
+            this.actualValue = Math.floor(this.actualValue + (this.targetValue - this.actualValue) * dt/1000)
             console.log(this.actualValue,'aaa ',this.targetValue, 'eee ',dt)
         }
 
