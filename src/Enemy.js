@@ -70,6 +70,24 @@ export default class Enemy extends Phaser.GameObjects.Container {
         })
     }
 
+    get isAlive() {
+        return this.hp > 0;
+    }
+
+    takeDamage(amount) {
+        const dmg = Math.max(0, Math.floor(amount));
+        this.hp = Math.max(0, this.hp - dmg);
+        this.healthBar.targetValue = this.hp;
+        if (this.hp <= 0) {
+            this.canBeClicked = false;
+            this.setAlpha(0.6);
+        }
+    }
+
+    setIntention(textureKey = 'neutro') {
+        this.cambiaPompa(textureKey);
+    }
+
 
 
     /**

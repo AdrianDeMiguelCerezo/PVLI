@@ -68,6 +68,14 @@ export default class BattleScene extends Phaser.Scene {
 
         this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
+        this.events.on('combat_ended', ({result}) => {
+            if (result === 'win') {
+                this.scene.start('Map');
+            } else {
+                this.scene.start('GameOver');
+            }
+        });
+
 
         this.cameras.main.setBackgroundColor("rgba(0, 200, 0, 0.5)");
 
