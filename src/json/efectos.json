@@ -6,7 +6,7 @@
         "diffHealthPercent": -5,
         "diffDmgPercent": 0,
         "diffDefensePercent": 0,
-        "duration": 3
+
     },
     "VENENO": {
         "name": "Envenenado",
@@ -15,7 +15,7 @@
         "diffHealthPercent": -2,
         "diffDmgPercent": 0,
         "diffDefensePercent": 0,
-        "duration": -2
+
     },
     "HAMBRIENTO_1": {
         "name": "Hambriento 1",
@@ -24,7 +24,7 @@
         "diffHealthPercent": 0,
         "diffDmgPercent": -30,
         "diffDefensePercent": -30,
-        "duration": -2
+
     },
     "PARALIZADO": {
         "name": "Paralizado",
@@ -33,7 +33,7 @@
         "diffHealthPercent": 0,
         "diffDmgPercent": 0,
         "diffDefensePercent": 0,
-        "duration": 2
+
     },
     "DEF+": {
         "name": "Def+",
@@ -42,24 +42,24 @@
         "diffHealthPercent": 0,
         "diffDmgPercent": 0,
         "diffDefensePercent": 30,
-        "duration": 2
+
     },
-    "ATQ-": {
+    "ATT-": {
         "name": "Att-",
         "isParalysis": false,
         "diffHealth": 0,
         "diffHealthPercent": 0,
         "diffDmgPercent": -30,
         "diffDefensePercent": 0,
-        "duration": 2
+
     },
-    "ATQ+": {
+    "ATT+": {
         "name": "Att+",
         "isParalysis": false,
         "diffHealth": 0,
         "diffHealthPercent": 0,
         "diffDmgPercent": 30,
         "diffDefensePercent": 0,
-        "duration": 2
+
     }
 }
