@@ -128,7 +128,7 @@ export default class BattleScene extends Phaser.Scene {
         for (let i = 0; i < this.enemiesTam; i++) {
             this.add.existing(this.enemies[i])
         }
-
+        this.add.existing(this.player)
         this.RedrawEnemies();
 
         this.events.on("select_skill", this.OnSelectSkill, this);
