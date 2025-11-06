@@ -17,18 +17,18 @@
         "effect": "DEF+",
         "effectDuration":1,
         "type": "ACTIVE",
-        "target": "SELF"
+        "target": "SELF",
     },
-    "HUIR": {
-        "name": "Huir",
-        "description": "Under construction",
-        "actionCost":2,
-        "spCost": 0,
+    /*"HUIR": {
+        "nombre": "Huir",
+        "descripcion": "Under construction",
+        "acciones":2,
+        "coste": 0,
         "damage": 0,
-        "effect": null,
-        "type": "ACTIVA",
-        "target": "SELF"
-    },
+        "efecto": null,
+        "tipo": "ACTIVA",
+        "objetivo": "SELF"
+    },*/
     "DISPARO_MULTIPLE": {
        "name": "Multi Disparo",
         "description": "1 acc. Haces 15 de daño a todos los enemigos",
@@ -36,39 +36,41 @@
         "spCost": 20,
         "damage": 15,
         "type": "ACTIVE",
-        "target": "ALLENEMIES"
+        "target": "ALLENEMIES",
     },
-    "ATAQUE_FURIOSO": {
-        "name": "Ataque furioso",
+    "ATAQUE_FURIOSO"
+     {
+         "name": "Ataque furioso",
         "description": "1 acc. Se han metido con tu pelo. CierraS los ojos y haCES 40 de daño a un enemigo aleatorio",
         "actionCost":1,
         "spCost": 0,
         "damage": 0,
-        "effect": "ATT+",
-        "effectDuration":2,
+        "effect": "ATT+"
+         "effectDuration":2,
         "type": "ACTIVE",
-        "target": "RNDENEMY"
-    },
+        "target": "RNDENEMY",
+     }
     "GRITO_BATALLA": {
        "name": "Grito de batalla",
         "description": "1 acc. Te da +ataque durante 2 turnos",
         "actionCost":1,
         "spCost": 30,
         "damage": 0,
-        "effect": "ATT+",
-        "effectDuration":2,
+        "effect": "ATT+"
+         "effectDuration":2,
         "type": "ACTIVE",
-        "target": "SELF"
+        "target": "SELF",
     },
+
     "CURACION": {
-        "name": "Cura",
+         "name": "Cura",
         "description": "2 acc. Llamas al cura pa que venga y te cure.",
         "actionCost":2,
         "spCost": 30,
         "damage": 0,
-        "effect": "ATT+",
-        "effectDuration":2,
+        "effect": "ATT+"
+         "effectDuration":2,
         "type": "ACTIVE",
-        "target": "SELF"
-    }
+        "target": "SELF",
+    },
 }
