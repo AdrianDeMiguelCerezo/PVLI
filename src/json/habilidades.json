@@ -1,5 +1,4 @@
 {
-
     "DEFENDER": {
         "name": "Defender",
         "description": "1 acc. Aumenta tu defensa este turno.",
@@ -42,7 +41,6 @@
         "type": "ACTIVE",
         "target": "SELF"
     },
-
     "CURACION": {
         "name": "Cura",
         "description": "2 acc. Llamas al cura pa que venga y te cure.",

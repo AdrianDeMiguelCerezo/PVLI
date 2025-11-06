@@ -19,7 +19,7 @@ export default class Player extends Phaser.GameObjects.Image//no hecha
         super(scene, x, y, texture);
         this.playerData = playerData;
 
-        this.atacar = this.scene.jsonEquipamiento[this.PlayerData.arma].habilidades[0];
+        this.atacar = this.scene.jsonEquipamiento[this.playerData.arma].habilidades[0];
         this.defender = this.scene.jsonHabilidades["DEFENDER"];
         //this.huir
         this.efectos = []
