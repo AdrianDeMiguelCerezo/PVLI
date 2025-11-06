@@ -96,7 +96,7 @@ export default class BattleScene extends Phaser.Scene {
         let botonDefender = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 50, 'DEFENDER');
         let botonHabilidades = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 85, 'Habilidades', () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
-        let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
+        //let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
 
 

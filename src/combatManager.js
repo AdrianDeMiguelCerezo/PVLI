@@ -77,24 +77,24 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   // ===== Helpers de normalización =====
 normalizeSkillFromJSON(skillKey, raw) {
   // Mapea objetivo string → enum interno
-  const target = this.mapObjetivoToEnum(raw.objetivo, raw.descripcion, skillKey);
+  const target = this.mapObjetivoToEnum(raw.target, raw.description, skillKey);
   // Si damage > 0 lo tratamos como ataque
   const tipo = (raw.damage && raw.damage > 0) ? 'dmg' : 'effect';
   return {
     tipo,
     power: raw.damage ?? 0,
     target,
-    costSP: raw.coste ?? 0,
+    costSP: raw.spCost ?? 0,
   };
 }
 
-mapObjetivoToEnum(objetivoStr, descripcion, skillKey) {
+mapObjetivoToEnum(objetivoStr, description, skillKey) {
   // Nuestro enum: 0 SELF, 1 ENEMY, 2 RND_ENEMY, 3 ALL_ENEMIES
   const map = { 'SELF':0, 'ENEMY':1, 'RND_ENEMY':2, 'RANDOM_ENEMY':2, 'ALL':3, 'ALL_ENEMIES':3 };
   let t = map[(objetivoStr||'').toUpperCase()] ?? 1;
 
   // Heurística útil: si en la descripción pone "todos", lo tratamos como AOE.
-  if (descripcion && /todos/i.test(descripcion)) t = 3;
+  if (description && /todos/i.test(description)) t = 3;
 
   // Caso particular: si queréis que una habilidad concreta sea AOE por diseño:
   if (skillKey === 'DISPARO_MULTIPLE') t = 3;
