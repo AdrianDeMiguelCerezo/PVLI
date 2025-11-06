@@ -43,9 +43,6 @@ export default class BattleScene extends Phaser.Scene {
      */
     init(enemyKeys) {
 
-        this.jsonEquipamiento = this.cache.json.get('equipamiento');
-        this.jsonEfectos = this.cache.json.get('efectos');
-        this.jsonItems = this.cache.json.get('items');
         this.jsonHabilidades = this.cache.json.get('habilidades');
         this.jsonEnemigos = this.cache.json.get('enemigos');
 

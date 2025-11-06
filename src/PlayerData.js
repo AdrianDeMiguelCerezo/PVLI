@@ -18,7 +18,7 @@ export default class PlayerData //no hecha
  * @param {any} pechera
  * @param {any} pantalones
  */
-    constructor(name = "", HP = 200, HPMax = 200, habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE', 'CURA'], items = [{ key: 'MOLOTOV', count: 2 }, { key: 'POTI_HP_MINI', count: 1 }], estados = [], SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0, arma, pechera, pantalones) {
+    constructor(name = "", HP = 200, HPMax = 200, habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE','ATAQUE_FURIOSO', 'CURACION'], items = [{ key: 'MOLOTOV', count: 2 }, { key: 'POTI_HP_MINI', count: 1 }], estados = [], SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0, arma, pechera, pantalones) {
         
         this.habilidadesOriginales = habilidades;
         this.habilidades = this.habilidadesOriginales;

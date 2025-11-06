@@ -43,36 +43,4 @@
             }
         ]
     }
-    /*"ANTIDOTO": {
-        "nombre": "Antídoto",
-        "descripcion": "Cura veneno.",
-        "usedInCombat": true,
-        "usedOutOfCombat": true,
-        "habilidades": [
-            ()=>
-            {
-                if(tengo poison
-                en mis
-                effects) {
-                    me quita
-                    el poison
-                }
-            }
-        ]
-    },
-    "DARDO_ENVENENADO": {
-        "nombre": "Dardo envenenado",
-        "descripcion": "Aplica veneno.",
-        "usedInCombat": true,
-        "usedOutOfCombat": false,
-        "habilidades": [ "DARDO_VENENO" ]
-    },
-
-    "ARTEFACTO_BRILLANTE": {
-        "nombre": "Extraño coso que brilla",
-        "descripcion": "Paraliza durante 2 turnos.",
-        "usedInCombat": true,
-        "usedOutOfCombat": false,
-        "habilidades": [ "PARALIZADOR" ]
-    }*/
 }
