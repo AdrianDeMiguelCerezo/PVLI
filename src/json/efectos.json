@@ -1,65 +1,53 @@
 {
     "QUEMADO": {
         "name": "Quemado",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": -5,
-        "diffDmgPercent": 0,
-        "diffDefensePercent": 0,
-
+        "diffHealthPercent": -5
     },
-    "VENENO": {
+    /*"VENENO": {
         "name": "Envenenado",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": -2,
-        "diffDmgPercent": 0,
-        "diffDefensePercent": 0,
+        "texture": "SP+",
+        "diffHealthPercent": -2
 
-    },
+    },*/
     "HAMBRIENTO_1": {
         "name": "Hambriento 1",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": 0,
+        "texture": "SP+",
         "diffDmgPercent": -30,
-        "diffDefensePercent": -30,
+        "diffDefensePercent": -30
 
     },
     "PARALIZADO": {
         "name": "Paralizado",
-        "isParalysis": true,
-        "diffHealth": 0,
-        "diffHealthPercent": 0,
-        "diffDmgPercent": 0,
-        "diffDefensePercent": 0,
+        "texture": "SP+",
+        "isParalysis": true
+    },
+    "HP+": {
+        "name": "Heal",
+        "texture": "SP+",
+        "diffHealth": 30
+    },
+    "SP+": {
+        "name": "Sp+",
+        "texture": "SP+",
+        "diffSp": 30
 
     },
     "DEF+": {
         "name": "Def+",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": 0,
-        "diffDmgPercent": 0,
-        "diffDefensePercent": 30,
+        "texture": "SP+",
+        "diffDefensePercent": 30
 
     },
     "ATT-": {
         "name": "Att-",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": 0,
-        "diffDmgPercent": -30,
-        "diffDefensePercent": 0,
+        "texture": "SP+",
+        "diffDmgPercent": -30
 
     },
     "ATT+": {
         "name": "Att+",
-        "isParalysis": false,
-        "diffHealth": 0,
-        "diffHealthPercent": 0,
-        "diffDmgPercent": 30,
-        "diffDefensePercent": 0,
+        "texture": "SP+",
+        "diffDmgPercent": 30
 
     }
 }

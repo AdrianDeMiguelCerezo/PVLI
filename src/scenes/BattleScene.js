@@ -43,6 +43,9 @@ export default class BattleScene extends Phaser.Scene {
      */
     init(enemyKeys) {
 
+        this.jsonEquipamiento = this.cache.json.get('equipamiento');
+        this.jsonEfectos = this.cache.json.get('efectos');
+        this.jsonItems = this.cache.json.get('items');
         this.jsonHabilidades = this.cache.json.get('habilidades');
         this.jsonEnemigos = this.cache.json.get('enemigos');
 
@@ -92,8 +95,8 @@ export default class BattleScene extends Phaser.Scene {
         this.menuItems = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
 
         //botones generales
-        let botonAtacar = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 15, 'ATQ_BASICO');
-        let botonDefender = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 50, 'DEFENDER');
+        let botonAtacar = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 15, this.player.atacar);
+        let botonDefender = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 50, this.player.defender);
         let botonHabilidades = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 85, 'Habilidades', () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
         let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
         //let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');

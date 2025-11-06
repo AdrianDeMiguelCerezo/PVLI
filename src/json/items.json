@@ -1,62 +1,78 @@
-  "COCTEL_MOLOTOV": {
-    "name": "Molotov",
-    "description": "Aplica quemado.",
-    "actions":1,
-    "usedInCombat": true,
-    "usedOutOfCombat": false,
-    "habilidades": [{"damage": 10,
-        "effect": "QUEMADO",
-        "effectDuration": 3,
-        "type": "ACTIVE",
-        "target": "ENEMY"}]
-  },
-  "POTI_HP_MINI": {
-    "namee": "Poción de salud (mini)",
-    "description": "Cura poca HP.",
-    "usedInCombat": true,
-    "usedOutOfCombat": true,
-    "habilidades": 
-    [ 
-        {
-        "effect": {"diffHealth": 10,}
-        "effectDuration":0,
-        "type": "ACTIVE",
-        "target": "SELF"
-        }
-    ]
-  },
-  "POTI_SP_MEDIA": {
-    "nombre": "Poción de SP (pequeña)",
-    "descripcion": "Restaura SP media.",
-    "usedInCombat": true,
-    "usedOutOfCombat": true,
-    "habilidades": [{
-        "effect": {"diffSp": 20,}
-        "effectDuration":0,
-        "type": "ACTIVE",
-        "target": "SELF"
-        }]
-  },
-  "ANTIDOTO": {
-    "nombre": "Antídoto",
-    "descripcion": "Cura veneno.",
-    "usedInCombat": true,
-    "usedOutOfCombat": true,
-    "habilidades": [()=>{if(tengo poison en mis effects){me quita el poison}}]
-  },
-  "DARDO_ENVENENADO": {
-    "nombre": "Dardo envenenado",
-    "descripcion": "Aplica veneno.",
-    "usedInCombat": true,
-    "usedOutOfCombat": false,
-    "habilidades": ["DARDO_VENENO"]
-  },
+{
+    "MOLOTOV": {
+        "name": "Molotov",
+        "description": "Aplica quemado.",
+        "actions": 1,
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [
+            {
+                "damage": 10,
+                "effect": "QUEMADO",
+                "effectDuration": 3,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ]
+    },
+    "POTI_HP_MINI": {
+        "namee": "Poción de salud (mini)",
+        "description": "Cura poca HP.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "effect": { "diffHealth": 10 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "POTI_SP_MEDIA": {
+        "nombre": "Poción de SP (pequeña)",
+        "descripcion": "Restaura SP media.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "effect": { "diffSp": 20 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    }
+    /*"ANTIDOTO": {
+        "nombre": "Antídoto",
+        "descripcion": "Cura veneno.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            ()=>
+            {
+                if(tengo poison
+                en mis
+                effects) {
+                    me quita
+                    el poison
+                }
+            }
+        ]
+    },
+    "DARDO_ENVENENADO": {
+        "nombre": "Dardo envenenado",
+        "descripcion": "Aplica veneno.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [ "DARDO_VENENO" ]
+    },
 
-  "ARTEFACTO_BRILLANTE": {
-    "nombre": "Extraño coso que brilla",
-    "descripcion": "Paraliza durante 2 turnos.",
-    "usedInCombat": true,
-    "usedOutOfCombat": false,
-    "habilidades": ["PARALIZADOR"]
-  }
+    "ARTEFACTO_BRILLANTE": {
+        "nombre": "Extraño coso que brilla",
+        "descripcion": "Paraliza durante 2 turnos.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [ "PARALIZADOR" ]
+    }*/
 }
