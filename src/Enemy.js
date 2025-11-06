@@ -1,4 +1,4 @@
-import StatusEffect from './StatusEffect.js'
+
 import HealthBar from './HealthBar.js'
 
 /**
