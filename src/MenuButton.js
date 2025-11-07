@@ -71,7 +71,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
                 })
                 this.on('pointerover', () => {
                     if (this.canBeClicked) {
-                        this.scene.ShowTextbox(this.scene.jsonHabilidades[key].habilidades[skill].description);
+                        this.scene.ShowTextbox(this.scene.jsonEquipamiento[key].habilidades[skill].description);
                         this.preFX.addGlow('0xfaf255', 1, 1, false, 1, 1)
                     }
                 })

@@ -4,6 +4,7 @@ import Enemy from '../Enemy.js'
 import Player from '../Player.js'
 import MenuButton from '../MenuButton.js'
 import Menu from '../Menu.js'
+import HealthBar from '../HealthBar.js'
 
 export default class BattleScene extends Phaser.Scene {
     /**
@@ -104,7 +105,7 @@ export default class BattleScene extends Phaser.Scene {
 
 
         this.UpdateMenus();
-        
+       
 
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
@@ -117,7 +118,7 @@ export default class BattleScene extends Phaser.Scene {
             padding: {
                 x: 3
             }
-        }).setOrigin(0, 1).setVisible(false);
+        }).setOrigin(0, 1).setVisible(false).setDepth(2);
 
         /**
          * Rect�ngulo negro transl�cido que tapa todo a la hora de elegir target
@@ -130,6 +131,14 @@ export default class BattleScene extends Phaser.Scene {
         }
         this.add.existing(this.player)
         this.RedrawEnemies();
+
+        this.barraVida = new HealthBar(this, this.fondoUI.x+100, this.fondoUI.y-30, 200, 30, this.player.playerData.HPMax, 3)
+        this.add.existing(this.barraVida)
+        this.barraVida.targetValue = this.player.playerData.HP;
+
+        this.barraSp = new HealthBar(this, this.fondoUI.x + 310, this.fondoUI.y - 30, 200, 30, this.player.playerData.SPMax, 3, 0x1B73CF)
+        this.add.existing(this.barraSp)
+        this.barraSp.targetValue = this.player.playerData.SP;
 
         this.events.on("select_skill", this.OnSelectSkill, this);
         this.events.on("select_target", this.OnSelectTarget, this);
@@ -150,6 +159,7 @@ export default class BattleScene extends Phaser.Scene {
             this.descriptionTextbox.y = Math.max(this.input.activePointer.y - this.descriptionTextbox.height, 0) + this.descriptionTextbox.height;
             
         }
+        this.barraVida.targetValue = this.player.playerData.HP;
         
     }
     OnSelectSkill() {
@@ -190,8 +200,8 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     UpdateMenus() {
-        this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
-        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 2).setVisible(false)
+        this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false).setDepth(1)
+        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 2).setVisible(false).setDepth(1)
         for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
             this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
         }

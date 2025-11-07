@@ -1,6 +1,6 @@
 export default class HealthBar extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, barWidth, barHeight,initialValue,borderThickness=2) {
+    constructor(scene, x, y, barWidth, barHeight,initialValue,borderThickness=2,colour= 0xff0000) {
         super(scene, x - barWidth / 2, y)
 
         this.borderThickness = borderThickness;
@@ -19,7 +19,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         this.healthBackgroundRectangle = new Phaser.GameObjects.Rectangle(this.scene, this.borderThickness, this.borderThickness, this.barWidth - 2 * this.borderThickness, this.barHeight - 2 * this.borderThickness, 0xffffff).setOrigin(0, 0);
 
-        this.healthRectangle = new Phaser.GameObjects.Rectangle(this.scene, this.borderThickness, this.borderThickness, this.barWidth - 2 * this.borderThickness, this.barHeight - 2 * this.borderThickness, 0xff0000).setOrigin(0, 0);
+        this.healthRectangle = new Phaser.GameObjects.Rectangle(this.scene, this.borderThickness, this.borderThickness, this.barWidth - 2 * this.borderThickness, this.barHeight - 2 * this.borderThickness, colour).setOrigin(0, 0);
 
 
         this.hpText = new Phaser.GameObjects.Text(scene, this.borderThickness, this.borderThickness, this.targetValue,
