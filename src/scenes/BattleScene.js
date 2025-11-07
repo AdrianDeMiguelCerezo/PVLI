@@ -191,7 +191,7 @@ export default class BattleScene extends Phaser.Scene {
 
     UpdateMenus() {
         this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
-        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
+        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 2).setVisible(false)
         for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
             this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
         }
