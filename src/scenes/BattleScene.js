@@ -88,26 +88,23 @@ export default class BattleScene extends Phaser.Scene {
         //luego el rect�ngulo oscuro que ocupa la pantalla, y luego los enemigos.
 
         //fondo ui
-        let fondoUI = this.add.rectangle(25, 400, 750, 200, 0xB7B7B7);
-        fondoUI.setOrigin(0, 0);
-        this.add.rectangle(fondoUI.x + 200, 400, 10, 200, 0x1F4D4F).setOrigin(0, 0);
-        this.menuHabilidades = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
-        this.menuItems = new Menu(this, fondoUI.x + 210, fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
+        this.fondoUI = this.add.rectangle(25, 400, 750, 200, 0xB7B7B7).setOrigin(0, 0);
+        
+        this.add.rectangle(this.fondoUI.x + 200, 400, 10, 200, 0x1F4D4F).setOrigin(0, 0);
+        
 
         //botones generales
-        let botonAtacar = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 15, this.player.atacar);
-        let botonDefender = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 50, this.player.defender);
-        let botonHabilidades = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 85, 'Habilidades', () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
-        let botonItems = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 120, 'Items', () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
+        console.log(this.player.playerData.arma, this.player.atacar)
+        let botonAtacar = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 15, this.player.playerData.arma, this.player.atacar);
+        let botonDefender = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 50, this.player.defender);
+        let botonHabilidades = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 85, 'Habilidades', null, () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
+        let botonItems = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 120, 'Items',null, () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
         //let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
 
 
-
-
-        for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
-            this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
-        }
+        this.UpdateMenus();
+        
 
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
@@ -137,6 +134,7 @@ export default class BattleScene extends Phaser.Scene {
         this.events.on("select_skill", this.OnSelectSkill, this);
         this.events.on("select_target", this.OnSelectTarget, this);
         this.events.on("target_selected", this.OnTargetSelected, this);
+        this.events.on("use_skill", this.UpdateMenus, this);
 
         let q = this.input.keyboard.addKey('Q');
         q.on('down', () => { return this.OnDeleteEnemy(this.enemies[0]) }, this);
@@ -189,6 +187,21 @@ export default class BattleScene extends Phaser.Scene {
     }
     OnTargetSelected() {
         this.blackFullRect.setVisible(false)
+    }
+
+    UpdateMenus() {
+        this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
+        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false)
+        for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
+            this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
+        }
+
+        for (let i = 0; i < this.player.playerData.items.length; i++) {
+            if (this.jsonItems[this.player.playerData.items[i].item].usedInCombat)
+            {
+                this.menuItems.AddButton(new MenuButton(this, 0, 0, this.player.playerData.items[i]))
+            }
+        }
     }
 
     ShowTextbox(text) {
