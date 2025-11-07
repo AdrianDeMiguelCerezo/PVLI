@@ -47,20 +47,29 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     }
 
     // Resolver directo si NO requiere selección
-    if (skill.target === Target.SELF) {
-      this.resolvePlayerSkill(skill, null);
-      return this.afterPlayerAction();
-    }
     if (skill.target === Target.RND_ENEMY) {
-      const vivos = this.enemies.filter(e => e.isAlive);
-      if (vivos.length) this.resolvePlayerSkill(skill, vivos[Math.floor(Math.random()*vivos.length)]);
+      const rnd = this.getRandomAliveEnemy();
+      if (rnd) {
+        rnd.preFX?.addGlow?.('0xffffaa', 1, 1, false, 1, 0);
+        this.scene.time.delayedCall(120, () => rnd.preFX?.clear?.());
+        this.resolvePlayerSkill(skill, rnd);
+      }
+      // Cierra overlay / re-habilita UI en flujos sin selección
+      this.scene.events.emit("target_selected");
       return this.afterPlayerAction();
     }
     if (skill.target === Target.ALL_ENEMIES) {
-      const vivos = this.enemies.filter(e => e.isAlive);
+      const vivos = this.getAliveEnemies();
       this.resolvePlayerSkill(skill, vivos);
+      this.scene.events.emit("target_selected");
       return this.afterPlayerAction();
     }
+    if (skill.target === Target.SELF) {
+      this.resolvePlayerSkill(skill, null);
+      this.scene.events.emit("target_selected");
+      return this.afterPlayerAction();
+    }
+
 
     // Objetivo unitario → pasar a selección (Enemy devolverá emittedKey)
     this.currentSkillKey = emittedKey;
@@ -129,18 +138,20 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
   // ===== Normalización =====
   normalizeSkillFromJSON(skillKey, raw) {
-    const target = this.mapObjetivoToEnum(raw.target, raw.description || raw.descripcion, skillKey);
+    const desc   = (raw.description ?? raw.descripcion ?? '');
+    const tgtRaw = (raw.target ?? raw.objetivo ?? '');
+    const target = this.mapObjetivoToEnum(tgtRaw, desc, skillKey);
     const tipo = (raw.damage && raw.damage > 0) ? 'dmg' : 'effect';
     return {
       key: skillKey,
       tipo,
       power: raw.damage ?? 0,
       target,
-      costSP: raw.spCost ?? raw.coste ?? 0,
-      effect: raw.effect ?? raw.efecto ?? null,
-      effectDuration: raw.effectDuration ?? raw['duraciónEfecto'] ?? 0,
-      name: raw.name || raw.nombre || skillKey,
-      description: raw.description || raw.descripcion || ''
+      costSP: (raw.spCost ?? raw.coste ?? 0),
+      effect: (raw.effect ?? raw.efecto ?? null),
+      effectDuration: (raw.effectDuration ?? raw['duraciónEfecto'] ?? 0),
+      name: (raw.name ?? raw.nombre ?? skillKey),
+      description: desc
     };
   }
 
@@ -163,15 +174,23 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
   mapObjetivoToEnum(objetivoStr, description, skillKey) {
     const s = (objetivoStr || '').toUpperCase();
-    if (s === 'SELF') return Target.SELF;
-    if (s === 'ENEMY') return Target.ENEMY;
-    if (s === 'RNDENEMY' || s === 'RANDOM_ENEMY' || s === 'RND_ENEMY') return Target.RND_ENEMY;
-    if (s === 'ALLENEMIES' || s === 'ALL_ENEMIES' || s === 'ALL') return Target.ALL_ENEMIES;
+
+    // enums.json ⇒ ["SELF","ENEMY","RNDENEMY","ALLENEMIES"]
+    if (s === 'SELF')       return Target.SELF;
+    if (s === 'ENEMY')      return Target.ENEMY;
+    if (s === 'RNDENEMY')   return Target.RND_ENEMY;    // ← importante
+    if (s === 'ALLENEMIES') return Target.ALL_ENEMIES;  // ← importante
+
+    // tolerancia a variantes antiguas
+    if (s === 'RND_ENEMY' || s === 'RANDOM_ENEMY') return Target.RND_ENEMY;
+    if (s === 'ALL' || s === 'ALL_ENEMIES')        return Target.ALL_ENEMIES;
+
+    // heurística por descripción (por si algún diseño dice “todos”)
     if (description && /todos|all/i.test(description)) return Target.ALL_ENEMIES;
-    // fallback: DISPARO_MULTIPLE siempre AOE (por diseño)
-    if (skillKey === 'DISPARO_MULTIPLE') return Target.ALL_ENEMIES; // habilidades JSON
+
     return Target.ENEMY;
   }
+
 
   // ===== Turno enemigos (placeholder L→R) =====
   startEnemyTurns() {
@@ -216,4 +235,13 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     this.ended = true;
     this.scene.events.emit('combat_ended', { result });
   }
+
+
+  getAliveEnemies() { return this.enemies.filter(e => e.isAlive); }
+
+  getRandomAliveEnemy() {
+    const arr = this.getAliveEnemies();
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : null;
+  }
+
 }

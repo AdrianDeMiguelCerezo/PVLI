@@ -3,4 +3,3 @@
     "Target": [ "SELF", "ENEMY", "RNDENEMY", "ALLENEMIES" ],
     "TipoHabilidad": [ "ACTIVA", "PASIVA", "TURNO1" ]
 }
-//no sé para qué es esto, pero los enums han cambiado
