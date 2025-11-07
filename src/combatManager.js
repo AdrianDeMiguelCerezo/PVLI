@@ -11,8 +11,9 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     this.player = player;           // Player (tiene .playerData)
     /** @type {Phaser.Scene} */ this.scene = scene;
 
-    this.actionsLeft = 2;           // según GDD: 2 acciones jugador
-    this.currentSkillKey = null;
+    this.actionsLeft = 2;           // según GDD
+    this.currentSkillKey = null;    // puede ser string de JSON o un token __SKOBJ__...
+    this._skillObjLut = Object.create(null); // token -> skill normalizada
 
     // UI events
     this.scene.events.on("use_skill", this.Use_Skill, this);
@@ -23,98 +24,168 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   }
 
   // ===== Input de UI =====
-  Use_Skill(skillKey) {
+  /**
+   * Acepta: string (clave del json) O un objeto de habilidad "inline" (desde UI/equipo)
+   */
+  Use_Skill(skillLike) {
     if (this.actionsLeft <= 0) return;
-    this.currentSkillKey = skillKey;
-    this.scene.events.emit("select_target", skillKey);
+
+    let skill, emittedKey;
+
+    if (typeof skillLike === 'string') {
+      const raw = this.scene.jsonHabilidades?.[skillLike];
+      if (!raw) return;
+      skill = this.normalizeSkillFromJSON(skillLike, raw);   // ← JSON habilidades
+      emittedKey = skillLike;                                // ← lo que verá Enemy
+    } else if (skillLike && typeof skillLike === 'object') {
+      skill = this.normalizeSkillFromObject(skillLike);      // ← Objeto en memoria
+      // Creamos token único para que Enemy lo “devuelva”
+      emittedKey = `__SKOBJ__${Date.now()}_${Math.random().toString(36).slice(2)}`;
+      this._skillObjLut[emittedKey] = skill;
+    } else {
+      return;
+    }
+
+    // Resolver directo si NO requiere selección
+    if (skill.target === Target.SELF) {
+      this.resolvePlayerSkill(skill, null);
+      return this.afterPlayerAction();
+    }
+    if (skill.target === Target.RND_ENEMY) {
+      const vivos = this.enemies.filter(e => e.isAlive);
+      if (vivos.length) this.resolvePlayerSkill(skill, vivos[Math.floor(Math.random()*vivos.length)]);
+      return this.afterPlayerAction();
+    }
+    if (skill.target === Target.ALL_ENEMIES) {
+      const vivos = this.enemies.filter(e => e.isAlive);
+      this.resolvePlayerSkill(skill, vivos);
+      return this.afterPlayerAction();
+    }
+
+    // Objetivo unitario → pasar a selección (Enemy devolverá emittedKey)
+    this.currentSkillKey = emittedKey;
+    this.scene.events.emit("select_target", emittedKey);
   }
 
   Target_Selected(enemy, skillKey) {
+    // skillKey puede ser una clave string del json o un token __SKOBJ__*
     if (this.currentSkillKey !== skillKey) return;
 
-    this.resolvePlayerSkill(skillKey, enemy);
+    // Recuperar la skill según el origen
+    let skill;
+    if (typeof skillKey === 'string' && skillKey.startsWith('__SKOBJ__')) {
+      skill = this._skillObjLut[skillKey];
+    } else {
+      const raw = this.scene.jsonHabilidades?.[skillKey];
+      if (!raw) return;
+      skill = this.normalizeSkillFromJSON(skillKey, raw);
+    }
+    if (!skill) return;
 
+    this.resolvePlayerSkill(skill, enemy);
+
+    // limpiar estado de selección
+    delete this._skillObjLut[skillKey];
     this.currentSkillKey = null;
+
+    // cerrar overlay / reactivar UI
+    this.scene.events.emit("target_selected");
+
+    this.afterPlayerAction();
+  }
+
+  afterPlayerAction() {
     this.actionsLeft--;
-    this.scene.events.emit("target_selected"); // reactivar botones
     this.scene.RedrawEnemies?.();
 
-    // ¿Fin de turno del jugador?
-    if (this.actionsLeft <= 0) {
+    this.checkEndOfCombat();
+    if (this.actionsLeft <= 0 && !this.ended) {
       this.startEnemyTurns();
+      return;
     }
+    // habilitar de nuevo botones de skill/item
+    this.scene.events.emit("select_skill");
   }
 
   // ===== Resolución jugador =====
-  resolvePlayerSkill(skillKey, enemyClicked) {
-    const raw = this.scene.jsonHabilidades[skillKey];
-    if (!raw) return;
-
-
-    const skill = this.normalizeSkillFromJSON(skillKey, raw);
-    const alive = this.enemies.filter(e => e.isAlive);
-
+  resolvePlayerSkill(skill, enemyOrArray) {
     const apply = (targets) => {
       if (!targets?.length) return;
       if (skill.tipo === 'dmg') {
         const power = skill.power ?? 5;
-        targets.forEach(t => t.takeDamage(power));
+        targets.forEach(t => t instanceof Enemy && t.takeDamage(power));
       }
-      // conectar aquí debuffs/buffs/curas con StatusEffect
+      // TODO efectos/buffs/curas (conectar StatusEffect)
     };
 
     switch (skill.target) {
-      case Target.SELF:        /* curas/buffs a jugador */ break;
-      case Target.ENEMY:       if (enemyClicked?.isAlive) apply([enemyClicked]); break;
-      case Target.RND_ENEMY:   if (alive.length) apply([alive[Math.floor(Math.random()*alive.length)]]); break;
-      case Target.ALL_ENEMIES: apply(alive); break;
-      default:                 if (enemyClicked?.isAlive) apply([enemyClicked]); break;
+      case Target.SELF:        /* curas/buffs al jugador (pendiente) */ break;
+      case Target.ENEMY:       if (enemyOrArray?.isAlive) apply([enemyOrArray]); break;
+      case Target.RND_ENEMY:   /* resuelto en Use_Skill */ break;
+      case Target.ALL_ENEMIES: apply(Array.isArray(enemyOrArray) ? enemyOrArray : this.enemies.filter(e=>e.isAlive)); break;
+      default:                 if (enemyOrArray?.isAlive) apply([enemyOrArray]); break;
     }
-
-    this.checkEndOfCombat();
   }
 
-  // ===== Helpers de normalización =====
-normalizeSkillFromJSON(skillKey, raw) {
-  // Mapea objetivo string → enum interno
-  const target = this.mapObjetivoToEnum(raw.target, raw.description, skillKey);
-  // Si damage > 0 lo tratamos como ataque
-  const tipo = (raw.damage && raw.damage > 0) ? 'dmg' : 'effect';
-  return {
-    tipo,
-    power: raw.damage ?? 0,
-    target,
-    costSP: raw.spCost ?? 0,
-  };
-}
+  // ===== Normalización =====
+  normalizeSkillFromJSON(skillKey, raw) {
+    const target = this.mapObjetivoToEnum(raw.target, raw.description || raw.descripcion, skillKey);
+    const tipo = (raw.damage && raw.damage > 0) ? 'dmg' : 'effect';
+    return {
+      key: skillKey,
+      tipo,
+      power: raw.damage ?? 0,
+      target,
+      costSP: raw.spCost ?? raw.coste ?? 0,
+      effect: raw.effect ?? raw.efecto ?? null,
+      effectDuration: raw.effectDuration ?? raw['duraciónEfecto'] ?? 0,
+      name: raw.name || raw.nombre || skillKey,
+      description: raw.description || raw.descripcion || ''
+    };
+  }
 
-mapObjetivoToEnum(objetivoStr, description, skillKey) {
-  // Nuestro enum: 0 SELF, 1 ENEMY, 2 RND_ENEMY, 3 ALL_ENEMIES
-  const map = { 'SELF':0, 'ENEMY':1, 'RND_ENEMY':2, 'RANDOM_ENEMY':2, 'ALL':3, 'ALL_ENEMIES':3 };
-  let t = map[(objetivoStr||'').toUpperCase()] ?? 1;
+  // objeto inline procedente de UI/equipo (formato parecido a JSON)
+  normalizeSkillFromObject(obj) {
+    const target = this.mapObjetivoToEnum(obj.target, obj.description || obj.descripcion, obj.key || obj.name);
+    const tipo = (obj.damage && obj.damage > 0) ? 'dmg' : 'effect';
+    return {
+      key: obj.key || obj.name || 'SKILL_OBJ',
+      tipo,
+      power: obj.damage ?? 0,
+      target,
+      costSP: obj.spCost ?? obj.coste ?? 0,
+      effect: obj.effect ?? obj.efecto ?? null,
+      effectDuration: obj.effectDuration ?? obj['duraciónEfecto'] ?? 0,
+      name: obj.name || obj.nombre || 'Skill',
+      description: obj.description || obj.descripcion || ''
+    };
+  }
 
-  // Heurística útil: si en la descripción pone "todos", lo tratamos como AOE.
-  if (description && /todos/i.test(description)) t = 3;
+  mapObjetivoToEnum(objetivoStr, description, skillKey) {
+    const s = (objetivoStr || '').toUpperCase();
+    if (s === 'SELF') return Target.SELF;
+    if (s === 'ENEMY') return Target.ENEMY;
+    if (s === 'RNDENEMY' || s === 'RANDOM_ENEMY' || s === 'RND_ENEMY') return Target.RND_ENEMY;
+    if (s === 'ALLENEMIES' || s === 'ALL_ENEMIES' || s === 'ALL') return Target.ALL_ENEMIES;
+    if (description && /todos|all/i.test(description)) return Target.ALL_ENEMIES;
+    // fallback: DISPARO_MULTIPLE siempre AOE (por diseño)
+    if (skillKey === 'DISPARO_MULTIPLE') return Target.ALL_ENEMIES; // habilidades JSON
+    return Target.ENEMY;
+  }
 
-  // Caso particular: si queréis que una habilidad concreta sea AOE por diseño:
-  if (skillKey === 'DISPARO_MULTIPLE') t = 3;
-
-  return t;
-}
-
-  // ===== Turno enemigos (placeholder secuencial L→R) =====
+  // ===== Turno enemigos (placeholder L→R) =====
   startEnemyTurns() {
     const step = (i=0) => {
-      // saltar KO
       while (i < this.enemies.length && !this.enemies[i].isAlive) i++;
       if (i >= this.enemies.length) {
-        // vuelve al jugador
         this.actionsLeft = 2;
         this.prepareEnemyIntentions();
+        // reactivar UI al volver el turno del jugador
+        this.scene.events.emit("select_skill");
         return;
       }
       const enemy = this.enemies[i];
-      // acción mínima: daño fijo 5
+      // acción mínima: daño fijo 5 al jugador
       this.damagePlayer(5);
       this.scene.time.delayedCall(200, () => {
         this.checkEndOfCombat();
