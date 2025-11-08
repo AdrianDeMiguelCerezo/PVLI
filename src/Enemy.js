@@ -35,7 +35,8 @@ export default class Enemy extends Phaser.GameObjects.Container {
          * Guarda todos sus StatusEffects
          * @type {StatusEffects}
          */
-        this.efectos = [];
+        this.efectos = [{ key: "QUEMADO", duration: 1 }, { key: "ATT+", duration: 1 }];
+        this.efectosTam = 2;
 
         this.healthBar = new HealthBar(scene, this.image.width / 2, -22, 100, 18, this.hp, 2);
 

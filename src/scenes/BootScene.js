@@ -23,6 +23,19 @@ export default class BootScene extends Phaser.Scene {
 
         //carga img statusEffects
         this.load.image('QUEMADO', 'assets/QUEMADO.png');
+        this.load.image('ENVENENADO', 'assets/ENVENENADO.png');
+        this.load.image('PARALIZADO', 'assets/PARALIZADO.png');
+        this.load.image('ATT+', 'assets/ATT+.png');
+        this.load.image('ATT++', 'assets/ATT++.png');
+        this.load.image('ATT-', 'assets/ATT-.png');
+        this.load.image('ATT--', 'assets/ATT--.png');
+        this.load.image('DEF+', 'assets/DEF+.png');
+        this.load.image('DEF++', 'assets/DEF++.png');
+        this.load.image('DEF-', 'assets/DEF-.png');
+        this.load.image('DEF--', 'assets/DEF--.png');
+        this.load.image('HAMBRE_1', 'assets/HAMBRE_1.png');
+        this.load.image('HAMBRE_2', 'assets/HAMBRE_2.png');
+
 
 
 

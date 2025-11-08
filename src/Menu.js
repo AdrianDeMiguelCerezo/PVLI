@@ -1,18 +1,33 @@
 import MenuButton from "./MenuButton.js"
 export default class Menu extends Phaser.GameObjects.Container {
 
-    constructor(scene, x, y, width, height, backgroundColour, rows, columns) {
+    /**
+     * 
+     * @param {any} scene
+     * @param {any} x
+     * @param {any} y
+     * @param {any} width
+     * @param {any} height
+     * @param {any} backgroundColour Si no quieres que haya fondo, no pongas nada
+     * @param {any} rows
+     * @param {any} columns
+     * @param {number} SBMEAB Space between menu edges and buttons
+     * @param {number} SBB Space between buttons and buttons
+     */
+    constructor(scene, x, y, width, height, rows, columns, backgroundColour = null ,SBMEAB =10,SBB=10) {
+        console.log(scene, x, y, width, height, rows, columns, backgroundColour)
         super(scene, x, y)
 
+        
         /**Space between menu edges and buttons
          * @type {number} 
          */
-        this.SBMEAB = 10;
+        this.SBMEAB = SBMEAB;
 
         /**Space between buttons and buttons
          * @type {number} 
          */
-        this.SBB = 10;
+        this.SBB = SBB;
 
         /**Lugares donde pueden haber botones
          * @type {MenuButton}
@@ -28,9 +43,9 @@ export default class Menu extends Phaser.GameObjects.Container {
         this.width = width;
         this.rows = rows;
         this.columns = columns;
-        const background = this.scene.add.rectangle(0, 0, width, height, backgroundColour).setOrigin(0, 0)
 
-        this.add(background);
+        if (backgroundColour != null) this.add(this.scene.add.rectangle(0, 0, width, height, backgroundColour).setOrigin(0, 0));
+
 
         scene.add.existing(this);
     }
@@ -41,8 +56,7 @@ export default class Menu extends Phaser.GameObjects.Container {
      * @param {number} column
      */
     AddButton(button, row = -1, column = -1) {
-        console.log(this.rows, 'cols:', this.columns)
-        console.log(row, 'col:', column)
+
         if (row == -1) {
             if (column == -1) {
                 let i = 0;
@@ -88,7 +102,7 @@ export default class Menu extends Phaser.GameObjects.Container {
 
             }
         }
-        console.log(this.positions)
+
     }
 
     /**
@@ -104,13 +118,12 @@ export default class Menu extends Phaser.GameObjects.Container {
 
 
         button.setFixedSize((this.width - 2 * this.SBMEAB - (this.columns - 1) * this.SBB) / this.columns, 0)
-        console.log('fixedWidth: ', button.style.fixedWidth);
+
         //console.log(this.SBMEAB, '+ (', this.width, ' - ', this.SBMEAB, ' - ', button.style.fixedWidth, ') * ', column, ' / ', this.columns, ' + ',this.SBB,' * ',column)
         button.x = this.SBMEAB + (button.style.fixedWidth + this.SBB) * column;
 
         button.y = this.SBMEAB + (this.height - this.SBMEAB) * row / this.rows;
-        console.log(button.x)
-        console.log(button.y)
+
     }
 
     AddItem(item, row = -1, column = -1) {
@@ -152,11 +165,8 @@ export default class Menu extends Phaser.GameObjects.Container {
 
         this.add(item);
 
-
-        item.setFixedSize((this.width - 2 * this.SBMEAB - (this.columns - 1) * this.SBB) / this.columns, 0)
-        
         item.x = this.SBMEAB + (item.width + this.SBB) * column;
 
-        item.y = this.SBMEAB + (this.height - this.SBMEAB) * row / this.rows;
+        item.y = this.SBMEAB + (item.height + this.SBB) * row;
     }
 }

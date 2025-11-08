@@ -34,7 +34,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             }
         )
 
-        console.log('vidaBarra',this)
+
         
         this.add(this.backgroundRectangle);
         this.add(this.healthBackgroundRectangle);

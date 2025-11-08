@@ -14,7 +14,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
      * @param {any} pointerDownAction
      */
     constructor(scene, x, y, key,skill, pointerDownAction, fontSize = 21, fixedWidth = 0, backgroundColor = '#707070') {
-        console.log(arguments)
+
         super(scene, x, y, " ",
             {
                 fontFamily: 'Arial',
@@ -107,7 +107,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             }
             //si no es ninguna de las anteriores, la key contiene {string item(del json de items),number cantidad}
             else {
-                console.log(key, scene.jsonItems[key.item])
+
                 this.itemKey = key.item;
                 this.itemCount = key.count;
                 this.text = scene.jsonItems[key.item].name + ": "+ key.count;

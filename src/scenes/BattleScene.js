@@ -96,7 +96,7 @@ export default class BattleScene extends Phaser.Scene {
         
 
         //botones generales
-        console.log(this.player.playerData.arma, this.player.atacar)
+        
         let botonAtacar = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 15, this.player.playerData.arma, this.player.atacar);
         let botonDefender = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 50, this.player.defender);
         let botonHabilidades = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 85, 'Habilidades', null, () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
@@ -106,8 +106,7 @@ export default class BattleScene extends Phaser.Scene {
 
 
         this.UpdateMenus();
-       
-        new ImageWithText(this,200,200,1,'QUEMADO',)
+
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
             fontFamily: 'Arial',
@@ -130,8 +129,9 @@ export default class BattleScene extends Phaser.Scene {
         for (let i = 0; i < this.enemiesTam; i++) {
             this.add.existing(this.enemies[i])
         }
-        this.add.existing(this.player)
+        this.add.existing(this.player.setOrigin(0,0))
         this.RedrawEnemies();
+
 
 
         //barras de hp y sp del jugador
@@ -191,12 +191,25 @@ export default class BattleScene extends Phaser.Scene {
             this.enemies[this.enemiesTam] = null;
             this.enemiesTam--;
         }
-        console.log(this)
+        
         this.RedrawEnemies();
     }
     RedrawEnemies() {
         for (let i = 0; i < this.enemiesTam; i++) {
             this.enemies[i].updateEnemy(500 + 35 * i, 220- 85 * (this.enemiesTam / 2 - i))
+        }
+        for (let i = 0; i < this.enemiesTam; i++)
+        {
+            let menuEffects = new Menu(this, this.enemies[i].x + this.enemies[i].image.width + 5, this.enemies[i].y, 100, 50, 2, 5, null ,0,1)
+            for (let j = 0; j < this.enemies[i].efectosTam; j++)
+            {
+                menuEffects.AddItem(new ImageWithText(this, 0, 0, this.enemies[i].efectos[j].duration, this.enemies[i].efectos[j].key,true,2))
+            }
+
+        }
+        let menuEffects = new Menu(this, this.player.x + this.player.width + 5, this.player.y, 100, 50, 2, 5, null, 0, 1)
+        for (let j = 0; j < this.player.playerData.efectosTam; j++) {
+            menuEffects.AddItem(new ImageWithText(this, 0, 0, this.player.playerData.efectos[j].duration, this.player.playerData.efectos[j].key,true,2))
         }
     }
     OnSelectTarget(skillKey) {
@@ -207,8 +220,8 @@ export default class BattleScene extends Phaser.Scene {
     }
 
     UpdateMenus() {
-        this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 3).setVisible(false).setDepth(1)
-        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 0xB7B7B7, 5, 2).setVisible(false).setDepth(1)
+        this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 5, 3, 0xB7B7B7).setVisible(false).setDepth(1)
+        this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 5, 2, 0xB7B7B7).setVisible(false).setDepth(1)
         for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
             this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
         }
