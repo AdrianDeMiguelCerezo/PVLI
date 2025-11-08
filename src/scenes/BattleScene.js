@@ -5,6 +5,7 @@ import Player from '../Player.js'
 import MenuButton from '../MenuButton.js'
 import Menu from '../Menu.js'
 import HealthBar from '../HealthBar.js'
+import ImageWithText from '../ImageWithText.js'
 
 export default class BattleScene extends Phaser.Scene {
     /**
@@ -106,7 +107,7 @@ export default class BattleScene extends Phaser.Scene {
 
         this.UpdateMenus();
        
-
+        new ImageWithText(this,200,200,1,'QUEMADO',)
 
         this.descriptionTextbox = this.add.text(0, 0, "", {
             fontFamily: 'Arial',
@@ -132,6 +133,9 @@ export default class BattleScene extends Phaser.Scene {
         this.add.existing(this.player)
         this.RedrawEnemies();
 
+
+        //barras de hp y sp del jugador
+
         this.barraVida = new HealthBar(this, this.fondoUI.x+100, this.fondoUI.y-30, 200, 30, this.player.playerData.HPMax, 3)
         this.add.existing(this.barraVida)
         this.barraVida.targetValue = this.player.playerData.HP;
@@ -139,6 +143,9 @@ export default class BattleScene extends Phaser.Scene {
         this.barraSp = new HealthBar(this, this.fondoUI.x + 310, this.fondoUI.y - 30, 200, 30, this.player.playerData.SPMax, 3, 0x1B73CF)
         this.add.existing(this.barraSp)
         this.barraSp.targetValue = this.player.playerData.SP;
+
+
+        //listeners de eventos
 
         this.events.on("select_skill", this.OnSelectSkill, this);
         this.events.on("select_target", this.OnSelectTarget, this);

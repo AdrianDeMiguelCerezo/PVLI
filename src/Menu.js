@@ -112,4 +112,51 @@ export default class Menu extends Phaser.GameObjects.Container {
         console.log(button.x)
         console.log(button.y)
     }
+
+    AddItem(item, row = -1, column = -1) {
+        if (row == -1) {
+            if (column == -1) {
+                let i = 0;
+                let j = 0;
+                let found = false;
+                while (i < this.rows && !found) {
+                    j = 0;
+                    while (j < this.columns && !found) { found = !this.positions[i][j]; j++ }
+                    i++;
+                }
+                i--; j--;
+
+                if (!this.positions[i][j]) {
+
+                    this._AddItem(item, i, j)
+
+                }
+                else {
+                    item.destroy();
+                }
+            }
+            else {
+                let i = 0;
+                let found = false;
+                while (i < this.rows && !found) { found = !this.positions[i][column]; i++; }
+                i--; j--;
+                if (!this.positions[i][column]) { this._AddItem(item, i, column) }
+                else { item.destroy(); }
+            }
+        }
+    }
+
+    _AddItem(item, row, column) {
+
+        this.positions[row][column] = item;
+
+        this.add(item);
+
+
+        item.setFixedSize((this.width - 2 * this.SBMEAB - (this.columns - 1) * this.SBB) / this.columns, 0)
+        
+        item.x = this.SBMEAB + (item.width + this.SBB) * column;
+
+        item.y = this.SBMEAB + (this.height - this.SBMEAB) * row / this.rows;
+    }
 }

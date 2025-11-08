@@ -13,11 +13,22 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('malo', 'assets/malo.png');
         this.load.image('BANDIDO_COMUN', 'assets/bandido.png');
         this.load.image('player', 'assets/player.png');
+
+        //carga img intents
         this.load.image('espada','assets/Espada.png');
         this.load.image('dobleEspada','assets/DobleEspada.png');
         this.load.image('bufo','assets/Bufo.png');
         this.load.image('debufo','assets/Debufo.png');
-        this.load.image('neutro','assets/Neutro.png');
+        this.load.image('neutro', 'assets/Neutro.png');
+
+        //carga img statusEffects
+        this.load.image('QUEMADO', 'assets/QUEMADO.png');
+
+
+
+
+
+        //Carga .json
         this.load.json('habilidades', 'src/json/habilidades.json');
         this.load.json('enemigos', 'src/json/enemigos.json'); 
         this.load.json('equipamiento', 'src/json/equipamiento.json'); 
