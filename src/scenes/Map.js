@@ -1,4 +1,5 @@
 import MapNode from '../MapNode.js'
+import AreaManager from '../AreaManager.js'
 
 export default class Map extends Phaser.Scene{
     constructor(){
@@ -15,12 +16,18 @@ export default class Map extends Phaser.Scene{
             this.registry.set('nodeVisited',{});
         }
 
+        if (!this.registry.has('areaLevel')){
+            this.registry.set('areaLevel', 0);
+        }
+
         this.nodes = [];
 
         this.add.image(0, 0, 'map').setOrigin(0).setDepth(0);
 
         this.graphics = this.add.graphics();
         this.graphics.setDepth(1);
+
+        this.areaGraphics = this.add.graphics().setDepth(0.5);
 
 
         new MapNode(this, 100, 100, 'node', 'Test', 0.2, 0, 2, 'node1');   // CURRENT
@@ -67,12 +74,17 @@ export default class Map extends Phaser.Scene{
 
         for (const n of this.nodes) n.setDepth(2);
 
+        this.areaManager = new AreaManager(this, ['node10','node20']); 
+        this.areaManager.updateAreas();
+
         this.drawConnections();
+
 
     }
 
     update(){
         this.drawConnections();
+        this.areaManager.drawAreas();
     }
 
     drawConnections(){
@@ -98,5 +110,9 @@ export default class Map extends Phaser.Scene{
                 }
             }
         }
+    }
+
+    addFocus(nodeId){
+        this.areaManager.addFocusNode(nodeId);
     }
 }

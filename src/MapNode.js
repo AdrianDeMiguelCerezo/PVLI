@@ -76,6 +76,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
 
                 this.openNearbyNodes();
 
+                this.scene.areaManager.expand();
+
+                if (this.nodeType===2) {
+                    this.scene.areaManager.addFocusNode(this.id);
+                }
+
                 if(nodeVisited[this.id]==false){
                     
                     scene.scene.start(this.targetScene);
@@ -115,7 +121,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
        
     }
 
-     openNearbyNodes() {
+    openNearbyNodes() {
         if (!this.scene.nodes || this.scene.nodes.length <= 1) return;
 
         const nodeStates = this.scene.registry.get('nodeStates') || {};
@@ -150,5 +156,5 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
 
         // persist updated map once
         this.scene.registry.set('nodeStates', nodeStates);
-  }
+    }
 }
