@@ -3,22 +3,69 @@
     "name": "Bandido común",
     "HpMax": 60,
     "habilidades": [
-        { }
+        {
+            "name": "Ataque básico",
+            "description": "Un golpe sencillo con el arma.",
+            "damage": 12,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "name": "Ataque avanzado",
+            "description": "Un golpe fuerte.",
+            "damage": 20,
+            "type": "SPECIAL_ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "name": "Defensión",
+            "description": "Haha",
+            "effect": "DEF+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "SELF"
+        }
+
     ]
   },
   "SOLDADO_ESTADO": {
     "name": "Soldado del estado",
     "HpMax": 85,
-    "habilidades": ["ATQ_BASICO"]
+    "habilidades": [
+        {
+            "name": "Quemación",
+            "description": "Quema.",
+            "effect": "QUEMADO",
+            "effectDuration": 3,
+            "type": "DEBUFF",
+            "target": "ENEMY"
+        }
+    ]
   },
   "ASALTANTE_MADRUGADOR": {
     "name": "Asaltante madrugador",
     "HpMax": 50,
-    "habilidades": ["ATQ_BASICO"]
+    "habilidades": [
+        {
+            "name": "Ataque básico",
+            "description": "1 acc. Un golpe sencillo con el arma.",
+            "damage": 12,
+            "type": "ACTIVE",
+            "target": "ENEMY"
+        }
+    ]
   },
   "MUJER_DESCONFIADA": {
     "name": "Mujer desconfiada",
     "HpMax": 70,
-    "habilidades": ["ATQ_MENOR"]
+    "habilidades": [
+        {
+            "name": "Ataque básico",
+            "description": "1 acc. Un golpe sencillo con el arma.",
+            "damage": 12,
+            "type": "ACTIVE",
+            "target": "ENEMY"
+        }
+    ]
   }
 }
