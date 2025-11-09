@@ -13,7 +13,7 @@ const State={
 
 export default class MapNode extends Phaser.GameObjects.Sprite{
 
-    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,isFocus=false,visited=false,radius=120,height=0){
+    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,radius=120){
         super(scene,x,y,texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -25,8 +25,6 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.state=state;
         this.radius=radius;
         this.visited=visited;
-        this.isFocus=isFocus;
-        this.height=height;
 
         if (!scene.nodes) scene.nodes = [];
         scene.nodes.push(this);
@@ -62,40 +60,11 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             nodeVisited[this.id] = this.visited;
             this.scene.registry.set('nodeVisited', nodeVisited);
         }
-
-        /*if(!this.scene.registry.has('nodeHeight')){
-            this.scene.registry.set('nodeHeight',{});
-        }
-        const nodeHeight=this.scene.registry.get('nodeHeight');
-
-        if(typeof nodeHeight[this.id]!=='undefined'){
-            this.height=nodeHeight[this.id];
-        }
-        else{
-            nodeHeight[this.id]=this.height;
-            this.scene.registry.set('nodeHeight',nodeHeight);
-        }
-
-        if(!this.scene.registry.has('nodeFocus')){
-            this.scene.registry.set('nodeFocus',{});
-        }
-        const nodeFocus=this.scene.registry.get('nodeFocus');
-
-        if(typeof nodeFocus[this.id]!=='undefined'){
-            this.isFocus=nodeFocus[this.id];
-        }
-        else{
-            nodeFocus[this.id]=this.isFocus;
-            this.scene.registry.set('nodeFocus',nodeFocus);
-        }
-
-        this.SetHeight();*/
         
         if(this.state===State.CURRENT)this.setVisited();
         this.updateTint();
         this.on('pointerover', () => {
             if(this.state==State.OPEN)this.setTintFill(0xffffff);
-            console.log("over")
         });
         this.on('pointerout', () => {
             this.updateTint();
@@ -110,9 +79,10 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                 if(nodeVisited[this.id]==false){
                     
                     scene.scene.start(this.targetScene);
-                }     
+                }
+                 
+                    
             }
-            console.log("up")
         });
     }
 
@@ -145,7 +115,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
        
     }
 
-    openNearbyNodes() {
+     openNearbyNodes() {
         if (!this.scene.nodes || this.scene.nodes.length <= 1) return;
 
         const nodeStates = this.scene.registry.get('nodeStates') || {};
@@ -180,29 +150,5 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
 
         // persist updated map once
         this.scene.registry.set('nodeStates', nodeStates);
-    }
-
-    SetHeight(){
-        if (!this.scene.nodes || this.scene.nodes.length <= 1) return;
-
-        const nodeHeight=this.scene.registry.get('nodeHeight')||{};
-        const nodeFocus=this.scene.registry.get('nodeFocus')||{};
-
-        for(const other of this.scene.nodes){
-            if(nodeFocus[other.id]==true)continue;
-
-            other.height=0;
-            for(const focus of this.scene.nodes){
-                if(nodeFocus[other.id]==false)continue;
-
-                const focusHeight=nodeHeight[focus.id];
-
-                const dist = Phaser.Math.Distance.Between(focus.x, focus.y, other.x, other.y);
-
-                other.height+=(focusHeight-dist);
-            }
-            nodeHeight[other.id]=other.height;
-        }
-        this.scene.registry.set('nodeHeight',nodeHeight);
-    }
+  }
 }
