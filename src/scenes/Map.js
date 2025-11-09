@@ -31,7 +31,7 @@ export default class Map extends Phaser.Scene{
         this.graphics.setDepth(1);
 
         this.connGraphics = this.add.graphics();
-        this.connGraphics.setDepth(1);
+        this.connGraphics.setDepth(2);
 
 
         new MapNode(this, 100, 100, 'node', 'Test', 0.2, 0, 2, 'node1');   // CURRENT
@@ -76,7 +76,8 @@ export default class Map extends Phaser.Scene{
         new MapNode(this, 250, 520, 'node', 'Test', 0.2, 0, 1, 'node34');
         new MapNode(this, 350, 550, 'node', 'Test', 0.2, 0, 1, 'node35');
 
-        for (const n of this.nodes) n.setDepth(2);
+        for (const n of this.nodes)n.setDepth(3);
+        
 
         this.needsPerimeterRedraw = true;
 
@@ -130,7 +131,6 @@ export default class Map extends Phaser.Scene{
         if (!nodeHeight) return;
 
         const levels = [
-            { min: 0, max: 99, color: 0x00ff00 },
             { min: 100, max: 199, color: 0x0000ff },
             { min: 200, max: 299, color: 0xffa500 },
             { min: 300, max: Infinity, color: 0xff0000 }
@@ -155,18 +155,9 @@ export default class Map extends Phaser.Scene{
             if (!hull || hull.length < 3) continue;
 
             this.graphics.beginPath();
-            this.graphics.moveTo(hull[0].x, hull[0].y);
-
-            for (let i = 1; i < hull.length; i++) {
-                this.graphics.lineTo(hull[i].x, hull[i].y);
-            }
-            this.graphics.closePath();
-
-            this.graphics.fillStyle(level.color, level.alpha);
-            this.graphics.fillPath();
-
             this.graphics.lineStyle(3, level.color, 1);
-            this.graphics.strokePath();
+            this.graphics.strokePoints(hull,true);
+            this.graphics.closePath();       
         }
     }
 
@@ -219,7 +210,6 @@ export default class Map extends Phaser.Scene{
 
         this.needsPerimeterRedraw = true;
 
-        console.log('expand() finished; nodeHeight sample:', Object.entries(nodeHeight).slice(0,5));
     }
 }
 

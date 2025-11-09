@@ -63,7 +63,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             this.scene.registry.set('nodeVisited', nodeVisited);
         }
 
-        if(!this.scene.registry.has('nodeHeight')){
+        /*if(!this.scene.registry.has('nodeHeight')){
             this.scene.registry.set('nodeHeight',{});
         }
         const nodeHeight=this.scene.registry.get('nodeHeight');
@@ -88,11 +88,14 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
             nodeFocus[this.id]=this.isFocus;
             this.scene.registry.set('nodeFocus',nodeFocus);
         }
+
+        this.SetHeight();*/
         
         if(this.state===State.CURRENT)this.setVisited();
         this.updateTint();
         this.on('pointerover', () => {
             if(this.state==State.OPEN)this.setTintFill(0xffffff);
+            console.log("over")
         });
         this.on('pointerout', () => {
             this.updateTint();
@@ -107,10 +110,9 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                 if(nodeVisited[this.id]==false){
                     
                     scene.scene.start(this.targetScene);
-                }
-                 
-                    
+                }     
             }
+            console.log("up")
         });
     }
 
