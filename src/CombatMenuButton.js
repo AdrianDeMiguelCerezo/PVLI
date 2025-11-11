@@ -1,6 +1,6 @@
 
 
-export default class MenuButton extends Phaser.GameObjects.Text {
+export default class CombatMenuButton extends Phaser.GameObjects.Text {
 
     /**
      * 

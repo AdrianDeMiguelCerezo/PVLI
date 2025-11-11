@@ -18,20 +18,34 @@ export default class PlayerData
  * @param {any} pechera
  * @param {any} pantalones
  */
-    constructor(name = "", HP = 200, HPMax = 200, habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE', 'ATAQUE_FURIOSO', 'CURACION'], items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 1 }], efectos = [], SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0, arma = "REVOLVER_OXIDADO", pechera = "CHAQUETA_PIEL", pantalones = "PANTALONES_REFORZADOS") {
+    constructor(name = "", HP = 200, HPMax = 200, SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0,
+        habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE', 'ATAQUE_FURIOSO', 'CURACION'],
+        items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 1 }], 
+        efectos = [],
+        equipamiento = ["PANTALONES_REFORZADOS"],
+        arma = "REVOLVER_OXIDADO", pechera = "CHAQUETA_PIEL", pantalones = null, 
+    )
+
+    {
         
         this.habilidadesOriginales = habilidades;
         this.habilidades = this.habilidadesOriginales;
         this.HP = HP;
         this.HPMax = HPMax;
         this.items = items;
-        this.efectos = [{ key: 'ATT+', duration: 2 }];
+        this.efectos = efectos;
+
+        /**keys de equipamiento no equipado
+         * @type {Array<string>} 
+         */
+        this.equipamiento = equipamiento;
         this.efectosTam = 1;
         this.SP = SP;
         this.SPMax = SPMax;
         this.arma = arma;
         this.pechera = pechera;
         this.pantalones = pantalones;
+
 
     }
 }

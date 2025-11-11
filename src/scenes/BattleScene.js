@@ -2,7 +2,7 @@ import PlayerData from '../PlayerData.js'
 import CombatManager from '../combatManager.js'
 import Enemy from '../Enemy.js'
 import Player from '../Player.js'
-import MenuButton from '../MenuButton.js'
+import CombatMenuButton from '../CombatMenuButton.js'
 import Menu from '../Menu.js'
 import HealthBar from '../HealthBar.js'
 import ImageWithText from '../ImageWithText.js'
@@ -97,10 +97,10 @@ export default class BattleScene extends Phaser.Scene {
 
         //botones generales
         
-        let botonAtacar = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 15, this.player.playerData.arma, this.player.atacar);
-        let botonDefender = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 50, this.player.defender);
-        let botonHabilidades = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 85, 'Habilidades', null, () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
-        let botonItems = new MenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 120, 'Items',null, () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
+        let botonAtacar = new CombatMenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 15, this.player.playerData.arma, this.player.atacar);
+        let botonDefender = new CombatMenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 50, this.player.defender);
+        let botonHabilidades = new CombatMenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 85, 'Habilidades', null, () => { this.menuHabilidades.setVisible(true); this.menuItems.setVisible(false) });
+        let botonItems = new CombatMenuButton(this, this.fondoUI.x + 10, this.fondoUI.y + 120, 'Items',null, () => { this.menuHabilidades.setVisible(false); this.menuItems.setVisible(true) });
         //let botonHuir = new MenuButton(this, fondoUI.x + 10, fondoUI.y + 155, 'HUIR');
 
 
@@ -223,13 +223,13 @@ export default class BattleScene extends Phaser.Scene {
         this.menuHabilidades = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 5, 3, 0xB7B7B7).setVisible(false).setDepth(1)
         this.menuItems = new Menu(this, this.fondoUI.x + 210, this.fondoUI.y, 540, 200, 5, 2, 0xB7B7B7).setVisible(false).setDepth(1)
         for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
-            this.menuHabilidades.AddButton(new MenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
+            this.menuHabilidades.AddButton(new CombatMenuButton(this, 0, 0, this.player.playerData.habilidades[i]))
         }
 
         for (let i = 0; i < this.player.playerData.items.length; i++) {
             if (this.jsonItems[this.player.playerData.items[i].item].usedInCombat)
             {
-                this.menuItems.AddButton(new MenuButton(this, 0, 0, this.player.playerData.items[i]))
+                this.menuItems.AddButton(new CombatMenuButton(this, 0, 0, this.player.playerData.items[i]))
             }
         }
     }

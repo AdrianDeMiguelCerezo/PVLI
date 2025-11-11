@@ -1,4 +1,4 @@
-import MenuButton from "./MenuButton.js"
+import CombatMenuButton from "./CombatMenuButton.js"
 export default class Menu extends Phaser.GameObjects.Container {
 
     /**
@@ -30,7 +30,7 @@ export default class Menu extends Phaser.GameObjects.Container {
         this.SBB = SBB;
 
         /**Lugares donde pueden haber botones
-         * @type {MenuButton}
+         * @type {CombatMenuButton}
          */
         this.positions = []
         for (let i = 0; i < rows; i++) {
@@ -51,7 +51,7 @@ export default class Menu extends Phaser.GameObjects.Container {
     }
     /**
      * 
-     * @param {MenuButton} button
+     * @param {CombatMenuButton} button
      * @param {number} row
      * @param {number} column
      */
@@ -107,7 +107,7 @@ export default class Menu extends Phaser.GameObjects.Container {
 
     /**
      * 
-     * @param {MenuButton} button
+     * @param {CombatMenuButton} button
      * @param {number} row
      * @param {number} column
      */
