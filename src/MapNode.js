@@ -13,7 +13,7 @@ const State={
 
 export default class MapNode extends Phaser.GameObjects.Sprite{
 
-    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,radius=120){
+    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,isFocus=false,height=0,radius=120){
         super(scene,x,y,texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -25,6 +25,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.state=state;
         this.radius=radius;
         this.visited=visited;
+        this.isFocus=isFocus;
+        this.height=height;
         this.id=id;
 
         scene.add.existing(this);
@@ -34,13 +36,14 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         if(this.state===State.CURRENT)this.visited=true;
         this.updateTint();
         this.on('pointerover', () => {
-            if(this.state==State.OPEN)this.setTintFill(0xffffff);
+            if(this.state===State.OPEN)this.setTintFill(0xffffff);
+            console.log("over")
         });
         this.on('pointerout', () => {
             this.updateTint();
         });
         this.on('pointerup', () => {
-            if (this.state == State.OPEN) {
+            if (this.state === State.OPEN) {
                 // Reset old current node
                 const oldCurrent = this.scene.nodes.find(n => n.state === State.CURRENT);
                 if(oldCurrent) oldCurrent.state = State.OPEN;
@@ -51,27 +54,23 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
                 
                 this.updateTint();
 
+                console.log("click")
                 this.openNearbyNodes();
 
                 // Send node data to target scene
                 const nodeData = this.scene.nodes.map(n => ({
                     id: n.id,
                     state: n.state,
-                    visited: n.visited
+                    visited: n.visited,
+                    isFocus: n.isFocus,
+                    height: n.height
                 }));
                 if(this.visited==false){
-                    this.scene.scene.start(this.targetScene, { nodes: nodeData }); 
+                    this.scene.scene.start(this.targetScene, { nodes: nodeData });
                 }
                 this.visited=true;
             }
         });
-    }
-
-    init(nodeInfo){
-        if(nodeInfo && this.id in nodeInfo){
-            this.state = nodeInfo[this.id].state;
-            this.visited = nodeInfo[this.id].visited;
-        }
     }
     
 
