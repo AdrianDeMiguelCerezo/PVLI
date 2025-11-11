@@ -25,43 +25,13 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.state=state;
         this.radius=radius;
         this.visited=visited;
-
-        if (!scene.nodes) scene.nodes = [];
-        scene.nodes.push(this);
-
-        this.id = id || `node-${this.scene.nodes.length}`;
+        this.id=id;
 
         scene.add.existing(this);
         this.setInteractive();
         this.setScale(scale);
-
-        if (!this.scene.registry.has('nodeStates')) {
-            this.scene.registry.set('nodeStates', {});
-        }
-        const nodeStates = this.scene.registry.get('nodeStates');
-
-        if (typeof nodeStates[this.id] !== 'undefined') {
-            this.state = nodeStates[this.id];
-        } 
-        else {
-            nodeStates[this.id] = this.state;
-            this.scene.registry.set('nodeStates', nodeStates);
-        }
-
-        if (!this.scene.registry.has('nodeVisited')) {
-            this.scene.registry.set('nodeVisited', {});
-        }
-        const nodeVisited = this.scene.registry.get('nodeVisited');
-
-        if (typeof nodeVisited[this.id] !== 'undefined') {
-            this.visited = nodeVisited[this.id];
-        } 
-        else {
-            nodeVisited[this.id] = this.visited;
-            this.scene.registry.set('nodeVisited', nodeVisited);
-        }
         
-        if(this.state===State.CURRENT)this.setVisited();
+        if(this.state===State.CURRENT)this.visited=true;
         this.updateTint();
         this.on('pointerover', () => {
             if(this.state==State.OPEN)this.setTintFill(0xffffff);
@@ -71,48 +41,43 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         });
         this.on('pointerup', () => {
             if (this.state == State.OPEN) {
+                // Reset old current node
+                const oldCurrent = this.scene.nodes.find(n => n.state === State.CURRENT);
+                if(oldCurrent) oldCurrent.state = State.OPEN;
+                oldCurrent?.updateTint();
 
-                this.setState(State.CURRENT);
+                // Set this node as current
+                this.state = State.CURRENT;
+                
+                this.updateTint();
 
                 this.openNearbyNodes();
 
-                this.scene.areaManager.expand();
-
-                if (this.nodeType===2) {
-                    this.scene.areaManager.addFocusNode(this.id);
+                // Send node data to target scene
+                const nodeData = this.scene.nodes.map(n => ({
+                    id: n.id,
+                    state: n.state,
+                    visited: n.visited
+                }));
+                if(this.visited==false){
+                    this.scene.scene.start(this.targetScene, { nodes: nodeData }); 
                 }
-
-                if(nodeVisited[this.id]==false){
-                    
-                    scene.scene.start(this.targetScene);
-                }
-                 
-                    
+                this.visited=true;
             }
         });
     }
 
-    setState(newState) {
-        this.state = newState;
-        this.updateTint();
-
-        const nodeStates = this.scene.registry.get('nodeStates') || {};
-        nodeStates[this.id] = this.state;
-        this.scene.registry.set('nodeStates', nodeStates);
-    }
-
-    setVisited() {
-
-        const nodeVisited = this.scene.registry.get('nodeVisited') || false;
-        nodeVisited[this.id] = true;
-        this.scene.registry.set('nodeVisited', nodeVisited);
+    init(nodeInfo){
+        if(nodeInfo && this.id in nodeInfo){
+            this.state = nodeInfo[this.id].state;
+            this.visited = nodeInfo[this.id].visited;
+        }
     }
     
 
     updateTint() {
-        const nodeVisited = this.scene.registry.get('nodeVisited');
         this.clearTint();
-        if(nodeVisited[this.id]==true&&this.state!==State.CURRENT) this.setTintFill(0x8b0000);
+        if(this.visited==true&&this.state!==State.CURRENT) this.setTintFill(0x8b0000);
         else{
              if (this.state === State.LOCKED) this.setTintFill(0x555555);
             else if (this.state === State.OPEN) this.setTintFill(0x000000);
@@ -122,39 +87,17 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
     }
 
     openNearbyNodes() {
-        if (!this.scene.nodes || this.scene.nodes.length <= 1) return;
+    if (!this.scene.nodes) return;
 
-        const nodeStates = this.scene.registry.get('nodeStates') || {};
+    for (const other of this.scene.nodes) {
+        if (other === this) continue;
 
-        for (const other of this.scene.nodes) {
-            if (other === this) continue;
+        const dist = Phaser.Math.Distance.Between(this.x, this.y, other.x, other.y);
 
-            const dist = Phaser.Math.Distance.Between(this.x, this.y, other.x, other.y);
-
-            // console.log(`${this.id} -> ${other.id}: dist=${dist.toFixed(1)}, radius=${this.radius}`);
-
-            if (dist <= this.radius) {
-                if (other.state === State.LOCKED) {
-                    other.state = State.OPEN;
-                    other.updateTint();
-                    nodeStates[other.id] = other.state;
-                }
-                else if(other.state===State.CURRENT){
-                    other.state = State.OPEN;
-                    other.updateTint();
-                    nodeStates[other.id] = other.state;
-                    other.setVisited();
-                
-                }
-            }
-            else{
-                other.state=State.LOCKED;
-                other.updateTint();
-                nodeStates[other.id] = other.state;  
-            }
+        if (dist <= this.radius && other.state === State.LOCKED) {
+            other.state = State.OPEN;
+            other.updateTint();
         }
-
-        // persist updated map once
-        this.scene.registry.set('nodeStates', nodeStates);
     }
+}
 }
