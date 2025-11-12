@@ -1,10 +1,18 @@
-
+import BattleScene from "./scenes/BattleScene.js";
+import PlayerData from './PlayerData.js'
 
 export default class MenuButton extends Phaser.GameObjects.Text {
 
+
+   
+    
+
+
+
+
     /**
      * 
-     * @param {any} scene
+     * @param {BattleScene} scene
      * @param {any} x
      * @param {any} y
      * @param {any} fontSize
@@ -181,6 +189,31 @@ export default class MenuButton extends Phaser.GameObjects.Text {
 
     }
 
+    Equipar() {
+        
+        switch (scene.jsonEquipamiento[key].type)
+        {
+            
+            case "WEAPON": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.arma ; this.scene.playerData.arma = this.key; }
+            case "TORSO": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.torso; this.scene.playerData.torso = this.key; }
+            case "LEGGINS": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.pantalones; this.scene.playerData.pantalones = this.key; }
+            default: throw "¿Esto dónde me lo pongo? ¿el la punta de "
+        }
+        //actualizarMenus
+    }
+    Desequipar() {
+        
+        
+        switch (scene.jsonEquipamiento[key].type) {
 
+            case "WEAPON": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.arma = null; }
+            case "TORSO": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.torso = null; }
+            case "LEGGINS": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.pantalones = null; }
+            default: throw "¿Donde está, no lo encuentro? ¿y qué es eso, se come?"
+        }
+        //actualizarMenus
+    }
+    UsarItem() {
 
+    }
 }

@@ -19,22 +19,22 @@
     "damage": 5,
     "defense": 0
   },
-  "CHAQUETA_PIEL": {
-    "nombre": "Chaqueta de piel",
-    "descripcion": "Abriga y protege algo más que una chaqueta de papel.",
-    "tipoEquipamiento": "CHESTPLATE",
-    "habilidades": [],
-    "crit_damage": 0,
-    "crit_chance": 0,
-    "defense": 8
-  },
-  "PANTALONES_REFORZADOS": {
-    "nombre": "Pantalones reforzados",
-    "descripcion": "Ahora con lana de mamut lanudo",
-    "tipoEquipamiento": "PANTALONES",
-    "habilidades": [],
-    "crit_damage": 0,
-    "crit_chance": 0,
-    "defense": 5
-  }
+    "CHAQUETA_PIEL": {
+        "name": "Chaqueta de piel",
+        "description": "Abriga y protege algo más que una chaqueta de papel.",
+        "type": "TORSO",
+        "habilidades": [],
+        "crit_damage": 0,
+        "crit_chance": 0,
+        "defense": 8
+    },
+    "PANTALONES_REFORZADOS": {
+        "name": "Pantalones reforzados",
+        "description": "Ahora con lana de mamut lanudo",
+        "type": "LEGGINS",
+        "habilidades": [],
+        "crit_damage": 0,
+        "crit_chance": 0,
+        "defense": 5
+    }
 }

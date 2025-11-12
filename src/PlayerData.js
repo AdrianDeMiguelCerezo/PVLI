@@ -15,7 +15,7 @@ export default class PlayerData
  * @param {any} dinero
  * @param {any} hambre
  * @param {any} arma
- * @param {any} pechera
+ * @param {any} torso
  * @param {any} pantalones
  */
     constructor(name = "", HP = 200, HPMax = 200, SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0,
@@ -23,7 +23,7 @@ export default class PlayerData
         items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 1 }], 
         efectos = [],
         equipamiento = ["PANTALONES_REFORZADOS"],
-        arma = "REVOLVER_OXIDADO", pechera = "CHAQUETA_PIEL", pantalones = null, 
+        arma = "REVOLVER_OXIDADO", torso = "CHAQUETA_PIEL", pantalones = null, 
     )
 
     {
@@ -43,7 +43,7 @@ export default class PlayerData
         this.SP = SP;
         this.SPMax = SPMax;
         this.arma = arma;
-        this.pechera = pechera;
+        this.torso = torso;
         this.pantalones = pantalones;
 
 
