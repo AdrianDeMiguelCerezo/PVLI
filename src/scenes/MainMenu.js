@@ -39,8 +39,5 @@ export default class MainMenu extends Phaser.Scene{
         makeButton(height / 2, 'Play', () => {
             this.scene.start('BootScene');
         });
-        makeButton(height / 1.5, 'MenuTest', () => {
-            this.scene.start('MenuTest',new PlayerData());
-        });
     }
 }
