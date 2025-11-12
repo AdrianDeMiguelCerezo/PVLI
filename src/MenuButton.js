@@ -213,7 +213,27 @@ export default class MenuButton extends Phaser.GameObjects.Text {
         }
         //actualizarMenus
     }
-    UsarItem() {
+    UsarItem()
+    {
+        /**
+         * @type {PlayerData}
+         */
+        let thissceneplayerData;
+        let i = 0;
+        let encontrado = false;
+        while (i < thissceneplayerData.items.length&&!encontrado) {
+            encontrado = thissceneplayerData.items[i].item==key
+            i++;
+        }
+        if (encontrado) {
+            i--;
+            thissceneplayerData.items[i].item.count--;
+        }
+        for (let j = 0; j < this.scene.jsonItems[i].habilidades.length; j++)
+        {
+            
+            thissceneplayerData.HP -= ? this.scene.jsonItems[i].habilidades[j].damage
 
+        }
     }
 }
