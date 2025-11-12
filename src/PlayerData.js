@@ -34,12 +34,12 @@ export default class PlayerData
         this.HPMax = HPMax;
         this.items = items;
         this.efectos = efectos;
+        this.efectosTam = efectos.length;
 
         /**keys de equipamiento no equipado
          * @type {Array<string>} 
          */
         this.equipamiento = equipamiento;
-        this.efectosTam = 1;
         this.SP = SP;
         this.SPMax = SPMax;
         this.arma = arma;
