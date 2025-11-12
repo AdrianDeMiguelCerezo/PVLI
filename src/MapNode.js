@@ -13,7 +13,7 @@ const State={
 
 export default class MapNode extends Phaser.GameObjects.Sprite{
 
-    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,isFocus=false,height=0,radius=120){
+    constructor(scene,x,y,texture,targetScene,scale=1,nodeType,state,id,visited=false,isFocus=false,difficulty=0,radius=120){
         super(scene,x,y,texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -26,7 +26,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite{
         this.radius=radius;
         this.visited=visited;
         this.isFocus=isFocus;
-        this.height=height;
+        this.difficulty=difficulty;
         this.id=id;
 
         scene.add.existing(this);
