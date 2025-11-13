@@ -79,7 +79,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
                 this.updateTint();
 
-                console.log("click: ",this, "\n nodes:", this.scene.nodes)
+                
                 this.openNearbyNodes();
 
 
