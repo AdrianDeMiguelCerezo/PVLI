@@ -50,7 +50,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
 
         //clikar enemigos para apuntar
         this.canBeClicked = false;
-        this.setInteractive(new Phaser.Geom.Rectangle(0,0,this.image.width,this.image.height),Phaser.Geom.Rectangle.Contains);
+        this.setInteractive(new Phaser.Geom.Rectangle(0,0,this.image.width,this.image.difficulty),Phaser.Geom.Rectangle.Contains);
         this.on('pointerdown', () => {
             if (this.canBeClicked) {
 

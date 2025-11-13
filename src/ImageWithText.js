@@ -26,7 +26,7 @@ export default class ImageWithText extends Phaser.GameObjects.Container {
         this.add(this.image)
 
 
-        if (fontSize == -1) fontSize = this.image.height - 2 * borderSize;
+        if (fontSize == -1) fontSize = this.image.difficulty - 2 * borderSize;
 
         if (centered) {
             var text = new Phaser.GameObjects.Text(scene, borderSize, borderSize, text,
@@ -58,6 +58,6 @@ export default class ImageWithText extends Phaser.GameObjects.Container {
         return this.image.width;
     }
     get height() {
-        return this.image.height;
+        return this.image.difficulty;
     }
 }

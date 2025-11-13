@@ -4,7 +4,11 @@ import BattleScene from './scenes/BattleScene.js';
 import DialogueScene from './scenes/DialogueScene.js';
 import MainMenu from './scenes/MainMenu.js';
 import GameOver from './scenes/GameOver.js';
+
 import MenuTest from './scenes/MenuTest.js';
+
+import xd from './scenes/xd.js';
+
 import BootScene from './scenes/BootScene.js';
 
 /**
@@ -22,8 +26,8 @@ let config = {
 		autoCenter: Phaser.Scale.CENTER_BOTH
 	},
 	scene: [MainMenu,BootScene,Map,MenuTest, Test, BattleScene, DialogueScene, GameOver],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
-												//objeto formado por el método preload y create definidos más abajo en 
-												//este mismo archivo
+
+	scene: [MainMenu,BootScene,Map,xd,MenuTest, Test, BattleScene, DialogueScene, GameOver],										
 	physics: { 
 		default: 'arcade', 
 		arcade: { 

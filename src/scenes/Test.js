@@ -3,6 +3,10 @@ export default class Test extends Phaser.Scene{
         super({key:'Test'})
     }
 
+    init(nodeInfo){
+        this.nodes=nodeInfo;
+    }
+
     preload(){
     }
 
@@ -19,7 +23,7 @@ export default class Test extends Phaser.Scene{
     //establece interaccion
     boton.setInteractive();
     boton.on('pointerdown', ()=>{
-        this.scene.start('Map');
+        this.scene.start('Map',this.nodes);
     })
    }
 }
