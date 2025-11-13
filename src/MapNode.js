@@ -27,7 +27,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, visited = false, scale = 0.2, difficulty = 0, radius = 130) {
+    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2,  radius = 130) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -67,7 +67,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             this.drawConnectionsFromCurrent();
         });
         this.on('pointerup', () => {
-            console.log(this.x, ", ", this.y, ", ", this.state)
+            
             if (this.state === State.OPEN) {
                 // Reset old current node
                 const oldCurrent = this.scene.nodes.find(n => n.state === State.CURRENT);
@@ -79,12 +79,14 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
                 this.updateTint();
 
-                console.log("click")
+                console.log("click: ",this, "\n nodes:", this.scene.nodes)
                 this.openNearbyNodes();
 
 
                 if (this.visited == false) {
-                    const nodeData = this.scene.nodes.map(n => ({
+                    this.visited = true;
+
+                    let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
                         targetScene: n.targetScene,
@@ -97,11 +99,11 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                         radius: n.radius
 
                     }));
-
-                    this.scene.registry.set("nodes", this.nodeData)
+                    
+                    this.scene.registry.set("nodes", nodeData)
                     this.scene.scene.start(this.targetScene);
                 }
-                this.visited = true;
+                
             }
         });
     }
@@ -168,7 +170,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
          * @type {MapNode} 
          */
         const currentNode = this.scene.nodes.find(n => n.state === State.CURRENT); //CURRENT
-        console.log(currentNode)
+        
         if (!currentNode) return;
 
         // Draw line from current to OPEN, nearby nodes

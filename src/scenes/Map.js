@@ -29,20 +29,22 @@ export default class Map extends Phaser.Scene {
 
         this.areaGraphics = this.add.graphics().setDepth(0.5);
 
+        console.log(this.registry.get("nodes"))
+
         if (!this.registry.get("nodes")) {
             this.nodes = []
 
-            this.nodes.push(new MapNode(this, 100, 100, 'node', 'Test', NodeType.COMMON, State.CURRENT, false));   // CURRENT
-            this.nodes.push(new MapNode(this, 200, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 150, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 250, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
+            this.nodes.push(new MapNode(this, 100, 100, 'node', 'Test', NodeType.COMMON, State.CURRENT, false,100));   // CURRENT
+            this.nodes.push(new MapNode(this, 200, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
+            this.nodes.push(new MapNode(this, 150, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
+            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
+            this.nodes.push(new MapNode(this, 250, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
 
-            this.nodes.push(new MapNode(this, 320, 150, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 400, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 420, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 300, 300, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 380, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
+            this.nodes.push(new MapNode(this, 320, 150, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
+            this.nodes.push(new MapNode(this, 400, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 100));
+            this.nodes.push(new MapNode(this, 420, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 100));
+            this.nodes.push(new MapNode(this, 300, 300, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 100));
+            this.nodes.push(new MapNode(this, 380, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 100));
 
             this.nodes.push(new MapNode(this, 500, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 480, 180, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
@@ -82,9 +84,9 @@ export default class Map extends Phaser.Scene {
         }
         else {
             this.nodes = []
-            for (n of this.registry.get("nodes"))
+            for (const n of this.registry.get("nodes"))
             {
-                nodes.push(new MapNode(this,n.x,n.y,"node",n.targetScene,n.nodeType,n.state,n.isFocus,n.visited,n.scale,n.difficulty,n.radius))
+                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.difficulty,n.isFocus,n.visited,n.scale,n.radius))
             }
         }
 
@@ -99,12 +101,37 @@ export default class Map extends Phaser.Scene {
         for (const n of this.nodes) n.setDepth(2);
 
         
-
+        this.GenerateDifficultyZones()
 
     }
 
 
-
-   
+    //complejidad O(n^3) si eliminar un elemento de un array tiene complejidad O(n)
+    GenerateDifficultyZones() {
+        let difficulty100nodes = []
+        let difficulty100arists = []
+        for (const node of this.nodes)
+        {
+            if (node.difficulty >= 100) { difficulty100nodes.push(node) }
+        }
+        for (const node of difficulty100nodes)
+        {
+            for (const other of this.nodes)
+            {
+                if (other.difficulty < 100 && Math.sqrt((node.x - other.x) * (node.x - other.x) + (node.y - other.y) * (node.y - other.y))<node.radius)
+                {
+                    difficulty100arists.push(new Phaser.Math.Vector2(node.x + other.x, node.y + other.y).scale(0.5));
+                }
+            }
+        }
+        const path = new Phaser.Curves.Path();
+        path.lineTo(difficulty100arists[0]);
+        difficulty100arists.splice(0, 1)
+        console.log("arr: ",difficulty100arists)
+        for (let i = 0; i < difficulty100arists.length; i++)
+        {
+            
+        }
+    }
 
 }
