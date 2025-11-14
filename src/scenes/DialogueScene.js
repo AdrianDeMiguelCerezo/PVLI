@@ -1,4 +1,5 @@
 import DialogText from "../dialog_plugin.js";
+import PlayerData from "../PlayerData.js";
 
 export default class DialogueScene extends Phaser.Scene {
 	/**
@@ -10,16 +11,27 @@ export default class DialogueScene extends Phaser.Scene {
 	constructor() {
 		super({ key: 'DialogueScene' });
 	}
-	init() {
+
+	/**
+	 * 
+	 * @param {any} nodeType
+	 * @param {any} difficultyLevel
+	 * @param {PlayerData} playerData
+	 * 
+	 */
+	init(nodeType, difficultyLevel, playerData) {
 		this.index = 0;
+		this.nodeType = nodeType;
+		this.difficultyLevel = difficultyLevel;
+		this.playerData = playerData;
 	}
 	create() {
 		this.add.image(0, 0, 'fondo').setOrigin(0, 0);
 
 		//carga el dialogo de su json
 		let data = this.cache.json.get('dialogos');
-		this.dialogos = data.dialogo1;
-
+		
+		this.dialogos = data.dialogo2;
 
 		this.dialog = new DialogText(this, {
 			borderThickness: 4,
@@ -80,7 +92,7 @@ export default class DialogueScene extends Phaser.Scene {
 	nextDialog(){
 		//pasa al siguiente dialogo
 		if(this.index < this.dialogos.length){
-			this.dialog.setText(this.dialogos[this.index].text, true);
+			this.dialog.setText(this.dialogos[this.index].name, this.dialogos[this.index].text, true);
 			this.index++;
 			this.createButtons();
 		}
@@ -129,10 +141,19 @@ export default class DialogueScene extends Phaser.Scene {
 		//mira el el json del dialogo las opciones
 		switch(opt.action) {
 			case "startCombat":
-				this.scene.start('BattleScene',['BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN',]);
+				this.scene.start('BattleScene',opt.combatEnemies);
 				break;
 			case "goToMap":
 				this.scene.start('Map');
+				break;
+			case "giveItem":
+				this.playerData.items.push({item: opt.item, count: 1});
+				break;
+			case "skillPoints":
+				this.playerData.SP += opt.sp;
+				break;
+			case "moneyCost":
+				this.playerData.dinero += opt.cant;
 				break;
 			case "jumpDialogue":
 				console.log(opt.jump);

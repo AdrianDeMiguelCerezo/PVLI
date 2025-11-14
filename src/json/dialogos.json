@@ -1,22 +1,58 @@
 {
     "dialogo1": [
-        { "text": "dialogo1" },
-        { "text": "dialogo 2" },
+        { "name": "", "text": "dialogo1" },
+        { "name": "nombre2", "text": "dialogo 2" },
         {
+            "name": "nombre2",
             "text": "dialogo3",
             "options": [
-                { "text": "opcion 1 (ir a combate)", "action": "startCombat" },
+                { "text": "opcion 1 (ir a combate)", "action": "startCombat", "combatEnemies": ["BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN"] },
                 { "text": "opcion 2 (continuar dialogo)", "action": "nextDialogue" },
-                { "text": "opcion 3 (saltar mas dialogo)", "action": "jumpDialogue", "jump": 1 },
+                { "text": "opcion 3 (saltar mas dialogo)", "action": "jumpDialogue", "jump": 4 },
                 { "text": "opcion 4 (volver al mapa)", "action": "goToMap" }
             ]
         },
         { 
+            "name": "nombre2",
             "text": "dialogo4", 
             "options": [
                 {"text": "ir a mapa", "action": "goToMap"}
             ] 
         },
-        { "text": "dialogo5" }
+        { "name": "nombre1", "text": "dialogo5" }
+    ],
+    "dialogo2": [
+        { "name": "", "text": "Esta anocheciendo en medio de la nada"},
+        { "name": "", "text": "Te encuentras una tienda de campaña. Estás cansado. ¿Quieres entrar a descansar un poco?",
+          "options": [
+            {   "text": "Sí", "action": "nextDialogue"},
+            {   "text": "No", "action": "goToMap"}
+          ]    
+        },
+        { "name": "", "text": "Dentro te encuentras a una mujer atractiva que te mira precavida."},
+        { "name": "Mujer atractiva", "text": "¿Que haces aquí?", 
+          "options": [
+            { "text": "Atacar", "action": "startCombat", "combatEnemies": ["MUJER_DESCONFIADA"]},
+            { "text": "'No sabia que hubiera aqui alguien, me voy'", "action": "goToMap"},
+            { "text":"'Necesito un lugar para dormir, ¿Tienes hueco?'", "action": "nextDialogue"},
+            { "text": "'¿Quien eres?'", "action": "jumpDialogue", "jump": 6}
+        ]},
+        { "name":"Mujer atractiva", "text": "¿Emm, no? ¿Por qué te debería dejar a tí dormir aquí conmigo?",
+          "options": [
+            { "text": "Atacar", "action":"startCombat"},
+            {"text": "'Es que eres demasiado bella como para que yo duerma en otra parte'", "action": "nextDialogue"},
+            {"text": "¿Cuanto pides?", "action": "nextDialogue"}
+          ]
+        },
+        { "name":"Mujer atractiva", "text":"Que dices, cabrón", 
+          "options": [
+            { "text": "Atacar", "action":"startCombat", "combatEnemies": ["MUJER_DESCONFIADA"]}
+            ]
+        },
+        { "name":"Mujer atractiva", "text":"¿Y a ti qué te importa?", 
+          "options": [
+            { "text": "Atacar", "action":"startCombat", "combatEnemies": ["MUJER_DESCONFIADA"]}
+            ]
+        }
     ]
 }
