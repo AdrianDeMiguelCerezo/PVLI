@@ -15,7 +15,7 @@ export default class Menu extends Phaser.GameObjects.Container {
      * @param {number} SBB Space between buttons and buttons
      */
     constructor(scene, x, y, width, height, rows, columns, backgroundColour = null ,SBMEAB =10,SBB=10) {
-        console.log(scene, x, y, width, height, rows, columns, backgroundColour)
+        //console.log(scene, x, y, width, height, rows, columns, backgroundColour)
         super(scene, x, y)
 
         
@@ -165,8 +165,9 @@ export default class Menu extends Phaser.GameObjects.Container {
 
         this.add(item);
 
-        item.x = this.SBMEAB + (item.width + this.SBB) * column;
+        item.x = this.SBMEAB + (this.width-2*this.SBMEAB/this.columns ) * column;
 
-        item.y = this.SBMEAB + (item.height + this.SBB) * row;
+        item.y = this.SBMEAB + (this.height - 2 * this.SBMEAB / this.rows ) * row;
+
     }
 }

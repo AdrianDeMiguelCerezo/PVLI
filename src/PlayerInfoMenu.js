@@ -20,15 +20,15 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         let w=this.scene.sys.canvas.width;
         let h=this.scene.sys.canvas.height;
         
-        this.menuEquip = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene,0,0,"Armas"));
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene,(w/1.5)*(1/3),0,"Torso"));
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene,(w/1.5)*(2/3),0,"Piernas"));
+        this.menuEquip = new Menu(this.scene, 20, 50, w / 1.5, h * 0.8, 20, 3, 0x222222);
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Armas", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
 
         this.menuItems = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222).setVisible(false);
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene,0,0,"Fuera \nde combate"));
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene,(w/1.5)*(1/3),0,"Dentro \nde combate"));
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene,(w/1.5)*(2/3),0,"Fuera y dentro \nde combate"));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Fuera \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
 
         this.menuHab = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222).setVisible(false);
 
