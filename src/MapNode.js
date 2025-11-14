@@ -117,6 +117,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             else if (this.state === State.OPEN) this.setTintFill(0x000000);
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
         }
+        //if (this.difficulty >= 100) { this.setTintFill(0x990000) }
+        
 
     }
 
