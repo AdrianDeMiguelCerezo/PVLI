@@ -58,8 +58,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
                 this.image.preFX.clear();
             }
         })
-        this.scene.events.on('target_selected', ()=> { this.canBeClicked = false })
-        this.scene.events.on('select_target', (skillKey) => { this.canBeClicked = true; this.skillKey = skillKey; })
+        
 
         this.on('pointerout', () => {
             this.image.preFX.clear()
@@ -69,6 +68,10 @@ export default class Enemy extends Phaser.GameObjects.Container {
                 this.image.preFX.addGlow('0xfaf255', 1, 1, false, 1, 0)
             }
         })
+        this.scene.events.on('target_selected', () => { this.canBeClicked = false })
+        this.scene.events.on('select_target', (skillKey) => { this.canBeClicked = true; this.skillKey = skillKey; })
+
+        this.on("destroy", () => { this.scene.events.off("select_target"); this.scene.events.off("target_selected") },this)
     }
 
     get isAlive() {
