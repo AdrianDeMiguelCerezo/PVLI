@@ -6,6 +6,12 @@ const NodeType = {
     CITY: 2
 }
 
+const DifficultyLimits = {
+    MEDIUM:100,
+    HARD:200,
+    FUCKED:300
+}
+
 const State = {
     OPEN: 0,
     LOCKED: 1,
@@ -56,7 +62,7 @@ export default class Map extends Phaser.Scene {
 
             this.nodes.push(new MapNode(this, 600, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 650, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 100));
+            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, 500));
             this.nodes.push(new MapNode(this, 680, 320, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 720, 240, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
 
@@ -87,7 +93,7 @@ export default class Map extends Phaser.Scene {
         else {
             this.nodes = []
             for (const n of this.registry.get("nodes")) {
-                console.log(n)
+                
                 this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.isFocus, n.difficulty, n.visited, n.scale, n.radius))
             }
         }
@@ -106,6 +112,7 @@ export default class Map extends Phaser.Scene {
         this.GenerateDifficultyZones();
 
         this.events.emit("update_tint")
+        
 
     }
 
@@ -122,9 +129,9 @@ export default class Map extends Phaser.Scene {
                 
                 const miAltura = this.IDWFormula(this.nodes, x, y,3)
 
-                if (miAltura < 100) { }
-                else if (miAltura < 200) { this.drawPixel(x, y, 0xFFB600) }
-                else if (miAltura < 300) { this.drawPixel(x, y, 0xFF8500) }
+                if (miAltura < DifficultyLimits.MEDIUM-20) { }
+                else if (miAltura < DifficultyLimits.HARD-20) { this.drawPixel(x, y, 0xFFB600) }
+                else if (miAltura < DifficultyLimits.FUCKED-20) { this.drawPixel(x, y, 0xFF8500) }
                 else { this.drawPixel(x, y, 0xEB2900) }
                     
                     
@@ -155,7 +162,7 @@ export default class Map extends Phaser.Scene {
 
             const distanceMult = 1 / (Math.pow(d, power))
 
-            sumaDividendo += n.difficulty * distanceMult;
+            sumaDividendo += this.TruncateDifficulty(n.difficulty) * distanceMult;
             sumaDivisor += distanceMult;
 
         }
@@ -185,11 +192,19 @@ export default class Map extends Phaser.Scene {
             {
                 n.difficulty +=  Math.max(0, f.difficulty - Math.hypot(f.x - n.x, f.y - n.y));
             }
+            
         }
     }
 
     drawPixel(x, y, color) {
         this.areaGraphics.fillStyle(color);
         this.areaGraphics.fillRect(x, y, 1, 1);
+    }
+
+    TruncateDifficulty(diff) {
+        if (diff < DifficultyLimits.MEDIUM) return 0;
+        else if (diff < DifficultyLimits.HARD) return DifficultyLimits.MEDIUM;
+        else if (diff < DifficultyLimits.FUCKED) return DifficultyLimits.HARD+20;
+        else return DifficultyLimits.FUCKED+30;
     }
 }
