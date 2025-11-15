@@ -29,7 +29,7 @@ export default class Map extends Phaser.Scene {
 
         this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
 
-
+        console.log(this.registry.get("nodes"));
 
         if (!this.registry.get("nodes")) {
 
@@ -87,7 +87,8 @@ export default class Map extends Phaser.Scene {
         else {
             this.nodes = []
             for (const n of this.registry.get("nodes")) {
-                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.difficulty, n.isFocus, n.visited, n.scale, n.radius))
+                console.log(n)
+                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.isFocus, n.difficulty, n.visited, n.scale, n.radius))
             }
         }
 
@@ -115,15 +116,15 @@ export default class Map extends Phaser.Scene {
     }
 
     GenerateDifficultyZones() {
-        console.log(this.nodes)
+        
         for (let x = 0; x < this.game.config.width; x++) {
             for (let y = 0; y < this.game.config.height; y++) {
                 
-                const miAltura = this.IDWFormula(this.nodes, x, y,2.5)
+                const miAltura = this.IDWFormula(this.nodes, x, y,3)
 
-                if (miAltura < 95) { }
-                else if (miAltura < 195) { this.drawPixel(x, y, 0xFFB600) }
-                else if (miAltura < 295) { this.drawPixel(x, y, 0xFF8500) }
+                if (miAltura < 100) { }
+                else if (miAltura < 200) { this.drawPixel(x, y, 0xFFB600) }
+                else if (miAltura < 300) { this.drawPixel(x, y, 0xFF8500) }
                 else { this.drawPixel(x, y, 0xEB2900) }
                     
                     
