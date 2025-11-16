@@ -111,7 +111,7 @@ export default class Map extends Phaser.Scene {
         this.RecalculateNodeDifficulties();
         this.GenerateDifficultyZones();
 
-        this.events.emit("update_tint")
+        
         
 
     }
@@ -120,10 +120,13 @@ export default class Map extends Phaser.Scene {
         for (const n of this.fociNodes) {
             n.difficulty += ammount;
         }
+        this.RecalculateNodeDifficulties();
+        this.GenerateDifficultyZones();
     }
 
     GenerateDifficultyZones() {
-        
+        this.areaGraphics.destroy();
+        this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
         for (let x = 0; x < this.game.config.width; x++) {
             for (let y = 0; y < this.game.config.height; y++) {
                 
@@ -139,6 +142,7 @@ export default class Map extends Phaser.Scene {
             }
 
         }
+        this.events.emit("update_tint")
     }
     /**
      * 
