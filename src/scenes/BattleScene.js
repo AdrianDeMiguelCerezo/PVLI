@@ -200,14 +200,14 @@ export default class BattleScene extends Phaser.Scene {
         }
         for (let i = 0; i < this.enemiesTam; i++)
         {
-            let menuEffects = new Menu(this, this.enemies[i].x + this.enemies[i].image.width + 5, this.enemies[i].y, 80, 50, 2, 5, null ,0,1)
+            let menuEffects = new Menu(this, this.enemies[i].x + this.enemies[i].image.width + 5, this.enemies[i].y, 90, 50, 2, 5, null ,0,1)
             for (let j = 0; j < this.enemies[i].efectosTam; j++)
             {
                 menuEffects.AddItem(new ImageWithText(this, 0, 0, this.enemies[i].efectos[j].duration, this.enemies[i].efectos[j].key,true,2,0.8))
             }
 
         }
-        let menuEffects = new Menu(this, this.player.x + this.player.width + 5, this.player.y, 80, 50, 2, 5, null, 0, 1)
+        let menuEffects = new Menu(this, this.player.x + this.player.width + 5, this.player.y, 90, 50, 2, 5, null, 0, 1)
         for (let j = 0; j < this.player.playerData.efectosTam; j++) {
             menuEffects.AddItem(new ImageWithText(this, 0, 0, this.player.playerData.efectos[j].duration, this.player.playerData.efectos[j].key,true,2,0.8))
         }
