@@ -35,6 +35,10 @@ export default class PlayerData
         this.items = items;
         this.efectos = efectos;
         this.efectosTam = efectos.length;
+        this.critDMG=critDMG;
+        this.critRate=critRate;
+        this.dinero=dinero;
+        this.hambre=hambre;
 
         /**keys de equipamiento no equipado
          * @type {Array<string>} 
