@@ -82,7 +82,7 @@ export default class Menu extends Phaser.GameObjects.Container {
                 let i = 0;
                 let found = false;
                 while (i < this.rows && !found) { found = !this.positions[i][column]; i++; }
-                i--; j--;
+                i--;
                 if (!this.positions[i][column]) { this._AddButton(button, i, column) }
                 else { button.destroy(); }
             }

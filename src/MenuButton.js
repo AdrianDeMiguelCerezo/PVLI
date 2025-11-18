@@ -91,7 +91,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
                         this.preFX.clear()
                     })
                 }
-                //si está en el jsonHabilidades, la skill se saca de ahí
+                //si estï¿½ en el jsonHabilidades, la skill se saca de ahï¿½
                 else if (scene.jsonHabilidades.hasOwnProperty(key)) {
                     this.text = scene.jsonHabilidades[key].name;
                     scene.add.existing(this);
@@ -146,14 +146,14 @@ export default class MenuButton extends Phaser.GameObjects.Text {
                 }
             }
             else {
-                if (scene.jsonHabilidades.hasOwnProperty(key)) {
+                if (scene.jsonEquipamiento.hasOwnProperty(key)) {
                     if (!!skill) {
                         this.text = scene.jsonEquipamiento[key].habilidades[skill].name
                     } else {
                         this.text = scene.jsonEquipamiento[key].name
                     }
                 }
-                else if (scene.jsonEquipamiento.hasOwnProperty(key)) { this.text = scene.jsonHabilidades[key].name }
+                else if (scene.jsonHabilidades.hasOwnProperty(key)) { this.text = scene.jsonHabilidades[key].name }
                 else if (scene.jsonItems.hasOwnProperty(key)) { this.text = scene.jsonItems[key].name }
                 else {throw "esta key no es un item, equipamiento, ni habilidad ubicada en habilidades.js" }
                 
@@ -164,7 +164,6 @@ export default class MenuButton extends Phaser.GameObjects.Text {
 
                 this.on('pointerdown',
                     () => {
-                        
                             scene.events.emit("show_description", key,skill)
                             this.preFX.clear();
                         
@@ -197,7 +196,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             case "WEAPON": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.arma ; this.scene.playerData.arma = this.key; }
             case "TORSO": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.torso; this.scene.playerData.torso = this.key; }
             case "LEGGINS": { this.scene.playerData.equipamiento[this.scene.playerData.equipamiento.indexOf(key)] = this.scene.playerData.pantalones; this.scene.playerData.pantalones = this.key; }
-            default: throw "¿Esto dónde me lo pongo? ¿el la punta de "
+            default: throw "ï¿½Esto dï¿½nde me lo pongo? ï¿½el la punta de "
         }
         //actualizarMenus
     }
@@ -209,7 +208,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             case "WEAPON": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.arma = null; }
             case "TORSO": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.torso = null; }
             case "LEGGINS": { this.scene.playerData.equipamiento.push(key); this.scene.playerData.pantalones = null; }
-            default: throw "¿Donde está, no lo encuentro? ¿y qué es eso, se come?"
+            default: throw "ï¿½Donde estï¿½, no lo encuentro? ï¿½y quï¿½ es eso, se come?"
         }
         //actualizarMenus
     }

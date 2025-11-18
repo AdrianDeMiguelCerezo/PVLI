@@ -49,8 +49,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab()));
 
         this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,2,0x222222);
-        this.clickedKey=""
-        this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.clickedKey.description));
+        this.desc=""
+        this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc));
         this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar/equipar",null,()=>this.usar(clickedKey),15),2);
         this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(clickedKey),15),2);   
 
@@ -71,12 +71,10 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(9/12),"HP: "+this.HP));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(10/12),"SP: "+this.SP));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
-
-        
+        this.create()
     }
     create(){
-        this.equipJson=this.cache.json.get('equipamiento');
-
+        this.scene.events.on("show_description",this.OnButtonClicked,this);
         this.addEquip();
     }
 
@@ -110,9 +108,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
     addEquip(){
         
-        for(let key in this.playerData.equipamiento){
-            const item=this.equipJson[key];
-            const label=item.name;
+        for(let key of this.playerData.equipamiento){
+            const item=this.scene.jsonEquipamiento[key];
             let column=0;
             switch(item.type){
                 case 'WEAPON':
@@ -124,14 +121,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                 case 'LEGGINS':
                     column=2;
                     break;
-            }
-            let button=new MenuButton(this,0,0,key,item.habilidades,()=>this.OnButtonClicked(key));
-            this.menuEquip.AddButton(button,-1,column);
+            }     
+            let button=new MenuButton(this.scene,0,0,key,null,null,21,0,"#707070",false);
+            this.menuEquip.AddButton(button,1,column);
         }
     }
 
     OnButtonClicked(key){
-        this.clickedKey=key;
+        console.log("se hace")  
+        this.desc=this.scene.jsonEquipamiento[key].description;
+        console.log(this.desc)
     }
 
 }
