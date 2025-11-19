@@ -1,3 +1,4 @@
+// Enemy.js
 import HealthBar from './HealthBar.js'
 
 /**
@@ -47,7 +48,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
         // === INTERACCIÓN CLICK ENEMIGO ===
         this.canBeClicked = false;
 
-        // OJO: antes usaba this.image.difficulty (que no existe) → altura 0 y no pillaba clics
+        // Zona clicable correcta
         this.setInteractive(
             new Phaser.Geom.Rectangle(0, 0, this.image.width, this.image.height),
             Phaser.Geom.Rectangle.Contains
@@ -91,7 +92,9 @@ export default class Enemy extends Phaser.GameObjects.Container {
     takeDamage(amount) {
         const dmg = Math.max(0, Math.floor(amount));
         this.hp = Math.max(0, (this.hp ?? 0) - dmg);
-        this.healthBar && (this.healthBar.targetValue = this.hp);
+        if (this.healthBar) {
+            this.healthBar.targetValue = this.hp;
+        }
         if (this.hp <= 0) {
             this.canBeClicked = false;
             this.setAlpha(0.6);
@@ -108,7 +111,9 @@ export default class Enemy extends Phaser.GameObjects.Container {
     updateEnemy(x, y) {
         this.x = x;
         this.y = y;
-        this.healthBar.targetValue = this.hp;
+        if (this.healthBar) {
+            this.healthBar.targetValue = this.hp;
+        }
     }
 
     /**
@@ -117,5 +122,37 @@ export default class Enemy extends Phaser.GameObjects.Container {
      */
     cambiaPompa(newTexture) {
         this.Pompa.setTexture(newTexture);
+    }
+
+    /**
+     * Pequeña animación de ataque:
+     * el enemigo se lanza un poco hacia el jugador y vuelve.
+     * Llama a onHit cuando se produce el "impacto".
+     * 
+     * @param {Phaser.GameObjects.Image|Phaser.GameObjects.Container} target 
+     * @param {Function} onHit 
+     */
+    playAttackAnimation(target, onHit) {
+        const scene = this.scene;
+        const originalX = this.x;
+        const originalY = this.y;
+
+        // Dirección aproximada hacia el jugador
+        let offsetX = 30;
+        if (target && typeof target.x === 'number') {
+            offsetX = (target.x < this.x) ? -30 : 30;
+        }
+
+        scene.tweens.add({
+            targets: this,
+            x: originalX + offsetX,
+            y: originalY,           // por si luego quieres mover también en Y
+            duration: 120,
+            yoyo: true,
+            ease: 'Quad.easeOut',
+            onComplete: () => {
+                if (onHit) onHit();
+            }
+        });
     }
 }

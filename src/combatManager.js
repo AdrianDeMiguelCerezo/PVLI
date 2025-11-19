@@ -397,45 +397,81 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     return Target.ENEMY;
   }
 
-  // =================== Turno de los enemigos ===================
+    // =================== Turno de los enemigos ===================
 
   /**
    * Turno de los enemigos: actúan de izquierda a derecha.
-   * De momento hacen un daño fijo 5 al jugador cada uno.
+   * Cada enemigo:
+   *  - hace una pequeña animación de ataque
+   *  - al "impactar" baja la vida del jugador
+   *  - esperamos un poco a que se vea la bajada de la barra
+   *  - pasamos al siguiente enemigo vivo
    */
   startEnemyTurns() {
     console.log("[CM] Empieza turno de enemigos");
 
-    const step = (i = 0) => {
-      // Saltar enemigos muertos
-      while (i < this.enemies.length && !this.enemies[i].isAlive) i++;
+    const scene  = this.scene;
+    const player = this.player;
 
-      // Si ya no queda ninguno, vuelve el turno al jugador
-      if (i >= this.enemies.length) {
-        this.actionsLeft = this.maxActionsPerTurn;
+    const doAttack = (index = 0) => {
+      // saltar enemigos muertos
+      while (index < this.enemies.length && !this.enemies[index].isAlive) {
+        index++;
+      }
+
+      // si ya no queda ninguno, vuelve el turno al jugador
+      if (index >= this.enemies.length) {
+        const maxActions =
+          this.maxActionsPerTurn ??
+          this.actionsPerTurn ??
+          2;
+
+        this.actionsLeft = maxActions;
         this.prepareEnemyIntentions();
+
         if (!this.ended) {
-          this.scene.events.emit("select_skill");
+          scene.events.emit("select_skill");
         }
         console.log("[CM] Fin turno enemigos, vuelve turno jugador");
         return;
       }
 
-      const enemy = this.enemies[i];
+      const enemy  = this.enemies[index];
+      const damage = 5; // aquí puedes luego enganchar daño desde jsonEnemigos
 
-      // TODO: usar habilidades reales del enemigo. Por ahora daño fijo 5.
-      this.damagePlayer(5);
-
-      // Pequeño delay para que se vea que atacan de uno en uno
-      this.scene.time.delayedCall(200, () => {
-        this.checkEndOfCombat();
-        if (!this.ended) {
-          step(i + 1);
+      const doHit = () => {
+        // impacto visual en el jugador (flash rojo rápido)
+        if (player && typeof player.setTint === "function") {
+          player.setTint(0xff0000);
+          scene.time.delayedCall(120, () => {
+            if (player && typeof player.clearTint === "function") {
+              player.clearTint();
+            }
+          });
         }
-      });
+
+        // aplicar daño (la barra se irá animando sola porque usa targetValue)
+        this.damagePlayer(damage);
+
+        // pequeño delay para que se note la bajada de vida antes del siguiente ataque
+        scene.time.delayedCall(400, () => {
+          this.checkEndOfCombat();
+          if (!this.ended) {
+            doAttack(index + 1);
+          }
+        });
+      };
+
+      // si el Enemy tiene animación de ataque, la usamos
+      if (enemy && typeof enemy.playAttackAnimation === "function") {
+        enemy.playAttackAnimation(player, doHit);
+      } else {
+        // fallback sin animación
+        doHit();
+      }
     };
 
-    step(0);
+    doAttack(0);
   }
 
   // =================== Utilidades de estado / fin de combate ===================
