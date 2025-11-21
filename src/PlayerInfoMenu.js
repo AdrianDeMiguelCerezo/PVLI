@@ -1,3 +1,4 @@
+import HealthBar from './HealthBar.js';
 import Menu from './Menu.js'
 import MenuButton from './MenuButton.js';
 import PlayerData from './PlayerData.js'
@@ -48,19 +49,14 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Equipamiento",null,()=>this.showEquip()));
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab()));
 
-        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,2,0x222222);
-        this.clickedKey=""
-        this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.clickedKey.description));
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar/equipar",null,()=>this.usar(clickedKey),15),2);
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(clickedKey),15),2);   
+        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,1,0x222222);
+        this.desc="" 
 
-        this.menuPlayer=new Menu(this.scene,w*(2.1/3),50+h*(0.86/3),w*(0.85/3),h*(0.6/3),6,1,0x222222);
+        this.menuPlayer=new Menu(this.scene,w*(2.1/3),50+h*(0.86/3),w*(0.85/3),h*(0.6/3),12,1,0x222222);
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
-        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(1/6),this.arma));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(2/6),"Torso equipado: "));
-        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(3/6),this.torso));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(4/6),"Piernas equipadas: "));
-        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(5/6),this.pantalones)); 
+        this.addPlayer();
 
         this.menuStats=new Menu(this.scene,w*(2.1/3),60+h*(0.86/3)+h*(0.6/3),w*(0.85/3),h*(0.89/3),12,1,0x222222);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
@@ -68,33 +64,48 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
         this.menuStats.add(new Phaser.GameObjects.Image(this.scene,20,h*(0.89/3)*(6/12),'player'));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(9/12),"HP: "+this.HP));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(10/12),"SP: "+this.SP));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(9/12),"HP: "));
+        this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(9/12),150,15,this.HP));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(10/12),"SP: "));
+        this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
-
-        
+        this.start()
     }
-    create(){
-        this.equipJson=this.cache.json.get('equipamiento');
-
+    /**
+     * Realiza las cosas que no se deberían hacer en el constructor al principio de la escena
+     */
+    start(){
+        this.scene.events.on("show_description",this.OnButtonClicked,this);
         this.addEquip();
     }
 
+    /**
+     * Solo deja visible el menu de equipamiento
+     */
     showEquip(){
         this.menuEquip.setVisible(true);
         this.menuItems.setVisible(false);
         this.menuHab.setVisible(false);
     }
+    /**
+     * Solo deja visible el menu de items
+     */
     showItems(){
         this.menuEquip.setVisible(false);
         this.menuItems.setVisible(true);
         this.menuHab.setVisible(false);
     }
+    /**
+     * Solo deja visible el menu de habilidades
+     */
     showHab(){
         this.menuEquip.setVisible(false);
         this.menuItems.setVisible(false);
         this.menuHab.setVisible(true);
     }
+    /**
+     * Actualiza los valores que se saca de playerData para cuando cambien
+     */
     updateValues(){
         this.HP=this.playerData.HP;
         this.SP=this.playerData.SP;
@@ -108,11 +119,13 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.hambre=this.playerData.hambre;
     }
 
+    /**
+     * Añade botones en el menu de equipamiento para representar el array de equipamiento no equipado de playerData
+     */
     addEquip(){
         
-        for(let key in this.playerData.equipamiento){
-            const item=this.equipJson[key];
-            const label=item.name;
+        for(let key of this.playerData.equipamiento){
+            const item=this.scene.jsonEquipamiento[key];
             let column=0;
             switch(item.type){
                 case 'WEAPON':
@@ -124,14 +137,170 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                 case 'LEGGINS':
                     column=2;
                     break;
-            }
-            let button=new MenuButton(this,0,0,key,item.habilidades,()=>this.OnButtonClicked(key));
-            this.menuEquip.AddButton(button,-1,column);
+            }     
+            let button=new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false);
+            this.menuEquip.AddButton(button,1,column);
+        }
+    }
+    /**
+     * Añade al menuPlayer el equipamiento que tiene equipado
+     */
+    addPlayer(){
+        if(this.arma!=null){
+            let button=new MenuButton(this.scene,0,0,this.arma,null,null,15,0,"#707070",false);
+            this.menuPlayer.AddButton(button,1,0);
+        }
+        if(this.torso!=null){
+            let button=new MenuButton(this.scene,0,0,this.torso,null,null,15,0,"#707070",false);
+            this.menuPlayer.AddButton(button,5,0);
+        }
+        if(this.pantalones!=null){
+            let button=new MenuButton(this.scene,0,0,this.pantalones,null,null,15,0,"#707070",false);
+            this.menuPlayer.AddButton(button,9,0);
         }
     }
 
+    /**
+     * Borra y vuelve a crear los menus para cambiar secciones con variable
+     * @param {number} menuShow Indica el menu que está activo cuando se llama a la función para que se mantenga en ese menu
+     */
+    updateMenus(menuShow){
+        delete this.menuEquip;
+        delete this.menuItems;
+        delete this.menuHab;
+        delete this.menuDesc;
+        delete this.menuPlayer;
+        delete this.menuStats;
+
+        let w=this.scene.sys.canvas.width;
+        let h=this.scene.sys.canvas.height;
+
+        this.menuEquip = new Menu(this.scene, 20, 50, w/1.5, h * 0.8, 20, 3, 0x222222);
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Armas", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
+
+        this.menuItems = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Fuera \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
+
+        this.menuHab = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
+
+        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,1,0x222222);
+        if(this.k!=null){
+            this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:w*(0.85/3)}}));
+            if(this.playerData.equipamiento.includes(this.k)){
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
+            }
+            else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+            }
+
+        }
+        
+        
+         
+
+        this.menuPlayer=new Menu(this.scene,w*(2.1/3),50+h*(0.86/3),w*(0.85/3),h*(0.6/3),12,1,0x222222);
+        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
+        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(2/6),"Torso equipado: "));
+        this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(4/6),"Piernas equipadas: "));
+        
+
+        this.menuStats=new Menu(this.scene,w*(2.1/3),60+h*(0.86/3)+h*(0.6/3),w*(0.85/3),h*(0.89/3),12,1,0x222222);
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
+        this.menuStats.add(new Phaser.GameObjects.Image(this.scene,20,h*(0.89/3)*(6/12),'player'));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(9/12),"HP: "));
+        this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(9/12),150,15,this.HP));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(10/12),"SP: "));
+        this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
+
+        this.addPlayer();
+        this.addEquip();
+
+        if(menuShow==1){
+            this.showEquip();
+        }
+        else if(menuShow==2){
+            this.showItems();
+        }
+        else if(menuShow==3){
+            this.showHab();
+        }
+    }
+
+    /**
+     * Se llama cuando se hace click a un boton relacionado a un json
+     * @param {string} key la llave del json
+     */
     OnButtonClicked(key){
-        this.clickedKey=key;
+        /**
+         * parámetro para saber el elemento que tenemos seleccionado
+         */
+        this.k=key;
+        this.desc=this.scene.jsonEquipamiento[key].description;
+        this.updateMenus(1);
+    }
+    /**
+     * Equipa lo que tengas seleccionado
+     */
+    equipar(){
+        
+        if(this.playerData.equipamiento.includes(this.k)){
+            let tag=this.scene.jsonEquipamiento[this.k];
+            if(tag.type=='WEAPON'){
+                if(this.playerData.arma!=null){
+                    this.playerData.equipamiento.push(this.playerData.arma);
+                }
+                this.playerData.arma=this.k;
+                this.playerData.equipamiento.splice(this.playerData.equipamiento.indexOf(this.k),1);
+            }
+            else if(tag.type=='TORSO'){
+                if(this.playerData.torso!=null){
+                    this.playerData.equipamiento.push(this.playerData.torso);
+                }
+                this.playerData.torso=this.k;
+                this.playerData.equipamiento.splice(this.playerData.equipamiento.indexOf(this.k),1);
+            }
+            else if(tag.type=='LEGGINS'){
+                if(this.playerData.pantalones!=null){
+                    this.playerData.equipamiento.push(this.playerData.pantalones);
+                }
+                this.playerData.pantalones=this.k;
+                this.playerData.equipamiento.splice(this.playerData.equipamiento.indexOf(this.k),1);
+            }
+            this.updateValues();
+            this.updateMenus(1);
+        }
+    }
+
+    /**
+     * Desequipa lo que tengas seleccionado
+     */
+    desequipar(){
+        
+        let tag=this.scene.jsonEquipamiento[this.k];
+        if(tag.type=='WEAPON'&&this.playerData.arma==this.k){          
+            this.playerData.equipamiento.push(this.playerData.arma);           
+            this.playerData.arma=null;
+        }
+        else if(tag.type=='TORSO'&&this.playerData.torso==this.k){
+            
+            this.playerData.equipamiento.push(this.playerData.torso);          
+            this.playerData.torso=null;
+        }
+        else if(tag.type=='LEGGINS'&&this.playerData.pantalones){           
+            this.playerData.equipamiento.push(this.playerData.pantalones);           
+            this.playerData.pantalones=null;
+        }
+        this.updateValues();
+        this.updateMenus(1);
+        
     }
 
 }
