@@ -126,6 +126,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         
         for(let key of this.playerData.equipamiento){
             const item=this.scene.jsonEquipamiento[key];
+            console.log(this.scene.jsonEquipamiento)
             let column=0;
             switch(item.type){
                 case 'WEAPON':

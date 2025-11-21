@@ -36,5 +36,11 @@
         "crit_damage": 0,
         "crit_chance": 0,
         "defense": 5
+    },
+    "PONCHO":{
+        "name": "Poncho",
+        "description": "Ahora más poncho que nunca",
+        "type": "TORSO",
+        "defense":3
     }
 }
