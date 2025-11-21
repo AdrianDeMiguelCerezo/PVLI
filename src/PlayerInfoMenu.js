@@ -49,11 +49,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Equipamiento",null,()=>this.showEquip()));
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab()));
 
-        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,2,0x222222);
-        this.desc=""
-        this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc));
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar/equipar",null,()=>this.usar(),15),2);
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);   
+        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,1,0x222222);
+        this.desc="" 
 
         this.menuPlayer=new Menu(this.scene,w*(2.1/3),50+h*(0.86/3),w*(0.85/3),h*(0.6/3),12,1,0x222222);
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
@@ -190,10 +187,20 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         this.menuHab = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
 
-        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,2,0x222222);
-        this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc));
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar/equipar",null,()=>this.usar(),15),2);
-        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);   
+        this.menuDesc=new Menu(this.scene,w*(2.1/3),50,w*(0.85/3),h*(0.8/3),3,1,0x222222);
+        if(this.k!=null){
+            this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:w*(0.85/3)}}));
+            if(this.playerData.equipamiento.includes(this.k)){
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
+            }
+            else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+            }
+
+        }
+        
+        
+         
 
         this.menuPlayer=new Menu(this.scene,w*(2.1/3),50+h*(0.86/3),w*(0.85/3),h*(0.6/3),12,1,0x222222);
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
@@ -240,9 +247,9 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.updateMenus(1);
     }
     /**
-     * Usa o equipa lo que tengas seleccionado
+     * Equipa lo que tengas seleccionado
      */
-    usar(){
+    equipar(){
         
         if(this.playerData.equipamiento.includes(this.k)){
             let tag=this.scene.jsonEquipamiento[this.k];
