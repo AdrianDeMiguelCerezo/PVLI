@@ -199,7 +199,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(2/6),"Torso equipado: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.6/3)*(4/6),"Piernas equipadas: "));
-        this.addPlayer();
+        
 
         this.menuStats=new Menu(this.scene,w*(2.1/3),60+h*(0.86/3)+h*(0.6/3),w*(0.85/3),h*(0.89/3),12,1,0x222222);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
@@ -213,6 +213,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
 
+        this.addPlayer();
         this.addEquip();
 
         if(menuShow==1){
@@ -245,22 +246,21 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         
         if(this.playerData.equipamiento.includes(this.k)){
             let tag=this.scene.jsonEquipamiento[this.k];
-            console.log(tag.type);
-            if(tag.type='WEAPON'){
+            if(tag.type=='WEAPON'){
                 if(this.playerData.arma!=null){
                     this.playerData.equipamiento.push(this.playerData.arma);
                 }
                 this.playerData.arma=this.k;
                 this.playerData.equipamiento.splice(this.playerData.equipamiento.indexOf(this.k),1);
             }
-            else if(tag.type='TORSO'){
+            else if(tag.type=='TORSO'){
                 if(this.playerData.torso!=null){
                     this.playerData.equipamiento.push(this.playerData.torso);
                 }
                 this.playerData.torso=this.k;
                 this.playerData.equipamiento.splice(this.playerData.equipamiento.indexOf(this.k),1);
             }
-            else if(tag.type='LEGGINS'){
+            else if(tag.type=='LEGGINS'){
                 if(this.playerData.pantalones!=null){
                     this.playerData.equipamiento.push(this.playerData.pantalones);
                 }
@@ -276,7 +276,24 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      * Desequipa lo que tengas seleccionado
      */
     desequipar(){
-
+        
+        let tag=this.scene.jsonEquipamiento[this.k];
+        if(tag.type=='WEAPON'&&this.playerData.arma==this.k){          
+            this.playerData.equipamiento.push(this.playerData.arma);           
+            this.playerData.arma=null;
+        }
+        else if(tag.type=='TORSO'&&this.playerData.torso==this.k){
+            
+            this.playerData.equipamiento.push(this.playerData.torso);          
+            this.playerData.torso=null;
+        }
+        else if(tag.type=='LEGGINS'&&this.playerData.pantalones){           
+            this.playerData.equipamiento.push(this.playerData.pantalones);           
+            this.playerData.pantalones=null;
+        }
+        this.updateValues();
+        this.updateMenus(1);
+        
     }
 
 }
