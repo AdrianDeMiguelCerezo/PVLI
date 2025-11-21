@@ -82,7 +82,7 @@ export default class Menu extends Phaser.GameObjects.Container {
                 let i = 0;
                 let found = false;
                 while (i < this.rows && !found) { found = !this.positions[i][column]; i++; }
-                i--;
+                i--; j--;
                 if (!this.positions[i][column]) { this._AddButton(button, i, column) }
                 else { button.destroy(); }
             }
@@ -165,9 +165,9 @@ export default class Menu extends Phaser.GameObjects.Container {
 
         this.add(item);
 
-        item.x = this.SBMEAB + ((this.width-2*this.SBMEAB)/this.columns ) * column;
+        item.x = this.SBMEAB + (this.width-2*this.SBMEAB/this.columns ) * column;
 
-        item.y = this.SBMEAB + ((this.height - 2 * this.SBMEAB) / this.rows ) * row;
+        item.y = this.SBMEAB + (this.height - 2 * this.SBMEAB / this.rows ) * row;
 
     }
 }

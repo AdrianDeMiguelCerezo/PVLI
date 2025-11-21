@@ -27,15 +27,13 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130) {
+    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2,  radius = 130) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
         this.targetScene = targetScene;
-
-        this.name = "node"
 
         this.nodeType = nodeType;
         this.state = state;
@@ -69,7 +67,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             this.drawConnectionsFromCurrent();
         });
         this.on('pointerup', () => {
-
+            
             if (this.state === State.OPEN) {
                 // Reset old current node
                 const oldCurrent = this.scene.nodes.find(n => n.state === State.CURRENT);
@@ -80,14 +78,10 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 this.state = State.CURRENT;
 
                 this.updateTint();
-                this.drawConnectionsFromCurrent();
-
-                this.openNearbyNodes();
-
-
-                this.scene.UpdateFociDifficulties(50);
 
                 
+                this.openNearbyNodes();
+
 
                 if (this.visited == false) {
                     this.visited = true;
@@ -105,20 +99,13 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                         radius: n.radius
 
                     }));
-
-                    this.scene.registry.set("nodes", nodeData);
-
-                    this.scene.events.removeAllListeners("update_tint");
-
-                    this.scene.scene.start(this.targetScene);
-
                     
+                    this.scene.registry.set("nodes", nodeData)
+                    this.scene.scene.start(this.targetScene);
                 }
-
+                
             }
         });
-
-        this.scene.events.on("update_tint", this.updateTint,this)
     }
 
 
@@ -129,14 +116,6 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             if (this.state === State.LOCKED) this.setTintFill(0x555555);
             else if (this.state === State.OPEN) this.setTintFill(0x000000);
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
-        }
-
-        console.log(this)
-        if (this.scene.game.config.physics.arcade.debug) {
-            if (this.difficulty < 100) { }
-            else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
-            else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
-            else { this.setTintFill(0x8B1800) }
         }
 
     }
@@ -191,7 +170,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
          * @type {MapNode} 
          */
         const currentNode = this.scene.nodes.find(n => n.state === State.CURRENT); //CURRENT
-
+        
         if (!currentNode) return;
 
         // Draw line from current to OPEN, nearby nodes
