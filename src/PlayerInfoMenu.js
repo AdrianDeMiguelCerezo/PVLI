@@ -69,7 +69,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(10/12),"SP: "));
         this.menuStats.add(new HealthBar(this.scene,100,h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
-        this.start()
+        this.start();
     }
     /**
      * Realiza las cosas que no se deberían hacer en el constructor al principio de la escena
