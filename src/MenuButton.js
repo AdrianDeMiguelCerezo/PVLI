@@ -163,7 +163,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             this.text = scene.jsonEquipamiento[key].name;
           }
         } else if (scene.jsonEquipamiento.hasOwnProperty(key)) {
-          this.text = scene.jsonHabilidades[key].name;
+          this.text = scene.jsonEquipamiento[key].name;
         } else if (scene.jsonItems.hasOwnProperty(key)) {
           this.text = scene.jsonItems[key].name;
         } else {
