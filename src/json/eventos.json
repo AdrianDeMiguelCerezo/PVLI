@@ -1,0 +1,42 @@
+{
+    "EVENTO_1":{
+        "nombres": ["nombre 1", "nombre 2"],
+        "recompensas": ["MOLOTOV", "POTI_HP_MINI"],
+        "SUBEVENTO_1":{
+            "speaker": 0,
+            "text": "esta es la primera linea del primer evento",
+            "option": [{"next": "SUBEVENTO_2"}]
+        },
+        "SUBEVENTO_2":{
+            "speaker": 0,
+            "text": "¿que quieres hacer?",
+            "optText": ["Luchar", "Consiguir item", "ir a tienda", "seguir hablando"],
+            "option": [{"next": "SUBEVENTO_3", "combat": "PATRULLA_ESTADO"}, {"next": "SUBEVENTO_4", "reward": -1}, {"next": "SUBEVENTO_2", "tienda": "ARMAS"}, {"next": "SUBEVENTO_5"}]
+        },
+        "SUBEVENTO_3":{
+            "speaker": 1,
+            "text": "Te he vencido",
+            "option": [{"next": "FIN"}]
+        },
+        "SUBEVENTO_4":{
+            "speaker": 1,
+            "text": "Gracias por el objeto",
+            "option": [{"next": "FIN"}]
+        },
+        "SUBEVENTO_5":{
+            "speaker":0,
+            "text": "Adios",
+            "option": [{"next": "FIN"}]
+        },
+        "FIN":{
+            "text": "vuelves al mapa"
+        }
+    },
+    "EVENTO_2":{
+        "NOMBRES": ["nombre 3"],
+        "SUBEVENTO_1":{
+            "speaker": 0,
+            "text": "Este es otro evento"
+        }
+    }
+}
