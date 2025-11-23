@@ -149,8 +149,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     column=2;
                     break;
             }     
-            let button=new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false);
-            this.menuEquip.AddButton(button,-1,column);
+            this.menuEquip.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
         }
     }
     /**
