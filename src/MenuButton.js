@@ -213,5 +213,6 @@ export default class MenuButton extends Phaser.GameObjects.Text {
     });
   }
 
+
   // (los métodos Equipar / Desequipar los dejo tal cual estaban; no influyen en el bug)
 }

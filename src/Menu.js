@@ -170,4 +170,12 @@ export default class Menu extends Phaser.GameObjects.Container {
         item.y = this.SBMEAB + (this.height - 2 * this.SBMEAB / this.rows ) * row;
 
     }
+
+    removeAllButtons() {
+        this.list.forEach(child => {
+            if (child.disableInteractive) child.disableInteractive();
+            if (child.removeAllListeners) child.removeAllListeners();
+            child.destroy();
+        });
+    }
 }
