@@ -1,34 +1,82 @@
 {
-    "EVENTO_1":{
-        "nombres": ["nombre 1", "nombre 2"],
-        "recompensas": ["MOLOTOV", "POTI_HP_MINI"],
-        "SUBEVENTO_1":{
+    "PUEBLO_MEDIANO": {
+
+        "parámetros": [
+            "nombre_tabernero",
+            "nombre_mercader",
+            "nombre_mujer_tabernero",
+            "nombre_bosque",
+            "nombre_taberna",
+            "recompensas_quest_tabernero_facil",
+            "recompensas_quest_tabernero_difícil"
+        ],
+
+        "nombre_tabernero": "Nombre_Hombre",
+
+
+
+
+
+        "recompensas_quest_tabernero": [
+            {
+                "oro": 100,
+                "items": "tala"
+            },
+            {
+                "oro": 0,
+                "items": "cual"
+            },
+            {
+                "oro": 10,
+                "items": "talcual"
+            }
+        ],
+
+        "nombres": [ "nombre 1", "nombre 2" ],
+        "recompensas": [ "MOLOTOV", "POTI_HP_MINI" ],
+        "SUBEVENTO_1": {
             "speaker": 0,
-            "text": "esta es la primera linea del primer evento",
-            "option": [{"next": "SUBEVENTO_2"}]
+            "text": "Hola, bienvenido a ___. Me llamo ___, soy el dueño de esta taverna",
+            "option": [ { "next": "SUBEVENTO_2" } ]
         },
-        "SUBEVENTO_2":{
+        "SUBEVENTO_2": {
             "speaker": 0,
             "text": "¿que quieres hacer?",
-            "optText": ["Luchar", "Consiguir item", "ir a tienda", "seguir hablando"],
-            "option": [{"next": "SUBEVENTO_3", "combat": "PATRULLA_ESTADO"}, {"next": "SUBEVENTO_4", "reward": -1}, {"next": "SUBEVENTO_2", "tienda": "ARMAS"}, {"next": "SUBEVENTO_5"}]
+            "optText": [ "Luchar", "Consiguir item", "ir a tienda", "seguir hablando" ],
+            "option": [
+                {
+                    "next": "SUBEVENTO_3",
+                    "combat": "PATRULLA_ESTADO"
+                },
+                {
+                    "next": "SUBEVENTO_4",
+                    "reward": -1
+                },
+                {
+                    "next": "SUBEVENTO_2",
+                    "tienda": "ARMAS"
+                },
+                { "next": "SUBEVENTO_5" }
+            ]
         },
-        "SUBEVENTO_3":{
+        "SUBEVENTO_3": {
             "speaker": 1,
             "text": "Te he vencido",
-            "option": [{"next": "FIN"}]
+            "option": [ { "next": "FIN" } ]
         },
-        "SUBEVENTO_4":{
+        "GANAS_QUEST_FÁCIL": {
             "speaker": 1,
             "text": "Gracias por el objeto",
-            "option": [{"next": "FIN"}]
+            "reward": "recompensas_quest_tabernero_facil",
+            "option": [ { "next": "FIN" } ]
         },
-        "SUBEVENTO_5":{
-            "speaker":0,
+        "GANAS_QUEST_DIFÍCIL": {
+            "speaker": 0,
             "text": "Adios",
-            "option": [{"next": "FIN"}]
+            "recompensas": "recompensas_quest_tabernero_difícil",
+            "option": [ { "next": "FIN" } ]
         },
-        "FIN":{
+        "FIN": {
             "text": "vuelves al mapa"
         }
     },
