@@ -1,5 +1,5 @@
 {
-
+    //Esto son arrays de cosas que se van a usar mucho a la hora de decidir los parámetros, como posibles nombres de personas.
     "nombres_hombre": [],
     "nombres_mujer": [],
 
