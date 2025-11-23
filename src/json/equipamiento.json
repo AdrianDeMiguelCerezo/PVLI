@@ -1,40 +1,53 @@
 {
-  "REVOLVER_OXIDADO": {
-    "name": "Revólver oxidado",
-    "description": "Viejo pero útil.",
-    "type": "WEAPON",
-    "habilidades": [
-        {
-            "name": "Ataque básico",
-            "description": "1 acc. Un golpe sencillo con el arma.",
-            "actionCost": 1,
-            "spCost": 0,
-            "damage": 12,
-            "type": "ACTIVE",
-            "target": "ENEMY"
-        }
-    ],
-    "crit_damage": 150,
-    "crit_chance": 10,
-    "damage": 5,
-    "defense": 0
-  },
+    "REVOLVER_OXIDADO": {
+        "name": "Revólver oxidado",
+        "description": "Viejo pero útil.",
+        "type": "WEAPON",
+        "habilidades": [
+            {
+                "name": "Ataque básico",
+                "description": "1 acc. Un golpe sencillo con el arma.",
+                "actionCost": 1,
+                "damage": 12,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ],
+        "crit_damage": 150,
+        "crit_chance": 10
+    },
+    "ESPADA_TABERNERO": {
+        "name": "Espada del tabernero",
+        "description": "Una espada bastante vieja y desgastada",
+        "type": "WEAPON",
+        "habilidades": [
+            {
+                "name": "Corte básico",
+                "description": "1 acc. Un corte sencillo con el arma.",
+                "actionCost": 1,
+                "damage": 16,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ],
+        "crit_damage": 100,
+        "crit_chance": 20
+    },
+
+
+
+    
     "CHAQUETA_PIEL": {
         "name": "Chaqueta de piel",
         "description": "Abriga y protege algo más que una chaqueta de papel.",
         "type": "TORSO",
-        "habilidades": [],
-        "crit_damage": 0,
-        "crit_chance": 0,
         "defense": 8
     },
     "PANTALONES_REFORZADOS": {
         "name": "Pantalones reforzados",
         "description": "Ahora con lana de mamut lanudo",
         "type": "LEGGINS",
-        "habilidades": [],
-        "crit_damage": 0,
-        "crit_chance": 0,
         "defense": 5
     }
+
 }

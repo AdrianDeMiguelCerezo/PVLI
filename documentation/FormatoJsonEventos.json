@@ -1,0 +1,154 @@
+{
+
+    "nombres_hombre": [],
+    "nombres_mujer": [],
+
+    "NOMBRE_EVENTO": {
+
+        "params": [
+            "parámetro_1",
+            "parámetro_2",
+            "parámetro_3",
+            "parámetro_5"
+
+        ],
+
+        "parámetro_1": "NH", //se sustituye por un nombre de nombres_hombre[]
+        "parámetro_2": "NM", //sese sustituye por un nombre de nombres_mujer[]
+
+        "parámetro_3": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ], //se sustituye por un algo random del array
+
+
+        "parámetro_5": [
+            {
+                "dinero": 50
+
+            },
+            {
+                "equipamiento": [ "ESPADA_TABERNERO" ]
+            },
+            {
+                "dinero": 20,
+                "items": [ "POTI_HP_MINI" ]
+            }
+        ], //se sustituye por un algo del array. Este es un ejemplo de array con recompensas.
+
+        /*Formato de las recompensas:
+        {
+            "nombre del atributo int del playerData q se cambia": (int) cambio en este,
+            ...
+            "nombre del n-ésimo atributo int del playerData q se cambia": (int) cambio en este,
+            "equipamiento": ["ARMA_TAL","ARMADURA_PASCUAL",...],
+            "items": ["ITEM_TAL",...]
+        }
+        */
+
+
+
+        //El primer subevento escrito es el subevento de entrada al evento este.
+        "SUBEVENTO_1": //Nombre del subevento.
+        [
+            //diálogo con botón de continuar
+            { "text": "texto del diálogo" },
+
+            //diálogo con botor de continuar, pero este tiene el texto custom
+            {
+                "text": "texto del diálogo",
+                "continue": "texto boton continue"
+            },
+
+            //diálogo con opciones custom
+            {
+                "text": "texto del diálogo",
+                "options": [
+
+                    //si escoges esta opción salta al subevento:"SUBEVENTO_TAL" de este evento
+                    {
+                        "text": "texto opción 1",
+                        "j": "SUBEVENTO_TAL"
+                    },
+
+                    //si escoges esta opción salta al evento:"EVENTO_TAL" de el json de eventos (ergo al subevento de entrada al evento: "EVENTO_TAL")
+                    {
+                        "text": "texto opción 2",
+                        "j": "/EVENTO_TAL"
+                    },
+
+                    //si escoges esta opción salta al subevento desde el que llegado entrado al evento al que pertenezco.
+                    {
+                        "text": "texto opción 3",
+                        "j": -1
+                    },
+
+                    //si escoges esta opción, sales al mapa.
+                    {
+                        "text": "texto opción 4",
+                        "j": null
+                    }
+
+                ]
+            }
+        ],
+        "SUBEVENTO_2": //nombre del subevento
+        //cadena lineal de sucesos(no hay opciones a elegir). Cuando acaba un suceso, ocurre el siguiente del array. Cuando no hay un suceso siguiente, se vuelve al mapa.
+        [
+            { "text": "texto del diálogo" },
+            { "text": "texto del diálogo" },
+            {
+                "text": "texto del diálogo",
+                "continue": "Lo dices en serio?!"
+            },
+            { "text": "texto del diálogo" },
+            { "text": "texto del diálogo" },
+            {
+                "text": "-Se la llevaron -snif- -snif-",
+                "continue": "¿Quiénes?"
+            },
+
+            //combate
+            {
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": {
+                        "dinero": 2,
+                        "items": "POTI_HP_MINI"
+                    },
+                    "ambush": true //empiezan los enemigos
+                },
+                "flee": null, //si huyes vas al mapa
+                "canFlee": false //es posible huir?
+            },
+            { "text": "Ha acabado el combate, estás cansado.\nSigues andando." },
+            { "text": "De rrepente, ves a más bandidos acercarse" },
+            {
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": {
+                        "dinero": 4
+                    },
+                    "ambush": false //empieza el jugador
+                },
+                "flee": "SUBEVENTO_TAL o /EVENTO_TAL o (int)-1 ", //si huyes vas al subevento llamado "SUBEVENTO_TAL", al evento llamado "EVENTO_TAL", o al subevento que llevó a este evento.
+                "canFlee": true //es posible huir?
+            },
+            {
+                "text": "Tras haber derrotado a todos los bandidos, vuelves a hablar con ${parámetro_1}"
+            },
+            {
+                "text": "Gracias por salvarme. Aquí tienes tus recompensas. ${parámetro_5}",
+                "rewards": "parámetro_5"
+            }
+
+
+        ]
+
+    },
+    "NOMBRE_EVENTO_CUAL": {
+        "params": [
+            "nombre_lider_bandidos",
+            "nombre_mercader",
+            "recompensas_quest_matar_líder"
+        ]
+        //y demás
+    }
+}
