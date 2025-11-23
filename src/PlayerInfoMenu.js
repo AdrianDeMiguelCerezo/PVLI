@@ -20,6 +20,10 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         let w=this.scene.sys.canvas.width;
         let h=this.scene.sys.canvas.height;
+        /**
+         * Botón vacio para que funcione bien la posición de los botones con la lógica de Menu
+         */
+        let empty=new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false);
         this.HP;
         this.SP;
         this.arma;
@@ -36,11 +40,17 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Armas", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
+        this.menuEquip.AddButton(empty,-1,0);
+        this.menuEquip.AddButton(empty,-1,1);
+        this.menuEquip.AddButton(empty,-1,2);
 
         this.menuItems = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222).setVisible(false);
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Fuera \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
+        this.menuItems.AddButton(empty,-1,0);
+        this.menuItems.AddButton(empty,-1,1);
+        this.menuItems.AddButton(empty,-1,2);
 
         this.menuHab = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222).setVisible(false);
 
@@ -140,7 +150,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     break;
             }     
             let button=new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false);
-            this.menuEquip.AddButton(button,1,column);
+            this.menuEquip.AddButton(button,-1,column);
         }
     }
     /**
@@ -175,16 +185,26 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         let w=this.scene.sys.canvas.width;
         let h=this.scene.sys.canvas.height;
+        /**
+         * Botón vacio para que funcione bien la posición de los botones con la lógica de Menu
+         */
+        let empty=new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false);
 
         this.menuEquip = new Menu(this.scene, 20, 50, w/1.5, h * 0.8, 20, 3, 0x222222);
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Armas", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
+        this.menuEquip.AddButton(empty,-1,0);
+        this.menuEquip.AddButton(empty,-1,1);
+        this.menuEquip.AddButton(empty,-1,2);
 
         this.menuItems = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Fuera \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
+        this.menuItems.AddButton(empty,-1,0);
+        this.menuItems.AddButton(empty,-1,1);
+        this.menuItems.AddButton(empty,-1,2);
 
         this.menuHab = new Menu(this.scene, 20, 50, w/1.5, h*0.8, 20, 3, 0x222222);
 

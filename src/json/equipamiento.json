@@ -30,7 +30,7 @@
     },
     "PANTALONES_REFORZADOS": {
         "name": "Pantalones reforzados",
-        "description": "Ahora con lana de mamut lanudo",
+        "description": "Ahora con lana de mamut lanudo.",
         "type": "LEGGINS",
         "habilidades": [],
         "crit_damage": 0,
@@ -39,8 +39,32 @@
     },
     "PONCHO":{
         "name": "Poncho",
-        "description": "Ahora más poncho que nunca",
+        "description": "Ahora más poncho que nunca.",
         "type": "TORSO",
         "defense":3
+    },
+    "ESCOPETA":{
+        "name":"Escopeta",
+        "description":"Hace mucho daño.",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque básico",
+                "description":"1 acc. Un golpe sencillo con el arma.",
+                "actionCost":1,
+                "damage":18,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            }
+        ],
+        "crit_damage": 200,
+        "crit_chance": 10,
+        "damage": 5
+    },
+    "VAQUEROS":{
+        "name":"Vaqueros",
+        "description":"Unos vaqueros para el vaquero.",
+        "type":"LEGGINS",
+        "defense":7
     }
 }

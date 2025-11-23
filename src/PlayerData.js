@@ -22,7 +22,7 @@ export default class PlayerData
         habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE', 'ATAQUE_FURIOSO', 'CURACION'],
         items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 1 }], 
         efectos = [],
-        equipamiento = ["PANTALONES_REFORZADOS","PONCHO"],
+        equipamiento = ["PANTALONES_REFORZADOS","PONCHO","ESCOPETA","VAQUEROS"],
         arma = "REVOLVER_OXIDADO", torso = "CHAQUETA_PIEL", pantalones = null, 
     )
 
