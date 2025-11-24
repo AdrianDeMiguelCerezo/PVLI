@@ -1,3 +1,5 @@
+
+
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
@@ -27,14 +29,16 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130) {
+    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
-        this.targetScene = targetScene;
 
+        //genera un evento a partir de estr nodo con la key eventKey
+        if (!!event) { this.event = generateEvent(eventKey); }
+        else { this.event = event; }
         this.name = "node"
 
         this.nodeType = nodeType;
@@ -95,7 +99,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
-                        targetScene: n.targetScene,
+                        event: n.event,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
@@ -208,5 +212,14 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 }
             }
         }
+    }
+
+    /**
+     * 
+     * @param {string} eventKey
+     */
+    generateEvent(eventKey) {
+        let event = new SubStateNode()
+        return event;
     }
 }
