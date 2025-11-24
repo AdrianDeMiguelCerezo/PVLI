@@ -219,7 +219,18 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {string} eventKey
      */
     generateEvent(eventKey) {
-        let event = new SubStateNode()
+
+        const evento = this.scene.jsonEventos[eventKey];
+        let params = {};
+
+        for (let par_nombre of evento["params"]) {
+            const par_valor = evento[par_nombre];
+            if (Array.isArray(par_valor)) {
+                params[par_nombre] = par_valor[Phaser.Math.RND.between(0, par_valor.length - 1)];
+            }
+            else
+            {params[par_nombre] = par_valor}
+        }
         return event;
     }
 }

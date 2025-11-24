@@ -48,6 +48,7 @@ export default class BootScene extends Phaser.Scene {
         this.load.json('efectos', 'src/json/efectos.json'); 
         this.load.json('items', 'src/json/items.json'); 
         this.load.json('dialogos', 'src/json/dialogos.json');
+        this.load.json('eventos', 'src/json/eventos.json');
     }
     create() {
 
