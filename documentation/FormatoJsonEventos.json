@@ -52,7 +52,7 @@
 
         },
 
-        "eventFractions": {
+        "eventFragments": {
 
             //El primer subevento escrito es el subevento de entrada al evento este.
             "Parte1": //Nombre del subevento.
@@ -61,7 +61,7 @@
                 { "text": "texto del di�logo" },
 
                 //en cualquier texto de un evento que se muestra en pantalla en el que se usa _Nombre_de_parámetro, 
-                //luego se sustituye por el valor que tenga el parámetro definido en params{} del evento: "Nombre_de_parámetro"
+                //luego se sustituye por el valor que tenga el parámetro local definido en params{} del evento: "Nombre_de_parámetro"
                 { "text": "_parámetro1: hola, soy _parámetro1" },
 
                 //di�logo con botor de continuar, pero este tiene el texto custom

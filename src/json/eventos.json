@@ -27,7 +27,7 @@
                 }
             ]
         },
-        "subeventos": {
+        "eventFragments": {
             "LLEGAS_PUEBLO": {
             },
             "ENTRAS_TABERNA": [
