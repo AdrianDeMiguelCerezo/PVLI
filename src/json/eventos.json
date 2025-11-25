@@ -4,186 +4,183 @@
 
 
 
-    "PUEBLO_MEDIANO": {
+  "PUEBLO_MEDIANO": {
 
-        "params": [
-            "nombre_tabernero",
-            "nombre_mujer_tabernero",
-            "nombre_taberna",
-            "nombre_bandidos",
-            "recompensas_quest_tabernero"
+    "params": {
+      "nombre_tabernero": "NH",
+      "nombre_mujer_tabernero": "NM",
 
-        ],
+      "nombre_bandidos": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ],
 
-        "nombre_tabernero": "NH",
-        "nombre_mujer_tabernero": "NM",
+      "nombre_taberna": [ "El pez del aire", "Pochi", "Niágara", "La cerveza dorada", "Calabaza's" ],
 
-        "nombre_bandidos": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ],
+      "recompensas_quest_tabernero": [
+        {
+          "dinero": 50
 
-        "nombre_taberna": [ "El pez del aire", "Pochi", "Niágara", "La cerveza dorada", "Calabaza's" ],
-
-        "recompensas_quest_tabernero": [
-            {
-                "dinero": 50
-
-            },
-            {
-                "equipamiento": [ "ESPADA_TABERNERO" ]
-            },
-            {
-                "dinero": 20,
-                "items": [ "POTI_HP_MINI" ]
-            }
-        ],
-
-        "LLEGAS_PUEBLO": {
         },
-        "ENTRAS_TABERNA": [
+        {
+          "equipamiento": [ "ESPADA_TABERNERO" ]
+        },
+        {
+          "dinero": 20,
+          "items": [ "POTI_HP_MINI" ]
+        }
+      ]
+    },
 
-            { "text": "-Hola, bienvenido a ${nombre_taberna}. Me llamo ${nombre_tabernero}, soy el dueño de esta taberna" },
+    "subeventos": {
+
+      "LLEGAS_PUEBLO": {
+      },
+      "ENTRAS_TABERNA": [
+
+        { "text": "-Hola, bienvenido a ${nombre_taberna}. Me llamo ${nombre_tabernero}, soy el dueño de esta taberna" },
+        {
+          "text": "-¿Qué quieres tomar?",
+
+          "options": [
             {
-                "text": "-¿Qué quieres tomar?",
-
-                "options": [
-                    {
-                        "text": "-Una cerveza por favor (5 monedas)",
-                        "j": "CERVEZA"
-                    },
-                    {
-                        "text": "-No quiero nada (Irse)",
-                        "j": null
-                    }
-                ]
-            }
-        ],
-
-        "CERVEZA": [
-
-            {
-                "text": "-¡Qué buena cerveza tenéis aquí!",
-                "actions": {
-                    "SP": 10,
-                    "dinero": -5
-                }
+              "text": "-Una cerveza por favor (5 monedas)",
+              "j": "CERVEZA"
             },
-            { "text": "-¡A que sí!\n${nombre_tabernero} se aparta y se pone a limpiar vasos" },
-
             {
-                "text": "A ${nombre_tabernero} se le ve triste",
-                "options": [
-                    {
-                        "text": "-¿Que te pasa?",
-                        "j": "HISTORIA_TRISTE"
-                    },
-                    {
-                        "text": "Irse",
-                        "j": null
-                    }
-                ]
+              "text": "-No quiero nada (Irse)",
+              "j": null
             }
-        ],
-        "HISTORIA_TRISTE": [
+          ]
+        }
+      ],
 
-            { "text": "-Pues resulta que el otro día estaba con mi mujer paseando por la calle -snif-" },
-            { "text": "-Llegaron, y mi mujer -snif-" },
+      "CERVEZA": [
+
+        {
+          "text": "-¡Qué buena cerveza tenéis aquí!",
+          "actions": {
+            "SP": 10,
+            "dinero": -5
+          }
+        },
+        { "text": "-¡A que sí!\n${nombre_tabernero} se aparta y se pone a limpiar vasos" },
+
+        {
+          "text": "A ${nombre_tabernero} se le ve triste",
+          "options": [
             {
-                "text": "-Se la llevaron -snif- -snif-",
-                "continue": "¿Quiénes?"
+              "text": "-¿Que te pasa?",
+              "j": "HISTORIA_TRISTE"
             },
-            { "text": "-ESOS BASTARDOS DE ${nombre_bandidos}" },
-            { "text": "-¡SE LLEVARON A MI &{nombre_mujer}!" },
-            { "text": "-¡No me puedo ni imaginar las cosas que la estarán haciendo!" },
-            { "text": "-Te daría cualquier cosa si la pudieras salvar.\n Su guarida se encuentra en los callejones sur del pueblo" },
             {
-                "text": "-¿Hay trato?",
-
-
-                "options": [
-                    {
-                        "text": "Hay trato.",
-                        "j": "BUSCAR BANDIDOS"
-                    },
-                    {
-                        "text": "Lo siento, tengo asuntos más importantes",
-                        "j": null
-                    }
-                ]
+              "text": "Irse",
+              "j": null
             }
-        ],
+          ]
+        }
+      ],
+      "HISTORIA_TRISTE": [
 
-        "BUSCAR_BANDIDOS": [
+        { "text": "-Pues resulta que el otro día estaba con mi mujer paseando por la calle -snif-" },
+        { "text": "-Llegaron, y mi mujer -snif-" },
+        {
+          "text": "-Se la llevaron -snif- -snif-",
+          "continue": "¿Quiénes?"
+        },
+        { "text": "-ESOS BASTARDOS DE ${nombre_bandidos}" },
+        { "text": "-¡SE LLEVARON A MI &{nombre_mujer}!" },
+        { "text": "-¡No me puedo ni imaginar las cosas que la estarán haciendo!" },
+        { "text": "-Te daría cualquier cosa si la pudieras salvar.\n Su guarida se encuentra en los callejones sur del pueblo" },
+        {
+          "text": "-¿Hay trato?",
 
-            { "text": "Vas a donde te ha dicho el tabernero" },
-            { "text": "Te encuentras cruzando una esquina cuando unos bandidos te sorprenden.\n-¡FUERA DE NUESTRO TERRITORIO!" },
+
+          "options": [
             {
-                "combat": {
-                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
-                    "rewards": {
-                        "dinero": 2
-                    },
-                    "ambush": true
-                },
-                "flee": null,
-                "canFlee": true
+              "text": "Hay trato.",
+              "j": "BUSCAR BANDIDOS"
             },
-            { "text": "Tras el combate, sigues dirigiéndote hacia dónde te ha dicho el Tabernero" },
-            { "text": "El lugar es una casa destartalada, aunque no más que las demás de esta zona" },
-            { "text": "Te acercas a la puerta" },
             {
-                "text": "Olles unos sonidos sordos provenientes del otro lado de la puerta",
-                "options": [
-                    {
-                        "text": "Pegar tu oído a la puerta",
-                        "j": 0
-                    },
-                    {
-                        "text": "Mirar por un hueco de la ventana",
-                        "j": 0
-                    },
-                    {
-                        "text": "Llamar a la puerta",
-                        "j": "LLAMAR_PUERTA"
-                    },
-                    {
-                        "text": "Abres la puerta de una patada",
-                        "j": 0
-                    }
-                ]
+              "text": "Lo siento, tengo asuntos más importantes",
+              "j": null
             }
+          ]
+        }
+      ],
 
-        ],
+      "BUSCAR_BANDIDOS": [
 
-        "LLAMAR_PUERTA": [
-            { "text": "La puerta se entreabre y una voz profunda pregunta desde detrás de la puerta:\n-¿Quién eres y qué quieres? Ahora estamos ocupados." },
+        { "text": "Vas a donde te ha dicho el tabernero" },
+        { "text": "Te encuentras cruzando una esquina cuando unos bandidos te sorprenden.\n-¡FUERA DE NUESTRO TERRITORIO!" },
+        {
+          "combat": {
+            "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+            "rewards": {
+              "dinero": 2
+            },
+            "ambush": true,
+            "canFlee": true
+          },
+          "flee": null
+          
+        },
+        { "text": "Tras el combate, sigues dirigiéndote hacia dónde te ha dicho el Tabernero" },
+        { "text": "El lugar es una casa destartalada, aunque no más que las demás de esta zona" },
+        { "text": "Te acercas a la puerta" },
+        {
+          "text": "Olles unos sonidos sordos provenientes del otro lado de la puerta",
+          "options": [
             {
-                "text": "Mientras te pregunta, olles una especie de gritos amortiguados de fondo.",
-
-                "options": [
-                    {
-                        "text": "Entrar a la fuerza",
-                        "j": "ENTRAR_FORZANDO"
-                    },
-                    {
-                        "text": "Irse",
-                        "j": null
-                    }
-                ]
-            }
-        ],
-        "ENTRAR_FORZANDO": [
-            { "text": "Empujas la puerta con fuerza y el hombre que te ha hablado antes se cae al suelo.\n-¡CÓMO TE ATREVES A IRRUMPIR ASÍ EN LA MORADA DE ${nombre_bandidos.toUpperCase()}!" },
-            { "text": "Mientras tando, presencias una horrible escena. Hay tres hombres semidesnudos haciéndole atrocidades a una mujer en un estado deplorable, que presupones que es ${nombre_mujer_tabernero}, la mujer del tabernero." },
+              "text": "Pegar tu oído a la puerta",
+              "j": 0
+            },
             {
-                "combat": {
-                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN","BANDIDO_COMUN", "BANDIDO_COMUN" ],
-                    "rewards": {
-                        "dinero": 10
-                    },
-                    "ambush": false
-                },
-                "canFlee": false
+              "text": "Mirar por un hueco de la ventana",
+              "j": 0
+            },
+            {
+              "text": "Llamar a la puerta",
+              "j": "LLAMAR_PUERTA"
+            },
+            {
+              "text": "Abres la puerta de una patada",
+              "j": 0
             }
-        ]
+          ]
+        }
+
+      ],
+
+      "LLAMAR_PUERTA": [
+        { "text": "La puerta se entreabre y una voz profunda pregunta desde detrás de la puerta:\n-¿Quién eres y qué quieres? Ahora estamos ocupados." },
+        {
+          "text": "Mientras te pregunta, olles una especie de gritos amortiguados de fondo.",
+
+          "options": [
+            {
+              "text": "Entrar a la fuerza",
+              "j": "ENTRAR_FORZANDO"
+            },
+            {
+              "text": "Irse",
+              "j": null
+            }
+          ]
+        }
+      ],
+      "ENTRAR_FORZANDO": [
+        { "text": "Empujas la puerta con fuerza y el hombre que te ha hablado antes se cae al suelo.\n-¡CÓMO TE ATREVES A IRRUMPIR ASÍ EN LA MORADA DE ${nombre_bandidos.toUpperCase()}!" },
+        { "text": "Mientras tando, presencias una horrible escena. Hay tres hombres semidesnudos haciéndole atrocidades a una mujer en un estado deplorable, que presupones que es ${nombre_mujer_tabernero}, la mujer del tabernero." },
+        {
+          "combat": {
+            "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+            "rewards": {
+              "dinero": 10
+            },
+            "ambush": false,
+            "canFlee": false
+          },
+          "flee": null
+        }
+      ]
     }
-
+  }
 }
