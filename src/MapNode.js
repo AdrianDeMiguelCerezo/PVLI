@@ -220,17 +220,40 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      */
     generateEvent(eventKey) {
 
-        const evento = this.scene.jsonEventos[eventKey];
+        const eventoJson = this.scene.jsonEventos[eventKey];
         let params = {};
 
-        for (let par_nombre of evento["params"]) {
-            const par_valor = evento[par_nombre];
-            if (Array.isArray(par_valor)) {
-                params[par_nombre] = par_valor[Phaser.Math.RND.between(0, par_valor.length - 1)];
-            }
-            else
-            {params[par_nombre] = par_valor}
+        for (let par_nombre of eventoJson["params"]) {
+            this.SetParamValue(params[par_nombre], eventoJson["params"][par_nombre])
         }
+
+        console.log(this.params);
+
         return event;
+    }
+
+    /**Setea el valor del objeto "param" al parseo de paramValue según la info del json de eventos.
+     * @param {string} param //nombre del parámetro del json
+     * @param {any} paramValue //valor en principio del parámetro del json
+     */
+    SetParamValue(param, paramValue) {
+        
+        if (Array.isArray(paramValue)) {
+            paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
+        }
+
+        //si el valor es el valor de un parámetro global:
+        if (paramValue[0] == '_') {
+            const infoGlobalParam = this.scene.jsonEventos["globalParams"][a.substring(1)];
+            if (Array.isArray(infoGlobalParam)) {
+                param = infoGlobalParam[Phaser.Math.RND.between(0, paramValue.length - 1)];
+            }
+            else {
+                param = infoGlobalParam;
+            }
+        }
+        else {
+            param = paramValue;
+        }
     }
 }

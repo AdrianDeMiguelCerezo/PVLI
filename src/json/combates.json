@@ -1,13 +1,14 @@
 {
-  "ENCUENTRO_BANDIDOS_CAMINO": {
-    "enemigos": ["BANDIDO_COMUN", "BANDIDO_COMUN"],
-    "recompensa": {
-      "oro": 50,
-      "items": ["VENDA"],
-      "equipos": []
+    "ENCUENTRO_BANDIDOS_CAMINO": {
+        "enemigos": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+        "recompensa": {
+            "oro": 50,
+            "items": [ "VENDA" ],
+            "equipos": []
+        },
+        "emboscada": false
     },
-    "emboscada": false
-  },
+
   "PATRULLA_ESTADO": {
     "enemigos": ["SOLDADO_ESTADO", "SOLDADO_ESTADO"],
     "recompensa": {

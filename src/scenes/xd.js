@@ -7,37 +7,59 @@ export default class xd extends Phaser.Scene {
         super({ key: 'xd' })
     }
 
-    preload() {
-        this.load.image('sky', 'https://labs.phaser.io/assets/skies/gradient11.png');
-    }
 
+    init() {
+        console.log("init1")
+        this.jsonEventos = this.cache.json.get('eventos');
+        console.log("init2")
+    }
     create() {
 
-        let rt;
-        let graphics;
-        this.add.image(400, 300, 'sky');
+        console.log(1, this.jsonEventos)
+        this.generateEvent("PUEBLO_MEDIANO");
 
-        graphics = new Phaser.GameObjects.Graphics(this);
-        graphics.lineStyle(4, 0x00ff00);
-        graphics.fillStyle(0x00ff00); // how to fill it??
 
-        rt = this.add.renderTexture(100, 100, 100, 100).setOrigin(0.5);
-
-        var circle = this.add
-            .circle(0, 0, 50, 0xff7e00)
-            .setAlpha(0.8)
-            .setVisible(false);
-
-        rt.draw(circle, 50, 50);
-
-        const path = new Phaser.Curves.Path();
-        path.lineTo(50, 0);
-        path.lineTo(50, 50);
-        path.add(new Phaser.Curves.QuadraticBezier(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(100, 50), new Phaser.Math.Vector2(100, 100)));
-        path.closePath();
-        graphics.fillPoints(path.getPoints())
-        this.add.existing(graphics);
-        
     }
+
+    generateEvent(eventKey) {
+
+        const eventoJson = this.jsonEventos[eventKey];
+        let params = {};
+        params["aaaa"] = 1;
+        for (const par_nombre in eventoJson["params"]) {
+
+            params[par_nombre] = this.GetJsonParamValue(eventoJson["params"][par_nombre]);
+            console.log(eventoJson["params"][par_nombre]);
+            
+        }
+
+        console.log(params);
+
+        return event;
+    }
+
+    /**Setea el valor del objeto "param" al parseo de paramValue según la info del json de eventos.
+     * @param {any} paramValue //valor en principio del parámetro del json
+     */
+    GetJsonParamValue(paramValue) {
+
+
+        if (Array.isArray(paramValue)) {
+            paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
+        }
+
+        //si el valor es el valor de un parámetro global:
+        if (paramValue[0] == '_') {
+            const infoGlobalParam = this.jsonEventos["globalParams"][paramValue.substring(1)];
+            if (Array.isArray(infoGlobalParam)) {
+                return infoGlobalParam[Phaser.Math.RND.between(0, paramValue.length - 1)];
+            }
+            else {return infoGlobalParam;}
+        }
+        else {return paramValue;}
+
+
+    }
+
 
 }
