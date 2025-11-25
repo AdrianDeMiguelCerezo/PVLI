@@ -119,9 +119,29 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.arma=this.playerData.arma;
         this.torso=this.playerData.torso;
         this.pantalones=this.playerData.pantalones;
-        this.def=0;
-        this.critDMG=this.playerData.critDMG;
-        this.critRate=this.playerData.critRate;
+        let weapon=null;
+        let torso=null;
+        let pants=null;
+        if(this.arma){
+            weapon=this.scene.jsonEquipamiento[this.arma];
+        }
+        if(this.torso){
+            torso=this.scene.jsonEquipamiento[this.torso];
+        }
+        if(this.pantalones){
+            pants=this.scene.jsonEquipamiento[this.pantalones];
+        }
+        this.def = (torso?.defense ?? 0) + (pants?.defense ?? 0);
+
+        this.critDMG =
+            (weapon?.crit_damage ?? 0) +
+            (torso?.crit_damage ?? 0) +
+            (pants?.crit_damage ?? 0);
+
+        this.critRate =
+            (weapon?.crit_chance ?? 0) +
+            (torso?.crit_chance ?? 0) +
+            (pants?.crit_chance ?? 0);
         this.dinero=this.playerData.dinero;
         this.hambre=this.playerData.hambre;
     }
@@ -228,7 +248,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
          * parámetro para saber el elemento que tenemos seleccionado
          */
         this.k=key;
-        this.desc=this.scene.jsonEquipamiento[key].description;
+        this.desc=this.scene.jsonEquipamiento[key].name+"\n-"+this.scene.jsonEquipamiento[key].description;
+        if(this.scene.jsonEquipamiento[key].crit_chance){
+            this.desc+="\n-Prob. crit: "+this.scene.jsonEquipamiento[key].crit_chance;
+        }
+        if(this.scene.jsonEquipamiento[key].crit_damage){
+            this.desc+="\n-Daño crit: "+this.scene.jsonEquipamiento[key].crit_damage;
+        }
+        if(this.scene.jsonEquipamiento[key].defense){
+            this.desc+="\n-Defensa: "+this.scene.jsonEquipamiento[key].defense;
+        }
         this.updateMenus(1);
     }
     /**

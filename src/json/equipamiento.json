@@ -16,7 +16,6 @@
     ],
     "crit_damage": 150,
     "crit_chance": 10,
-    "damage": 5,
     "defense": 0
   },
     "CHAQUETA_PIEL": {
@@ -58,8 +57,7 @@
             }
         ],
         "crit_damage": 200,
-        "crit_chance": 10,
-        "damage": 5
+        "crit_chance": 10
     },
     "VAQUEROS":{
         "name":"Vaqueros",
