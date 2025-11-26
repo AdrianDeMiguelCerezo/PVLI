@@ -100,6 +100,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,0);
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,1);
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,2);
+        this.addItems();
     }
     /**
      * Solo deja visible el menu de habilidades
@@ -166,6 +167,25 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     break;
             }     
             this.menuEquip.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
+        }
+    }
+    /**
+     * Lo mismo que addEquip pero para Items
+     */
+    addItems(){
+        for(let entry of this.playerData.items){
+            const key=entry.item;
+            const item=this.scene.jsonItems[key];
+            let column=0;
+            if(item.usedInCombat){
+                if(item.usedOutOfCombat){
+                    column=2;
+                }
+                else{
+                    column=1;
+                }
+            }
+            this.menuItems.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
         }
     }
     /**
@@ -247,23 +267,37 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         /**
          * parámetro para saber el elemento que tenemos seleccionado
          */
-        this.k=key;
-        this.desc=this.scene.jsonEquipamiento[key].name+"\n-"+this.scene.jsonEquipamiento[key].description;
-        if(this.scene.jsonEquipamiento[key].crit_chance){
-            this.desc+="\n-Prob. crit: "+this.scene.jsonEquipamiento[key].crit_chance;
-        }
-        if(this.scene.jsonEquipamiento[key].crit_damage){
-            this.desc+="\n-Daño crit: "+this.scene.jsonEquipamiento[key].crit_damage;
-        }
-        if(this.scene.jsonEquipamiento[key].defense){
-            this.desc+="\n-Defensa: "+this.scene.jsonEquipamiento[key].defense;
-        }
-        if(this.scene.jsonEquipamiento[key].habilidades){
-            for(const hab of this.scene.jsonEquipamiento[key].habilidades){
-                this.desc+="\n- "+hab.name+": "+hab.description+"\n-Daño: "+hab.damage;
+        this.k;
+        
+        if(this.scene.jsonEquipamiento[key]){
+            this.k=key;
+            this.desc=this.scene.jsonEquipamiento[key].name+"\n-"+this.scene.jsonEquipamiento[key].description;
+            if(this.scene.jsonEquipamiento[key].crit_chance){
+                this.desc+="\n-Prob. crit: "+this.scene.jsonEquipamiento[key].crit_chance;
             }
+            if(this.scene.jsonEquipamiento[key].crit_damage){
+                this.desc+="\n-Daño crit: "+this.scene.jsonEquipamiento[key].crit_damage;
+            }
+            if(this.scene.jsonEquipamiento[key].defense){
+                this.desc+="\n-Defensa: "+this.scene.jsonEquipamiento[key].defense;
+            }
+            if(this.scene.jsonEquipamiento[key].habilidades){
+                for(const hab of this.scene.jsonEquipamiento[key].habilidades){
+                    this.desc+="\n- "+hab.name+": "+hab.description+"\n-Daño: "+hab.damage;
+                }
+            }
+            this.updateMenus(1);
         }
-        this.updateMenus(1);
+        else if(this.scene.jsonItems[key]){
+            
+            this.k=key;
+            const entry = this.playerData.items.find(obj => obj.item === key);
+            this.desc=this.scene.jsonItems[key].name+"\n-"+this.scene.jsonItems[key].description+"\n-Cantidad: "+entry.count;
+            this.updateMenus(2);
+        }
+        
+        
+        
     }
     /**
      * Equipa lo que tengas seleccionado
