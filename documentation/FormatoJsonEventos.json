@@ -58,20 +58,22 @@
             "Parte1": //Nombre del subevento.
             [
                 //di�logo con bot�n de continuar
-                { "text": "texto del di�logo" },
+                { "type": "dialogue","text": "texto del di�logo" },
 
                 //en cualquier texto de un evento que se muestra en pantalla en el que se usa _Nombre_de_parámetro, 
                 //luego se sustituye por el valor que tenga el parámetro local definido en params{} del evento: "Nombre_de_parámetro"
-                { "text": "_parámetro1: hola, soy _parámetro1" },
+                { "type": "dialogue","text": "_parámetro1: hola, soy _parámetro1" },
 
                 //di�logo con botor de continuar, pero este tiene el texto custom
                 {
+                    "type": "dialogue",
                     "text": "texto del di�logo",
                     "continue": "texto boton continue"
                 },
 
                 //di�logo con opciones custom
                 {
+                    "type": "dialogue",
                     "text": "texto del di�logo",
                     "options": [
 
@@ -105,14 +107,15 @@
             "Parte2": //etiqueta de un fragmento / fragmento de evento con nombre
             //cadena lineal de fragmentos(no hay opciones a elegir). Cuando acaba un fragmento, ocurre el siguiente del array. Cuando no hay un fragmento siguiente, se vuelve al mapa.
             [
-                { "text": "texto del di�logo" },
-                { "text": "texto del di�logo" },
+                { "type": "dialogue","text": "texto del di�logo" },
+                { "type": "dialogue","text": "texto del di�logo" },
                 {
+                    "type": "dialogue",
                     "text": "texto del di�logo",
                     "continue": "Lo dices en serio?!"
                 },
-                { "text": "texto del di�logo" },
-                { "text": "texto del di�logo" },
+                { "type": "dialogue","text": "texto del di�logo" },
+                { "type": "dialogue","text": "texto del di�logo" },
                 {
                     "text": "_parámetro1: -Se la llevaron -snif- -snif-",
                     "continue": "�Qui�nes?"
@@ -120,6 +123,7 @@
 
                 //combate
                 {
+                    "type": "combat",
                     "combat": {
                         "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                         "rewards": { //se escribe en formato recompensa
@@ -132,9 +136,10 @@
                     "flee": null //si huyes vas al mapa
 
                 },
-                { "text": "Ha acabado el combate, est�s cansado.\nSigues andando." },
-                { "text": "De repente, ves a m�s bandidos acercarse" },
+                { "type": "dialogue","text": "Ha acabado el combate, est�s cansado.\nSigues andando." },
+                { "type": "dialogue","text": "De repente, ves a m�s bandidos acercarse" },
                 {
+                    "type": "combat",
                     "combat": {
                         "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                         "rewards": {
@@ -147,9 +152,11 @@
 
                 },
                 {
+                    "type": "dialogue",
                     "text": "Tras haber derrotado a todos los bandidos, vuelves a hablar con _par�metro_1"
                 },
                 {
+                    "type": "dialogue",
                     "text": "Gracias por salvarme. Aqu� tienes tus recompensas. _par�metro_5",
                     "rewards": "par�metro_5"
                 }

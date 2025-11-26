@@ -58,10 +58,10 @@ class EventParser {
 
         }
 
-        let this.namedEventFragmentsArray = {}
+        this.namedEventFragmentsArray = {}
 
         
-        this.GenerateNamedEventFragment(this.eventoJson["eventFragments"][0], this.params, this.namedEventFragmentsArray)
+        this.GenerateNamedEventFragment(this.eventoJson["eventFragments"][0])
         
 
         console.log(this.params);
@@ -93,15 +93,16 @@ class EventParser {
     }
 
     /**
-     * @param {object} namedEventFragmentsArray Array con todos los fragmentos de evento para 
-     * @param {object} params guarda los parámetros del evento
-     * @param {object} namedEventFragment objeto que guarda la info del subevento a parsear del json.
+     * @param {Array} namedEventFragment objeto que guarda la info del subevento a parsear del json.
      * @returns {SubStateNode}
      */
-    GenerateNamedEventFragment(namedEventFragment, params, namedEventFragmentsArray) {
+    GenerateNamedEventFragment(namedEventFragment) {
         
+        namedEventFragment[0]
 
-        for(const eventFragment in namedEventFragment)
+        for (let i = 1; i < namedEventFragment.length;i++) {
+
+        }
 
 
 
@@ -109,7 +110,44 @@ class EventParser {
         return
     }
 
-    GenerateSingleEventFragment() {
+    GenerateSingleEventFragment(eventFragmentJson) {
+        var expReg = new RegExp("_\\w*", "g");
+        let eventFragmentNode = new SubStateNode();
+        switch (eventFragmentJson.type) {
+            case "dialogue": {
+                eventFragmentNode.texto = this.ParseStringWithParams(eventFragmentJson.text);
 
+                if (!!eventFragmentJson.options) {
+
+                }
+                else
+                {
+                    if (!!eventFragmentJson.continue) {
+                        eventFragmentNode.opciones.texto = this.ParseStringWithParams(eventFragmentJson.continue);
+                    }
+                }
+
+
+
+
+
+                break;
+            }
+            case "combat": { break; }
+            default: break;
+        }
+    }
+    /**
+     * 
+     * @param {string} string
+     * @param {RegExp} expReg
+     */
+    ParseStringWithParams(string,expReg) {
+        
+        for (let parameter of string.match(expReg)) {
+            console.log(parameter, "por", this.params[parameter.substring(1)])
+            string = string.replace(parameter, this.params[parameter.substring(1)])
+        }
+        return string;
     }
 }

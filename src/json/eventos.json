@@ -32,8 +32,9 @@
             },
             "ENTRAS_TABERNA": [
 
-                { "text": "-Hola, bienvenido a _nombre_taberna. Me llamo _nombre_tabernero, soy el dueño de esta taberna" },
+                { "type": "dialogue", "text": "-Hola, bienvenido a _nombre_taberna. Me llamo _nombre_tabernero, soy el dueño de esta taberna" },
                 {
+                    "type": "dialogue",
                     "text": "-¿Qué quieres tomar?",
 
                     "options": [
@@ -52,15 +53,17 @@
             "CERVEZA": [
 
                 {
+                    "type": "dialogue",
                     "text": "-¡Qué buena cerveza tenéis aquí!",
                     "actions": {
                         "SP": 10,
                         "dinero": -5
                     }
                 },
-                { "text": "-¡A que sí!\n_nombre_tabernero se aparta y se pone a limpiar vasos" },
+                { "type": "dialogue","text": "-¡A que sí!\n_nombre_tabernero se aparta y se pone a limpiar vasos" },
 
                 {
+                    "type": "dialogue",
                     "text": "A _nombre_tabernero se le ve triste",
                     "options": [
                         {
@@ -76,28 +79,26 @@
             ],
             "HISTORIA_TRISTE": [
 
-                { "text": "-Pues resulta que el otro día estaba con mi mujer paseando por la calle -snif-" },
-                { "text": "-Llegaron, y mi mujer -snif-" },
+                { "type": "dialogue","text": "-Pues resulta que el otro día estaba con mi mujer paseando por la calle -snif-" },
+                { "type": "dialogue","text": "-Llegaron, y mi mujer -snif-" },
                 {
+                    "type": "dialogue",
                     "text": "-Se la llevaron -snif- -snif-",
                     "continue": "¿Quiénes?"
                 },
-                { "text": "-ESOS BASTARDOS DE _nombre_bandidos" },
-                { "text": "-¡SE LLEVARON A MI _nombre_mujer_tabernero!" },
-                { "text": "-¡No me puedo ni imaginar las cosas que la estarán haciendo!" },
-                { "text": "-Te daría cualquier cosa si la pudieras salvar.\n Su guarida se encuentra en los callejones sur del pueblo" },
+                {"type": "dialogue", "text": "-ESOS BASTARDOS DE _nombre_bandidos" },
+                {"type": "dialogue","text": "-¡SE LLEVARON A MI _nombre_mujer_tabernero!" },
+                {"type": "dialogue", "text": "-¡No me puedo ni imaginar las cosas que la estarán haciendo!" },
+                { "type": "dialogue","text": "-Te daría cualquier cosa si la pudieras salvar.\n Su guarida se encuentra en los callejones sur del pueblo" },
                 {
+                    "type": "dialogue",
                     "text": "-¿Hay trato?",
 
 
                     "options": [
                         {
-                            "text": "Hay trato.",
+                            "text": "Continue",
                             "j": "BUSCAR BANDIDOS"
-                        },
-                        {
-                            "text": "Lo siento, tengo asuntos más importantes",
-                            "j": null
                         }
                     ]
                 }
@@ -105,9 +106,10 @@
 
             "BUSCAR_BANDIDOS": [
 
-                { "text": "Vas a donde te ha dicho el tabernero" },
-                { "text": "Te encuentras cruzando una esquina cuando unos bandidos te sorprenden.\n-¡FUERA DE NUESTRO TERRITORIO!" },
+                { "type": "dialogue","text": "Vas a donde te ha dicho el tabernero" },
+                { "type": "dialogue","text": "Te encuentras cruzando una esquina cuando unos bandidos te sorprenden.\n-¡FUERA DE NUESTRO TERRITORIO!" },
                 {
+                    "type": "combat",
                     "combat": {
                         "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                         "rewards": {
@@ -119,10 +121,11 @@
                     "flee": null
 
                 },
-                { "text": "Tras el combate, sigues dirigiéndote hacia dónde te ha dicho el Tabernero" },
-                { "text": "El lugar es una casa destartalada, aunque no más que las demás de esta zona" },
-                { "text": "Te acercas a la puerta" },
+                { "type": "dialogue","text": "Tras el combate, sigues dirigiéndote hacia dónde te ha dicho el Tabernero" },
+                { "type": "dialogue","text": "El lugar es una casa destartalada, aunque no más que las demás de esta zona" },
+                { "type": "dialogue","text": "Te acercas a la puerta" },
                 {
+                    "type": "dialogue",
                     "text": "Olles unos sonidos sordos provenientes del otro lado de la puerta",
                     "options": [
                         {
@@ -147,8 +150,9 @@
             ],
 
             "LLAMAR_PUERTA": [
-                { "text": "La puerta se entreabre y una voz profunda pregunta desde detrás de la puerta:\n-¿Quién eres y qué quieres? Ahora estamos ocupados." },
+                { "type": "dialogue","text": "La puerta se entreabre y una voz profunda pregunta desde detrás de la puerta:\n-¿Quién eres y qué quieres? Ahora estamos ocupados." },
                 {
+                    "type": "dialogue",
                     "text": "Mientras te pregunta, olles una especie de gritos amortiguados de fondo.",
 
                     "options": [
@@ -164,9 +168,10 @@
                 }
             ],
             "ENTRAR_FORZANDO": [
-                { "text": "Empujas la puerta con fuerza y el hombre que te ha hablado antes se cae al suelo.\n-¡CÓMO TE ATREVES A IRRUMPIR ASÍ EN LA MORADA DE _nombre_bandidos!" },
-                { "text": "Mientras tando, presencias una horrible escena. Hay tres hombres semidesnudos haciéndole atrocidades a una mujer en un estado deplorable, que presupones que es _nombre_mujer_tabernero, la mujer del tabernero." },
+                { "type": "dialogue","text": "Empujas la puerta con fuerza y el hombre que te ha hablado antes se cae al suelo.\n-¡CÓMO TE ATREVES A IRRUMPIR ASÍ EN LA MORADA DE _nombre_bandidos!" },
+                { "type": "dialogue","text": "Mientras tando, presencias una horrible escena. Hay tres hombres semidesnudos haciéndole atrocidades a una mujer en un estado deplorable, que presupones que es _nombre_mujer_tabernero, la mujer del tabernero." },
                 {
+                    "type": "combat",
                     "combat": {
                         "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                         "rewards": {
