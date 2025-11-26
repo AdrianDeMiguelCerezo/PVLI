@@ -40,7 +40,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Equipamiento",null,()=>this.showEquip()));
         this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab()));
 
-        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),3,1,0x222222);
+        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x222222);
         this.desc="" 
 
         this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x222222);
@@ -188,20 +188,20 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      * @param {number} menuShow Indica el menu que está activo cuando se llama a la función para que se mantenga en ese menu
      */
     updateMenus(menuShow){
-        delete this.menuDesc;
-        delete this.menuPlayer;
-        delete this.menuStats;
+        this.menuDesc.destroy();
+        this.menuPlayer.destroy();
+        this.menuStats.destroy();
         
         
 
-        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),3,1,0x222222);
+        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x222222);
         if(this.k!=null){
             this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:this.w*(0.85/3)}}));
             if(this.playerData.equipamiento.includes(this.k)){
-                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),3);
             }
             else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
-                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),3);  
             }
 
         }
@@ -257,6 +257,11 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         }
         if(this.scene.jsonEquipamiento[key].defense){
             this.desc+="\n-Defensa: "+this.scene.jsonEquipamiento[key].defense;
+        }
+        if(this.scene.jsonEquipamiento[key].habilidades){
+            for(const hab of this.scene.jsonEquipamiento[key].habilidades){
+                this.desc+="\n- "+hab.name+": "+hab.description+"\n-Daño: "+hab.damage;
+            }
         }
         this.updateMenus(1);
     }
