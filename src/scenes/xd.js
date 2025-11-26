@@ -48,28 +48,23 @@ class EventParser {
 
     generateEvent(eventKey) {
 
-        const eventoJson = this.jsonEventos[eventKey];
-        let params = {};
+        this.eventoJson = this.jsonEventos[eventKey];
+        this.params = {};
         
-        for (const par_nombre in eventoJson["params"]) {
+        for (const par_nombre in this.eventoJson["params"]) {
 
-            params[par_nombre] = this.GetJsonParamValue(eventoJson["params"][par_nombre]);
-            console.log(eventoJson["params"][par_nombre]);
+            this.params[par_nombre] = this.GetJsonParamValue(this.eventoJson["params"][par_nombre]);
+            console.log(this.eventoJson["params"][par_nombre]);
 
         }
 
-        let namedEventFragmentsArray = {}
+        let this.namedEventFragmentsArray = {}
 
-        for (const namedEventFragment in eventoJson["eventFragments"])
-        {
-            namedEventFragmentsArray[namedEventFragment] = new SubStateNode();
-        }
-        for(const namedEventFragment in eventoJson["eventFragments"])
-        {
-            this.GenerateNamedEventFragment(namedEventFragment, params, namedEventFragmentsArray)
-        }
+        
+        this.GenerateNamedEventFragment(this.eventoJson["eventFragments"][0], this.params, this.namedEventFragmentsArray)
+        
 
-        console.log(params);
+        console.log(this.params);
 
         return event;
     }
@@ -106,12 +101,12 @@ class EventParser {
     GenerateNamedEventFragment(namedEventFragment, params, namedEventFragmentsArray) {
         
 
-        for(const eventFragment generate)
+        for(const eventFragment in namedEventFragment)
 
 
 
 
-        
+        return
     }
 
     GenerateSingleEventFragment() {

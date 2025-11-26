@@ -54,7 +54,7 @@
 
         "eventFragments": {
 
-            //El primer subevento escrito es el subevento de entrada al evento este.
+            //El primer fragmeno co nnombre escrito es el fragmento de entrada al evento este.
             "Parte1": //Nombre del subevento.
             [
                 //di�logo con bot�n de continuar
@@ -75,19 +75,19 @@
                     "text": "texto del di�logo",
                     "options": [
 
-                        //si escoges esta opci�n salta al subevento:"SUBEVENTO_TAL" de este evento
+                        //si escoges esta opci�n salta al fragmento:"ETOQIETA_FRAGMENTO_TAL" de este evento
                         {
                             "text": "texto opci�n 1",
-                            "j": "SUBEVENTO_TAL"
+                            "j": "ETIQUETA_FRAGMENTO_TAL"
                         },
 
-                        //si escoges esta opci�n salta al evento:"EVENTO_TAL" de el json de eventos (ergo al subevento de entrada al evento: "EVENTO_TAL")
+                        //si escoges esta opci�n salta al evento:"EVENTO_TAL" de el json de eventos (ergo al fragmento de entrada al evento: "EVENTO_TAL")
                         {
                             "text": "texto opci�n 2",
                             "j": "/EVENTO_TAL"
                         },
 
-                        //si escoges esta opci�n salta al subevento desde el que llegado entrado al evento al que pertenezco.
+                        //si escoges esta opci�n salta al fragmento desde el que llegado entrado al evento al que pertenezco.
                         {
                             "text": "texto opci�n 3",
                             "j": -1
@@ -102,8 +102,8 @@
                     ]
                 }
             ],
-            "Parte2": //nombre del subevento
-            //cadena lineal de sucesos(no hay opciones a elegir). Cuando acaba un suceso, ocurre el siguiente del array. Cuando no hay un suceso siguiente, se vuelve al mapa.
+            "Parte2": //etiqueta de un fragmento / fragmento de evento con nombre
+            //cadena lineal de fragmentos(no hay opciones a elegir). Cuando acaba un fragmento, ocurre el siguiente del array. Cuando no hay un fragmento siguiente, se vuelve al mapa.
             [
                 { "text": "texto del di�logo" },
                 { "text": "texto del di�logo" },
@@ -143,7 +143,7 @@
                         "ambush": false, //empieza el jugador
                         "canFlee": true //es posible huir?
                     },
-                    "flee": "SUBEVENTO_TAL o /EVENTO_TAL o (int)-1 " //si huyes vas al subevento llamado "SUBEVENTO_TAL", al evento llamado "EVENTO_TAL", o al subevento que llev� a este evento.
+                    "flee": "ETIQUETA_FRAGMENTO_TAL o /EVENTO_TAL o (int)-1 " //si huyes vas al subevento llamado "SUBEVENTO_TAL", al evento llamado "EVENTO_TAL", o al subevento que llev� a este evento.
 
                 },
                 {
