@@ -206,8 +206,9 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
     /**
      * Borra y vuelve a crear los menus para cambiar secciones con variable
      * @param {number} menuShow Indica el menu que está activo cuando se llama a la función para que se mantenga en ese menu
+     * @param {number} habIndex Indica la habilidad en la que te encuentras en caso de que hubiera más de una habilidad por equipamiento
      */
-    updateMenus(menuShow){
+    updateMenus(menuShow=0,habIndex=0){
         this.menuDesc.destroy();
         this.menuPlayer.destroy();
         this.menuStats.destroy();
@@ -219,10 +220,18 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:this.w*(0.85/3)}}));
             if(this.scene.jsonEquipamiento[this.k]){
                 if(this.playerData.equipamiento.includes(this.k)){
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),3);
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
                 }
                 else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),3);  
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+                }
+                
+
+                if(this.scene.jsonEquipamiento[this.k].habilidades[habIndex]){
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,this.scene.jsonEquipamiento[this.k].habilidades[habIndex].name,null,()=>this.habDesc(habIndex),15),3);
+                }
+                else{
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Volver",null,()=>this.OnButtonClicked(this.k),15),3);
                 }
             }
             else if(this.scene.jsonItems[this.k]){
@@ -283,11 +292,6 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             }
             if(this.scene.jsonEquipamiento[key].defense){
                 this.desc+="\n-Defensa: "+this.scene.jsonEquipamiento[key].defense;
-            }
-            if(this.scene.jsonEquipamiento[key].habilidades){
-                for(const hab of this.scene.jsonEquipamiento[key].habilidades){
-                    this.desc+="\n- "+hab.name+": "+hab.description+"\n-Daño: "+hab.damage;
-                }
             }
             if(this.playerData.equipamiento.includes(key)){
                 this.updateMenus(1);
@@ -386,6 +390,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             this.updateValues();
             this.updateMenus(2);
         }
+    }
+
+    /**
+     * Muestra en la ventana de descripción la descripción de la habilidad correspondiente
+     * @param {*} index En el caso de que hubiera más de una habilidad por equipamiento, esto enseñaría en la que te encuentras para poner botón del siguiente
+     */
+    habDesc(index){
+        const item=this.scene.jsonEquipamiento[this.k].habilidades[index];
+        this.desc=item.name+"\n-"+item.description+"\n-Daño: "+item.damage;
+        this.updateMenus(0,index+1);
     }
 
 }

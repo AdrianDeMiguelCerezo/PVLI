@@ -54,6 +54,14 @@
                 "damage":18,
                 "type":"ACTIVE",
                 "target":"ENEMY"
+            },
+            {
+                "name":"SuperShot",
+                "description":"2 acc, 15SP. Hace daño tremendo a un enemigo.",
+                "actionCost":2,
+                "damage":30,
+                "type":"ACTIVE",
+                "target":"ENEMY"
             }
         ],
         "crit_damage": 200,
