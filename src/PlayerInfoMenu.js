@@ -247,8 +247,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.addPlayer();
 
         if(menuShow==1){
-            this.showEquip();
-            
+            this.showEquip();        
         }
         else if(menuShow==2){
             this.showItems();
@@ -286,7 +285,13 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     this.desc+="\n- "+hab.name+": "+hab.description+"\n-Daño: "+hab.damage;
                 }
             }
-            this.updateMenus(1);
+            if(this.playerData.equipamiento.includes(key)){
+                this.updateMenus(1);
+            }
+            else{
+                this.updateMenus(0);
+            }
+            
         }
         else if(this.scene.jsonItems[key]){
             
