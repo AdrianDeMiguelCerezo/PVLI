@@ -17,8 +17,10 @@ export default class xd extends Phaser.Scene {
 
         console.log(1, this.jsonEventos)
         let eventParser = new EventParser(this.jsonEventos)
-        evento = eventParser.generateEvent("EVENTO_TEST1");
-
+        console.log(this.jsonEventos)
+        console.log(Object.keys(this.jsonEventos))
+        let evento = eventParser.generateEvent("EVENTO_TEST1");
+        console.log(evento)
 
 
     }
@@ -50,10 +52,11 @@ class EventParser {
     generateEvent(eventKey) {
 
         this.evento_Json = this.jsonEventos[eventKey];
-
+        console.log(this.jsonEventos)
+        console.log(eventKey,'\n',this.jsonEventos[eventKey])
 
         /**@type {Array} abreviatura de evento_Json["eventFragments"]*/
-        this.eventFragments_Json = evento_Json["eventFragments"];
+        this.eventFragments_Json =this.evento_Json["eventFragments"];
 
         //por motivos de eficiencia, se tiene una tabla de equivalencias (map);  "tag": posición en event_fragments_Json.
         console.log("Tags:\n");
@@ -73,19 +76,20 @@ class EventParser {
         this.taggedEventFragmentsArray = {}
 
 
-        let event = this.GenerateEventFragments(this.eventFragments_Json[0])
+        let event = this.GenerateEventFragment(this.eventFragments_Json[0])
 
 
-        console.log(this.params);
+        console.log(this.eventFragments_Json);
 
         return event;
     }
 
 
 
-    GenerateSingleEventFragment(index) {
+    GenerateEventFragment(index) {
         /** abreviatura de this.eventFragments_Json[index] */
         const thisFragment_json = this.eventFragments_Json[index];
+        console.log("yo json:",thisFragment_json)
         /**Expresión regular usada para parsear los params del json que son palabras que empiezan por "_" */
         let expReg = new RegExp("_\\w*", "g");
 
@@ -132,11 +136,11 @@ class EventParser {
                         //saltar al fragmento que está directamente a continuación de este en el json.
                         else if (jumpTag === undefined) {
                             const indexSalto = ++index;
-                            eventFragmentNode.opciones[i].salto = this.GenerateSingleEventFragment(indexSalto)
+                            eventFragmentNode.opciones[i].salto = this.GenerateEventFragment(indexSalto)
                         }
                         //saltar a la tag tal si existe
                         else if(this.tags.hasOwnProperty(jumpTag)){
-                            eventFragmentNode.opciones[i].salto = this.GenerateSingleEventFragment(this.tags[jumpTag]) 
+                            eventFragmentNode.opciones[i].salto = this.GenerateEventFragment(this.tags[jumpTag]) 
                         }
                         //si la tag con este nombre no existe
                         else {
@@ -158,7 +162,7 @@ class EventParser {
                         eventFragmentNode.opciones[0].texto = "Continue";
                     }
 
-                    eventFragmentNode.opciones[0].salto = this.GenerateSingleEventFragment(++index)
+                    eventFragmentNode.opciones[0].salto = this.GenerateEventFragment(++index)
 
                 }
 
@@ -178,11 +182,11 @@ class EventParser {
                         //saltar al fragmento que está directamente a continuación de este en el json.
                         else if (jumpTag === undefined) {
                             const indexSalto = ++index;
-                            eventFragmentNode.nodoHuida = this.GenerateSingleEventFragment(indexSalto)
+                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(indexSalto)
                         }
                         //saltar a la tag tal si existe
                         else if (this.tags.hasOwnProperty(jumpTag)) {
-                            eventFragmentNode.nodoHuida = this.GenerateSingleEventFragment(this.tags[jumpTag])
+                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(this.tags[jumpTag])
                         }
                         //si la tag con este nombre no existe
                         else {
@@ -194,7 +198,7 @@ class EventParser {
                     //generar nodo de diálogo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
                         new SubStateNode("dialigue", undefined, "Has ganadoel combate. Falta  decirte cuáles son las recompensas.",
-                            [{ texto: "Continue", salto: this.GenerateSingleEventFragment(++index) }],
+                            [{ texto: "Continue", salto: this.GenerateEventFragment(++index) }],
                             thisFragment_json.rewards,undefined);
 
                 break;
