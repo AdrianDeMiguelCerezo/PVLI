@@ -54,7 +54,7 @@
 
 
             {
-                "tag": "CERVEZA"
+                "tag": "CERVEZA",
                 "type": "dialogue",
                 "text": "-¡Qué buena cerveza tenéis aquí!",
                 "actions": {

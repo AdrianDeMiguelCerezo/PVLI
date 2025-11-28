@@ -1,4 +1,4 @@
-
+import SubStateNode from "../SubStateNode.js"
 
 
 export default class xd extends Phaser.Scene {
@@ -88,6 +88,7 @@ class EventParser {
         /**Expresión regular usada para parsear los params del json que son palabras que empiezan por "_" */
         let expReg = new RegExp("_\\w*", "g");
 
+        /**@type {SubStateNode} */
         let eventFragmentNode = new SubStateNode();
 
         //si no soy, al mapa
@@ -152,7 +153,12 @@ class EventParser {
 
                 break;
             }
-            case "combat": { break; }
+            case "combat":
+            {
+
+                eventFragmentNode.combate = this.eventFragments_Json[index].combat
+                break;
+            }
             default: break;
         }
 
