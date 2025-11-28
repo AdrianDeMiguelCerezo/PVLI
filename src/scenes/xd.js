@@ -16,7 +16,8 @@ export default class xd extends Phaser.Scene {
     create() {
 
         console.log(1, this.jsonEventos)
-        evento = this.generateEvent("PUEBLO_MEDIANO");
+        let eventParser = new EventParser(this.jsonEventos)
+        evento = eventParser.generateEvent("EVENTO_TEST1");
 
 
 
@@ -251,8 +252,8 @@ class EventParser {
     WriteRewards(rewards) {
         const rewardsArray = Object.keys(rewards)
         let returnString = "";
-        for (let i = 0; i < rewardsArray.length - 1; i++) {
-            returnString+= 
-        }
+        //for (let i = 0; i < rewardsArray.length - 1; i++) {
+        //    returnString+= 
+        //}
     }
 }

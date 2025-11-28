@@ -76,7 +76,7 @@
         "continue": "texto boton continue"
       },
 
-      //di�logo con opciones custom
+      //di�logo con opciones custom (max tres opciones)
       {
         "type": "dialogue",
         "text": "texto del di�logo",
@@ -104,6 +104,9 @@
           {
             "text": "texto opci�n 4",
             "j": null
+          },
+          {
+            "text": "texto opci�n 5"
           }
 
         ]
@@ -201,13 +204,26 @@
 
 
 //Formatos separados(para ctrl+c,ctrl+v)
-
-
-"nombre_evento": {
+{
+  "type": "dialogue",
+  "text": "",
+  "continue": ""
+} 
+//
+{
+  "type": "dialogue",
+  "text": "",
+  "options": [
+    {
+      "text": "",
+      "j": "TAG"
+    }
+  ]
+}, "nombre_evento": {
 
   "params": {
 
-  }
+  },
 
   "eventFractions": {
 
@@ -224,7 +240,9 @@
   },
   "ambush": true, //empiezan los enemigos
   "canFlee": false //es posible huir?
-} "fracciónEvento_combate": {
+}, //
+
+"fracciónEvento_combate": {
   "combat": {
     "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
     "rewards": { //se escribe en formato recompensa

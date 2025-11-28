@@ -1,8 +1,51 @@
 {
-    "globalParams": {
-        "nombre_h": [ "Pepe", "Juan", "Jorge", "Saúl", "Johan", "Joseph.J", "Jonathan.J", "Josuke.H", "DIO", "Antonio", "Federico", "Nicolás" ],
-        "nombre_m": [ "Pepa", "Juana", "Ana", "Sonia", "Erina", "Estefanía", "Daniela", "Josefina", "Holly", "Antonia", "Lera", "Nami", "Nico" ]
+  "globalParams": {
+    "nombre_h": [ "Pepe", "Juan", "Jorge", "Saúl", "Johan", "Joseph.J", "Jonathan.J", "Josuke.H", "DIO", "Antonio", "Federico", "Nicolás" ],
+    "nombre_m": [ "Pepa", "Juana", "Ana", "Sonia", "Erina", "Estefanía", "Daniela", "Josefina", "Holly", "Antonia", "Lera", "Nami", "Nico" ]
+  },
+  "EVENTO_TEST1": {
+    "params": {
+      "nombre_1": "_nombre_h",
+      "nombre_2": "_nombre_m"
+
     },
+    "eventFragments": [
+      {
+        "type": "dialogue",
+        "text": "Hola, soy _nombre_1. ¿Quieres saber cuánto vale tu coche?",
+        "options": [
+          {
+            "text": "Sí",
+            "j": "COMPRO"
+          },
+          {
+            "text": "No"
+          },
+          {
+            "text": "Ciao",
+            "j": "null"
+          }
+
+        ]
+      },
+      {
+        "type": "dialogue",
+        "text": "pOR Qhé, si soy Antonio Lob... _nombre_1. ",
+        "continue": "porque yo, _nombre_2, no soy tonta."
+      },
+      {
+        "tag": "COMPRO",
+        "type": "dialogue",
+        "text": "Entonces muere",
+        "options": [{"text": "Ok."},{"text": "nunca!","j": "COMPRO"}]
+      }
+    ]
+
+
+
+
+
+  },
     "PUEBLO_MEDIANO": {
 
         "params": {
