@@ -323,7 +323,9 @@ export default class BattleScene extends Phaser.Scene {
     this.blackFullRect.setVisible(false);
   }
 
-  UpdateMenus() {
+    UpdateMenus() {
+        this.menuItems?.destroy();
+        this.menuHabilidades?.destroy();
     // Menú de habilidades
     this.menuHabilidades = new Menu(
       this,

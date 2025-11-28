@@ -217,8 +217,10 @@ export default class MenuButton extends Phaser.GameObjects.Text {
     });
   }
 
-  destroy(){
-    this.removeAllListeners();
+    destroy() {
+        
+        this.removeAllListeners();
+        super.destroy();
   }
 
 
