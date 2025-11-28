@@ -113,6 +113,7 @@ class EventParser {
         //generar/dar valores al fragmento de evento
         switch (thisFragment_json.type) {
             case "dialogue": {
+                eventFragmentNode.tipo = "dialogue";
                 eventFragmentNode.texto = this.ParseStringWithParams(thisFragment_json.text);
 
                 //si hay múltiples opciones custom
@@ -140,8 +141,8 @@ class EventParser {
                 //Si no quedan fragmentos a continuación, sale al mapa.
                 else {
                     //si el texto del continue es custom:
-                    if (!!this.eventFragments_Json[index].continue) {
-                        eventFragmentNode.opciones[0].texto = this.ParseStringWithParams(this.eventFragments_Json[index].continue);
+                    if (!!thisFragment_json.continue) {
+                        eventFragmentNode.opciones[0].texto = this.ParseStringWithParams(thisFragment_json.continue);
                     }
                     else {
                         eventFragmentNode.opciones[0].texto = "Continue";
@@ -155,8 +156,10 @@ class EventParser {
             }
             case "combat":
             {
+                    eventFragmentNode.tipo = "combat";
+                    eventFragmentNode.combate = thisFragment_json.combat;
+                    eventFragmentNode.opciones[0].salto = new SubStateNode("dialigue",undefined,"Has ganado")
 
-                eventFragmentNode.combate = this.eventFragments_Json[index].combat
                 break;
             }
             default: break;
@@ -204,4 +207,6 @@ class EventParser {
         }
         return string;
     }
+
+    ParseRewards
 }

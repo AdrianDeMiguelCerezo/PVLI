@@ -183,7 +183,7 @@
       {
         "type": "dialogue",
         "text": "Gracias por salvarme. Aqu� tienes tus recompensas. _par�metro_5",
-        "actions": "_parámetro_5"
+        "rewards": "_parámetro_5"
       }
 
 
