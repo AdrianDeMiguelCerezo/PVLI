@@ -1,8 +1,15 @@
 
 export default class SubStateNode {
 
-
-    constructor(tipo, combate,texto,opciones,consecuencias,subState_Huida) {
+    /**
+ * 
+ * @param {object} combate
+ * @param {string} texto
+ * @param {{"texto":string,"salto":SubStateNode}[]} opciones
+ * @param {} consecuencias
+ * @param {SubStateNode} eventFragment_Huida
+ */
+    constructor(tipo, combate, texto, opciones = [], consecuencias = [],eventFragment_Huida) {
         this.tipo = tipo; 
 
         this.combate = combate;
@@ -27,17 +34,10 @@ export default class SubStateNode {
         /**
          * @type {SubStateNode} subestado al que se va si se huye del combate.
          */
-        this.nodoHuida = subState_Huida;
+        this.nodoHuida = eventFragment_Huida;
     }
 
-    /**
-     * 
-     * @param {object} combate
-     * @param {string} texto
-     * @param {{"texto":string,"salto":SubStateNode}[]} opciones
-     * @param {} consecuencias
-     * @param {SubStateNode} eventFragment_Huida
-     */
+
     Create(tipo, combate, texto, opciones, consecuencias, eventFragment_Huida) {
         this.tipo = tipo;
         
