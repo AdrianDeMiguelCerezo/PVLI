@@ -8,7 +8,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
    * @param {BattleScene} scene
    * @param {number} x
    * @param {number} y
-   * @param {any} key Indica o la key de la habilidad si se guarda en habilidades.json,
+   * @param {any} key Indica o la key de la habilidad si se guarda en habilidades.json;
    *                  o la key de equipamiento, o es una tupla { item, count }
    * @param {string} skill Indica la skill a utilizar si se trata de una pieza de equipamiento
    * @param {Function} pointerDownAction Acción directa si NO es un botón de combate
@@ -41,7 +41,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
       }
     );
 
-    // ==== BOTONES GENÉRICOS (Atacar / Defender / Habilidades / Items...) ====
+    // ==== BOTONES GENÉRICOS (Se les pasa un callback) ====
     if (!!pointerDownAction) {
       this.text = key;
       scene.add.existing(this);
@@ -61,8 +61,9 @@ export default class MenuButton extends Phaser.GameObjects.Text {
       this.on("pointerout", () => {
         this.preFX.clear();
       });
-    } else {
-      // ==== BOTONES DE COMBATE (habilidades / items / equipamiento) ====
+    }
+    else {
+      // ==== BOTONES DE COMBATE (usar habilidades e items) ====
       if (isCombat) {
         // --- Habilidad de equipamiento (arma, torso, etc.) ---
         if (!!skill) {
@@ -154,8 +155,11 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             this.preFX.clear();
           });
         }
-      } else {
-        // ==== BOTONES DE MENÚ (fuera de combate, bestiario, inventario...) ====
+      }
+
+      // ==== BOTONES DE MENÚ (fuera de combate, bestiario, inventario...) ====
+      else {
+        
         if (scene.jsonHabilidades.hasOwnProperty(key)) {
           if (!!skill) {
             this.text = scene.jsonEquipamiento[key].habilidades[skill].name;
