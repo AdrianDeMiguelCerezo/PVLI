@@ -217,13 +217,17 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x222222);
         if(this.k!=null){
             this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:this.w*(0.85/3)}}));
-            if(this.playerData.equipamiento.includes(this.k)){
-                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),3);
+            if(this.scene.jsonEquipamiento[this.k]){
+                if(this.playerData.equipamiento.includes(this.k)){
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),3);
+                }
+                else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
+                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),3);  
+                }
             }
-            else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
-                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),3);  
+            else if(this.scene.jsonItems[this.k]){
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar",null,()=>this.usar(),15),3);
             }
-
         }
          
         this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x222222);
@@ -359,6 +363,29 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.updateValues();
         this.updateMenus(1);
         
+    }
+
+    /**
+     * Usa el item que tengas seleccionado
+     */
+    usar(){
+        const item=this.scene.jsonItems[this.k];
+        if(item.usedOutOfCombat){
+            //codigo para usar item
+
+            const entry = this.playerData.items.find(obj => obj.item === this.k);
+
+            entry.count--;
+            if(entry.count<=0){
+                this.playerData.items.splice(this.playerData.items.indexOf(entry),1);
+                this.desc="";
+            }
+            else{
+                this.desc=this.scene.jsonItems[this.k].name+"\n-"+this.scene.jsonItems[this.k].description+"\n-Cantidad: "+entry.count;
+            }
+            this.updateValues();
+            this.updateMenus(2);
+        }
     }
 
 }
