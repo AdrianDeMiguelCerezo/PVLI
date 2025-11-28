@@ -27,7 +27,7 @@ export default class SubStateNode {
         /**
          * @type {SubStateNode} subestado al que se va si se huye del combate.
          */
-        this.EventFragment_Huida = subState_Huida;
+        this.nodoHuida = subState_Huida;
     }
 
     /**
@@ -53,7 +53,7 @@ export default class SubStateNode {
         this.consecuencias = consecuencias;
 
 
-        this.EventFragment_Huida = eventFragment_Huida;
+        this.nodoHuida = eventFragment_Huida;
     }
 
 

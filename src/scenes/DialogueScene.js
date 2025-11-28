@@ -74,7 +74,7 @@ export default class DialogueScene extends Phaser.Scene {
 												}]
 											}
 										}],
-										EventFragment_Huida: {
+										nodoHuida: {
 											tipo: "dialogue",
 											texto: "Has huido",
 											opciones: [
@@ -151,7 +151,7 @@ export default class DialogueScene extends Phaser.Scene {
 		}
 		//si el tipo es combate comienza combate con los atributos
 		else if(evento.tipo == "combat"){
-			this.scene.start('BattleScene', evento.combate.enemies, evento.opciones[0].salto, evento.EventFragment_Huida);
+			this.scene.start('BattleScene', evento.combate.enemies, evento.opciones[0].salto, evento.nodoHuida);
 		}
 	}
 

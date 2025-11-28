@@ -133,6 +133,15 @@ class EventParser {
                             const indexSalto = ++index;
                             eventFragmentNode.opciones[i].salto = this.GenerateSingleEventFragment(indexSalto)
                         }
+                        //saltar a la tag tal si existe
+                        else if(this.tags.hasOwnProperty(jumpTag)){
+                            eventFragmentNode.opciones[i].salto = this.GenerateSingleEventFragment(this.tags[jumpTag]) 
+                        }
+                        //si la tag con este nombre no existe
+                        else {
+                            console.log("la tag llamada ", jumpTag, " no existe.");
+                            eventFragmentNode.opciones[i].salto = null;
+                        }
 
                     }
 
@@ -158,7 +167,34 @@ class EventParser {
             {
                     eventFragmentNode.tipo = "combat";
                     eventFragmentNode.combate = thisFragment_json.combat;
-                    eventFragmentNode.opciones[0].salto = new SubStateNode("dialigue",undefined,"Has ganado")
+
+                    if (thisFragment_json.flee) {
+                        const jumpTag = thisFragment_json.flee;
+                        //Saltar al mapa
+                        if (jumpTag === null) {
+                            eventFragmentNode.nodoHuida = null;
+                        }
+                        //saltar al fragmento que está directamente a continuación de este en el json.
+                        else if (jumpTag === undefined) {
+                            const indexSalto = ++index;
+                            eventFragmentNode.nodoHuida = this.GenerateSingleEventFragment(indexSalto)
+                        }
+                        //saltar a la tag tal si existe
+                        else if (this.tags.hasOwnProperty(jumpTag)) {
+                            eventFragmentNode.nodoHuida = this.GenerateSingleEventFragment(this.tags[jumpTag])
+                        }
+                        //si la tag con este nombre no existe
+                        else {
+                            console.log("la tag llamada", jumpTag, " no existe.");
+                            eventFragmentNode.nodoHuida = null;
+                        }
+                    }
+
+                    //generar nodo de diálogo al que se va al ganar
+                    eventFragmentNode.opciones[0].salto =
+                        new SubStateNode("dialigue", undefined, "Has ganadoel combate. Falta  decirte cuáles son las recompensas.",
+                            [{ texto: "Continue", salto: this.GenerateSingleEventFragment(++index) }],
+                            thisFragment_json.rewards,undefined);
 
                 break;
             }
@@ -208,5 +244,15 @@ class EventParser {
         return string;
     }
 
-    ParseRewards
+    /**
+     * 
+     * @param {object} rewards
+     */
+    WriteRewards(rewards) {
+        const rewardsArray = Object.keys(rewards)
+        let returnString = "";
+        for (let i = 0; i < rewardsArray.length - 1; i++) {
+            returnString+= 
+        }
+    }
 }
