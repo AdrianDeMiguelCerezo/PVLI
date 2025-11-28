@@ -1,18 +1,20 @@
 
-class SubStateNode {
+export default class SubStateNode {
 
 
-    constructor(combate,texto,opciones,consecuencias,subState_Huida) {
+    constructor(tipo, combate,texto,opciones,consecuencias,subState_Huida) {
+        this.tipo = tipo; 
+
         this.combate = combate;
 
         /**
-         * @type {string} texto del diálogo
+         * @type {string} texto del diï¿½logo
          */
         this.texto = texto;
 
 
         /**
-         * [{textoOpción,Nodo al q se va},{textoOpción,Nodo al q se va},...] 
+         * [{textoOpciï¿½n,Nodo al q se va},{textoOpciï¿½n,Nodo al q se va},...] 
          * @type {{"texto":string,"salto":SubStateNode}[]}
          */
         this.opciones = opciones;
@@ -36,7 +38,9 @@ class SubStateNode {
      * @param {} consecuencias
      * @param {SubStateNode} eventFragment_Huida
      */
-    Create(combate, texto, opciones, consecuencias, eventFragment_Huida) {
+    Create(tipo, combate, texto, opciones, consecuencias, eventFragment_Huida) {
+        this.tipo = tipo;
+        
         this.combate = combate;
 
 
