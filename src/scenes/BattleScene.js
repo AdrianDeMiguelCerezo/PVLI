@@ -324,6 +324,10 @@ export default class BattleScene extends Phaser.Scene {
   }
 
     UpdateMenus() {
+
+        const menuItemsVisible = !!this.menuItems?.visible;
+        const menuHabilidadesVisible = !!this.menuHabilidades?.visible;
+
         this.menuItems?.destroy();
         this.menuHabilidades?.destroy();
     // Menú de habilidades
@@ -337,7 +341,7 @@ export default class BattleScene extends Phaser.Scene {
       3,
       0xb7b7b7
     )
-      .setVisible(false)
+      .setVisible(menuHabilidadesVisible)
       .setDepth(1);
 
     // Menú de items
@@ -351,7 +355,7 @@ export default class BattleScene extends Phaser.Scene {
       2,
       0xb7b7b7
     )
-      .setVisible(false)
+      .setVisible(menuItemsVisible)
       .setDepth(1);
 
     // Habilidades del jugador

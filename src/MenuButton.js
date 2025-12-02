@@ -48,9 +48,10 @@ export default class MenuButton extends Phaser.GameObjects.Text {
 
       this.setInteractive();
       this.on("pointerdown", () => {
-        if (this.canBeClicked) {
+          if (this.canBeClicked) {
+              this.preFX.clear();
           pointerDownAction();
-          this.preFX.clear();
+          
         }
       });
       this.on("pointerover", () => {
@@ -73,27 +74,30 @@ export default class MenuButton extends Phaser.GameObjects.Text {
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
+              if (this.canBeClicked) {
+                  this.preFX.clear();
               scene.events.emit(
                 "use_skill",
                 scene.jsonEquipamiento[key].habilidades[skill]
               );
-              this.preFX.clear();
+              
             }
           });
 
           this.on("pointerover", () => {
-            if (this.canBeClicked) {
+              if (this.canBeClicked) {
+                  this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
               scene.ShowTextbox(
                 scene.jsonEquipamiento[key].habilidades[skill].description
               );
-              this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+              
             }
           });
 
-          this.on("pointerout", () => {
+            this.on("pointerout", () => {
+                this.preFX.clear();
             if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
+            
           });
         }
         // --- Habilidad definida en habilidades.json ---
@@ -104,23 +108,25 @@ export default class MenuButton extends Phaser.GameObjects.Text {
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
+              if (this.canBeClicked) {
+                  this.preFX.clear();
               // Aquí emitimos la KEY, el CombatManager ya la resuelve en jsonHabilidades
               scene.events.emit("use_skill", key);
-              this.preFX.clear();
+              
             }
           });
 
           this.on("pointerover", () => {
-            if (this.canBeClicked) {
+              if (this.canBeClicked) {
+                  this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
               scene.ShowTextbox(scene.jsonHabilidades[key].description);
-              this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+              
             }
           });
 
-          this.on("pointerout", () => {
+            this.on("pointerout", () => {
+                this.preFX.clear();
             if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
           });
         }
         // --- Botón de item (MOLOTOV, pociones, etc.) ---
@@ -133,13 +139,14 @@ export default class MenuButton extends Phaser.GameObjects.Text {
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
+              if (this.canBeClicked) {
+              this.preFX.clear();
               // De momento usamos la primera habilidad del item
               scene.events.emit(
                 "use_skill",
                 scene.jsonItems[key.item].habilidades[0]
               );
-              this.preFX.clear();
+
             }
           });
 
@@ -150,9 +157,9 @@ export default class MenuButton extends Phaser.GameObjects.Text {
             }
           });
 
-          this.on("pointerout", () => {
+            this.on("pointerout", () => {
+                this.preFX.clear();
             if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
           });
         }
       }
@@ -178,9 +185,10 @@ export default class MenuButton extends Phaser.GameObjects.Text {
 
         this.setInteractive();
 
-        this.on("pointerdown", () => {
+          this.on("pointerdown", () => {
+              this.preFX.clear();
           scene.events.emit("show_description", key, skill);
-          this.preFX.clear();
+          
         });
 
         this.on("pointerover", () => {
@@ -218,7 +226,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
   }
 
     destroy() {
-        
+        console.log(this.text,", destruido")
         this.removeAllListeners();
         super.destroy();
   }
