@@ -60,6 +60,13 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(10/12),"SP: "));
         this.menuStats.add(new HealthBar(this.scene,100,this.h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
+
+        this.scene.add.rectangle(23,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
+        this.scene.add.rectangle((this.w / 1.5) * (1 / 3)+22,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
+        this.scene.add.rectangle((this.w / 1.5) * (2 / 3)+18,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
+        this.scene.add.rectangle((this.w / 1.5)+17,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
+        this.scene.add.rectangle(this.w/3+20,48,this.w/1.5,5,0xcf303f,1);
+        this.scene.add.rectangle(this.w/3+20,68,this.w/1.5,5,0xcf303f,1);
         this.start();
     }
     /**
