@@ -160,14 +160,14 @@ export default class MenuButton extends Phaser.GameObjects.Text {
       // ==== BOTONES DE MENÚ (fuera de combate, bestiario, inventario...) ====
       else {
         
-        if (scene.jsonHabilidades.hasOwnProperty(key)) {
+        if (scene.jsonEquipamiento.hasOwnProperty(key)) {
           if (!!skill) {
             this.text = scene.jsonEquipamiento[key].habilidades[skill].name;
           } else {
             this.text = scene.jsonEquipamiento[key].name;
           }
-        } else if (scene.jsonEquipamiento.hasOwnProperty(key)) {
-          this.text = scene.jsonEquipamiento[key].name;
+        } else if (scene.jsonHabilidades.hasOwnProperty(key)) {
+          this.text = scene.jsonHabilidades[key].name;
         } else if (scene.jsonItems.hasOwnProperty(key)) {
           this.text = scene.jsonItems[key].name;
         } else {

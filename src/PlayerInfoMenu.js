@@ -109,6 +109,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuEquip?.destroy();
         this.menuItems?.destroy();
         this.menuHab = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x222222);
+        this.addHab();
     }
 
     /**
@@ -188,6 +189,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             this.menuItems.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
         }
     }
+
+    /**
+     * Añade al menuHab las habilidades que tengas
+     */
+    addHab(){
+        for(let key of this.playerData.habilidades){
+            this.menuHab.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,-1);
+        }
+    }
+
     /**
      * Añade al menuPlayer el equipamiento que tiene equipado
      */
@@ -219,19 +230,28 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         if(this.k!=null){
             this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:this.w*(0.85/3)}}));
             if(this.scene.jsonEquipamiento[this.k]){
-                if(this.playerData.equipamiento.includes(this.k)){
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
-                }
-                else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+                if(habIndex==0){
+                    if(this.playerData.equipamiento.includes(this.k)){
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
+                    }
+                    else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+                    }
                 }
                 
-
-                if(this.scene.jsonEquipamiento[this.k].habilidades[habIndex]){
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,this.scene.jsonEquipamiento[this.k].habilidades[habIndex].name,null,()=>this.habDesc(habIndex),15),3);
-                }
-                else{
-                    this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Volver",null,()=>this.OnButtonClicked(this.k),15),3);
+                if(this.scene.jsonEquipamiento[this.k].habilidades){
+                    if(habIndex==0){
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.habDesc(habIndex),15),3);
+                    }
+                    else{
+                        if(this.scene.jsonEquipamiento[this.k].habilidades[habIndex]){
+                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Siguiente",null,()=>this.habDesc(habIndex),15),3);
+                        }
+                        else{
+                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Volver",null,()=>this.OnButtonClicked(this.k),15),3);
+                        }
+                    }
+                    
                 }
             }
             else if(this.scene.jsonItems[this.k]){
