@@ -92,7 +92,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuEquip.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,2);
         this.addEquip();
     }
-    /**
+    /**S
      * Solo deja visible el menu de items
      */
     showItems(){

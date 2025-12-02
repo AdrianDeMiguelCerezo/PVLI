@@ -189,9 +189,8 @@ export default class Menu extends Phaser.GameObjects.Container {
 
     removeAllButtons() {
         this.list.forEach(child => {
-            if (child.disableInteractive) child.disableInteractive();
-            if (child.removeAllListeners) child.removeAllListeners();
             child.destroy();
         });
     }
+
 }
