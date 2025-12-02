@@ -29,7 +29,9 @@ export default class xd extends Phaser.Scene {
 class EventParser {
     constructor(jsonEventos) {
         this.jsonEventos = jsonEventos;
-        /**Guarda conversiones parámetroJson a atributo del PlayerData*/
+        /**Guarda conversiones parámetroJson a atributo del PlayerDat
+         * "paramJson":"attributePlayerData"
+         */
         this.rewardsJsonToAttribute =
         {
             "dinero": "dinero",
@@ -178,6 +180,13 @@ class EventParser {
 
                 }
 
+                if (thisFragment_json.rewards) {
+                    eventFragmentNode.consecuencias = {}
+                    for (const [key, value] of Object.entries(thisFragment_json.rewards)) {
+                        eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                    }
+                }
+
                 break;
             }
             case "combat":
@@ -207,11 +216,20 @@ class EventParser {
                         }
                     }
 
+                    const combatRewards_json = thisFragment_json.combat.rewards;
+                    let consecuencias;
+                    if (combatRewards_json) {
+                        consecuencias = {}
+                        for (const [key, value] of Object.entries(combatRewards_json)) {
+                            consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                        }
+                    }
+
                     //generar nodo de diálogo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
                         new SubStateNode("dialigue", undefined, "Has ganadoel combate. Falta  decirte cuáles son las recompensas.",
                             [{ texto: "Continue", salto: this.GenerateEventFragment(++index) }],
-                            thisFragment_json.rewards, undefined);
+                            consecuencias, undefined);
 
                     break;
                 }
