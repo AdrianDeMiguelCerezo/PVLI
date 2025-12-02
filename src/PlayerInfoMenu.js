@@ -328,6 +328,12 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             this.desc=this.scene.jsonItems[key].name+"\n-"+this.scene.jsonItems[key].description+"\n-Cantidad: "+entry.count;
             this.updateMenus(2);
         }
+        else if(this.scene.jsonHabilidades[key]){
+            this.k=key;
+            const item=this.scene.jsonHabilidades[key];
+            this.desc=item.name+"\n-"+item.description;
+            this.updateMenus(3);
+        }
         
         
         
