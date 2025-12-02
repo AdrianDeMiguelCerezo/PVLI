@@ -77,9 +77,9 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuHab?.destroy();
 
         this.menuEquip = new Menu(this.scene, 20, 50, this.w/1.5, this.h * 0.8, 20, 3, 0x222222);
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Armas", { align: 'center' }));
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (this.w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
-        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, (this.w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 70, 0, "Armas", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 65+(this.w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
+        this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 50+(this.w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
         this.menuEquip.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,0);
         this.menuEquip.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,1);
         this.menuEquip.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,2);
@@ -94,9 +94,9 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         
 
         this.menuItems = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x222222);
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 0, 0, "Fuera \nde combate", { align: 'center' }));
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (this.w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
-        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, (this.w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 40, 0, "Fuera \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 40+(this.w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
+        this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 20+(this.w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,0);
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,1);
         this.menuItems.AddButton(new MenuButton(this.scene,0,0,"PONCHO",null,null,0,0,"#222222",false),-1,2);
