@@ -73,6 +73,12 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         //Usado en el menú de equipamiento
         this.scene.add.rectangle(this.w/3+20,68,this.w/1.5,5,0xcf303f,1);
+
+        //Para el menuDesc
+        this.scene.add.rectangle(this.w*(2.525/3),50,this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.525/3),50+this.h*(0.8/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.1/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.95/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
         this.start();
     }
     /**
@@ -89,7 +95,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuItems?.destroy();
         this.menuHab?.destroy();
 
-        this.menuEquip = new Menu(this.scene, 20, 50, this.w/1.5, this.h * 0.8, 20, 3, 0x222222);
+        this.menuEquip = new Menu(this.scene, 20, 50, this.w/1.5, this.h * 0.8, 20, 3, 0x6f9090);
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 70, 0, "Armas", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 65+(this.w / 1.5) * (1 / 3), 0, "Torso", { align: 'center' }));
         this.menuEquip.add(new Phaser.GameObjects.Text(this.scene, 50+(this.w / 1.5) * (2 / 3), 0, "Piernas", { align: 'center' }));
@@ -118,7 +124,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuHab?.destroy();
         
 
-        this.menuItems = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x222222);
+        this.menuItems = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x6f9090);
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 40, 0, "Fuera \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 40+(this.w / 1.5) * (1 / 3), 0, "Dentro \nde combate", { align: 'center' }));
         this.menuItems.add(new Phaser.GameObjects.Text(this.scene, 20+(this.w / 1.5) * (2 / 3), 0, "Fuera y dentro \nde combate", { align: 'center' }));
@@ -145,7 +151,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
     showHab(){
         this.menuEquip?.destroy();
         this.menuItems?.destroy();
-        this.menuHab = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x222222);
+        this.menuHab = new Menu(this.scene, 20, 50, this.w/1.5, this.h*0.8, 20, 3, 0x6f9090);
 
         //Usados en todos los menus
         this.scene.add.rectangle(23,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
@@ -212,7 +218,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     column=2;
                     break;
             }     
-            this.menuEquip.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
+            this.menuEquip.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#c8d9d0",false),-1,column);
         }
     }
     /**
@@ -231,7 +237,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                     column=1;
                 }
             }
-            this.menuItems.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,column);
+            this.menuItems.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#c8d9d0",false),-1,column);
         }
     }
 
@@ -240,7 +246,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      */
     addHab(){
         for(let key of this.playerData.habilidades){
-            this.menuHab.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#707070",false),-1,-1);
+            this.menuHab.AddButton(new MenuButton(this.scene,0,0,key,null,null,15,0,"#c8d9d0",false),-1,-1);
         }
     }
 
@@ -249,13 +255,13 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      */
     addPlayer(){
         if(this.arma!=null){
-            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.arma,null,null,15,0,"#707070",false),1,0);
+            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.arma,null,null,15,0,"#c8d9d0",false),1,0);
         }
         if(this.torso!=null){
-            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.torso,null,null,15,0,"#707070",false),5,0);
+            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.torso,null,null,15,0,"#c8d9d0",false),5,0);
         }
         if(this.pantalones!=null){
-            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.pantalones,null,null,15,0,"#707070",false),9,0);
+            this.menuPlayer.AddButton(new MenuButton(this.scene,0,0,this.pantalones,null,null,15,0,"#c8d9d0",false),9,0);
         }
     }
 
@@ -277,30 +283,30 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             if(this.scene.jsonEquipamiento[this.k]){
                 if(habIndex==0){
                     if(this.playerData.equipamiento.includes(this.k)){
-                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15),2);
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Equipar",null,()=>this.equipar(),15,0,"#c8d9d0",false),2);
                     }
                     else if(this.playerData.arma==this.k||this.playerData.torso==this.k||this.playerData.pantalones==this.k){
-                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15),2);  
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Desequipar",null,()=>this.desequipar(),15,0,"#c8d9d0",false),2);  
                     }
                 }
                 
                 if(this.scene.jsonEquipamiento[this.k].habilidades){
                     if(habIndex==0){
-                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.habDesc(habIndex),15),3);
+                        this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.habDesc(habIndex),15,0,"#c8d9d0",false),3);
                     }
                     else{
                         if(this.scene.jsonEquipamiento[this.k].habilidades[habIndex]){
-                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Siguiente",null,()=>this.habDesc(habIndex),15),3);
+                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Siguiente",null,()=>this.habDesc(habIndex),15,0,"#c8d9d0",false),3);
                         }
                         else{
-                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Volver",null,()=>this.OnButtonClicked(this.k),15),3);
+                            this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Volver",null,()=>this.OnButtonClicked(this.k),15,0,"#c8d9d0",false),3);
                         }
                     }
                     
                 }
             }
             else if(this.scene.jsonItems[this.k]){
-                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar",null,()=>this.usar(),15),3);
+                this.menuDesc.AddButton(new MenuButton(this.scene,0,0,"Usar",null,()=>this.usar(),15,0,"#c8d9d0",false),3);
             }
         }
          
@@ -321,6 +327,12 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(10/12),"SP: "));
         this.menuStats.add(new HealthBar(this.scene,100,this.h*(0.89/3)*(10/12),150,15,this.SP,2,0x0000ff));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(11/12),"Hambre: "+this.hambre));
+
+        //Para el menuDesc
+        this.scene.add.rectangle(this.w*(2.525/3),50,this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.525/3),50+this.h*(0.8/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.1/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.95/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
         
         this.addPlayer();
 
