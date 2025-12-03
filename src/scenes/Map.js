@@ -35,7 +35,7 @@ export default class Map extends Phaser.Scene {
 
         this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
 
-        console.log(this.registry.get("nodes"));
+        //console.log(this.registry.get("nodes"));
 
         if (!this.registry.get("nodes")) {
             this.nodes = []
@@ -82,10 +82,9 @@ export default class Map extends Phaser.Scene {
             this.nodes.push(new MapNode(this, 250, 520, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 350, 550, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
 
-            
-            
-
-
+            for(let node of this.nodes){
+                node.setDepth(3);
+            }
 
         }
         else {
@@ -93,6 +92,10 @@ export default class Map extends Phaser.Scene {
             for (const n of this.registry.get("nodes"))
             {
                 this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.isFocus, n.difficulty, n.visited, n.scale, n.radius))
+                
+            }
+            for(let node of this.nodes){
+                node.setDepth(3);
             }
         }
 
