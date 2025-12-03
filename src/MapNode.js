@@ -35,6 +35,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
          */
         this.targetScene = targetScene;
 
+        this.name="node";
+
         this.nodeType = nodeType;
         this.state = state;
         this.radius = radius;
@@ -78,9 +80,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 this.state = State.CURRENT;
 
                 this.updateTint();
+                this.drawConnectionsFromCurrent();
 
                 
                 this.openNearbyNodes();
+
+                this.scene.UpdateFociDifficulties(50);
 
 
                 if (this.visited == false) {
@@ -99,6 +104,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                         radius: n.radius
 
                     }));
+
+                    this.scene.registry.set("nodes", nodeData);
+
+                    this.scene.events.removeAllListeners("update_tint");
+
+                    this.scene.scene.start(this.targetScene);
                     
                     this.scene.registry.set("nodes", nodeData)
                     this.scene.scene.start(this.targetScene);
@@ -106,6 +117,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 
             }
         });
+
+        this.scene.events.on("update_tint", this.updateTint,this)
     }
 
 
@@ -116,6 +129,13 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             if (this.state === State.LOCKED) this.setTintFill(0x555555);
             else if (this.state === State.OPEN) this.setTintFill(0x000000);
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
+        }
+        
+        if (this.scene.game.config.physics.arcade.debug) {
+            if (this.difficulty < 100) { }
+            else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
+            else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
+            else { this.setTintFill(0x8B1800) }
         }
 
     }

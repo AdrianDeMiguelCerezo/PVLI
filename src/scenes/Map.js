@@ -6,6 +6,12 @@ const NodeType = {
     CITY: 2
 }
 
+const DifficultyLimits = {
+    MEDIUM:100,
+    HARD:200,
+    FUCKED:300
+}
+
 const State = {
     OPEN: 0,
     LOCKED: 1,
@@ -25,11 +31,11 @@ export default class Map extends Phaser.Scene {
         this.add.image(0, 0, 'map').setOrigin(0).setDepth(0);
 
         this.graphics = this.add.graphics();
-        this.graphics.setDepth(1);
+        this.graphics.setDepth(2);
 
-        this.areaGraphics = this.add.graphics().setDepth(0.5);
+        this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
 
-        console.log(this.registry.get("nodes"))
+        console.log(this.registry.get("nodes"));
 
         if (!this.registry.get("nodes")) {
             this.nodes = []
@@ -37,7 +43,7 @@ export default class Map extends Phaser.Scene {
             this.nodes.push(new MapNode(this, 100, 100, 'node', 'Test', NodeType.COMMON, State.CURRENT, false,100));   // CURRENT
             this.nodes.push(new MapNode(this, 200, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
             this.nodes.push(new MapNode(this, 150, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
-            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
+            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, true,300));
             this.nodes.push(new MapNode(this, 250, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
 
             this.nodes.push(new MapNode(this, 320, 150, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
@@ -54,19 +60,19 @@ export default class Map extends Phaser.Scene {
 
             this.nodes.push(new MapNode(this, 600, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 650, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
+            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,500));
             this.nodes.push(new MapNode(this, 680, 320, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 720, 240, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
 
             this.nodes.push(new MapNode(this, 700, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 740, 180, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 740, 360, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 700, 420, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
+            this.nodes.push(new MapNode(this, 700, 420, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,200));
             this.nodes.push(new MapNode(this, 620, 400, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
 
             this.nodes.push(new MapNode(this, 540, 440, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 460, 420, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
-            this.nodes.push(new MapNode(this, 400, 480, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
+            this.nodes.push(new MapNode(this, 400, 480, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,100));
             this.nodes.push(new MapNode(this, 320, 440, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
             this.nodes.push(new MapNode(this, 250, 400, 'node', 'Test', NodeType.COMMON, State.LOCKED, false));
 
@@ -86,7 +92,7 @@ export default class Map extends Phaser.Scene {
             this.nodes = []
             for (const n of this.registry.get("nodes"))
             {
-                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.difficulty,n.isFocus,n.visited,n.scale,n.radius))
+                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.isFocus, n.difficulty, n.visited, n.scale, n.radius))
             }
         }
 
@@ -97,41 +103,104 @@ export default class Map extends Phaser.Scene {
 
         nodoActual.drawConnectionsFromCurrent();
 
+        this.RecalculateNodeDifficulties();
+        this.GenerateDifficultyZones();
 
-        for (const n of this.nodes) n.setDepth(2);
+    }
 
-        
-        this.GenerateDifficultyZones()
-
+    UpdateFociDifficulties(ammount) {
+        for (const n of this.fociNodes) {
+            n.difficulty += ammount;
+        }
+        this.RecalculateNodeDifficulties();
+        this.GenerateDifficultyZones();
     }
 
 
     //complejidad O(n^3) si eliminar un elemento de un array tiene complejidad O(n)
     GenerateDifficultyZones() {
-        let difficulty100nodes = []
-        let difficulty100arists = []
-        for (const node of this.nodes)
-        {
-            if (node.difficulty >= 100) { difficulty100nodes.push(node) }
-        }
-        for (const node of difficulty100nodes)
-        {
-            for (const other of this.nodes)
-            {
-                if (other.difficulty < 100 && Math.sqrt((node.x - other.x) * (node.x - other.x) + (node.y - other.y) * (node.y - other.y))<node.radius)
-                {
-                    difficulty100arists.push(new Phaser.Math.Vector2(node.x + other.x, node.y + other.y).scale(0.5));
-                }
+         this.areaGraphics.destroy();
+        this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
+        for (let x = 0; x < this.game.config.width; x++) {
+            for (let y = 0; y < this.game.config.height; y++) {
+                
+                const miAltura = this.IDWFormula(this.nodes, x, y,3)
+
+                if (miAltura < DifficultyLimits.MEDIUM-20) { }
+                else if (miAltura < DifficultyLimits.HARD-20) { this.drawPixel(x, y, 0xFFB600) }
+                else if (miAltura < DifficultyLimits.FUCKED-20) { this.drawPixel(x, y, 0xFF8500) }
+                else { this.drawPixel(x, y, 0xEB2900) }
+                    
+                    
+                
             }
+
         }
-        const path = new Phaser.Curves.Path();
-        path.lineTo(difficulty100arists[0]);
-        difficulty100arists.splice(0, 1)
-        console.log("arr: ",difficulty100arists)
-        for (let i = 0; i < difficulty100arists.length; i++)
-        {
-            
+        this.events.emit("update_tint")
+    }
+    /**
+     * 
+     * @param {Array<MapNode>} arrayPuntos
+     * @param {number} x
+     * @param {number} y
+     * @param {number} power
+     * @returns
+     */
+    IDWFormula(arrayPuntos,x,y,power) {
+        let sumaDividendo = 0;
+        let sumaDivisor = 0;
+        for (const n of arrayPuntos) {
+            const d = Math.hypot(x - n.x, y - n.y);
+
+            if (d == 0) {
+                sumaDividendo = n.difficulty;
+                sumaDivisor = 1;
+                break;
+            }
+
+            const distanceMult = 1 / (Math.pow(d, power))
+
+            sumaDividendo += this.TruncateDifficulty(n.difficulty) * distanceMult;
+            sumaDivisor += distanceMult;
+
+        }
+
+        return sumaDividendo / sumaDivisor
+    }
+
+    RecalculateNodeDifficulties()
+    {
+
+        /**@type {Array<MapNode>}*/
+        this.fociNodes = []
+
+        /**@type {Array<MapNode>}*/
+        this.nonFociNodes = []
+
+        for (const n of this.nodes) {
+            if (n.isFocus) this.fociNodes.push(n)
+            else this.nonFociNodes.push(n)
+        }
+
+        for (const n of this.nonFociNodes){
+            n.difficulty = 0;
+            for (const f of this.fociNodes){
+                n.difficulty +=  Math.max(0, f.difficulty - Math.hypot(f.x - n.x, f.y - n.y));
+            }
         }
     }
 
+
+    drawPixel(x, y, color) {
+        this.areaGraphics.fillStyle(color);
+        this.areaGraphics.fillRect(x, y, 1, 1);
+    }
+
+    TruncateDifficulty(diff) {
+        if (diff < DifficultyLimits.MEDIUM) return 0;
+        else if (diff < DifficultyLimits.HARD) return DifficultyLimits.MEDIUM;
+        else if (diff < DifficultyLimits.FUCKED) return DifficultyLimits.HARD+20;
+        else return DifficultyLimits.FUCKED+30;
+    }
 }
+
