@@ -24,6 +24,8 @@ export default class PlayerData
         efectos = [],
         equipamiento = ["PANTALONES_REFORZADOS","PONCHO","ESCOPETA","VAQUEROS"],
         arma = "REVOLVER_OXIDADO", torso = "CHAQUETA_PIEL", pantalones = null, 
+        skins=['cowboy','swimsuit'],
+        skinIndex=0
     )
 
     {
@@ -39,6 +41,8 @@ export default class PlayerData
         this.critRate=critRate;
         this.dinero=dinero;
         this.hambre=hambre;
+        this.skins=skins;
+        this.skinIndex=skinIndex;
 
         /**keys de equipamiento no equipado
          * @type {Array<string>} 

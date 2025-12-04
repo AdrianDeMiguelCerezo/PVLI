@@ -12,7 +12,9 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('fondo', 'assets/fondoPlaceholderDialogos.png');
         this.load.image('malo', 'assets/malo.png');
         this.load.image('BANDIDO_COMUN', 'assets/bandido.png');
-        this.load.image('player', 'assets/player.png');
+        this.load.image('player', 'assets/cowboy.png');
+        this.load.image('cowboy','assets/cowboy.png');
+        this.load.image('swimsuit','assets/swimsuit.png');
 
         //carga img intents
         this.load.image('espada','assets/Espada.png');
@@ -57,6 +59,8 @@ export default class BootScene extends Phaser.Scene {
         this.uiButton(100, 200, "Go to BattleScene", 'BattleScene', ['BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN',])
         this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', new PlayerData())
         this.uiButton(100, 500, "Go to xd", 'xd',)
+
+        
     }
     /**
      * 

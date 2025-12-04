@@ -49,11 +49,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(4/6),"Piernas equipadas: "));
         this.addPlayer();
 
-        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x6f9090);
+        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,2,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
-        this.menuStats.add(new Phaser.GameObjects.Image(this.scene,20,this.h*(0.89/3)*(6/12),'player'));
+
+        this.player=new Phaser.GameObjects.Image(this.scene,20,this.h*(0.89/3)*(6/12),'player');
+        this.player.setScale(4);
+        this.menuStats.add(this.player);
+        this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
+        
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
         this.menuStats.add(new HealthBar(this.scene,100,this.h*(0.89/3)*(9/12),150,15,this.HP));
@@ -285,6 +290,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
     updateMenus(menuShow=0,habIndex=0){
         this.menuDesc.destroy();
         this.menuPlayer.destroy();
+        this.menuStats.remove(this.player);
         this.menuStats.destroy();
         
         
@@ -328,11 +334,15 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(4/6),"Piernas equipadas: "));
         
 
-        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x6f9090);
+        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,2,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
-        this.menuStats.add(new Phaser.GameObjects.Image(this.scene,20,this.h*(0.89/3)*(6/12),'player'));
+
+        
+        this.menuStats.add(this.player);
+        this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
+
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
         this.menuStats.add(new HealthBar(this.scene,100,this.h*(0.89/3)*(9/12),150,15,this.HP));
@@ -498,6 +508,15 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         const item=this.scene.jsonEquipamiento[this.k].habilidades[index];
         this.desc=item.name+"\n-"+item.description+"\n-Daño: "+item.damage;
         this.updateMenus(0,index+1);
+    }
+
+    /**
+     * Cambia la skin del jugador
+     */
+    changeSkin(){
+        this.playerData.skinIndex = (this.playerData.skinIndex + 1) % this.playerData.skins.length;
+        const newSkinKey = this.playerData.skins[this.playerData.skinIndex];
+        this.player.setTexture(newSkinKey);
     }
 
 }
