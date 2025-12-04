@@ -48,7 +48,7 @@ class EventParser {
             "efectos": "efectos"
 
         }
-
+        this.MAX_OPTIONS = 3;
 
     }
 
@@ -134,36 +134,46 @@ class EventParser {
 
                 //si hay múltiples opciones custom
                 if (!!thisFragment_json.options) {
-                    for (let i = 0; i < thisFragment_json.options.length; i++) {
+
+                    let i = 0;
+
+                    
+                    
+
+                    let j = 0;
+                    while (i < this.MAX_OPTIONS && (j < thisFragment_json.permanentOptions.length)) {
 
                         //en eventFragmentNode.opciones[i] hay un objeto
                         eventFragmentNode.opciones[i] = {};
+                        this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg)
+                        i++;
+                        j++;
 
-                        //seteo su texto
-                        eventFragmentNode.opciones[i].texto = this.ParseStringWithParams(thisFragment_json.options[i].text, expReg);
+                    }
 
-                        //seteo su salto:
-                        const jumpTag = thisFragment_json.options[i].j;
+                    //genero un array ordenado de enteros que representan cada opción y luego lo desordeno para generar opciones random.
+                    let array = [];
 
-                        //Saltar al mapa
-                        if (jumpTag === "null" || jumpTag === null) {
-                            eventFragmentNode.opciones[i].salto = null;
-                        }
-                        //saltar al fragmento que está directamente a continuación de este en el json.
-                        else if (jumpTag === undefined || jumpTag === "undefined") {
-                            const indexSalto = ++index;
-                            eventFragmentNode.opciones[i].salto = this.GenerateEventFragment(indexSalto)
-                        }
-                        //saltar a la tag tal si existe
-                        else if (this.tags.hasOwnProperty(jumpTag)) {
-                            eventFragmentNode.opciones[i].salto = this.GenerateEventFragment(this.tags[jumpTag])
-                        }
-                        //si la tag con este nombre no existe
-                        else {
-                            console.log("la tag llamada ", jumpTag, " no existe.");
-                            eventFragmentNode.opciones[i].salto = null;
-                        }
+                    for (n = 0; n < thisFragment_json.options.length; n++)
+                    {
+                        array[n] = n;
+                    }
+                    for (n = 0; n < 20; n++) {
+                        let o1 = Phaser.Math.Between(0, array.length - 1);
+                        let o2 = Phaser.Math.Between(0, array.length - 1);
 
+                        const temp = array[o1];
+                        array[o1] = array[o2];
+                        array[o2] = temp;
+
+                    }
+
+                    j = 0;
+                    while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < thisFragment_json.optionsAmmount)
+                    {
+                        this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg)
+                        i++;
+                        j++;
                     }
 
                 }
@@ -244,6 +254,32 @@ class EventParser {
         return eventFragmentNode;
     }
 
+    SetFragmentOption(fragmentOption,jsonOption,expReg) {
+        //seteo su texto
+        fragmentOption.texto = this.ParseStringWithParams(jsonOption.text, expReg);
+
+        //seteo su salto:
+        const jumpTag = jsonOption.j;
+
+        //Saltar al mapa
+        if (jumpTag === "null" || jumpTag === null) {
+            fragmentOption.salto = null;
+        }
+        //saltar al fragmento que está directamente a continuación de este en el json.
+        else if (jumpTag === undefined || jumpTag === "undefined") {
+            const indexSalto = ++index;
+            fragmentOption.salto = this.GenerateEventFragment(indexSalto)
+        }
+        //saltar a la tag tal si existe
+        else if (this.tags.hasOwnProperty(jumpTag)) {
+            fragmentOption.salto = this.GenerateEventFragment(this.tags[jumpTag])
+        }
+        //si la tag con este nombre no existe
+        else {
+            console.log("La tag llamada ", jumpTag, " no existe.");
+            fragmentOption.salto = null;
+        }
+    }
 
     /**Setea el valor del objeto "param" al parseo de paramValue según la info del json de eventos.
     * @param {any} paramValue //valor en principio del parámetro del json
@@ -299,14 +335,18 @@ class EventParser {
     WriteRewards(rewards) {
 
         let returnString = "";
+        let array = Object.entries(rewards);
 
         //decidido según representación en el json
-        for (const [key, value] of Object.entries(rewards)) {
+        for (let i = 0; i < array.length; i++) {
+            const key = array[i][0]
+            const value = array[i][1]
+            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString+="y "}
             switch (key) {
-                case "dinero": { returnString += value + " de dinero"; break; }
-                case "HP": { returnString += value > 0 ? "+" : "" + valor + " de vida"; break; }
-                case "SP": { returnString += value > 0 ? "+" : "" + valor + " de sp"; break; }
-                case "hambre": { returnString += value > 0 ? "+" : "" + valor + " de hambre"; break; }
+                case "dinero": { returnString += value + " de dinero, "; break; }
+                case "HP": { returnString += value > 0 ? "+" : "" + valor + " de vida, "; break; }
+                case "SP": { returnString += value > 0 ? "+" : "" + valor + " de sp, "; break; }
+                case "hambre": { returnString += value > 0 ? "+" : "" + valor + " de hambre, "; break; }
 
                 case "habilidad":
                     {
@@ -315,7 +355,7 @@ class EventParser {
                         for (const habilidad in value) {
                             returnString += this.jsonHabilidades[habilidad].name + ", ";
                         }
-                        returnString = returnString.slice(0, -2);
+                        
                         break;
 
                     }
@@ -325,40 +365,36 @@ class EventParser {
                         for (const item in value) {
                             returnString += this.jsonItems[item.item].name + " (x" + item.count + "), ";
                         }
-                        returnString = returnString.slice(0, -2);
+                        
                         break;
 
                     }
                 case "efecto": {
                     returnString += value.length > 1 ? "los efectos de " : "el efecto de ";
                     for (const estado in value) {
-                        returnString += this.jsonEfectos[estado.effect].name;
-                        if(estado.effectDuration) {
-                            
-                        }
+                        returnString += this.jsonEfectos[estado.effect].name + ", ";
+
+                        //falta incluir la duración del efecto.
                     }
                 }
-                case "dinero": { returnString += value + " de dinero"; break; }
-                case "dinero": { returnString += value + " de dinero"; break; }
-                case "dinero": { returnString += value + " de dinero"; break; }
+
+                case "dificultadGlobal": { returnString += "se han aumentado en gran medida los esfuerzos del estado por capturate"; break; }
+                
+                case "dificultadCercano": { returnString += "el estado ha aumentado los esfuerzos de búsqueda desde un cuartel cercano, "; break; }
+                case "dificultadRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
+                case "despertarGlobal": { returnString += "el estado está llevando a cabo una persecución a gran escala, "; break; }
+                case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
+                case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
+
+                case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
+               
             }
+             
         }
-        //{
+        //quitar el último ", "
+        returnString = returnString.slice(0, -2);
+        
 
-        //    "dinero": (int) cambio en el dinero del jugador
-        //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
-        //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
-        //    "hambre": (int) cambio en el hambre del jugador.
-        //    "habilidad": ["Habilidad_tal", "habilidad_cual", ...]
-        //    "equipamiento": ["ARMA_TAL", "ARMADURA_PASCUAL", ...],
-        //    "item": [{item:"ITEM_TAL",count:(int)}, ...]
-        //    "efecto": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
-
-        //    "dificultadGlobal": (int) aumento de la dificultad todos los focos.
-        //    "dificultadCercano": (int) aumento de la dificultad foco más cercano.
-        //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos a r distancia de este nodo en diff.
-        //    "despertarCercano": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con diff dificultad.
-        //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con diff dificultad, si no hay, crea foco en mi ubicación con diff dificultad.
-        //}
+        
     }
 }
