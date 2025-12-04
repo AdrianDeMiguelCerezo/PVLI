@@ -36,20 +36,20 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.showEquip();
         
         this.menuSelect=new Menu(this.scene, 0,this.h*0.9,this.w,this.h*0.2,1,3);
-        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Objetos",null,()=>this.showItems()));
-        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Equipamiento",null,()=>this.showEquip()));
-        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab()));
+        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Objetos",null,()=>this.showItems(),21,0,"#c8d9d0",false));
+        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Equipamiento",null,()=>this.showEquip(),21,0,"#c8d9d0",false));
+        this.menuSelect.AddButton(new MenuButton(this.scene,0,0,"Habilidades",null,()=>this.showHab(),21,0,"#c8d9d0",false));
 
-        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x222222);
+        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x6f9090);
         this.desc="" 
 
-        this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x222222);
+        this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x6f9090);
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(2/6),"Torso equipado: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(4/6),"Piernas equipadas: "));
         this.addPlayer();
 
-        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x222222);
+        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
@@ -79,6 +79,18 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.scene.add.rectangle(this.w*(2.525/3),50+this.h*(0.8/3),this.w*(0.85/3),2,0xcf303f,1);
         this.scene.add.rectangle(this.w*(2.1/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
         this.scene.add.rectangle(this.w*(2.95/3),50+this.h*(0.4/3),2,this.h*(0.81/3),0xcf303f,1);
+
+        //Para el menuPlayer
+        this.scene.add.rectangle(this.w*(2.525/3),60+this.h*(0.8/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.525/3),60+this.h*(1.415/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.095/3),81+this.h*(1/3),2,this.h*(0.625/3),0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.955/3),81+this.h*(1/3),2,this.h*(0.625/3),0xcf303f,1);
+
+        //Para el menuStats
+        this.scene.add.rectangle(this.w*(2.525/3),60+this.h*(1.45/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.525/3),62+this.h*(2.35/3),this.w*(0.85/3),2,0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.095/3),81+this.h*(1.8/3),2,this.h*(0.92/3),0xcf303f,1);
+        this.scene.add.rectangle(this.w*(2.955/3),81+this.h*(1.8/3),2,this.h*(0.92/3),0xcf303f,1);
         this.start();
     }
     /**
@@ -277,7 +289,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         
         
 
-        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x222222);
+        this.menuDesc=new Menu(this.scene,this.w*(2.1/3),50,this.w*(0.85/3),this.h*(0.8/3),4,1,0x6f9090);
         if(this.k!=null){
             this.menuDesc.add(new Phaser.GameObjects.Text(this.scene,0,0,this.desc,{wordWrap:{width:this.w*(0.85/3)}}));
             if(this.scene.jsonEquipamiento[this.k]){
@@ -310,13 +322,13 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
             }
         }
          
-        this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x222222);
+        this.menuPlayer=new Menu(this.scene,this.w*(2.1/3),50+this.h*(0.86/3),this.w*(0.85/3),this.h*(0.6/3),12,1,0x6f9090);
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,0,"Arma equipada: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(2/6),"Torso equipado: "));
         this.menuPlayer.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.6/3)*(4/6),"Piernas equipadas: "));
         
 
-        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x222222);
+        this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,1,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
