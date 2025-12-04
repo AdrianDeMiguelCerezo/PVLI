@@ -27,7 +27,7 @@ export default class xd extends Phaser.Scene {
 }
 
 class EventParser {
-    constructor(jsonEventos, jsonHabilidades, jsonEquipamiento, jsonItems,jsonEfectos) {
+    constructor(jsonEventos, jsonHabilidades, jsonEquipamiento, jsonItems, jsonEfectos) {
         this.jsonEventos = jsonEventos;
         this.jsonItems = jsonItems;
         this.jsonHabilidades = jsonHabilidades;
@@ -136,44 +136,46 @@ class EventParser {
                 if (!!thisFragment_json.options) {
 
                     let i = 0;
-
-                    
-                    
-
                     let j = 0;
-                    while (i < this.MAX_OPTIONS && (j < thisFragment_json.permanentOptions.length)) {
 
-                        //en eventFragmentNode.opciones[i] hay un objeto
-                        eventFragmentNode.opciones[i] = {};
-                        this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg)
-                        i++;
-                        j++;
+                    //si existen opciones permanentes
+                    if (thisFragment_json.permanentOptions) {
+                        while (i < this.MAX_OPTIONS && (j < thisFragment_json.permanentOptions.length)) {
 
+                            //en eventFragmentNode.opciones[i] hay un objeto
+                            eventFragmentNode.opciones[i] = {};
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg)
+                            i++;
+                            j++;
+
+                        }
                     }
 
+                    //si existen opciones random
+                    if (thisFragment_json.options) {
                     //genero un array ordenado de enteros que representan cada opción y luego lo desordeno para generar opciones random.
-                    let array = [];
+                        let array = [];
 
-                    for (n = 0; n < thisFragment_json.options.length; n++)
-                    {
-                        array[n] = n;
-                    }
-                    for (n = 0; n < 20; n++) {
-                        let o1 = Phaser.Math.Between(0, array.length - 1);
-                        let o2 = Phaser.Math.Between(0, array.length - 1);
+                        for (n = 0; n < thisFragment_json.options.length; n++) {
+                            array[n] = n;
+                        }
+                        for (n = 0; n < 20; n++) {
+                            let o1 = Phaser.Math.Between(0, array.length - 1);
+                            let o2 = Phaser.Math.Between(0, array.length - 1);
 
-                        const temp = array[o1];
-                        array[o1] = array[o2];
-                        array[o2] = temp;
+                            const temp = array[o1];
+                            array[o1] = array[o2];
+                            array[o2] = temp;
 
-                    }
+                        }
 
-                    j = 0;
-                    while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < thisFragment_json.optionsAmmount)
-                    {
-                        this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg)
-                        i++;
-                        j++;
+                        const optionsAmmount = !!thisFragment_json.optionsAmmount ? thisFragment_json.optionsAmmount : thisFragment_json.options.length
+                        j = 0;
+                        while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg)
+                            i++;
+                            j++;
+                        }
                     }
 
                 }
@@ -254,7 +256,7 @@ class EventParser {
         return eventFragmentNode;
     }
 
-    SetFragmentOption(fragmentOption,jsonOption,expReg) {
+    SetFragmentOption(fragmentOption, jsonOption, expReg) {
         //seteo su texto
         fragmentOption.texto = this.ParseStringWithParams(jsonOption.text, expReg);
 
@@ -341,7 +343,7 @@ class EventParser {
         for (let i = 0; i < array.length; i++) {
             const key = array[i][0]
             const value = array[i][1]
-            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString+="y "}
+            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
             switch (key) {
                 case "dinero": { returnString += value + " de dinero, "; break; }
                 case "HP": { returnString += value > 0 ? "+" : "" + valor + " de vida, "; break; }
@@ -355,7 +357,7 @@ class EventParser {
                         for (const habilidad in value) {
                             returnString += this.jsonHabilidades[habilidad].name + ", ";
                         }
-                        
+
                         break;
 
                     }
@@ -365,7 +367,7 @@ class EventParser {
                         for (const item in value) {
                             returnString += this.jsonItems[item.item].name + " (x" + item.count + "), ";
                         }
-                        
+
                         break;
 
                     }
@@ -379,7 +381,7 @@ class EventParser {
                 }
 
                 case "dificultadGlobal": { returnString += "se han aumentado en gran medida los esfuerzos del estado por capturate"; break; }
-                
+
                 case "dificultadCercano": { returnString += "el estado ha aumentado los esfuerzos de búsqueda desde un cuartel cercano, "; break; }
                 case "dificultadRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
                 case "despertarGlobal": { returnString += "el estado está llevando a cabo una persecución a gran escala, "; break; }
@@ -387,14 +389,14 @@ class EventParser {
                 case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
 
                 case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
-               
+
             }
-             
+
         }
         //quitar el último ", "
         returnString = returnString.slice(0, -2);
-        
 
-        
+
+
     }
 }

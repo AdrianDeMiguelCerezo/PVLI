@@ -129,6 +129,7 @@
                         "text": "texto opci�n 4",
                         "j": null
                     },
+                    //si j es undefined, va al siguiente fragmento
                     {
                         "text": "texto opci�n 5"
                     }
@@ -247,9 +248,10 @@
             "text": "",
             "j": "TAG"
         }
-    ]
+    ],
     "optionAmmount": 1
-}, "nombre_evento": {
+}
+, "nombre_evento": {
 
     "params": {
 
