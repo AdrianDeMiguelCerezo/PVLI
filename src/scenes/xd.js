@@ -27,8 +27,12 @@ export default class xd extends Phaser.Scene {
 }
 
 class EventParser {
-    constructor(jsonEventos) {
+    constructor(jsonEventos, jsonHabilidades, jsonEquipamiento, jsonItems,jsonEfectos) {
         this.jsonEventos = jsonEventos;
+        this.jsonItems = jsonItems;
+        this.jsonHabilidades = jsonHabilidades;
+        this.jsonEquipamiento = jsonEquipamiento;
+        this.jsonEfectos = jsonEfectos;
         /**Guarda conversiones parámetroJson a atributo del PlayerDat
          * "paramJson":"attributePlayerData"
          */
@@ -52,6 +56,7 @@ class EventParser {
     generateEvent(eventKey) {
 
         this.evento_Json = this.jsonEventos[eventKey];
+
         console.log(this.jsonEventos)
         console.log(eventKey, '\n', this.jsonEventos[eventKey])
 
@@ -197,7 +202,7 @@ class EventParser {
                     if (thisFragment_json.flee) {
                         const jumpTag = thisFragment_json.flee;
                         //Saltar al mapa
-                        if (jumpTag === "null" || jumpTag === null ) {
+                        if (jumpTag === "null" || jumpTag === null) {
                             eventFragmentNode.nodoHuida = null;
                         }
                         //saltar al fragmento que está directamente a continuación de este en el json.
@@ -292,10 +297,68 @@ class EventParser {
      * @param {object} rewards
      */
     WriteRewards(rewards) {
-        const rewardsArray = Object.keys(rewards)
+
         let returnString = "";
-        //for (let i = 0; i < rewardsArray.length - 1; i++) {
-        //    returnString+= 
+
+        //decidido según representación en el json
+        for (const [key, value] of Object.entries(rewards)) {
+            switch (key) {
+                case "dinero": { returnString += value + " de dinero"; break; }
+                case "HP": { returnString += value > 0 ? "+" : "" + valor + " de vida"; break; }
+                case "SP": { returnString += value > 0 ? "+" : "" + valor + " de sp"; break; }
+                case "hambre": { returnString += value > 0 ? "+" : "" + valor + " de hambre"; break; }
+
+                case "habilidad":
+                    {
+
+                        returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
+                        for (const habilidad in value) {
+                            returnString += this.jsonHabilidades[habilidad].name + ", ";
+                        }
+                        returnString = returnString.slice(0, -2);
+                        break;
+
+                    }
+                case "item":
+                    {
+
+                        for (const item in value) {
+                            returnString += this.jsonItems[item.item].name + " (x" + item.count + "), ";
+                        }
+                        returnString = returnString.slice(0, -2);
+                        break;
+
+                    }
+                case "efecto": {
+                    returnString += value.length > 1 ? "los efectos de " : "el efecto de ";
+                    for (const estado in value) {
+                        returnString += this.jsonEfectos[estado.effect].name;
+                        if(estado.effectDuration) {
+                            
+                        }
+                    }
+                }
+                case "dinero": { returnString += value + " de dinero"; break; }
+                case "dinero": { returnString += value + " de dinero"; break; }
+                case "dinero": { returnString += value + " de dinero"; break; }
+            }
+        }
+        //{
+
+        //    "dinero": (int) cambio en el dinero del jugador
+        //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
+        //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
+        //    "hambre": (int) cambio en el hambre del jugador.
+        //    "habilidad": ["Habilidad_tal", "habilidad_cual", ...]
+        //    "equipamiento": ["ARMA_TAL", "ARMADURA_PASCUAL", ...],
+        //    "item": [{item:"ITEM_TAL",count:(int)}, ...]
+        //    "efecto": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
+
+        //    "dificultadGlobal": (int) aumento de la dificultad todos los focos.
+        //    "dificultadCercano": (int) aumento de la dificultad foco más cercano.
+        //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos a r distancia de este nodo en diff.
+        //    "despertarCercano": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con diff dificultad.
+        //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con diff dificultad, si no hay, crea foco en mi ubicación con diff dificultad.
         //}
     }
 }
