@@ -15,6 +15,11 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('player', 'assets/cowboy.png');
         this.load.image('cowboy','assets/cowboy.png');
         this.load.image('swimsuit','assets/swimsuit.png');
+        this.load.image('halloween','assets/halloween.png');
+        this.load.image('christmas','assets/christmas.png');
+        this.load.image('butler','assets/butler.png');
+        this.load.image('school','assets/school.png');
+        this.load.image('cat','assets/cat.png');
 
         //carga img intents
         this.load.image('espada','assets/Espada.png');

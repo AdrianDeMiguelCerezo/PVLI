@@ -24,7 +24,7 @@ export default class PlayerData
         efectos = [],
         equipamiento = ["PANTALONES_REFORZADOS","PONCHO","ESCOPETA","VAQUEROS"],
         arma = "REVOLVER_OXIDADO", torso = "CHAQUETA_PIEL", pantalones = null, 
-        skins=['cowboy','swimsuit'],
+        skins=['cowboy','swimsuit','halloween','christmas','butler','school','cat'],
         skinIndex=0
     )
 
