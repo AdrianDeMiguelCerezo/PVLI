@@ -1,4 +1,6 @@
 import MapNode from '../MapNode.js'
+import MenuButton from '../MenuButton.js'
+import PlayerData from '../PlayerData.js'
 
 const NodeType = {
     COMMON: 0,
@@ -35,6 +37,17 @@ export default class Map extends Phaser.Scene {
 
         this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
 
+        //Boton de desplegar opciones
+        this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, ()=>{ 
+            this.mainMenuButton.visible = !this.mainMenuButton.visible;
+            this.inventoryButton.visible = !this.inventoryButton.visible;
+        }, 15, 0, "#c8d9d0", false).setOrigin(1).setDepth(4);
+        //boton de ir al inventario
+        this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null, 
+            ()=>{ this.scene.start('MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1).setDepth(4);
+        //boton de ir al menu principal
+        this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null, 
+            ()=>{ this.scene.start('MainMenu')}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1).setDepth(4);
         //console.log(this.registry.get("nodes"));
 
         if (!this.registry.get("nodes")) {

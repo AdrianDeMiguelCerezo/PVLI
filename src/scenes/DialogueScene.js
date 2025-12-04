@@ -1,5 +1,6 @@
 import DialogText from "../dialog_plugin.js";
 import PlayerData from "../PlayerData.js";
+import MenuButton from "../MenuButton.js";
 
 export default class DialogueScene extends Phaser.Scene {
 	/**
@@ -27,7 +28,18 @@ export default class DialogueScene extends Phaser.Scene {
 	}
 	create() {
 		this.add.image(0, 0, 'fondo').setOrigin(0, 0);
-
+		 //Boton de desplegar opciones
+		this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, ()=>{ 
+			this.mainMenuButton.visible = !this.mainMenuButton.visible;
+			this.inventoryButton.visible = !this.inventoryButton.visible;
+		}, 15, 0, "#c8d9d0", false).setOrigin(1);
+		//boton de ir al inventario
+		this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null, 
+			()=>{ this.scene.start('MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+		//boton de ir al menu principal
+		this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null, 
+			()=>{ this.scene.start('MainMenu')}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+		
 		//carga el dialogo de su json
 		let data = this.cache.json.get('dialogos');
 		

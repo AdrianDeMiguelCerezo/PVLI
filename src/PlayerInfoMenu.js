@@ -17,7 +17,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         scene.add.existing(this);
         this.scene=scene
         this.playerData=playerData
-
+console.log(this.scene);
         this.w=this.scene.sys.canvas.width;
         this.h=this.scene.sys.canvas.height;
 
@@ -382,7 +382,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
          * parámetro para saber el elemento que tenemos seleccionado
          */
         this.k;
-        
+        console.log(this.scene);
         if(this.scene.jsonEquipamiento[key]){
             this.k=key;
             this.desc=this.scene.jsonEquipamiento[key].name+"\n-"+this.scene.jsonEquipamiento[key].description;
@@ -519,4 +519,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.player.setTexture(newSkinKey);
     }
 
+    destroy(fromScene) {
+        this.scene.events.off("show_description", this.OnButtonClicked, this);
+        super.destroy(fromScene);
+    }
 }
