@@ -53,7 +53,7 @@
 
     },
 
-    "CAÑÓN_BANDIDOS_O_MONTAÑAS": {
+    "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
@@ -66,7 +66,7 @@
                     "dinero": 40
                 },
                 {
-                    "habilidad": ""
+                    "habilidad": ["SUPREME_MEDITATION"]
                 }
             ]
         },
@@ -96,7 +96,7 @@
                 "tag": "AvanceDia1",
                 "type": "dialogue",
                 "text": "Primer día, las cosas han ido bien de momento.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de idea, mejor doy la vuelta",
@@ -119,13 +119,13 @@
             {
                 "type": "dialogue",
                 "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Por suerte, no te has hecho demasiado daño.\n _scratch_day_cost",
-                "rewards": "_scratch_day_cost"
+                "rewards": "scratch_day_cost"
             },
             {
                 "tag": "AvanceDia2",
                 "type": "dialogue",
                 "text": "Segundo día, ya solo se ven montañas.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de opción, mejor doy la vuelta",
@@ -156,13 +156,13 @@
             {
                 "type": "dialogue",
                 "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Ha dolido mucho.\n _wounded_day_cost",
-                "rewards": "_wounded_day_cost"
+                "rewards": "wounded_day_cost"
             },
             {
                 "tag": "AvanceDia3",
                 "type": "dialogue",
                 "text": "Tercer día, más montañas.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de idea, mejor doy la vuelta",
@@ -182,7 +182,7 @@
                 "tag": "AvanceDia4",
                 "type": "dialogue",
                 "text": "Cuarto día.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de idea, mejor doy la vuelta",
@@ -209,13 +209,13 @@
             {
                 "type": "dialogue",
                 "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Por suerte, it's just a scratch'.\n _scratch_day_cost",
-                "rewards": "_scratch_day_cost"
+                "rewards": "scratch_day_cost"
             },
             {
                 "tag": "AvanceDia5",
                 "type": "dialogue",
                 "text": "Quinto día, ojalá se acaben estas montañas.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de idea, mejor doy la vuelta",
@@ -246,13 +246,13 @@
             {
                 "type": "dialogue",
                 "text": "Mientras caminabas por la montaña, te ha caído una roca en el hombro.\n _wounded_day_cost",
-                "rewards": "_wounded_day_cost"
+                "rewards": "wounded_day_cost"
             },
             {
                 "tag": "AvanceDia6",
                 "type": "dialogue",
                 "text": "Sexto día, ya debería faltar poco.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
                         "text": "He cambiado de idea, mejor doy la vuelta",
@@ -283,13 +283,13 @@
             {
                 "type": "dialogue",
                 "text": " Mientras caminabas por la montaña, te has tropezado y te has caído, la herida es fea.\n _wounded_day_cost",
-                "rewards": "_wounded_day_cost"
+                "rewards": "wounded_day_cost"
             },
             {
                 "tag": "AvanceDia7",
                 "type": "dialogue",
                 "text": "Más montañas? aún no se ve el final. Mierda! creo que me he perdido.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "options": [
                     {
                         "text": "Seguir para alante",
@@ -311,7 +311,7 @@
                 "tag": "AvanceDia7+",
                 "type": "dialogue",
                 "text": "Vale, creo que estoy donde anteayer, aunque aún no se ve el final.\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "options": [
                     {
                         "text": "Seguir para alante"
@@ -353,7 +353,7 @@
                 "tag": "Tesoro_grieta",
                 "type": "dialogue",
                 "text": "Has encontrado un tesoro en la grieta. _lucky_crack_rewards.",
-                "rewards": "_lucky_crack_rewards.",
+                "rewards": "lucky_crack_rewards.",
                 "options": [
                     {
                         "text": "Seguir para alante",

@@ -11,14 +11,18 @@ export default class xd extends Phaser.Scene {
     init() {
         console.log("init1")
         this.jsonEventos = this.cache.json.get('eventos');
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEquipamiento = this.cache.json.get('equipamiento');
+        this.jsonItems = this.cache.json.get('items');
+        this.jsonEfectos = this.cache.json.get('efectos');
         console.log("init2")
     }
     create() {
 
-        let eventParser = new EventParser(this.jsonEventos)
-        console.log(this.jsonEventos)
-        let evento = eventParser.generateEvent("EVENTO_TEST1");
-        console.log(evento)
+        let eventParser = new EventParser(this.jsonEventos,this.jsonHabilidades,this.jsonEquipamiento,this.jsonItems,this.jsonEfectos)
+        console.log("jsonEventos:",this.jsonEventos)
+        let evento = eventParser.generateEvent("BANDIT_CANNON_OR_MOUNTAINS");
+        console.log("evento:",evento)
 
 
     }
@@ -33,6 +37,9 @@ class EventParser {
         this.jsonHabilidades = jsonHabilidades;
         this.jsonEquipamiento = jsonEquipamiento;
         this.jsonEfectos = jsonEfectos;
+
+        if (!jsonEventos || !jsonItems || !jsonHabilidades || !jsonEquipamiento || !jsonEfectos) {throw "EventParser no está inicializado correctamente" }
+
         /**Guarda conversiones parámetroJson a atributo del PlayerDat
          * "paramJson":"attributePlayerData"
          */
@@ -45,7 +52,17 @@ class EventParser {
             "equipamiento": "equipamiento",
             "habilidades": "habilidades",
             "items": "items",
-            "efectos": "efectos"
+            "efectos": "efectos",
+
+            "dificultadGlobal": "dificultadGlobal",
+            "dificultadCercano": "dificultadCercano", 
+            "dificultadRadio": "dificultadRadio",
+
+            "despertarGlobal": "despertarGlobal",
+            "despertarCercano": "despertarCercano",
+            "despertarRadio": "despertarRadio",
+
+            "despertarCercanoCrear": "despertarCercanoCrear",
 
         }
         this.MAX_OPTIONS = 3;
@@ -57,8 +74,10 @@ class EventParser {
 
         this.evento_Json = this.jsonEventos[eventKey];
 
-        console.log(this.jsonEventos)
-        console.log(eventKey, '\n', this.jsonEventos[eventKey])
+        
+        console.log("eventKey:", eventKey, "\nthis.jsonEventos[eventKey]", this.jsonEventos[eventKey])
+
+        if (this.evento_Json == undefined) { throw "No hay un evento con el nombre: " + eventKey }
 
         /**@type {Array} abreviatura de evento_Json["eventFragments"]*/
         this.eventFragments_Json = this.evento_Json["eventFragments"];
@@ -153,13 +172,13 @@ class EventParser {
 
                     //si existen opciones random
                     if (thisFragment_json.options) {
-                    //genero un array ordenado de enteros que representan cada opción y luego lo desordeno para generar opciones random.
+                        //genero un array ordenado de enteros que representan cada opción y luego lo desordeno para generar opciones random.
                         let array = [];
 
-                        for (n = 0; n < thisFragment_json.options.length; n++) {
+                        for (let n = 0; n < thisFragment_json.options.length; n++) {
                             array[n] = n;
                         }
-                        for (n = 0; n < 20; n++) {
+                        for (let n = 0; n < 20; n++) {
                             let o1 = Phaser.Math.Between(0, array.length - 1);
                             let o2 = Phaser.Math.Between(0, array.length - 1);
 
@@ -172,6 +191,7 @@ class EventParser {
                         const optionsAmmount = !!thisFragment_json.optionsAmmount ? thisFragment_json.optionsAmmount : thisFragment_json.options.length
                         j = 0;
                         while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
+                            eventFragmentNode.opciones[i] = {};
                             this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg)
                             i++;
                             j++;
@@ -199,11 +219,25 @@ class EventParser {
 
                 if (thisFragment_json.rewards) {
                     eventFragmentNode.consecuencias = {}
-                    for (const [key, value] of Object.entries(thisFragment_json.rewards)) {
-                        eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                    switch (typeof thisFragment_json.rewards) {
+                        //si es un string, se refiere al parámetro con ese nombre
+                        case "string":
+                            {
+                                for (const [key, value] of Object.entries(this.params[thisFragment_json.rewards])) {
+                                    eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                                }
+                                break;
+                            }
+                        //si es un objeto, es un literal
+                        case "object":
+                            {
+                                for (const [key, value] of Object.entries(thisFragment_json.rewards)) {
+                                    eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                                }
+                                break;
+                            }
                     }
                 }
-
                 break;
             }
             case "combat":
@@ -237,8 +271,24 @@ class EventParser {
                     let consecuencias;
                     if (combatRewards_json) {
                         consecuencias = {}
-                        for (const [key, value] of Object.entries(combatRewards_json)) {
-                            consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                        
+                        switch (typeof combatRewards_json) {
+                            //si es un string, se refiere al parámetro con ese nombre
+                            case "string":
+                                {
+                                    for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
+                                        consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                                    }
+                                    break;
+                                }
+                            //si es un objeto, es un literal
+                            case "object":
+                                {
+                                    for (const [key, value] of Object.entries(combatRewards_json)) {
+                                        consecuencias[this.rewardsJsonToAttribute[key]] = value;
+                                    }
+                                    break;
+                                }
                         }
                     }
 
@@ -256,7 +306,7 @@ class EventParser {
         return eventFragmentNode;
     }
 
-    SetFragmentOption(fragmentOption, jsonOption, expReg) {
+    SetFragmentOption(fragmentOption, jsonOption, expReg,index) {
         //seteo su texto
         fragmentOption.texto = this.ParseStringWithParams(jsonOption.text, expReg);
 
@@ -269,7 +319,7 @@ class EventParser {
         }
         //saltar al fragmento que está directamente a continuación de este en el json.
         else if (jumpTag === undefined || jumpTag === "undefined") {
-            const indexSalto = ++index;
+            const indexSalto = ++index; 
             fragmentOption.salto = this.GenerateEventFragment(indexSalto)
         }
         //saltar a la tag tal si existe

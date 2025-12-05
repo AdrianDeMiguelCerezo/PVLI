@@ -43,10 +43,10 @@
         //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
         //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
         //    "hambre": (int) cambio en el hambre del jugador.
-        //    "habilidad": ["Habilidad_tal", "habilidad_cual", ...]
+        //    "habilidades": ["Habilidad_tal", "habilidad_cual", ...]
         //    "equipamiento": ["ARMA_TAL", "ARMADURA_PASCUAL", ...],
-        //    "item": [{item:"ITEM_TAL",count:(int)}, ...]
-        //    "efecto": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
+        //    "items": [{item:"ITEM_TAL",count:(int)}, ...]
+        //    "efectos": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
 
         //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
         //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano.

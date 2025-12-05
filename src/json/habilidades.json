@@ -54,7 +54,7 @@
     },
     "SUPREME_MEDITATION": {
         "name": "Meditación suprema",
-        "description": "2 acc. Llamas al cura pa que venga y te cure.",
+        "description": "2 acc. Regeneras ",
         "actionCost": 2,
         "spCost": 60,
         "damage": 0,
