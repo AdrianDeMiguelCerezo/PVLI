@@ -188,7 +188,8 @@ class EventParser {
 
                         }
 
-                        const optionsAmmount = !!thisFragment_json.optionsAmmount ? thisFragment_json.optionsAmmount : thisFragment_json.options.length
+                        console.log("Hay optionsAmmount:",(!!thisFragment_json.optionsAmmount))
+                        const optionsAmmount = (!!thisFragment_json.optionsAmmount) ? thisFragment_json.optionsAmmount : thisFragment_json.options.length
                         j = 0;
                         while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
                             eventFragmentNode.opciones[i] = {};
@@ -367,7 +368,7 @@ class EventParser {
      */
     ParseStringWithParams(string, expReg) {
 
-        console.log("string: ", string, "matches: ", string.match(expReg))
+        
 
         //si no matchea con nada, devuelve null
         if (string.match(expReg) != null) {
@@ -376,8 +377,8 @@ class EventParser {
                 
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 if (typeof (this.params[parameter.substring(1)]) === "object") {
-                    console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(parameter.substring(1)))
-                    string = string.replace(parameter, this.WriteRewards(parameter.substring(1)))
+                    console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
+                    string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(1)]))
                 }
                 else {
                     console.log("Written Reward:", this.params[parameter.substring(1)])
@@ -399,19 +400,21 @@ class EventParser {
         let returnString = "";
         let array = Object.entries(rewards);
 
-        console.log("WriteRewards() array:",array)
+        //console.log("WriteRewards() array:",array)
         //decidido según representación en el json
         for (let i = 0; i < array.length; i++) {
             const key = array[i][0]
             const value = array[i][1]
+
+            //console.log(key, ":", value);
             if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
             switch (key) {
                 case "dinero": { returnString += value + " de dinero, "; break; }
-                case "HP": { returnString += value > 0 ? "+" : "" + valor + " de vida, "; break; }
-                case "SP": { returnString += value > 0 ? "+" : "" + valor + " de sp, "; break; }
-                case "hambre": { returnString += value > 0 ? "+" : "" + valor + " de hambre, "; break; }
+                case "HP": { returnString += (value > 0 ? "+" : "") + value + " de vida, "; break; }
+                case "SP": { returnString += (value > 0 ? "+" : "") + value + " de sp, "; break; }
+                case "hambre": { returnString += (value > 0 ? "+" : "") + value + " de hambre, "; break; }
 
-                case "habilidad":
+                case "habilidades":
                     {
 
                         returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
@@ -422,7 +425,7 @@ class EventParser {
                         break;
 
                     }
-                case "item":
+                case "items":
                     {
 
                         for (const item in value) {
@@ -432,7 +435,7 @@ class EventParser {
                         break;
 
                     }
-                case "efecto": {
+                case "efectos": {
                     returnString += value.length > 1 ? "los efectos de " : "el efecto de ";
                     for (const estado in value) {
                         returnString += this.jsonEfectos[estado.effect].name + ", ";
@@ -451,6 +454,7 @@ class EventParser {
 
                 case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
 
+                default: throw "la key:"+key+" no existe en el objeto de rewards"
             }
 
         }
