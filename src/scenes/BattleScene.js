@@ -264,23 +264,18 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   /**
+   * Elimina un enemigo concreto del array y reordena.
    * @param {Enemy} enemy
    */
   OnDeleteEnemy(enemy) {
-    let i = 0;
-    let encontrado = false;
-    while (i < this.enemiesTam && !encontrado) {
-      encontrado = this.enemies[i] === enemy;
-      i++;
-    }
-    if (encontrado) {
-      enemy.destroy();
-      for (i; i < this.enemiesTam; i++) {
-        this.enemies[i - 1] = this.enemies[i];
-      }
-      this.enemies[this.enemiesTam] = null;
-      this.enemiesTam--;
-    }
+    const idx = this.enemies.indexOf(enemy);
+    if (idx === -1) return;
+
+    enemy.destroy();
+
+    // eliminar del array sin dejar nulls
+    this.enemies.splice(idx, 1);
+    this.enemiesTam = this.enemies.length;
 
     this.RedrawEnemies();
   }

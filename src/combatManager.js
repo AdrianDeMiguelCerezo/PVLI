@@ -700,22 +700,27 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   startEnemyTurns() {
     console.log("[CM] Empieza turno de enemigos");
 
-    const scene = this.scene;
+    const scene  = this.scene;
     const player = this.player;
 
     const doAttack = (index = 0) => {
-      while (index < this.enemies.length && !this.enemies[index].isAlive) {
+      // saltar enemigos nulos o muertos
+      while (
+        index < this.enemies.length &&
+        (!this.enemies[index] || !this.enemies[index].isAlive)
+      ) {
         index++;
       }
 
+      // si ya no queda ninguno, vuelve el turno al jugador
       if (index >= this.enemies.length) {
         console.log("[CM] Fin turno enemigos → vuelve turno jugador");
         this.startPlayerTurn();
         return;
       }
 
-      const enemy = this.enemies[index];
-      const damage = 5; // TODO: sacar de enemigos.json según habilidad elegida
+      const enemy  = this.enemies[index];
+      const damage = 5; // TODO: sacar de enemigos.json
 
       const onHit = () => {
         if (player && typeof player.setTint === "function") {

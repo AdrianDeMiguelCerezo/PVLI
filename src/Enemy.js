@@ -62,7 +62,9 @@ export default class Enemy extends Phaser.GameObjects.Container {
     this.on("pointerdown", () => {
       if (this.canBeClicked && this.isAlive) {
         this.scene.events.emit("target_selected", this, this.skillKey);
-        this.image.preFX.clear();
+        if (this.image.preFX) {
+          this.image.preFX.clear();
+        }
       }
     });
 
@@ -80,11 +82,13 @@ export default class Enemy extends Phaser.GameObjects.Container {
     });
 
     this.on("pointerout", () => {
-      this.image.preFX.clear();
+      if (this.image.preFX) {
+        this.image.preFX.clear();
+      }
     });
 
     this.on("pointerover", () => {
-      if (this.canBeClicked && this.isAlive) {
+      if (this.canBeClicked && this.isAlive && this.image.preFX) {
         this.image.preFX.addGlow("0xfaf255", 1, 1, false, 1, 0);
       }
     });
