@@ -23,12 +23,9 @@ export default class DialogueScene extends Phaser.Scene {
 	 * @param {PlayerData} playerData
 	 * 
 	 */
-	init(eventName, fragmentoEvento, nodeType, difficultyLevel, playerData) {
+	init(fragmentoEvento, playerData) {
 		this.fragmentoEvento = fragmentoEvento;
-		this.eventName = eventName;
-		this.index = 0;
-		this.nodeType = nodeType;
-		this.difficultyLevel = difficultyLevel;
+		
 		this.playerData = playerData;
 	}
 	create() {

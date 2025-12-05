@@ -1,5 +1,5 @@
 import SubStateNode from "../SubStateNode.js"
-
+import PlayerData from "../PlayerData.js"
 
 export default class xd extends Phaser.Scene {
 
@@ -24,6 +24,7 @@ export default class xd extends Phaser.Scene {
         let evento = eventParser.generateEvent("BANDIT_CANNON_OR_MOUNTAINS");
         console.log("evento:",evento)
 
+        this.scene.start("DialogueScene",evento,new PlayerData())
 
     }
 
@@ -266,7 +267,7 @@ class EventParser {
                         }
                         //si la tag con este nombre no existe
                         else {
-                            console.log("la tag llamada", jumpTag, " no existe.");
+                            console.log("la tag llamada", jumpTag, " no existe. (se queda como null de momento)");
                             eventFragmentNode.nodoHuida = null;
                         }
                     }
