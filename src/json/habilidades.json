@@ -51,5 +51,16 @@
         "effectDuration": 2,
         "type": "ACTIVE",
         "target": "SELF"
+    },
+    "SUPREME_MEDITATION": {
+        "name": "Meditación suprema",
+        "description": "2 acc. Regeneras ",
+        "actionCost": 2,
+        "spCost": 60,
+        "damage": 0,
+        "effect": "ATT+",
+        "effectDuration": 2,
+        "type": "ACTIVE",
+        "target": "SELF"
     }
 }

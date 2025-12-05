@@ -15,15 +15,16 @@ export default class DialogueScene extends Phaser.Scene {
 
 	/**
 	 * 
+	 * @param {SubStateNode} fragmentoEvento
+	 * @param {string} eventName
 	 * @param {any} nodeType
 	 * @param {any} difficultyLevel
 	 * @param {PlayerData} playerData
 	 * 
 	 */
-	init(nodeType, difficultyLevel, playerData) {
-		this.index = 0;
-		this.nodeType = nodeType;
-		this.difficultyLevel = difficultyLevel;
+	init(fragmentoEvento, playerData) {
+		this.fragmentoEvento = fragmentoEvento;
+		
 		this.playerData = playerData;
 	}
 	create() {
@@ -45,6 +46,11 @@ export default class DialogueScene extends Phaser.Scene {
 		
 		this.dialogos = data.dialogo2;
 
+		//si al iniciar la escena ya hay un fragmento cargado, reescribe con ese evento (por testear para cuando se vuelva de la escena de combate)
+		if(this.fragmentoEvento != undefined){
+			this.currentEvento = this.fragmentoEvento;
+			console.log(this.fragmentoEvento);
+		}
 		this.dialog = new DialogText(this, {
 			borderThickness: 4,
 			borderColor: 0x555555,
@@ -59,62 +65,57 @@ export default class DialogueScene extends Phaser.Scene {
 			fontFamily: "Arial",
 			posY: 175
 		});
-		
-		this.nextDialog();
-	}
-
-	//pone botones de opciones y si no hay ninguna opcion, pone boton de continuar
-	createButtons(){
-		//dialogo actual
-		const dlAct = this.dialogos[this.index-1];
-		
-		//crea dialogos si hay
-		if(dlAct.options){
-			this.createOptions(dlAct.options);
-			return;
-		}
-
-		//boton de continuar
-		let btnText = this.add.text(400, 425, "CONTINUE", {fontFamily: 'Arial', fontSize: '24px', color: '#fff', backgroundColor:'#828181'});
-		btnText.setOrigin(0.5,0.5);
-		btnText.setInteractive();
-		btnText.on('pointerover', function () {
-			this.setTint(0xff0000);
-		});
-		btnText.on('pointerout', function () {
-			this.clearTint();
-		});
-		btnText.on('pointerdown', ()=>{
-			//continua al siguiente dialogo y destruye el boton
-			this.nextDialog();
-			btnText.destroy();
-		});
+		//mira el primer evento
+		this.checkEvent(this.currentEvento);
 	}
 
 	/**
-	 * Salta a una linea del dialogo
-	 * @param {number} jumpLine
+	 * comprueba el tipo del fragmento actual
+	 * @param {SubStateNode} evento
 	 */
-	jumpDialog(jumpLine){
-		this.index = jumpLine;
-		this.nextDialog();
+	checkEvent(evento){
+		//si el evento es null, vuelve al mapa
+		if(evento === null){
+			this.scene.start('Map');
+		}
+		//comprueba si hay acciones
+		let textoConsequencias = this.handleConsecuencias(evento.consecuencias);
+		//si el tipo es dialogue, pon el texto y crea las opciones
+		if(evento.tipo == "dialogue"){
+			this.dialog.setText(textoConsequencias + evento.texto, true);
+			this.createOptions(evento.opciones);
+		}
+		//si el tipo es combate comienza combate con los atributos
+		else if(evento.tipo == "combat"){
+			this.scene.start('BattleScene', evento.combate.enemies, evento.opciones[0].salto, evento.nodoHuida);
+		}
 	}
 
-
-	nextDialog(){
-		//pasa al siguiente dialogo
-		if(this.index < this.dialogos.length){
-			this.dialog.setText(this.dialogos[this.index].name, this.dialogos[this.index].text, true);
-			this.index++;
-			this.createButtons();
+	/**
+	 * Modifica el PlayerData con el contenido de la accion del fragmento actual (si hay)
+	 * y devuelve un texto que dice que ha cambiado
+	 * 
+	 */
+	handleConsecuencias(consecuencias){
+		let textoConsequencias = "";
+		if(consecuencias){
+			if(consecuencias.dinero){
+				textoConsequencias += "Dinero: " + consecuencias.dinero + " oros \n";
+			}
+			if(consecuencias.sp){
+				textoConsequencias += "SP: " + consecuencias.sp + "\n";
+			}
+			//... demas atributos
 		}
-		else{
-			this.dialog.closeText();
-		}
+		return textoConsequencias;
 	}
 
-	//crea botones de opciones
-	createOptions(options){
+	/**
+	 * Pone botones de opciones por cada opcion en el fragmento
+	 * 
+	 */
+	createOptions(opciones){
+
 		//posicion original y offset para cada nuevo boton
 		const baseY = 425;
 		let offsetY = 0;
@@ -122,9 +123,9 @@ export default class DialogueScene extends Phaser.Scene {
 		//grupo de botones de opciones
 		this.optionsButtons = [];
 
-		options.forEach(opt => {
+		opciones.forEach(opt => {
 			//añade el texto
-			const btn = this.add.text(400, baseY + offsetY, opt.text, {fontFamily: 'Arial', fontSize: '24px', color: '#fff', backgroundColor:'#828181'});
+			const btn = this.add.text(400, baseY + offsetY, opt.texto, {fontFamily: 'Arial', fontSize: '24px', color: '#fff', backgroundColor:'#828181'});
 			btn.setOrigin(0.5);
 			//interaccion con botones
 			btn.setInteractive();
@@ -138,8 +139,8 @@ export default class DialogueScene extends Phaser.Scene {
 				//destruye cada boton
 				this.optionsButtons.forEach(btn => btn.destroy());
 				this.optionsButtons = [];
-				//accion del boton
-				this.handleAction(opt);
+				//comprueba el siguiente fragmento
+				this.checkEvent(opt.salto);
 			});
 			//añade boton al grupo de botones de opciones
 			this.optionsButtons.push(btn);
@@ -147,35 +148,6 @@ export default class DialogueScene extends Phaser.Scene {
 			offsetY += 40;
 		});
 
-	}
-
-	handleAction(opt) {
-		//mira el el json del dialogo las opciones
-		switch(opt.action) {
-			case "startCombat":
-				this.scene.start('BattleScene',opt.combatEnemies);
-				break;
-			case "goToMap":
-				this.scene.start('Map');
-				break;
-			case "giveItem":
-				this.playerData.items.push({item: opt.item, count: 1});
-				break;
-			case "skillPoints":
-				this.playerData.SP += opt.sp;
-				break;
-			case "moneyCost":
-				this.playerData.dinero += opt.cant;
-				break;
-			case "jumpDialogue":
-				console.log(opt.jump);
-				//salta a cierta linea de dialogo
-				this.jumpDialog(opt.jump);
-				break;
-			default:
-				this.nextDialog();
-				break;
-		}
 	}
 
 }

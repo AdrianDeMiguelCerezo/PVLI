@@ -3,6 +3,10 @@
         "name": "Quemado",
         "diffHealthPercent": -5
     },
+     "ENVENENADO": {
+        "name": "Envenenado",
+        "diffHealthPercent": -2
+    },
     "HAMBRIENTO_1": {
         "name": "Hambriento 1",
         "texture": "SP+",
