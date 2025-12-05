@@ -305,7 +305,7 @@
             {
                 "type": "dialogue",
                 "text": "Mientras descansabas un momento, has visto que te has arañado el brazo con algo.\n _scratch_day_cost.",
-                "rewards": "_scratch_day_cost"
+                "rewards": "scratch_day_cost"
             },
             {
                 "tag": "AvanceDia7+",
@@ -353,11 +353,11 @@
                 "tag": "Tesoro_grieta",
                 "type": "dialogue",
                 "text": "Has encontrado un tesoro en la grieta. _lucky_crack_rewards.",
-                "rewards": "lucky_crack_rewards.",
+                "rewards": "lucky_crack_rewards",
                 "options": [
                     {
                         "text": "Seguir para alante",
-                        "j": "Serpiente_grieta"
+                        "j": "AvanceDia8"
                     }
                 ],
                 "optionAmmount": 1
@@ -386,7 +386,7 @@
                 "tag": "AvanceDia8",
                 "type": "dialogue",
                 "text": "Ya se ve el final de estas malditas montañas. Al fin se acaba esto. \nSeguro llego hasta ahí mañana\n _climbing_day_cost.",
-                "rewards": "_climbing_day_cost",
+                "rewards": "climbing_day_cost",
                 "options": [
                     {
                         "text": "Seguir para alante"

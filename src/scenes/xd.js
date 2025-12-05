@@ -151,8 +151,8 @@ class EventParser {
                 eventFragmentNode.tipo = "dialogue";
                 eventFragmentNode.texto = this.ParseStringWithParams(thisFragment_json.text, expReg);
 
-                //si hay múltiples opciones custom
-                if (!!thisFragment_json.options) {
+                //si hay opciones custom
+                if (thisFragment_json.options || thisFragment_json.permanentOptions) {
 
                     let i = 0;
                     let j = 0;
@@ -163,7 +163,7 @@ class EventParser {
 
                             //en eventFragmentNode.opciones[i] hay un objeto
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg,index)
                             i++;
                             j++;
 
@@ -192,7 +192,7 @@ class EventParser {
                         j = 0;
                         while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg,index)
                             i++;
                             j++;
                         }
@@ -223,6 +223,8 @@ class EventParser {
                         //si es un string, se refiere al parámetro con ese nombre
                         case "string":
                             {
+                                console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
+                                
                                 for (const [key, value] of Object.entries(this.params[thisFragment_json.rewards])) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                 }
@@ -231,6 +233,7 @@ class EventParser {
                         //si es un objeto, es un literal
                         case "object":
                             {
+                                console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
                                 for (const [key, value] of Object.entries(thisFragment_json.rewards)) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                 }
@@ -276,6 +279,7 @@ class EventParser {
                             //si es un string, se refiere al parámetro con ese nombre
                             case "string":
                                 {
+                                    console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -284,6 +288,7 @@ class EventParser {
                             //si es un objeto, es un literal
                             case "object":
                                 {
+                                    console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
                                     for (const [key, value] of Object.entries(combatRewards_json)) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -362,18 +367,23 @@ class EventParser {
      */
     ParseStringWithParams(string, expReg) {
 
-        //console.log("string: ", string, "matches: ", string.match(expReg))
+        console.log("string: ", string, "matches: ", string.match(expReg))
 
         //si no matchea con nada, devuelve null
         if (string.match(expReg) != null) {
             for (let parameter of string.match(expReg)) {
 
+                
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 if (typeof (this.params[parameter.substring(1)]) === "object") {
-                    string = string.replace(parameter, "ESTO ES UNA RECOMPENSA")
+                    console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(parameter.substring(1)))
+                    string = string.replace(parameter, this.WriteRewards(parameter.substring(1)))
                 }
+                else {
+                    console.log("Written Reward:", this.params[parameter.substring(1)])
                 //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
-                string = string.replace(parameter, this.params[parameter.substring(1)])
+                    string = string.replace(parameter, this.params[parameter.substring(1)])
+                }
             }
         }
         return string;
@@ -389,6 +399,7 @@ class EventParser {
         let returnString = "";
         let array = Object.entries(rewards);
 
+        console.log("WriteRewards() array:",array)
         //decidido según representación en el json
         for (let i = 0; i < array.length; i++) {
             const key = array[i][0]
@@ -446,7 +457,8 @@ class EventParser {
         //quitar el último ", "
         returnString = returnString.slice(0, -2);
 
-
+        return returnString;
 
     }
+
 }
