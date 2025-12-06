@@ -4,6 +4,11 @@ import MenuButton from "../MenuButton.js";
 import SubStateNode from "../SubStateNode.js"
 import MapNode from "../MapNode.js";
 
+const NodeType = {
+    COMMON: 0,
+    TOWN: 1,
+    CITY: 2
+}
 const State = {
     OPEN: 0,
     LOCKED: 1,
@@ -107,7 +112,7 @@ export default class DialogueScene extends Phaser.Scene {
      * @param {SubStateNode} evento
      */
     checkEvent(evento) {
-        
+
 
         this.handleConsecuencias(evento.consecuencias);
         this.dialog.setText(evento.texto, true);
@@ -122,23 +127,36 @@ export default class DialogueScene extends Phaser.Scene {
      */
     handleConsecuencias(consecuencias) {
         this.rewardsGiven = true;
+
+        /**
+         * @type {{x: number ,y: number ,event: SubStateNode,nodeType: NodeType ,state: State,isFocus:boolean,isAwake:boolean,visited: boolean,scale:idk,difficulty: number, radius: number}[]}
+         */
         let mapNodes = this.registry.get("nodes");
         let currentNode;
-        let i = 0;
-        while (currentNode === undefined && i < mapNodes.length) {
-            if (mapNodes[i].state === State.CURRENT) { currentNode = mapNodes[i]; }
-            i++;
+
+        if (mapNodes === undefined) { mapNodes = []; console.log("POSIBLE ERROR: no hay nada en el registry de \"nodes\"") }
+
+        if (mapNodes.length != 0) {
+            let i = 0;
+            while (currentNode === undefined && i < mapNodes.length) {
+                if (mapNodes[i].state === State.CURRENT) { currentNode = mapNodes[i]; }
+                i++;
+            }
+            if (currentNode === undefined) { throw "ERROR: No hay un nodo current" }
         }
-        if (currentNode === undefined) {throw "ERROR: No hay un nodo current" }
+
+
+
 
         for (const [key, value] in Object.entries(consecuencias)) {
 
 
             switch (key) {
 
+                case "HP": { this.playerData.HP += value }
 
                 case "dificultadGlobal": {
-                    for (let i = 0; i < mapNodes.length;i++) {
+                    for (let i = 0; i < mapNodes.length; i++) {
                         if (mapNodes[i].isFocus && mapNodes[i].isAwake) { mapNodes[i].difficulty += value; }
                     }
                     break;
@@ -150,31 +168,43 @@ export default class DialogueScene extends Phaser.Scene {
                     let closestIndex = -1;
                     for (let i = 0; i < mapNodes.length; i++) {
                         const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
-                        if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i;  }
+                        if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
                     }
                     if (closestIndex = -1) {
                         for (let i = 0; i < mapNodes.length; i++) {
                             const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
                             if (mapNodes[i].isFocus && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
                         }
-                        if (closestIndex != -1) { mapNodes[closestIndex].awake = true; mapNodes[closestIndex].difficulty = value; }
+                        if (closestIndex != -1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty = value; }
                     }
                     else {
-                        mapNodes[closestIndex].difficulty =+ value;
+                        mapNodes[closestIndex].difficulty = + value;
                     }
                     break;
                 }
-                case "dificultadRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
-                case "despertarGlobal": { returnString += "el estado está llevando a cabo una persecución a gran escala, "; break; }
+                case "dificultadRadio": {
+                    for (let i = 0; i < mapNodes.length; i++) {
+                        const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                        if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < value.r) { mapNodes[i].difficulty += value.diff }
+                    }
+                    break;
+                }
+
+                case "despertarGlobal": {
+                    for (let i = 0; i < mapNodes.length; i++) {
+                        if (mapNodes[i].isFocus && !mapNodes[i].isAwake) { mapNodes[i].isAwake = true; mapNodes[i].difficulty += value.diff }
+                    }
+                    break;
+                }
                 case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
                 case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
 
                 case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
             }
-        
+
         }
 
-        this.scene.registry.set("nodes", mapNodes);
+        this.registry.set("nodes", mapNodes);
     }
 
     /**
@@ -206,14 +236,14 @@ export default class DialogueScene extends Phaser.Scene {
 
                 this.rewardsGiven = false;
 
-                if (evento === null) {
+                if (opt.salto === null) {
                     this.scene.start('Map');
                 }
-                if (evento.tipo == "dialogue") {
+                else if (opt.salto.tipo == "dialogue") {
                     this.scene.start(this.scene.key, opt.salto, this.playerData)
                 }
                 //si el tipo es combate comienza combate con los atributos
-                else if (evento.tipo == "combat") {
+                else if (opt.salto.tipo == "combat") {
                     this.scene.start('BattleScene', opt.salto, this.playerData);
                 }
 

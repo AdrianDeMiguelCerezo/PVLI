@@ -50,9 +50,9 @@
 
         //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
         //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano. Si no hay despiertos, solamente despirta el más cercano.
-        //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos despiertos a r distancia de este nodo en diff.
+        //    "dificultadRadio"{ (int) r, (int) diff } aumenta la dificultad de los focos despiertos en un radio de r de este nodo en diff.
 
-        //    "despertarGlobal" (int) diff  despertar todos los focos dormidos, con diff dificultad
+        //    "despertarGlobal" (int) diff despertar todos los focos dormidos, con su dificultad base + con diff dificultad.
         //    "despertarCercano": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
         //    "despertarRadio": { (int) r, (int) diff } despertar todos los focos dormidos a menos de r distancia, con su dificultad base + diff dificultad.
              
