@@ -116,8 +116,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
                     this.scene.scene.start(this.targetScene);
                     
-                    this.scene.registry.set("nodes", nodeData)
-                    this.scene.scene.start(this.targetScene);
+
                 }
                 
             }

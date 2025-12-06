@@ -49,7 +49,7 @@
         //    "efectos": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
 
         //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
-        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano.
+        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano. Si no hay despiertos, solamente despirta el más cercano.
         //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos despiertos a r distancia de este nodo en diff.
 
         //    "despertarGlobal" (int) diff  despertar todos los focos dormidos, con diff dificultad

@@ -2,7 +2,13 @@ import DialogText from "../dialog_plugin.js";
 import PlayerData from "../PlayerData.js";
 import MenuButton from "../MenuButton.js";
 import SubStateNode from "../SubStateNode.js"
+import MapNode from "../MapNode.js";
 
+const State = {
+    OPEN: 0,
+    LOCKED: 1,
+    CURRENT: 2
+}
 export default class DialogueScene extends Phaser.Scene {
     /**
      * Escena de texto cargado con archivos TTF locales.
@@ -117,7 +123,14 @@ export default class DialogueScene extends Phaser.Scene {
     handleConsecuencias(consecuencias) {
         this.rewardsGiven = true;
         let mapNodes = this.registry.get("nodes");
-        
+        let currentNode;
+        let i = 0;
+        while (currentNode === undefined && i < mapNodes.length) {
+            if (mapNodes[i].state === State.CURRENT) { currentNode = mapNodes[i]; }
+            i++;
+        }
+        if (currentNode === undefined) {throw "ERROR: No hay un nodo current" }
+
         for (const [key, value] in Object.entries(consecuencias)) {
 
 
@@ -136,8 +149,18 @@ export default class DialogueScene extends Phaser.Scene {
                     let smallestDistance = 100000000;
                     let closestIndex = -1;
                     for (let i = 0; i < mapNodes.length; i++) {
-                        const d = Math.hypot(x - n.x, y - n.y);
-                        if (mapNodes[i].isFocus && d<smallestDistance) { mapNodes[i].difficulty += value; }
+                        const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                        if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i;  }
+                    }
+                    if (closestIndex = -1) {
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                            if (mapNodes[i].isFocus && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
+                        }
+                        if (closestIndex != -1) { mapNodes[closestIndex].awake = true; mapNodes[closestIndex].difficulty = value; }
+                    }
+                    else {
+                        mapNodes[closestIndex].difficulty =+ value;
                     }
                     break;
                 }
@@ -150,6 +173,8 @@ export default class DialogueScene extends Phaser.Scene {
             }
         
         }
+
+        this.scene.registry.set("nodes", mapNodes);
     }
 
     /**
