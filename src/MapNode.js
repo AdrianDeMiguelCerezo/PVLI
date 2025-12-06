@@ -1,3 +1,5 @@
+
+
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
@@ -27,15 +29,17 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2,  radius = 130) {
+    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
-        this.targetScene = targetScene;
 
-        this.name="node";
+        //genera un evento a partir de estr nodo con la key eventKey
+        if (!!event) { this.event = generateEvent(eventKey); }
+        else { this.event = event; }
+        this.name = "node"
 
         this.nodeType = nodeType;
         this.state = state;
@@ -94,7 +98,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
-                        targetScene: n.targetScene,
+                        event: n.event,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
@@ -206,6 +210,49 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     this.scene.graphics.strokePath();
                 }
             }
+        }
+    }
+
+    /**
+     * 
+     * @param {string} eventKey
+     */
+    generateEvent(eventKey) {
+
+        const eventoJson = this.scene.jsonEventos[eventKey];
+        let params = {};
+
+        for (let par_nombre of eventoJson["params"]) {
+            this.SetParamValue(params[par_nombre], eventoJson["params"][par_nombre])
+        }
+
+        console.log(this.params);
+
+        return event;
+    }
+
+    /**Setea el valor del objeto "param" al parseo de paramValue seg�n la info del json de eventos.
+     * @param {string} param //nombre del par�metro del json
+     * @param {any} paramValue //valor en principio del par�metro del json
+     */
+    SetParamValue(param, paramValue) {
+        
+        if (Array.isArray(paramValue)) {
+            paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
+        }
+
+        //si el valor es el valor de un par�metro global:
+        if (paramValue[0] == '_') {
+            const infoGlobalParam = this.scene.jsonEventos["globalParams"][a.substring(1)];
+            if (Array.isArray(infoGlobalParam)) {
+                param = infoGlobalParam[Phaser.Math.RND.between(0, paramValue.length - 1)];
+            }
+            else {
+                param = infoGlobalParam;
+            }
+        }
+        else {
+            param = paramValue;
         }
     }
 }

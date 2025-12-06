@@ -1,0 +1,635 @@
+{
+    "globalParams": {
+        "nombre_h": [ "Pepe", "Juan", "Jorge", "Saúl", "Johan", "Joseph.J", "Jonathan.J", "Josuke.H", "DIO", "Antonio", "Federico", "Nicolás" ],
+        "nombre_m": [ "Pepa", "Juana", "Ana", "Sonia", "Erina", "Estefanía", "Daniela", "Josefina", "Holly", "Antonia", "Lera", "Nami", "Nico" ]
+    },
+    "EVENTO_TEST1": {
+        "params": {
+            "nombre_1": "_nombre_h",
+            "nombre_2": "_nombre_m"
+
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Hola, soy _nombre_1. ¿Quieres saber cuánto vale tu coche?",
+                "options": [
+                    {
+                        "text": "Sí",
+                        "j": "COMPRO"
+                    },
+                    {
+                        "text": "No"
+                    },
+                    {
+                        "text": "Ciao",
+                        "j": "null"
+                    }
+
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "pOR Qhé, si soy Antonio Lob... _nombre_1. ",
+                "continue": "porque yo, _nombre_2, no soy tonta."
+            },
+            {
+                "tag": "COMPRO",
+                "type": "dialogue",
+                "text": "Entonces muere",
+                "options": [
+                    { "text": "Ok." },
+                    {
+                        "text": "nunca!",
+                        "j": "COMPRO"
+                    }
+                ]
+            }
+        ]
+
+
+
+
+
+    },
+
+    "BANDIT_CANNON_OR_MOUNTAINS": {
+        "params": {
+            "climbing_day_cost": { "hambre": 5 },
+            "scratch_day_cost": { "HP": -5 },
+            "wounded_day_cost": { "HP": -10 },
+            "lucky_crack_rewards": [
+                {
+                    "dinero": 20
+                },
+                {
+                    "dinero": 40
+                },
+                {
+                    "habilidades": ["SUPREME_MEDITATION"]
+                }
+            ]
+        },
+
+        "eventFragments": [
+
+
+
+
+
+            {
+                "tag": "elecciónCaminos",
+                "type": "dialogue",
+                "text": "Qué camino tomo?",
+                "permanentOptions": [
+                    {
+                        "text": "Montaña (1 semana de viaje)",
+                        "j": "AvanceDia1"
+                    },
+                    {
+                        "text": "Cañón (2 días de viaje)",
+                        "j": null
+                    }
+                ]
+            },
+            {
+                "tag": "AvanceDia1",
+                "type": "dialogue",
+                "text": "Primer día, las cosas han ido bien de momento.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta",
+                        "j": "elecciónCaminos"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia2"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Por suerte, no te has hecho demasiado daño.\n _scratch_day_cost",
+                "rewards": "scratch_day_cost"
+            },
+            {
+                "tag": "AvanceDia2",
+                "type": "dialogue",
+                "text": "Segundo día, ya solo se ven montañas.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de opción, mejor doy la vuelta",
+                        "j": "VueltaDia2"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia3"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia3"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia3"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Ha dolido mucho.\n _wounded_day_cost",
+                "rewards": "wounded_day_cost"
+            },
+            {
+                "tag": "AvanceDia3",
+                "type": "dialogue",
+                "text": "Tercer día, más montañas.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta",
+                        "j": "VueltaDia3"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia4"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "AvanceDia4",
+                "type": "dialogue",
+                "text": "Cuarto día.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta",
+                        "j": "VueltaDia4"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia5"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia5"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminabas por la montaña, te has tropezado y te has caído. Por suerte, it's just a scratch'.\n _scratch_day_cost",
+                "rewards": "scratch_day_cost"
+            },
+            {
+                "tag": "AvanceDia5",
+                "type": "dialogue",
+                "text": "Quinto día, ojalá se acaben estas montañas.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta",
+                        "j": "VueltaDia5"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia6"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia6"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia6"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminabas por la montaña, te ha caído una roca en el hombro.\n _wounded_day_cost",
+                "rewards": "wounded_day_cost"
+            },
+            {
+                "tag": "AvanceDia6",
+                "type": "dialogue",
+                "text": "Sexto día, ya debería faltar poco.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta",
+                        "j": "VueltaDia6"
+                    }
+
+                ],
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia8"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia7"
+                    },
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia7"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": " Mientras caminabas por la montaña, te has tropezado y te has caído, la herida es fea.\n _wounded_day_cost",
+                "rewards": "wounded_day_cost"
+            },
+            {
+                "tag": "AvanceDia7",
+                "type": "dialogue",
+                "text": "Más montañas? aún no se ve el final. Mierda! creo que me he perdido.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia7+"
+                    },
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras descansabas un momento, has visto que te has arañado el brazo con algo.\n _scratch_day_cost.",
+                "rewards": "scratch_day_cost"
+            },
+            {
+                "tag": "AvanceDia7+",
+                "type": "dialogue",
+                "text": "Vale, creo que estoy donde anteayer, aunque aún no se ve el final.\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir para alante"
+
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras descansabas un momento, has visto algo que brilla en una grieta.",
+                "permanentOptions": [
+                    {
+                        "text": "ignorar",
+                        "j": "AvanceDia8"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Meter la mano",
+                        "j": "Tesoro_grieta"
+                    },
+                    {
+                        "text": "Meter la mano",
+                        "j": "Tesoro_grieta"
+                    },
+                    {
+                        "text": "Meter la mano",
+                        "j": "Tesoro_grieta"
+                    },
+                    {
+                        "text": "Meter la mano",
+                        "j": "Serpiente_grieta"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "Tesoro_grieta",
+                "type": "dialogue",
+                "text": "Has encontrado un tesoro en la grieta. _lucky_crack_rewards.",
+                "rewards": "lucky_crack_rewards",
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia8"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "Serpiente_grieta",
+                "type": "dialogue",
+                "text": "Al meter la mano en ta grieta, sientes una mordida, y al sacar la mano, ves a una serpiente despegarse de ella y volver a entrar en la grieta.\n Con el paso del tiempo, la mano se te va hinchando. Esa serpiente era venenosa, aunque por suerte, no parece un veneno demasiado fuerte. Sino, ya estarías muerto",
+                "rewards": {
+                    "efecto": [
+                        {
+                            "effect": "ENVENENADO",
+                            "effectDuration": -1
+                        }
+                    ]
+                },
+                "options": [
+                    {
+                        "text": "Seguir para alante",
+                        "j": "AvanceDia8"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "AvanceDia8",
+                "type": "dialogue",
+                "text": "Ya se ve el final de estas malditas montañas. Al fin se acaba esto. \nSeguro llego hasta ahí mañana\n _climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir para alante"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Al fin puedo descansar en un lugar blando.",
+                "permanentOptions": [
+                    {
+                        "text": "continue",
+                        "j": null
+                    }
+                ]
+            }
+
+
+
+
+        ]
+    },
+    "PUEBLO_MEDIANO": {
+
+        "params": {
+            "nombre_tabernero": "_nombre_h",
+            "nombre_mujer_tabernero": "_nombre_m",
+
+            "nombre_bandidos": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ],
+
+            "nombre_taberna": [ "El pez del aire", "Pochi", "Niágara", "La cerveza dorada", "Calabaza's" ],
+
+            "recompensas_quest_tabernero": [
+                {
+                    "dinero": 50
+
+                },
+                {
+                    "equipamiento": [ "ESPADA_TABERNERO" ]
+                },
+                {
+                    "dinero": 20,
+                    "items": [ "POTI_HP_MINI" ]
+                }
+            ]
+        },
+
+        "eventFragments": [
+
+
+            {
+                "tag": "ENTRAS_TABERNA",
+                "type": "dialogue",
+                "text": "-Hola, bienvenido a _nombre_taberna. Me llamo _nombre_tabernero, soy el dueño de esta taberna"
+            },
+            {
+                "type": "dialogue",
+                "text": "-¿Qué quieres tomar?",
+
+                "options": [
+                    {
+                        "text": "-Una cerveza por favor (5 monedas)",
+                        "j": "CERVEZA"
+                    },
+                    {
+                        "text": "-No quiero nada (Irse)",
+                        "j": null
+                    }
+                ]
+            },
+
+
+            {
+                "tag": "CERVEZA",
+                "type": "dialogue",
+                "text": "-¡Qué buena cerveza tenéis aquí!",
+                "actions": {
+                    "SP": 10,
+                    "dinero": -5
+                }
+            },
+            {
+                "type": "dialogue",
+                "text": "-¡A que sí!\n_nombre_tabernero se aparta y se pone a limpiar vasos"
+            },
+
+            {
+                "type": "dialogue",
+                "text": "A _nombre_tabernero se le ve triste",
+                "options": [
+                    {
+                        "text": "-¿Que te pasa?",
+                        "j": "HISTORIA_TRISTE"
+                    },
+                    {
+                        "text": "Irse",
+                        "j": null
+                    }
+                ]
+            },
+
+
+            {
+                "tag": "HISTORIA_TRISTE",
+                "type": "dialogue",
+                "text": "-Pues resulta que el otro día estaba con mi mujer paseando por la calle -snif-"
+            },
+            {
+                "type": "dialogue",
+                "text": "-Llegaron, y mi mujer -snif-"
+            },
+            {
+                "type": "dialogue",
+                "text": "-Se la llevaron -snif- -snif-",
+                "continue": "¿Quiénes?"
+            },
+            {
+                "type": "dialogue",
+                "text": "-ESOS BASTARDOS DE _nombre_bandidos"
+            },
+            {
+                "type": "dialogue",
+                "text": "-¡SE LLEVARON A MI _nombre_mujer_tabernero!"
+            },
+            {
+                "type": "dialogue",
+                "text": "-¡No me puedo ni imaginar las cosas que la estarán haciendo!"
+            },
+            {
+                "type": "dialogue",
+                "text": "-Te daría cualquier cosa si la pudieras salvar.\n Su guarida se encuentra en los callejones sur del pueblo"
+            },
+            {
+                "type": "dialogue",
+                "text": "-¿Hay trato?"
+            },
+
+
+
+            {
+                "tag": "BUSCAR_BANDIDOS",
+                "type": "dialogue",
+                "text": "Vas a donde te ha dicho el tabernero"
+            },
+            {
+                "type": "dialogue",
+                "text": "Te encuentras cruzando una esquina cuando unos bandidos te sorprenden.\n-¡FUERA DE NUESTRO TERRITORIO!"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": {
+                        "dinero": 2
+                    },
+                    "ambush": true,
+                    "canFlee": true
+                },
+                "flee": null
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras el combate, sigues dirigiéndote hacia dónde te ha dicho el Tabernero"
+            },
+            {
+                "type": "dialogue",
+                "text": "El lugar es una casa destartalada, aunque no más que las demás de esta zona"
+            },
+            {
+                "type": "dialogue",
+                "text": "Te acercas a la puerta"
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Olles unos sonidos sordos provenientes del otro lado de la puerta",
+                "options": [
+                    {
+                        "text": "Pegar tu oído a la puerta",
+                        "j": 0
+                    },
+                    {
+                        "text": "Mirar por un hueco de la ventana",
+                        "j": 0
+                    },
+                    {
+                        "text": "Llamar a la puerta",
+                        "j": "LLAMAR_PUERTA"
+                    },
+                    {
+                        "text": "Abres la puerta de una patada",
+                        "j": 0
+                    }
+                ]
+            },
+
+            {
+                "tag": "LLAMAR_PUERTA",
+                "type": "dialogue",
+                "text": "La puerta se entreabre y una voz profunda pregunta desde detrás de la puerta:\n-¿Quién eres y qué quieres? Ahora estamos ocupados."
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras te pregunta, olles una especie de gritos amortiguados de fondo.",
+
+                "options": [
+                    {
+                        "text": "Entrar a la fuerza",
+                        "j": "ENTRAR_FORZANDO"
+                    },
+                    {
+                        "text": "Irse",
+                        "j": null
+                    }
+                ]
+            },
+
+
+            {
+                "tag": "ENTRAR_FORZANDO",
+                "type": "dialogue",
+                "text": "Empujas la puerta con fuerza y el hombre que te ha hablado antes se cae al suelo.\n-¡CÓMO TE ATREVES A IRRUMPIR ASÍ EN LA MORADA DE _nombre_bandidos!"
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Mientras tando, presencias una horrible escena. Hay tres hombres semidesnudos haciéndole atrocidades a una mujer en un estado deplorable, que presupones que es _nombre_mujer_tabernero, la mujer del tabernero."
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": {
+                        "dinero": 10
+                    },
+                    "ambush": false,
+                    "canFlee": false
+                },
+                "flee": null
+            }
+
+        ]
+    }
+}

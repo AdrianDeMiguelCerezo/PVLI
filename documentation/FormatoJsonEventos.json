@@ -1,0 +1,288 @@
+{
+
+    //Esto son parámetros que se van a usar mucho a la hora de decidir los par�metros, como posibles nombres de personas.
+    //Los parámetros globales no pueden tener el valor de otros parámetros, ya sean globales o locales a un evento.
+    "globalParams": {
+        "nombre_hombre": [],
+        "nombre_mujer": []
+    },
+
+    "NOMBRE_EVENTO": {
+
+        //Objeto con los parámetros definidos locales para este evento. 
+        //Para utilizarlos en un texto que se muestra al jugador, se escribe "_nombreDelParamámetro" en el texto.
+        //Los parámetros locales no pueden tener el valor de otros parámetros locales.
+        //Los parámetros locales pueden tener el valor de un parámetro del objeto de parámetros globales: "globalParams".
+        //Para ello, se les da el valor "_NombreDelParámetroGlobal"
+        "params": {
+
+            "par�metro_1": "_nombre_hombre", //se sustituye por un nombre de nombres_hombre[]
+            "par�metro_2": "_nombre_mujer", //sese sustituye por un nombre de nombres_mujer[]
+
+            "par�metro_3": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ], //se sustituye por un algo random del array
+
+
+            "par�metro_5": [
+                {
+                    "dinero": 50
+
+                },
+                {
+                    "equipamiento": [ "ESPADA_TABERNERO" ]
+                },
+                {
+                    "dinero": 20,
+                    "items": [ "POTI_HP_MINI" ]
+                }
+            ] //se sustituye por un algo del array. Este es un ejemplo de array con recompensas.
+
+            /*Formato de las recompensas:
+        //{
+
+        //    "dinero": (int) cambio en el dinero del jugador
+        //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
+        //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
+        //    "hambre": (int) cambio en el hambre del jugador.
+        //    "habilidades": ["Habilidad_tal", "habilidad_cual", ...]
+        //    "equipamiento": ["ARMA_TAL", "ARMADURA_PASCUAL", ...],
+        //    "items": [{item:"ITEM_TAL",count:(int)}, ...]
+        //    "efectos": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
+
+        //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
+        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano.
+        //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos despiertos a r distancia de este nodo en diff.
+
+        //    "despertarGlobal" (int) diff  despertar todos los focos dormidos, con diff dificultad
+        //    "despertarCercano": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
+        //    "despertarRadio": { (int) r, (int) diff } despertar todos los focos dormidos a menos de r distancia, con su dificultad base + diff dificultad.
+             
+        //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
+        //     si no focos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con diff dificultad.
+        //}
+        */
+
+
+
+        },
+
+        "eventFragments": [
+
+
+            //di�logo con bot�n de continuar
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo"
+            },
+
+            //en cualquier texto de un evento que se muestra en pantalla en el que se usa _Nombre_de_parámetro, 
+            //luego se sustituye por el valor que tenga el parámetro local definido en params{} del evento: "Nombre_de_parámetro"
+            {
+                "type": "dialogue",
+                "text": "_parámetro1: hola, soy _parámetro1"
+            },
+
+            //di�logo con botor de continuar, pero este tiene el texto custom
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo",
+                "continue": "texto boton continue"
+            },
+
+            //di�logo con opciones custom (max tres opciones)
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo",
+
+                //opciones que salen sí o sí (si hay más de 3, salen las 3 primeras)
+                "permanentOptions": [
+                    {
+                        "text": "texto opci�n 1",
+                        "j": "ETIQUETA_FRAGMENTO_TAL"
+                    },
+                    {
+                        "text": "texto opci�n 1",
+                        "j": "ETIQUETA_FRAGMENTO_TAL"
+                    }
+                ],
+                "options": [
+
+                    //si escoges esta opci�n salta al fragmento:"ETOQIETA_FRAGMENTO_TAL" de este evento
+                    {
+                        "text": "texto opci�n 1",
+                        "j": "ETIQUETA_FRAGMENTO_TAL"
+                    },
+
+                    //si escoges esta opci�n salta al evento:"EVENTO_TAL" de el json de eventos (ergo al fragmento de entrada al evento: "EVENTO_TAL")
+                    {
+                        "text": "texto opci�n 2",
+                        "j": "/EVENTO_TAL"
+                    },
+
+                    //si escoges esta opci�n salta al fragmento desde el que llegado entrado al evento al que pertenezco.
+                    {
+                        "text": "texto opci�n 3",
+                        "j": -1
+                    },
+
+                    //si escoges esta opci�n, sales al mapa.
+                    {
+                        "text": "texto opci�n 4",
+                        "j": null
+                    },
+                    //si j es undefined, va al siguiente fragmento
+                    {
+                        "text": "texto opci�n 5"
+                    }
+
+                ],
+
+                //cantidad de opciones que salen del array de opciones. 
+                //Se escogen: Min(Min( 3-Min(3,permanentOptions.length) ,optionsAmmount),options.length) 
+                //== el mínimo entre la cantidad de huecos vacíos, el tamaño del array de opciones y la cantidad de opciones a coger de este.
+                "optionsAmmount": 3
+            },
+
+            //etiqueta de un fragmento / fragmento de evento con nombre
+
+
+            {
+                "tag": "Fragmento1",
+                "type": "dialogue",
+                "text": "texto del di�logo"
+            },
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo"
+            },
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo",
+                "continue": "Lo dices en serio?!"
+            },
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo"
+            },
+            {
+                "type": "dialogue",
+                "text": "texto del di�logo"
+
+            },
+            {
+                "text": "_parámetro1: -Se la llevaron -snif- -snif-",
+                "continue": "�Qui�nes?"
+            },
+
+            //combate
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": { //se escribe en formato recompensa
+                        "dinero": 2,
+                      "items": [ "POTI_HP_MINI" ]
+                    },
+                    "ambush": true, //empiezan los enemigos
+                    "canFlee": false //es posible huir?
+                },
+                "flee": null //si huyes vas al mapa
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Ha acabado el combate, est�s cansado.\nSigues andando."
+            },
+            {
+                "type": "dialogue",
+                "text": "De repente, ves a m�s bandidos acercarse"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "rewards": {
+                        "dinero": 4
+                    },
+                    "ambush": false, //empieza el jugador
+                    "canFlee": true //es posible huir?
+                },
+                "flee": "ETIQUETA_FRAGMENTO_TAL o /EVENTO_TAL o (int)-1 " //si huyes vas al fragmento de evento con la etiqueta llamada "ETIQUETA_FRAGMENTO_TAL", al evento llamado "EVENTO_TAL", O al subevento que lleve a este evento.
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras haber derrotado a todos los bandidos, vuelves a hablar con _par�metro_1"
+            },
+            {
+                "type": "dialogue",
+                "text": "Gracias por salvarme. Aqu� tienes tus recompensas. _par�metro_5",
+                "rewards": "_parámetro_5"
+            }
+
+
+
+        ]
+    },
+
+
+    "NOMBRE_EVENTO_CUAL": {
+
+        //y dem�s
+    }
+
+}
+
+
+//Formatos separados(para ctrl+c,ctrl+v)
+{
+    "type": "dialogue",
+    "text": "",
+    "continue": ""
+}
+//
+{
+    "type": "dialogue",
+    "text": "",
+    "options": [
+        {
+            "text": "",
+            "j": "TAG"
+        }
+    ],
+    "optionAmmount": 1
+}
+, "nombre_evento": {
+
+    "params": {
+
+    },
+
+    "eventFractions": {
+
+    }
+}, //
+
+
+//combate
+"combat": {
+    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+    "rewards": { //se escribe en formato recompensa
+        "dinero": 2,
+        "items": "POTI_HP_MINI"
+    },
+    "ambush": true, //empiezan los enemigos
+    "canFlee": false //es posible huir?
+}, //
+
+"fracciónEvento_combate": {
+    "combat": {
+        "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+        "rewards": { //se escribe en formato recompensa
+            "dinero": 2,
+            "items": "POTI_HP_MINI"
+        },
+        "ambush": true, //empiezan los enemigos
+        "canFlee": false //es posible huir?
+    },
+    "flee": null //si huyes vas al mapa
+}

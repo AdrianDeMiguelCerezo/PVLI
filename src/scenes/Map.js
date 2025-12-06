@@ -25,7 +25,7 @@ export default class Map extends Phaser.Scene {
     }
 
     init() {
-
+        this.jsonEventos = this.cache.json.get("eventos");
     }
 
     create() {
