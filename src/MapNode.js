@@ -29,7 +29,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
+    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -47,7 +47,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         this.visited = visited;
         this.isFocus = isFocus;
         this.difficulty = difficulty;
-
+        this.isAwake = isAwake;
 
         scene.add.existing(this);
         this.setInteractive();
@@ -102,6 +102,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
+                        isAwake:n.isAwake,
                         visited: n.visited,
                         scale: n.scale,
                         difficulty: n.difficulty,

@@ -420,6 +420,7 @@ class EventParser {
 
                         returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
                         for (const habilidad in value) {
+                            console.log("habilidad:",habilidad)
                             returnString += this.jsonHabilidades[habilidad].name + ", ";
                         }
 

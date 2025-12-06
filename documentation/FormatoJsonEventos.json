@@ -57,7 +57,7 @@
         //    "despertarRadio": { (int) r, (int) diff } despertar todos los focos dormidos a menos de r distancia, con su dificultad base + diff dificultad.
              
         //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
-        //     si no focos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con diff dificultad.
+        //     si no focos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con su dificultad + diff dificultad.
         //}
         */
 
