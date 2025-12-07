@@ -9,7 +9,7 @@ export default class SubStateNode {
  * @param {} consecuencias
  * @param {SubStateNode} eventFragment_Huida
  */
-    constructor(tipo, combate, texto, opciones = [], consecuencias = [],eventFragment_Huida) {
+    constructor(tipo, combate, texto, opciones = [], consecuencias = [],eventFragment_Huida,eventFragment_noPay) {
         this.tipo = tipo; 
 
         this.combate = combate;
@@ -35,26 +35,13 @@ export default class SubStateNode {
          * @type {SubStateNode} subestado al que se va si se huye del combate.
          */
         this.nodoHuida = eventFragment_Huida;
+
+        /**
+         * @type {SubStateNode} subestado al que se va si no tienes suficiente dinero para un pago de este fragmento.
+         */
+        this.nodoNoPay = eventFragment_noPay
     }
 
-
-    Create(tipo, combate, texto, opciones, consecuencias, eventFragment_Huida) {
-        this.tipo = tipo;
-        
-        this.combate = combate;
-
-
-        this.texto = texto;
-
-        this.opciones = opciones;
-
-
-
-        this.consecuencias = consecuencias;
-
-
-        this.nodoHuida = eventFragment_Huida;
-    }
 
 
 }

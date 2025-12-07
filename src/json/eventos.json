@@ -66,7 +66,7 @@
                     "dinero": 40
                 },
                 {
-                    "habilidades": ["SUPREME_MEDITATION"]
+                    "habilidades": [ "SUPREME_MEDITATION" ]
                 }
             ]
         },
@@ -385,7 +385,7 @@
             {
                 "tag": "AvanceDia8",
                 "type": "dialogue",
-                "text": "Ya se ve el final de estas malditas montañas. Al fin se acaba esto. \nSeguro llego hasta ahí mañana\n _climbing_day_cost.",
+                "text": "Ya se ve el final de estas malditas montañas. Al fin se acaba esto. \nSeguro llego hasta ahí mañana\n_climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "options": [
                     {
@@ -397,17 +397,155 @@
             {
                 "type": "dialogue",
                 "text": "Al fin puedo descansar en un lugar blando.",
+                "rewards": {
+                    "dificultadGlobal": 30
+                },
                 "permanentOptions": [
                     {
                         "text": "continue",
                         "j": null
                     }
                 ]
+            },
+            {
+                "tag": "VueltaDia6",
+                "type": "dialogue",
+                "text": "Me rindo, voy a dar la vuelta e ir por el cañón\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia6"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    }
+                ],
+                "optionAmmount": 1
+            },
+            {
+                "tag": "VueltaDia5",
+                "type": "dialogue",
+                "text": "Un día cansado\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia5"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    },
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "VueltaDia4"
+                    },
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "serpienteVenenosaVueltaDia4"
+                    }
+                ],
+                "optionAmmount": 1
+            },
+             {
+                "type": "dialogue",
+                "text": "Mientras dormías, sientes un dolor repentino en la pierna que te despierta.\nCuando miras qué ha sido, ves una mordedura de serpiente en tu pierna.\nAl pasar un rato, se te empieza a poner morada la pierna.\nLa serpiente era venenosa.",
+                "rewards": "scratch_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "VueltaDia4"
+                    }
+                ]
+            },
+            {
+                "tag": "serpienteVenenosaVueltaDia4",
+                "type": "dialogue",
+                "text": "Mientras dormías, sientes un dolor repentino en la pierna que te despierta.\nCuando miras qué ha sido, ves una mordedura de serpiente en tu pierna.\nAl pasar un rato, ves que no hay reacción alguna. Menos mal que la serpiente no era venenosa.",
+                "rewards": "scratch_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "VueltaDia4"
+                    }
+                ]
+            },
+            {
+                "tag": "VueltaDia4",
+                "type": "dialogue",
+                "text": "Estoy como a tres días del cruce del principio\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia4"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    }
+                ],
+                "optionAmmount": 1
+            },
+            {
+                "tag": "VueltaDia3",
+                "type": "dialogue",
+                "text": "Qué cansado es esto\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia3"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    },
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "VueltaDia2"
+                    }
+                ],
+                "optionAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminabas por un saliente ,te has arañado con una roca.\n_scratch_day_cost",
+                "rewards": "scratch_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar retrocediendo"
+                    }
+                ]
+            },
+            {
+                "tag": "VueltaDia2",
+                "type": "dialogue",
+                "text": "Ya estoy a nada del cruce del principio\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    },
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "elecciónCaminos"
+                    }
+                ],
+                "optionAmmount": 1
             }
-
-
-
-
         ]
     },
     "PUEBLO_MEDIANO": {

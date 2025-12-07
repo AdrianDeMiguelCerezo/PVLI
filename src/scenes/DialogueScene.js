@@ -80,7 +80,7 @@ export default class DialogueScene extends Phaser.Scene {
          * evento generado por hardcode para testear los fragmentos, quitar cuando haya una forma de leerlos
          * @type {SubStateNode}
          */
-        
+
 
 
         this.dialog = new DialogText(this, {
@@ -108,8 +108,10 @@ export default class DialogueScene extends Phaser.Scene {
      */
     checkEvent(evento) {
 
-
-        this.handleConsecuencias(evento.consecuencias);
+        if (!this.rewardsGiven) {
+            this.rewardsGiven = true;
+            this.handleConsecuencias(evento.consecuencias);
+        }
         this.dialog.setText(evento.texto, true);
         this.createOptions(evento.opciones);
 
@@ -118,10 +120,9 @@ export default class DialogueScene extends Phaser.Scene {
     /**
      * Modifica el PlayerData con el contenido de la accion del fragmento actual (si hay)
      * y devuelve un texto que dice que ha cambiado
-     * 
+     * @param {{}} consecuencias 
      */
     handleConsecuencias(consecuencias) {
-        this.rewardsGiven = true;
 
         /**
          * @type {{x: number ,y: number ,event: SubStateNode,nodeType: NodeType ,state: State,isFocus:boolean,isAwake:boolean,visited: boolean,scale:idk,difficulty: number, radius: number}[]}
@@ -141,141 +142,151 @@ export default class DialogueScene extends Phaser.Scene {
         }
 
 
-		const objEntries = Object.entries(consecuencias);
-		for(let k = 0; k < objEntries.length; k++){
-				const key = objEntries[k][0];
-				const value = objEntries[k][1];
-				switch (key) {
+        const objEntries = Object.entries(consecuencias);
 
-					case "dinero": { 
-						this.playerData.dinero += value;
-						break;
-					}
+        //si es un pago
+        if (consecuencias.hasOwnProperty("pago") && consecuencias["pago"] > this.playerData.dinero) {
+            this.restart(this.fragmentoEvento.nodoNoPay, this.playerData);
+        }
+        else {
+            for (let k = 0; k < objEntries.length; k++) {
+                const key = objEntries[k][0];
+                const value = objEntries[k][1];
+                switch (key) {
 
-					case "HP": { 
-						console.log("HP" + value);
-						this.playerData.HP += value;
-						break;
-					}
+                    case "dinero": {
+                        this.playerData.dinero += value;
+                        break;
+                    }
+                    case "pago": {
+                        break;
+                    }
+                    case "HP": {
+                        console.log("HP" + value);
+                        this.playerData.HP += value;
+                        break;
+                    }
 
-					case "SP": { 
-						this.playerData.SP += value;
-						break;
-					}
+                    case "SP": {
+                        this.playerData.SP += value;
+                        break;
+                    }
 
-					case "hambre": { 
-						this.playerData.hambre += value;
-						break;
-					}
+                    case "hambre": {
+                        this.playerData.hambre += value;
+                        break;
+                    }
 
-					case "habilidades": {
-						for(let i = 0; i < value.length; i++){
-							let j = 0;
-							while(j < this.playerData.habilidades.length && this.playerData.habilidades[i] != value[i]){
-								j++;
-							}
-							if(j == this.playerData.habilidades.length){
-								this.playerData.habilidades.push(value[i]);
-							}
-						}
-						break;
-					}
-					case "equipamiento": {
-						for(let i = 0; i < value.length; i++){
-							let j = 0;
-							while(j < this.playerData.equipamiento.length && this.playerData.equipamiento[i] != value[i]){
-								j++;
-							}
-							if(j == this.playerData.equipamiento.length){
-								this.playerData.equipamiento.push(value[i]);
-							}
-						}
-						break;
-					}
+                    case "habilidades": {
+                        for (let i = 0; i < value.length; i++) {
+                            let j = 0;
+                            while (j < this.playerData.habilidades.length && this.playerData.habilidades[i] != value[i]) {
+                                j++;
+                            }
+                            if (j == this.playerData.habilidades.length) {
+                                this.playerData.habilidades.push(value[i]);
+                            }
+                        }
+                        break;
+                    }
+                    case "equipamiento": {
+                        for (let i = 0; i < value.length; i++) {
+                            let j = 0;
+                            while (j < this.playerData.equipamiento.length && this.playerData.equipamiento[i] != value[i]) {
+                                j++;
+                            }
+                            if (j == this.playerData.equipamiento.length) {
+                                this.playerData.equipamiento.push(value[i]);
+                            }
+                        }
+                        break;
+                    }
 
-					case "items": {
-						for(let i = 0; i < value.length; i++){
-							let j = 0;
-							while(j < this.playerData.items.length && this.playerData.items[i].item != value[i].item){
-								j++;
-							}
-							if(j == this.playerData.items.length){
-								this.playerData.items.push(value[i]);
-							}
-							else{
-								this.playerData.items[j].count += value[i].count;
-							}
-						}
-						break;
-					}
+                    case "items": {
+                        for (let i = 0; i < value.length; i++) {
+                            let j = 0;
+                            while (j < this.playerData.items.length && this.playerData.items[i].item != value[i].item) {
+                                j++;
+                            }
+                            if (j == this.playerData.items.length) {
+                                this.playerData.items.push(value[i]);
+                            }
+                            else {
+                                this.playerData.items[j].count += value[i].count;
+                            }
+                        }
+                        break;
+                    }
 
-					case "efectos": {
-						for(let i = 0; i < value.length; i++){
-							let j = 0;
-							while(j < this.playerData.efectos.length && this.playerData.efectos[i].effect != value[i].effect){
-								j++;
-							}
-							if(j == this.playerData.efectos.length){
-								this.playerData.efectos.push(value[i]);
-							}
-							else{
-								this.playerData.efectos[j].effectDuration += value[i].effectDuration;
-							}
-						}
-						break;
-					}
+                    case "efectos": {
+                        for (let i = 0; i < value.length; i++) {
+                            let j = 0;
+                            while (j < this.playerData.efectos.length && this.playerData.efectos[i].effect != value[i].effect) {
+                                j++;
+                            }
+                            if (j == this.playerData.efectos.length) {
+                                this.playerData.efectos.push(value[i]);
+                            }
+                            else {
+                                this.playerData.efectos[j].effectDuration += value[i].effectDuration;
+                            }
+                        }
+                        break;
+                    }
 
-					case "dificultadGlobal": {
-						for (let i = 0; i < mapNodes.length; i++) {
-							if (mapNodes[i].isFocus && mapNodes[i].isAwake) { mapNodes[i].difficulty += value; }
-						}
-						break;
-					}
+                    case "dificultadGlobal": {
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            if (mapNodes[i].isFocus && mapNodes[i].isAwake) { mapNodes[i].difficulty += value; }
+                        }
+                        break;
+                    }
 
-					case "dificultadCercano": {
+                    case "dificultadCercano": {
 
-						let smallestDistance = 100000000;
-						let closestIndex = -1;
-						for (let i = 0; i < mapNodes.length; i++) {
-							const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
-							if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
-						}
-						if (closestIndex = -1) {
-							for (let i = 0; i < mapNodes.length; i++) {
-								const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
-								if (mapNodes[i].isFocus && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
-							}
-							if (closestIndex != -1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty = value; }
-						}
-						else {
-							mapNodes[closestIndex].difficulty = + value;
-						}
-						break;
-					}
-					case "dificultadRadio": {
-						for (let i = 0; i < mapNodes.length; i++) {
-							const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
-							if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < value.r) { mapNodes[i].difficulty += value.diff }
-						}
-						break;
-					}
+                        let smallestDistance = 100000000;
+                        let closestIndex = -1;
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                            if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
+                        }
+                        if (closestIndex = -1) {
+                            for (let i = 0; i < mapNodes.length; i++) {
+                                const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                                if (mapNodes[i].isFocus && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
+                            }
+                            if (closestIndex != -1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty = value; }
+                        }
+                        else {
+                            mapNodes[closestIndex].difficulty = + value;
+                        }
+                        break;
+                    }
+                    case "dificultadRadio": {
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                            if (mapNodes[i].isFocus && mapNodes[i].isAwake && d < value.r) { mapNodes[i].difficulty += value.diff }
+                        }
+                        break;
+                    }
 
-					case "despertarGlobal": {
-						for (let i = 0; i < mapNodes.length; i++) {
-							if (mapNodes[i].isFocus && !mapNodes[i].isAwake) { mapNodes[i].isAwake = true; mapNodes[i].difficulty += value.diff }
-						}
-						break;
-					}
-					case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
-					case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
+                    case "despertarGlobal": {
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            if (mapNodes[i].isFocus && !mapNodes[i].isAwake) { mapNodes[i].isAwake = true; mapNodes[i].difficulty += value.diff }
+                        }
+                        break;
+                    }
+                    case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
+                    case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
 
-					case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
-				}
+                    case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
+                }
 
-			
-		}
-		console.log(this.playerData);
-        this.registry.set("nodes", mapNodes);
+
+            }
+            console.log(this.playerData);
+            this.registry.set("nodes", mapNodes);
+        }
+       
     }
 
     /**

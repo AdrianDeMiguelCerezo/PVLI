@@ -19,12 +19,12 @@ export default class xd extends Phaser.Scene {
     }
     create() {
 
-        let eventParser = new EventParser(this.jsonEventos,this.jsonHabilidades,this.jsonEquipamiento,this.jsonItems,this.jsonEfectos)
-        console.log("jsonEventos:",this.jsonEventos)
+        let eventParser = new EventParser(this.jsonEventos, this.jsonHabilidades, this.jsonEquipamiento, this.jsonItems, this.jsonEfectos)
+        console.log("jsonEventos:", this.jsonEventos)
         let evento = eventParser.generateEvent("BANDIT_CANNON_OR_MOUNTAINS");
-        console.log("evento:",evento)
+        console.log("evento:", evento)
 
-        this.scene.start("DialogueScene",evento,new PlayerData())
+        this.scene.start("DialogueScene", evento, new PlayerData())
 
     }
 
@@ -39,14 +39,15 @@ class EventParser {
         this.jsonEquipamiento = jsonEquipamiento;
         this.jsonEfectos = jsonEfectos;
 
-        if (!jsonEventos || !jsonItems || !jsonHabilidades || !jsonEquipamiento || !jsonEfectos) {throw "EventParser no está inicializado correctamente" }
+        if (!jsonEventos || !jsonItems || !jsonHabilidades || !jsonEquipamiento || !jsonEfectos) { throw "EventParser no está inicializado correctamente" }
 
-        /**Guarda conversiones parámetroJson a atributo del PlayerDat
+        /**Guarda conversiones parámetroJson a atributo de la implementación interna/playerData
          * "paramJson":"attributePlayerData"
          */
         this.rewardsJsonToAttribute =
         {
             "dinero": "dinero",
+            "pago": "pago",
             "HP": "HP",
             "SP": "SP",
             "hambre": "hambre",
@@ -56,7 +57,7 @@ class EventParser {
             "efectos": "efectos",
 
             "dificultadGlobal": "dificultadGlobal",
-            "dificultadCercano": "dificultadCercano", 
+            "dificultadCercano": "dificultadCercano",
             "dificultadRadio": "dificultadRadio",
 
             "despertarGlobal": "despertarGlobal",
@@ -75,7 +76,7 @@ class EventParser {
 
         this.evento_Json = this.jsonEventos[eventKey];
 
-        
+
         console.log("eventKey:", eventKey, "\nthis.jsonEventos[eventKey]", this.jsonEventos[eventKey])
 
         if (this.evento_Json == undefined) { throw "No hay un evento con el nombre: " + eventKey }
@@ -83,8 +84,7 @@ class EventParser {
         /**@type {Array} abreviatura de evento_Json["eventFragments"]*/
         this.eventFragments_Json = this.evento_Json["eventFragments"];
 
-        //por motivos de eficiencia, se tiene una tabla de equivalencias (map);  "tag": posición en event_fragments_Json.
-
+        /** por motivos de eficiencia, se tiene una tabla de equivalencias (map);  "tag": posición en event_fragments_Json. */
         this.tags = {}
         for (let i = 0; i < this.eventFragments_Json.length; i++) {
             if (!!this.eventFragments_Json[i].tag) { this.tags[this.eventFragments_Json[i].tag] = i }
@@ -164,7 +164,7 @@ class EventParser {
 
                             //en eventFragmentNode.opciones[i] hay un objeto
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg,index)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg, index)
                             i++;
                             j++;
 
@@ -189,12 +189,12 @@ class EventParser {
 
                         }
 
-                        console.log("Hay optionsAmmount:",(!!thisFragment_json.optionsAmmount))
+                        console.log("Hay optionsAmmount:", (!!thisFragment_json.optionsAmmount))
                         const optionsAmmount = (!!thisFragment_json.optionsAmmount) ? thisFragment_json.optionsAmmount : thisFragment_json.options.length
                         j = 0;
                         while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg,index)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg, index)
                             i++;
                             j++;
                         }
@@ -226,7 +226,7 @@ class EventParser {
                         case "string":
                             {
                                 console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
-                                
+
                                 for (const [key, value] of Object.entries(this.params[thisFragment_json.rewards])) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                 }
@@ -243,6 +243,26 @@ class EventParser {
                             }
                     }
                 }
+
+                //si el evento tiene un pago
+                if (eventFragmentNode.consecuencias.hasOwnProperty("pago")) {
+
+                    //genera el fragment oal que se va si no dinero suficiente
+                    eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
+
+                    //si hay un noPayFragment al que se salta, se salta a ese, si es null o undefined se vuelve al anterior.
+                    if (thisFragment_json.noPayFragment) {
+                        eventFragmentNode.nodoNoPay.opciones = [{
+                            texto: "\"No tengo dinero suficiente\"",
+                            j: this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment])
+                        }]
+                    }
+                    else {
+                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", j: eventFragmentNode }]
+                    }
+
+                }
+
                 break;
             }
             case "combat":
@@ -276,7 +296,7 @@ class EventParser {
                     let consecuencias;
                     if (combatRewards_json) {
                         consecuencias = {}
-                        
+
                         switch (typeof combatRewards_json) {
                             //si es un string, se refiere al parámetro con ese nombre
                             case "string":
@@ -313,7 +333,7 @@ class EventParser {
         return eventFragmentNode;
     }
 
-    SetFragmentOption(fragmentOption, jsonOption, expReg,index) {
+    SetFragmentOption(fragmentOption, jsonOption, expReg, index) {
         //seteo su texto
         fragmentOption.texto = this.ParseStringWithParams(jsonOption.text, expReg);
 
@@ -326,7 +346,7 @@ class EventParser {
         }
         //saltar al fragmento que está directamente a continuación de este en el json.
         else if (jumpTag === undefined || jumpTag === "undefined") {
-            const indexSalto = ++index; 
+            const indexSalto = ++index;
             fragmentOption.salto = this.GenerateEventFragment(indexSalto)
         }
         //saltar a la tag tal si existe
@@ -369,13 +389,13 @@ class EventParser {
      */
     ParseStringWithParams(string, expReg) {
 
-        
+
 
         //si no matchea con nada, devuelve null
         if (string.match(expReg) != null) {
             for (let parameter of string.match(expReg)) {
 
-                
+
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 if (typeof (this.params[parameter.substring(1)]) === "object") {
                     console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
@@ -383,7 +403,7 @@ class EventParser {
                 }
                 else {
                     console.log("Written Reward:", this.params[parameter.substring(1)])
-                //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
+                    //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
                     string = string.replace(parameter, this.params[parameter.substring(1)])
                 }
             }
@@ -411,6 +431,7 @@ class EventParser {
             if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
             switch (key) {
                 case "dinero": { returnString += value + " de dinero, "; break; }
+                case "pago": { returnString += "has pagado " + value + ", "; break; }
                 case "HP": { returnString += (value > 0 ? "+" : "") + value + " de vida, "; break; }
                 case "SP": { returnString += (value > 0 ? "+" : "") + value + " de sp, "; break; }
                 case "hambre": { returnString += (value > 0 ? "+" : "") + value + " de hambre, "; break; }
@@ -420,7 +441,7 @@ class EventParser {
 
                         returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
                         for (const habilidad in value) {
-                            console.log("habilidad:",habilidad)
+                            console.log("habilidad:", habilidad)
                             returnString += this.jsonHabilidades[habilidad].name + ", ";
                         }
 
@@ -456,7 +477,7 @@ class EventParser {
 
                 case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
 
-                default: throw "la key:"+key+" no existe en el objeto de rewards"
+                default: throw "la key:" + key + " no existe en el objeto de rewards"
             }
 
         }
