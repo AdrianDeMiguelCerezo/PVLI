@@ -39,11 +39,18 @@ export default class DialogueScene extends Phaser.Scene {
     init(fragmentoEvento, playerData) {
 
 
-        this.fragmentoEvento = fragmentoEvento;
+        this.fragmentoEvento = !!fragmentoEvento ? fragmentoEvento : {
+            tipo: "dialogue",
+            texto: "ERROR: no hay un diálogo asociado a esta escena",
+            opciones: [{
+                texto: "CONTINUAR",
+                salto: null
+            }]
+        };
 
         //si le paso un playerdata, coge ese.
         if (playerData) {
-            this.playerData = playerData;
+            this.playerData = playerData
         }
         else {
             //si no, se lo paso y no lo tiene de antes, lo crea.
@@ -73,20 +80,8 @@ export default class DialogueScene extends Phaser.Scene {
          * evento generado por hardcode para testear los fragmentos, quitar cuando haya una forma de leerlos
          * @type {SubStateNode}
          */
-        this.currentEvento = {
-            tipo: "dialogue",
-            texto: "ERROR: no hay un diálogo asociado a esta escena",
-            opciones: [{
-                texto: "CONTINUAR",
-                salto: null
-            }]
-        };
+        
 
-        //si al iniciar la escena ya hay un fragmento cargado, reescribe con ese evento (por testear para cuando se vuelva de la escena de combate)
-        if (this.fragmentoEvento != undefined) {
-            this.currentEvento = this.fragmentoEvento;
-            console.log(this.fragmentoEvento);
-        }
 
         this.dialog = new DialogText(this, {
             borderThickness: 4,
@@ -104,7 +99,7 @@ export default class DialogueScene extends Phaser.Scene {
         });
 
         //mira el fragmento de evento
-        this.checkEvent(this.currentEvento);
+        this.checkEvent(this.fragmentoEvento);
     }
 
     /**
@@ -146,10 +141,11 @@ export default class DialogueScene extends Phaser.Scene {
         }
 
 
+        console.log("consecuencias:",consecuencias)
 
+        for (const [key, value] of Object.entries(consecuencias)) {
 
-        for (const [key, value] in Object.entries(consecuencias)) {
-
+            console.log("consecuencias Key:",key," value:",value)
 
             switch (key) {
 
@@ -203,7 +199,7 @@ export default class DialogueScene extends Phaser.Scene {
             }
 
         }
-
+        console.log("cambios en playerData:", this.playerData)
         this.registry.set("nodes", mapNodes);
     }
 
