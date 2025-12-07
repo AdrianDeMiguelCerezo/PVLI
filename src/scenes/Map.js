@@ -56,7 +56,7 @@ export default class Map extends Phaser.Scene {
             this.nodes.push(new MapNode(this, 100, 100, 'node', 'Test', NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
             this.nodes.push(new MapNode(this, 200, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,false));
             this.nodes.push(new MapNode(this, 150, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, true,true,300));
+            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, true,true,250));
             this.nodes.push(new MapNode(this, 250, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
 
             this.nodes.push(new MapNode(this, 320, 150, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
@@ -73,7 +73,7 @@ export default class Map extends Phaser.Scene {
 
             this.nodes.push(new MapNode(this, 600, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
             this.nodes.push(new MapNode(this, 650, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, true, false,500));
+            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, true, false,350));
             this.nodes.push(new MapNode(this, 680, 320, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
             this.nodes.push(new MapNode(this, 720, 240, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
 
@@ -112,15 +112,20 @@ export default class Map extends Phaser.Scene {
             }
         }
 
+
+
         /**@type {MapNode}*/
         const nodoActual = this.nodes.find(n => n.state === State.CURRENT);
         if (!nodoActual) throw "No hay nodo current. xd";
         nodoActual.openNearbyNodes();
-
         nodoActual.drawConnectionsFromCurrent();
 
         this.RecalculateNodeDifficulties();
+        for (let node of this.nodes) {
+            console.log(node.difficulty)
+        }
         this.GenerateDifficultyZones();
+
 
     }
 
@@ -135,7 +140,7 @@ export default class Map extends Phaser.Scene {
 
     //complejidad O(n^3) si eliminar un elemento de un array tiene complejidad O(n)
     GenerateDifficultyZones() {
-         this.areaGraphics.destroy();
+        this.areaGraphics.destroy();
         this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
         for (let x = 0; x < this.game.config.width; x++) {
             for (let y = 0; y < this.game.config.height; y++) {
@@ -143,9 +148,9 @@ export default class Map extends Phaser.Scene {
                 const miAltura = this.IDWFormula(this.nodes, x, y,3)
 
                 if (miAltura < DifficultyLimits.MEDIUM-20) { }
-                else if (miAltura < DifficultyLimits.HARD-20) { this.drawPixel(x, y, 0xFFB600) }
-                else if (miAltura < DifficultyLimits.FUCKED-20) { this.drawPixel(x, y, 0xFF8500) }
-                else { this.drawPixel(x, y, 0xEB2900) }
+                else if (miAltura < DifficultyLimits.HARD-20) { this.drawPixel(x, y, 0xFFB600,2) }
+                else if (miAltura < DifficultyLimits.FUCKED-20) { this.drawPixel(x, y, 0xFF8500,2) }
+                else { this.drawPixel(x, y, 0xEB2900,2) }
                     
                     
                 
@@ -197,19 +202,22 @@ export default class Map extends Phaser.Scene {
             if (n.isFocus) this.fociNodes.push(n)
             else this.nonFociNodes.push(n)
         }
+        console.log(this.fociNodes)
 
         for (const n of this.nonFociNodes){
             n.difficulty = 0;
-            for (const f of this.fociNodes){
-                n.difficulty +=  Math.max(0, f.difficulty - Math.hypot(f.x - n.x, f.y - n.y));
+            for (const f of this.fociNodes) {
+                const newDifficulty = Math.max(0, f.difficulty - Math.pow(Math.hypot(f.x - n.x, f.y - n.y) / 15, 2.2));
+                if (n.difficulty < newDifficulty) { n.difficulty = newDifficulty; }
+               
             }
         }
     }
 
 
-    drawPixel(x, y, color) {
+    drawPixel(x, y, color,scale) {
         this.areaGraphics.fillStyle(color);
-        this.areaGraphics.fillRect(x, y, 1, 1);
+        this.areaGraphics.fillRect(x, y, scale, scale);
     }
 
     TruncateDifficulty(diff) {

@@ -29,7 +29,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
+    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false,isAwake = false, difficulty=0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -89,7 +89,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 
                 this.openNearbyNodes();
 
-                this.scene.UpdateFociDifficulties(50);
+                this.scene.UpdateFociDifficulties(10);
 
 
                 if (this.visited == false) {
