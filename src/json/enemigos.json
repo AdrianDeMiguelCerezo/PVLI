@@ -67,5 +67,69 @@
             "target": "ENEMY"
         }
     ]
+  },
+  "PERRO_RABIOSO": {
+    "name": "Perro rabioso",
+    "HpMax": 30,
+    "habilidades": [
+        {
+            "damage": 8,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "damage": 12,
+            "type": "SPECIAL_ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "effect": "ATT+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "SELF"
+        }
+
+    ]
+  },
+  "TORRETA": {
+    "name": "Torreta",
+    "HpMax": 50,
+    "habilidades": [
+        {
+            "damage": 5,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        }
+
+    ]
+  },
+  "GRAN_BLOQUEO":{
+    "name": "Gran bloqueo",
+    "HpMax": 100,
+    "habilidades":[
+      {
+          "damage": 15,
+          "type": "ATTACK",
+          "target": "ENEMY"
+      },
+      {
+          "effect": "ATT+",
+          "effectDuration":  2,
+          "type": "BUFF",
+          "target": "SELF"
+      },
+      {
+          "effect": "HP+",
+          "effectDuration":  0,
+          "type": "BUFF",
+          "target": "SELF"
+      },
+      {
+          "effect": "ATT-",
+          "effectDuration":  2,
+          "type": "DEBUFF",
+          "target": "ENEMY"
+      }
+    ]
   }
 }
