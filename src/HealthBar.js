@@ -7,7 +7,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         this.targetValue = initialValue;
 
-        this.actualValue = initialValue;
+        this._actualValue = initialValue;
 
         this.p = (barWidth - 2 * borderThickness) / initialValue; //cuantos píxeles por cada value
 
@@ -44,13 +44,17 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     }
     preUpdate(t, dt) {
         
-        if (this.actualValue > this.targetValue) {
-            this.actualValue = this.actualValue - 20 * dt / 1000
-        } else {
-            this.actualValue = this.targetValue;
+        if (this._actualValue > this.targetValue) {
+            this._actualValue = this._actualValue - 20 * dt / 1000
+        } else if(this._actualValue < this.targetValue) {
+            this._actualValue = this._actualValue + 20 * dt / 1000
         }
-        this.shownValue = Math.floor(this.actualValue)
-        this.healthRectangle.width = this.actualValue*this.p;
+        if (Math.abs(this._actualValue) < Math.abs(this.targetValue) + 1 && Math.abs(this._actualValue) > Math.abs(this.targetValue)-1)
+        {
+            this._actualValue = this.targetValue;
+        }
+        
+        this.healthRectangle.width = this._actualValue*this.p;
 
         this.hpText.text = this.targetValue;
     }
