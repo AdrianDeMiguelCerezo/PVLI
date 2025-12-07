@@ -15,6 +15,38 @@
             }
         ]
     },
+    "DARDO_ENVENENADO": {
+        "name": "Dardo envenenado",
+        "description": "Aplica veneno.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [
+            {
+                "actions": 1,
+                "damage": 8,
+                "effect": "ENVENENADO",
+                "effectDuration": 10,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ]
+    },
+    "FLASHBANG": {
+        "name": "Flashbang",
+        "description": "Paraliza a un enemigo.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [
+            {
+                "actions": 1,
+                "damage": 5,
+                "effect": "PARALIZADO",
+                "effectDuration": 1,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ]
+    },
     "POTI_HP_MINI": {
         "name": "Poción de salud (mini)",
         "description": "Cura poca HP.",
@@ -39,6 +71,36 @@
             {
                 "actions": 1,
                 "effect": { "diffSp": 20 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "NABO": {
+        "nombre": "Nabo",
+        "descripcion": "Restaura HP, y no poco.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHealth": 30 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "POTI_HP_GRANDE": {
+        "nombre": "Poción de HP(Grande)",
+        "descripcion": "Restaura mucho HP.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHealth": 50 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
