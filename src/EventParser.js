@@ -237,7 +237,7 @@ export default class EventParser {
             case "combat":
                 {
                     eventFragmentNode.tipo = "combat";
-                    eventFragmentNode.combate = thisFragment_json.combat;
+                    eventFragmentNode.combate = thisFragment_json.combat; //cuidado, aquí se copia una referencia creo
 
                     if (thisFragment_json.flee) {
                         const jumpTag = thisFragment_json.flee;
@@ -270,7 +270,7 @@ export default class EventParser {
                             //si es un string, se refiere al par�metro con ese nombre
                             case "string":
                                 {
-                                    console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
+                                    console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -279,7 +279,7 @@ export default class EventParser {
                             //si es un objeto, es un literal
                             case "object":
                                 {
-                                    console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
+                                    console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
                                     for (const [key, value] of Object.entries(combatRewards_json)) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -290,8 +290,8 @@ export default class EventParser {
 
                     //generar nodo de di�logo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialigue", undefined, "Has ganadoel combate. Falta  decirte cu�les son las recompensas.",
-                            [{ texto: "Continue", salto: this.GenerateEventFragment(++index) }],
+                        new SubStateNode("dialigue", undefined, "Has ganado el combate. \nRecompensas:"+this.WriteRewards(consecuencias),
+                            [{ texto: "Continuar", salto: this.GenerateEventFragment(++index) }],
                             consecuencias, undefined);
 
                     break;

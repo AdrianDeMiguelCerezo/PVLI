@@ -139,12 +139,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
         }
         
-        //if (this.scene.game.config.physics.arcade.debug) {
+        if (this.scene.game.config.physics.arcade.debug) {
             if (this.difficulty < 100) { }
             else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
             else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
             else { this.setTintFill(0x8B1800) }
-        //}
+        }
 
     }
 
@@ -215,48 +215,5 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 }
             }
         }
-    }
-
-    /**
-     * 
-     * @param {string} eventKey
-     */
-    generateEvent(eventKey) {
-
-        const eventoJson = this.scene.jsonEventos[eventKey];
-        let params = {};
-
-        for (let par_nombre of eventoJson["params"]) {
-            this.SetParamValue(params[par_nombre], eventoJson["params"][par_nombre])
-        }
-
-        console.log(this.params);
-
-        return event;
-    }
-
-    /**Setea el valor del objeto "param" al parseo de paramValue seg�n la info del json de eventos.
-     * @param {string} param //nombre del par�metro del json
-     * @param {any} paramValue //valor en principio del par�metro del json
-     */
-    SetParamValue(param, paramValue) {
-        
-        if (Array.isArray(paramValue)) {
-            paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
-        }
-
-        //si el valor es el valor de un par�metro global:
-        if (paramValue[0] == '_') {
-            const infoGlobalParam = this.scene.jsonEventos["globalParams"][a.substring(1)];
-            if (Array.isArray(infoGlobalParam)) {
-                param = infoGlobalParam[Phaser.Math.RND.between(0, paramValue.length - 1)];
-            }
-            else {
-                param = infoGlobalParam;
-            }
-        }
-        else {
-            param = paramValue;
-        }
-    }
+    }  
 }

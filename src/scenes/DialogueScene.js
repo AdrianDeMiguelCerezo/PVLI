@@ -305,7 +305,7 @@ export default class DialogueScene extends Phaser.Scene {
 
         opciones.forEach(opt => {
             //añade el texto
-            const btn = this.add.text(400, baseY + offsetY, opt.texto, { fontFamily: 'Arial', fontSize: '24px', color: '#fff', backgroundColor: '#828181' });
+            const btn = this.add.text(400, baseY + offsetY, opt.texto, { fontFamily: 'Arial', fontSize: '24px', color: '#fff', backgroundColor: '#828181', padding: { x: 5 } });
             btn.setOrigin(0.5);
             //interaccion con botones
             btn.setInteractive();

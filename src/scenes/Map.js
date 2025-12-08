@@ -138,7 +138,7 @@ export default class Map extends Phaser.Scene {
 
     UpdateFociDifficulties(ammount) {
         for (const n of this.fociNodes) {
-            n.difficulty += ammount;
+            if(n.isAwake) n.difficulty += ammount;
         }
         this.RecalculateNodeDifficulties();
         this.GenerateDifficultyZones();
