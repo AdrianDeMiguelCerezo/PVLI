@@ -1,7 +1,7 @@
 {
   "BANDIDO_COMUN": {
     "name": "Bandido común",
-    "HpMax": 60,
+    "HpMax": 50,
     "habilidades": [
         {
             "name": "Ataque básico",
@@ -26,6 +26,103 @@
             "target": "SELF"
         }
 
+    ]
+  },
+  "PIROMANO":{
+    "name": "Pirómano",
+    "HpMax": 40,
+    "habilidades": [
+        {
+            "damage":5,
+            "effect":"QUEMADO",
+            "effectDuration": 3,
+            "type":"DEBUFF",
+            "target":"ENEMY"
+        },
+        {
+            "damage":3,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
+    ]
+  },
+  "MEDICO":{
+    "name": "Médico",
+    "HpMax": 30,
+    "habilidades":[
+        {
+            "effect":{ "diffHealth": 20 },
+            "effectDuration": 0,
+            "type":"BUFF",
+            "target":"ALLENEMIES"
+        },
+        {
+            "effect":{ "diffHealth": 40 },
+            "effectDuration": 0,
+            "type":"BUFF",
+            "target":"RNDENEMY"
+        },
+        {
+            "damage":3,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        {
+            "damage":3,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
+    ]
+  },
+  "TANQUE":{
+    "name":"Tanque",
+    "HpMax":80,
+    "habilidades":[
+        {
+            "damage":6,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        { 
+            "effect": "DEF+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "SELF"
+        }
+    ]
+  },
+  "BUFEADOR":{
+    "name":"Bufeador",
+    "HpMax":40,
+    "habilidades":[
+        {
+            "damage":4,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        {
+            "effect": "ATT+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "RNDENEMY"
+        }
+    ]
+  },
+  "DEBUFEADOR":{
+    "name":"Debufeador",
+    "HpMax":40,
+    "habilidades":[
+        {
+            "effect": "ATT-",
+            "effectDuration":  2,
+            "type": "DEBUFF",
+            "target": "ENEMY"
+        },
+        {
+            "damage":7,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
     ]
   },
   "SOLDADO_ESTADO": {
@@ -62,7 +159,7 @@
         {
             "name": "Ataque básico",
             "description": "1 acc. Un golpe sencillo con el arma.",
-            "damage": 12,
+            "damage": 18,
             "type": "ACTIVE",
             "target": "ENEMY"
         }
