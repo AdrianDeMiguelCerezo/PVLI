@@ -423,7 +423,7 @@
                         "text": "Seguir retrocediendo"
                     }
                 ],
-                "optionAmmount": 1
+                "optionsAmmount": 1
             },
             {
                 "tag": "VueltaDia5",
@@ -449,7 +449,7 @@
                         "j": "serpienteVenenosaVueltaDia4"
                     }
                 ],
-                "optionAmmount": 1
+                "optionsAmmount": 1
             },
              {
                 "type": "dialogue",
@@ -490,7 +490,7 @@
                         "text": "Seguir retrocediendo"
                     }
                 ],
-                "optionAmmount": 1
+                "optionsAmmount": 1
             },
             {
                 "tag": "VueltaDia3",
@@ -512,7 +512,7 @@
                         "j": "VueltaDia2"
                     }
                 ],
-                "optionAmmount": 1
+                "optionsAmmount": 1
             },
             {
                 "type": "dialogue",
@@ -544,7 +544,7 @@
                         "j": "elecciónCaminos"
                     }
                 ],
-                "optionAmmount": 1
+                "optionsAmmount": 1
             }
         ]
     },
