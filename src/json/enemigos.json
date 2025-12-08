@@ -139,19 +139,6 @@
         }
     ]
   },
-  "ASALTANTE_MADRUGADOR": {
-    "name": "Asaltante madrugador",
-    "HpMax": 50,
-    "habilidades": [
-        {
-            "name": "Ataque básico",
-            "description": "1 acc. Un golpe sencillo con el arma.",
-            "damage": 12,
-            "type": "ACTIVE",
-            "target": "ENEMY"
-        }
-    ]
-  },
   "MUJER_DESCONFIADA": {
     "name": "Mujer desconfiada",
     "HpMax": 70,
