@@ -40,7 +40,7 @@
         //{
 
         //    "dinero": (int) cambio en el dinero del jugador
-        //    "pago": (int) dinero a pagar. Solo existe como recompensa en nodos de diálogo. Si no se tiene dinero suficiente, no te quita dinero y te lleva en el momento al fragmento de evento guardado en el atributo de este fragmento llamado "noPayFragment":"TAG QUE SEA". El pago
+        //    "pago": (int) dinero a pagar. Solo existe como recompensa en nodos de diálogo. Si no se tiene dinero suficiente, no te quita dinero y te lleva en el momento al fragmento de evento guardado en el atributo de este fragmento llamado "noPayFragment":"TAG QUE SEA". El pago es la primera recompensa del fragmento ergo si no pagas, no hay demás recompensas.
         //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
         //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
         //    "hambre": (int) cambio en el hambre del jugador.
