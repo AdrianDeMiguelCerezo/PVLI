@@ -67,6 +67,7 @@
                     "dinero": 40
                 },
                 {
+                    "dinero": 5,
                     "habilidades": [ "SUPREME_MEDITATION" ]
                 }
             ],
@@ -74,6 +75,29 @@
             "cannon_day_cost": { "hambre": 2 },
             "bandit_chest_rewards": [],
             "try_break_bandit_chest_cost": { "HP": -5 },
+            "llamar_aliados_rewards": [
+                {
+                    "dinero": 20,
+                    "items": [
+                        {
+                            "item": "MOLOTOV",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "dinero": 15,
+                    "items": [
+                        {
+                            "item": "MOLOTOV",
+                            "count": 2
+                        }
+                    ]
+                },
+                {
+                    "dinero": 35
+                }
+            ]
         },
 
         "eventFragments": [
@@ -892,7 +916,7 @@
                 "text": "\"Qué extraño, no esperaba encontrarme otra roca con una silueta convenientemente igual a la mía, y menos que funcionara de nuevo la estartegia.\"\n\"¡Hoy debe ser mi día de suerte!\"",
                 "continue": "Seguir andando"
             },
-             {
+            {
                 "type": "dialogue",
                 "text": "Tras andar un poco más, llegas a la salida del cañón.\n_cannon_day_cost",
                 "rewards": "cannon_day_cost",
@@ -902,8 +926,70 @@
                         "j": null
                     }
                 ]
-            }
+            },
+            {
+                "tag": "2Bandidos_emboscada",
+                "type": "dialogue",
+                "text": "De repente, ves a uno de los bandidos tocar un cuerno una vez. \nBandido1:\"¡QUÉ CREES QUE HACES INTENTANDO ESCONDERTE DE NOSOTROS DETRÁS DE ESA ROCA CON UNA SILUETA CONVENIENTEMENTE PARECIDA A LA TUYA!\"\nLa silueta, no era convenientemente igual a la tuya.",
+                "permanentOptions": [
+                    {
+                        "text": "Acercarte a ellos en son de paz",
+                        "j": "2Bandidos_saludar_refuerzos"
+                    },
+                    {
+                        "text": "Atacar a los bandidos"
+                    }
+                ]
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
+                    "rewards": { //se escribe en formato recompensa
+                        "dinero": 5
+                    },
+                    "ambush": true, //empiezan los enemigos
+                    "canFlee": true //es posible huir?
+                },
+                "flee": "intento_bengala"
 
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras acabar la batalla, aparece un grupo más grande de bandidos. Ven a sus compañeros caídos y arremeten contra tí."
+            },
+            {
+                "tag": "llamar_aliados",
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_FUEGO", "BANDIDO_COMUN", "BANDIDO_BUFFER" ],
+                    "rewards": "llamar_aliados_rewards",
+                    "ambush": true, //empiezan los enemigos
+                    "canFlee": true //es posible huir?
+                },
+                "flee": "llamar_aliados_2"
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras derrotar a este grupo, te diriges a la salida del cañón lo más rápido que puedes."
+                "permanentOptions": 
+            },
+            {
+                "tag": "llamar_aliados_2",
+                "type": "dialogue",
+                "text": "Por tu espalda, uno de los bandidos de quienes acabas de escapar sopla un cuerno 2 veces. Poco tiempo después, ves a otro grupo de bandidos acercándose a toda velocidad hacia tí.\nLa batalla es inevitable."
+            },
+            {
+                "batalla_llamar_aliados_2"
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_HEALER", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_HEALER" ],
+                    "rewards": {"dinero": 20,"items": [{"item":"POTI_HP_MINI"}]},
+                    "ambush": true, //empiezan los enemigos
+                    "canFlee": true //es posible huir?
+                },
+                "flee": "huir_llamar_aliados"
+            }
 
         ]
     },

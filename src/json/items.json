@@ -55,7 +55,7 @@
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffHealth": 10 },
+                "effect": { "diffHealth": 40 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
@@ -70,7 +70,7 @@
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffSp": 20 },
+                "effect": { "diffSp":75 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
@@ -100,7 +100,7 @@
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffHealth": 50 },
+                "effect": { "diffHealth": 150 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
