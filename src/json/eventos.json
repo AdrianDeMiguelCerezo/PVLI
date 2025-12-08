@@ -55,8 +55,7 @@
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
-            "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
-            "cannon_day_cost": { "hambre": 2 },
+
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
             "wounded_day_cost": { "HP": -10 },
@@ -70,7 +69,11 @@
                 {
                     "habilidades": [ "SUPREME_MEDITATION" ]
                 }
-            ]
+            ],
+            "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
+            "cannon_day_cost": { "hambre": 2 },
+            "bandit_chest_rewards": [],
+            "try_break_bandit_chest_cost": { "HP": -5 },
         },
 
         "eventFragments": [
@@ -688,14 +691,220 @@
             },
             {
                 "type": "dialogue",
-                "text": "Has conseguido cruzar el cañón sin encontrarte a _nombre_grupo_bandidos. Será una mentira que estaban activos por esta zona."
+                "text": "Has conseguido cruzar el cañón sin encontrarte a _nombre_grupo_bandidos. Será una mentira que estaban activos por esta zona.",
                 "permanentOptions": [
                     {
                         "text": "Continuar",
                         "j": null
                     }
                 ]
+            },
+            {
+                "tag": "No_visto1",
+                "type": "dialogue",
+                "text": "Mientras caminas, ves a lo lejos a un grupo de 3 personas. \nParecen ser los bandidos de _nombre_grupo_bandidos de los que te avisaron.",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles por sorpresa",
+                        "j": "3Bandidos_noEmboscada"
+                    },
+                    {
+                        "text": "Acercarte a ellos en son de paz",
+                        "j": "3Bandidos_saludar"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya",
+                        "j": "3Bandidos_emboscada"
+                    },
+                    {
+                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya"
+                    },
+                    {
+                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "\"No me han visto, no me esperaba que esto fuera a funcionar\"",
+                "continue": "Seguir andando"
+            },
+            {
+                "type": "dialogue",
+                "text": "Anochece, encuentras un lugar oculto para descansar en la pared del cañón, y descansas hasta el amanecer para luego continuar tu viaje.\n_cannon_day_cost",
+                "permanentOptions": [],
+                "options": [
+                    {
+                        "text": "Continuar",
+                        "j": "No_visto2"
+                    },
+                    {
+                        "text": "Continuar"
+                    },
+                    {
+                        "text": "Continuar"
+                    },
+                    {
+                        "text": "Continuar"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras sales de la pequeña cavidad en la que has dormido, te tropiezas con algo.\nAl mirar hacia abajo, te das cuenta de que te has tropezado con una caja de madera cerrada con llave",
+                "permanentOptions": [
+                    {
+                        "text": "Dejarla donde está y seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Intentar abrirla",
+                        "j": "cofre_bandido"
+                    },
+                    {
+                        "text": "Intentar abrirla",
+                        "j": "cofre_bandido_no_abre"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "cofre_bandido",
+                "type": "dialogue",
+                "text": "Consigues forzar la cerradura de la caja. _bandit_chest_rewards",
+                "rewards": "bandit_chest_rewards",
+                "permanentOptions": [
+                    {
+                        "text": "seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ]
+            },
+            {
+                "tag": "cofre_bandido_no_abre",
+                "type": "dialogue",
+                "text": "No consigues forzar la cerradura de la caja.",
+                "rewards": "bandit_chest_rewards",
+                "permanentOptions": [
+                    {
+                        "text": "seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Romper la caja",
+                        "tag": "cofre_bandido_romper"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "cofre_bandido_romper",
+                "type": "dialogue",
+                "text": "No consigues romper la caja, y además de eso, te haces daño en el proceso._try_break_bandit_chest_cost",
+                "rewards": "try_break_bandit_chest_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Dejar de intentarlo y seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "intentarlo de nuevo",
+                        "tag": "cofre_bandido_romper"
+                    },
+                    {
+                        "text": "Romper la caja",
+                        "tag": "cofre_bandido_roto_recompensas"
+                    },
+                    {
+                        "text": "Romper la caja",
+                        "tag": "cofre_bandido_roto_recompensas"
+                    },
+                    {
+                        "text": "Romper la caja",
+                        "tag": "cofre_bandido_roto_noRecompensas"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "cofre_bandido_roto_recompensas",
+                "type": "dialogue",
+                "text": "Has conseguido romper la caja.\nRevisas lo que tenía dentro.\n_bandit_chest_rewards",
+                "rewards": "bandit_chest_rewards",
+                "permanentOptions": [
+                    {
+                        "text": "seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ]
+            },
+            {
+                "tag": "cofre_bandido_roto_noRecompensas",
+                "type": "dialogue",
+                "text": "Has conseguido romper la caja, pero lo que sea que hubiera adentro se ha roto y está ahora desperdigado por el suelo.",
+                "permanentOptions": [
+                    {
+                        "text": "seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ]
+            },
+            {
+                "tag": "No_visto2",
+                "type": "dialogue",
+                "text": "Mientras caminas, ves a lo lejos a 2 personas caminando. \nPor sus pintas, parecen ser otros bandidos de _nombre_grupo_bandidos haciendo su ronda.",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles por sorpresa",
+                        "j": "2Bandidos_noEmboscada"
+                    },
+                    {
+                        "text": "Acercarte a ellos en son de paz",
+                        "j": "2Bandidos_saludar"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya",
+                        "j": "2Bandidos_emboscada"
+                    },
+                    {
+                        "text": "Esconderte detrás de otra roca con una silueta convenientemente igual a la tuya"
+                    },
+                    {
+                        "text": "Esconderte detrás de otra roca con una silueta convenientemente igual a la tuya"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "\"Qué extraño, no esperaba encontrarme otra roca con una silueta convenientemente igual a la mía, y menos que funcionara de nuevo la estartegia.\"\n\"¡Hoy debe ser mi día de suerte!\"",
+                "continue": "Seguir andando"
+            },
+             {
+                "type": "dialogue",
+                "text": "Tras andar un poco más, llegas a la salida del cañón.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar tu travesía",
+                        "j": null
+                    }
+                ]
             }
+
+
         ]
     },
     "PUEBLO_MEDIANO": {

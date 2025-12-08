@@ -50,7 +50,7 @@
         //    "efectos": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
 
         //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
-        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano. Si no hay despiertos, solamente despirta el más cercano.
+        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano. Si no hay despiertos, solamente despirta el más cercano con dificultad int.
         //    "dificultadRadio"{ (int) r, (int) diff } aumenta la dificultad de los focos despiertos en un radio de r de este nodo en diff.
 
         //    "despertarGlobal" (int) diff despertar todos los focos dormidos, con su dificultad base + con diff dificultad.
@@ -58,7 +58,7 @@
         //    "despertarRadio": { (int) r, (int) diff } despertar todos los focos dormidos a menos de r distancia, con su dificultad base + diff dificultad.
              
         //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
-        //     si no focos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con su dificultad + diff dificultad.
+        //     si no focos dormidos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con su dificultad + diff dificultad.
         //}
         */
 
@@ -247,6 +247,7 @@
 }
 //
 {
+    "tag": "",
     "type": "dialogue",
     "text": "",
     "permanentOptions": [],
@@ -258,6 +259,10 @@
     ],
     "optionsAmmount": 1
 }
+
+
+
+
 , "nombre_evento": {
 
     "params": {

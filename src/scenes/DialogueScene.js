@@ -276,10 +276,40 @@ export default class DialogueScene extends Phaser.Scene {
                         }
                         break;
                     }
-                    case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
-                    case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
+                    case "despertarCercano":
+                        {
+                            let smallestDistance = 100000000;
+                            let closestIndex = -1;
 
-                    case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
+                            for (let i = 0; i < mapNodes.length; i++) {
+                                const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                                if (mapNodes[i].isFocus && !mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
+                            }
+                            if (smallestDistance<=value.r && closestIndex!=-1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty += value.diff; }
+
+                            break;
+                        }
+                    case "despertarCercanoCrear": {
+                        let smallestDistance = 100000000;
+                        let closestIndex = -1;
+
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                            if (mapNodes[i].isFocus && !mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
+                        }
+                        if (smallestDistance <= value.r && closestIndex != -1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty += value.diff; }
+                        else {
+                            currentNode.isFocus = true; currentNode.isAwake = true; currentNode.difficulty += value.diff;
+                        }
+                        break; }
+
+                    case "despertarRadio": {
+                        for (let i = 0; i < mapNodes.length; i++) {
+                            const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
+                            if (mapNodes[i].isFocus && !mapNodes[i].isAwake && d < value.r) { mapNodes[i].isAwake = true; mapNodes[i].difficulty += value.diff }
+                        }
+                        break;
+}
                 }
 
 
@@ -287,7 +317,7 @@ export default class DialogueScene extends Phaser.Scene {
             console.log(this.playerData);
             this.registry.set("nodes", mapNodes);
         }
-       
+
     }
 
     /**
@@ -330,8 +360,8 @@ export default class DialogueScene extends Phaser.Scene {
                     this.scene.start('BattleScene', opt.salto, this.playerData);
                 }
                 else if (opt.salto.tipo == "fin") {
-					this.scene.start('WinScene');
-				}
+                    this.scene.start('WinScene');
+                }
 
             });
             //añade boton al grupo de botones de opciones
