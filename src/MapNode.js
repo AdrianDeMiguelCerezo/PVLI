@@ -1,4 +1,5 @@
-
+import EventParser from "./EventParser.js";
+import PlayerData from "./PlayerData.js";
 
 const NodeType = {
     COMMON: 0,
@@ -29,18 +30,17 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false,isAwake = false, difficulty=0, visited = false, scale = 0.2, radius = 130,event = null) {
+    constructor(scene, x, y, texture,eventKeys, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
 
-        //genera un evento a partir de estr nodo con la key eventKey
-        if (!!event) { this.event = generateEvent(eventKey); }
-        else { this.event = event; }
+        
         this.name = "node"
 
+        this.eventKeys = eventKeys;
         this.nodeType = nodeType;
         this.state = state;
         this.radius = radius;
@@ -48,6 +48,11 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         this.isFocus = isFocus;
         this.difficulty = difficulty;
         this.isAwake = isAwake;
+
+        //if(this.difficulty )
+        let eventoParserer = new EventParser(this.scene.jsonEventos,this.scene.jsonHabilidades,this.scene.jsonEquipamiento,this.scene.jsonItems,this.scene.jsonEfectos);
+        
+        let eventoParseado = eventoParserer.generateEvent(this.eventKeys);
 
         scene.add.existing(this);
         this.setInteractive();
@@ -98,7 +103,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
-                        event: n.event,
+                        event: n.eventKeys,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
@@ -113,9 +118,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     this.scene.registry.set("nodes", nodeData);
 
                     this.scene.events.removeAllListeners("update_tint");
-
-                    this.scene.scene.start(this.targetScene);
                     
+                    this.scene.scene.start('DialogueScene', eventoParseado, new PlayerData());
 
                 }
                 

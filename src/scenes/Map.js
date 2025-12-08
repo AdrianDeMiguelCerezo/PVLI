@@ -2,6 +2,7 @@ import MapNode from '../MapNode.js'
 import MenuButton from '../MenuButton.js'
 import PlayerData from '../PlayerData.js'
 
+
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
@@ -26,6 +27,10 @@ export default class Map extends Phaser.Scene {
 
     init() {
         this.jsonEventos = this.cache.json.get("eventos");
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEquipamiento = this.cache.json.get('equipamiento');
+        this.jsonItems = this.cache.json.get('items');
+        this.jsonEfectos = this.cache.json.get('efectos');
     }
 
     create() {
@@ -53,49 +58,50 @@ export default class Map extends Phaser.Scene {
         if (!this.registry.get("nodes")) {
             this.nodes = []
 
-            this.nodes.push(new MapNode(this, 100, 100, 'node', 'Test', NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
-            this.nodes.push(new MapNode(this, 200, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false,false));
-            this.nodes.push(new MapNode(this, 150, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 80, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, true,true,250));
-            this.nodes.push(new MapNode(this, 250, 250, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 100, 100, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
+            this.nodes.push(new MapNode(this, 200, 120, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false,false));
+            this.nodes.push(new MapNode(this, 150, 200, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 80, 250, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, true,true,250));
+            this.nodes.push(new MapNode(this, 250, 250, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 320, 150, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 400, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 420, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 300, 300, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 380, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 320, 150, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 400, 100, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 420, 200, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 300, 300, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 380, 280, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 500, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 480, 180, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 520, 260, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 450, 320, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 550, 350, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 500, 100, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 480, 180, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 520, 260, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 450, 320, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 550, 350, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 600, 120, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 650, 200, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 600, 280, 'node', 'Test', NodeType.COMMON, State.LOCKED, true, false,350));
-            this.nodes.push(new MapNode(this, 680, 320, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 720, 240, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 600, 120, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 650, 200, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 600, 280, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, true, false,350));
+            this.nodes.push(new MapNode(this, 680, 320, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 720, 240, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 700, 100, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 740, 180, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 740, 360, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 700, 420, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 620, 400, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 700, 100, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 740, 180, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 740, 360, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 700, 420, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 620, 400, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 540, 440, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 460, 420, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 400, 480, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 320, 440, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 250, 400, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 540, 440, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 460, 420, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 400, 480, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 320, 440, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 250, 400, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 180, 350, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 100, 400, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 150, 500, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 250, 520, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 350, 550, 'node', 'Test', NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 180, 350, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 100, 400, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 150, 500, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 250, 520, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 350, 550, 'node', "BANDIT_CANNON_OR_MOUNTAINS", NodeType.COMMON, State.LOCKED, false, false));
 
             for(let node of this.nodes){
+                console.log(node);
                 node.setDepth(3);
             }
 
@@ -104,7 +110,8 @@ export default class Map extends Phaser.Scene {
             this.nodes = []
             for (const n of this.registry.get("nodes"))
             {
-                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.targetScene, n.nodeType, n.state, n.isFocus,n.isAwake, n.difficulty, n.visited, n.scale, n.radius))
+                console.log(n);
+                this.nodes.push(new MapNode(this, n.x, n.y, "node", n.event, n.nodeType, n.state, n.isFocus,n.isAwake, n.difficulty, n.visited, n.scale, n.radius))
                 
             }
             for(let node of this.nodes){

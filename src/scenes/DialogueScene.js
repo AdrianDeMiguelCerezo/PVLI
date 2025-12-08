@@ -97,7 +97,7 @@ export default class DialogueScene extends Phaser.Scene {
             fontFamily: "Arial",
             posY: 175
         });
-
+        console.log(this.fragmentoEvento);
         //mira el fragmento de evento
         this.checkEvent(this.fragmentoEvento);
     }
@@ -112,6 +112,7 @@ export default class DialogueScene extends Phaser.Scene {
             this.rewardsGiven = true;
             this.handleConsecuencias(evento.consecuencias);
         }
+        console.log(evento);
         this.dialog.setText(evento.texto, true);
         this.createOptions(evento.opciones);
 
@@ -328,6 +329,9 @@ export default class DialogueScene extends Phaser.Scene {
                 else if (opt.salto.tipo == "combat") {
                     this.scene.start('BattleScene', opt.salto, this.playerData);
                 }
+                else if (opt.salto.tipo == "fin") {
+					this.scene.start('WinScene');
+				}
 
             });
             //añade boton al grupo de botones de opciones
