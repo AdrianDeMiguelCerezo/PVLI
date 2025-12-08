@@ -66,6 +66,11 @@
 
         },
 
+
+        //en todos los textos, formato:
+        //lo que diga el jugador, text:" \"cosas.\""
+        //lo que diga un npc, text: "NPC_tal:\"cosas.\""
+        //lo que ocurre, a secas, text: "cosas"
         "eventFragments": [
 
 
@@ -181,7 +186,7 @@
                     "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                     "rewards": { //se escribe en formato recompensa
                         "dinero": 2,
-                      "items": [ "POTI_HP_MINI" ]
+                        "items": [ "POTI_HP_MINI" ]
                     },
                     "ambush": true, //empiezan los enemigos
                     "canFlee": false //es posible huir?

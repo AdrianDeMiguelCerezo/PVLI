@@ -55,6 +55,7 @@
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
+            "cannon_day_cost": { "hambre": 2 },
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
             "wounded_day_cost": { "HP": -10 },
@@ -95,7 +96,7 @@
             {
                 "tag": "AvanceDia1",
                 "type": "dialogue",
-                "text": "Primer día, las cosas han ido bien de momento.\n _climbing_day_cost.",
+                "text": "Deberían faltar unos 6 días para llegar al final, las cosas han ido bien de momento.\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -124,7 +125,7 @@
             {
                 "tag": "AvanceDia2",
                 "type": "dialogue",
-                "text": "Segundo día, ya solo se ven montañas.\n _climbing_day_cost.",
+                "text": "Deberían faltar unos 5 días para llegar al final, ya solo se ven montañas.\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -161,7 +162,7 @@
             {
                 "tag": "AvanceDia3",
                 "type": "dialogue",
-                "text": "Tercer día, más montañas.\n _climbing_day_cost.",
+                "text": "Ya debería estar a mitad de camino, solo veo más montañas.\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -181,7 +182,7 @@
             {
                 "tag": "AvanceDia4",
                 "type": "dialogue",
-                "text": "Cuarto día.\n _climbing_day_cost.",
+                "text": "\"A ver...\"Abre el mapa\n\"estoy a unos 2 días del pie de las montañas\" .\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -214,7 +215,7 @@
             {
                 "tag": "AvanceDia5",
                 "type": "dialogue",
-                "text": "Quinto día, ojalá se acaben estas montañas.\n _climbing_day_cost.",
+                "text": "Debería llegar mañana por la tarde al final de esto, ojalá se acaben ya estas montañas.\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -251,7 +252,7 @@
             {
                 "tag": "AvanceDia6",
                 "type": "dialogue",
-                "text": "Sexto día, ya debería faltar poco.\n _climbing_day_cost.",
+                "text": "Hmmmm...\n ya debería verse la planicie, parece que no calculé bien el tiempo de viaje.\n _climbing_day_cost.",
                 "rewards": "climbing_day_cost",
                 "permanentOptions": [
                     {
@@ -292,11 +293,11 @@
                 "rewards": "climbing_day_cost",
                 "options": [
                     {
-                        "text": "Seguir para alante",
+                        "text": "Volver sobre tus pasos",
                         "j": "AvanceDia7+"
                     },
                     {
-                        "text": "Seguir para alante"
+                        "text": "Volver sobre tus pasos"
 
                     }
                 ],
@@ -451,7 +452,7 @@
                 ],
                 "optionsAmmount": 1
             },
-             {
+            {
                 "type": "dialogue",
                 "text": "Mientras dormías, sientes un dolor repentino en la pierna que te despierta.\nCuando miras qué ha sido, ves una mordedura de serpiente en tu pierna.\nAl pasar un rato, se te empieza a poner morada la pierna.\nLa serpiente era venenosa.",
                 "rewards": "scratch_day_cost",
@@ -526,6 +527,28 @@
             },
             {
                 "tag": "VueltaDia2",
+                "type": "dialogue",
+                "text": "Ya estoy a nada del cruce del principio\n_climbing_day_cost.",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
+                        "j": "AvanceDia2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Seguir retrocediendo"
+                    },
+                    {
+                        "text": "Seguir retrocediendo",
+                        "j": "elecciónCaminos"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+             {
+                "tag": "Cañon 1",
                 "type": "dialogue",
                 "text": "Ya estoy a nada del cruce del principio\n_climbing_day_cost.",
                 "rewards": "climbing_day_cost",
