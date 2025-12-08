@@ -55,6 +55,7 @@
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
+            "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
@@ -547,27 +548,153 @@
                 ],
                 "optionsAmmount": 1
             },
-             {
+            {
                 "tag": "Cañon 1",
                 "type": "dialogue",
-                "text": "Ya estoy a nada del cruce del principio\n_climbing_day_cost.",
-                "rewards": "climbing_day_cost",
-                "permanentOptions": [
-                    {
-                        "text": "He cambiado de idea, mejor doy la vuelta de nuevo",
-                        "j": "AvanceDia2"
-                    }
-                ],
+                "text": "Empiezas tu camino a través del cañón.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
                 "options": [
                     {
-                        "text": "Seguir retrocediendo"
+                        "text": "Seguir avanzando"
                     },
                     {
-                        "text": "Seguir retrocediendo",
-                        "j": "elecciónCaminos"
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "Pre-peaje"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "No_visto1"
                     }
                 ],
                 "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Por suerte, de momento no te has encontrado a ningún bandido.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "Pre-peaje"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "No_visto1"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "\"La travesía a través del cañón está llendo sin contratiempos. Mañana al atardecer estaré fuera del cañón\"\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "Pre-peaje"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "No_visto1"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Ya se ve a lo lejos la salida del cañón.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "options": [
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "Pre-peaje"
+                    },
+                    {
+                        "text": "Seguir avanzando",
+                        "j": "No_visto1"
+                    }
+
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Has conseguido cruzar el cañón sin encontrarte a _nombre_grupo_bandidos. Será una mentira que estaban activos por esta zona."
+                "permanentOptions": [
+                    {
+                        "text": "Continuar",
+                        "j": null
+                    }
+                ]
             }
         ]
     },
