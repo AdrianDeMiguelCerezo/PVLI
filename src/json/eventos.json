@@ -1718,7 +1718,7 @@
                 },
                 {
                     "dinero": 40,
-                    "items": [ "POTI_HP_GRANDE" ]
+                    "items": [ {"item":"POTI_HP_GRANDE","count":1} ]
                 }
             ]
         },
@@ -1852,5 +1852,84 @@
             }
         ]
 
+    },
+    "PERRO_ATRAPADO":{
+        "params": {
+            "recompensas_perro_atrapado": [
+                {
+                    "dinero": 10
+
+                },
+                {
+                    "items":[{"item":"NABO","count":2}]
+                },
+                {
+                    "items": [{"item":"POTI_SP_MINI","count":1}]
+                }
+            ],
+            "recompensas_perro_libre":[
+                {
+                    "dinero":5
+                },
+                {
+                    "items":[{"item":"POTI_HP_MINI","count":1}]
+                },
+                {
+                    "items":[{"item":"FLASHBANG","count":1}]
+                }
+            ]
+        },
+        "eventFragments":[
+            {
+                "type":"dialogue",
+                "text":"Te encuentras un perro atrapado dentro de una casa en una trampa claramente hecha para un humano. Está sangrando bastante."
+            },
+            {
+                "type":"dialogue",
+                "text":"Oyes ruido de fondo de gente que seguramente vaya hacia el perro. La casa está vacía. Podrías saquearla, pero solo tienes tiempo para una cosa.",
+                "options":[
+                    {
+                        "text":"Liberar al perro",
+                        "j":"PERRO_LIBRE"
+                    },
+                    {
+                        "text":"Saquear la casa",
+                        "j":"LOOT_CASA"
+                    },
+                    {
+                        "text":"Salir corriendo",
+                        "j":null
+                    }
+                ]
+            },
+            {
+                "tag":"PERRO_LIBRE",
+                "type":"dialogue",
+                "text":"Decides liberar al perro, pero te haces daño en el proceso.",
+                "rewards":{"efecto":{"HP":-10}}
+            },
+            {
+                "type":"dialogue",
+                "text":"Al liberarlo, descubres que estaba guardando _recompensas_perro_libre. Te lo da y te despides de él con caricias.",
+                "rewards":"recompensas_perro_libre",
+                "options":[
+                    {
+                        "text":"Adiós, chucho",
+                        "j":null
+                    }
+                ]
+            },
+
+            {
+                "tag":"LOOT_CASA",
+                "type":"dialogue",
+                "text":"Pasas del perro para saquear la casa, y encuentras _recompensas_perro_atrapado. Te vas antes de que te vean los otros.",
+                "rewards":"recompensas_perro_atrapado"
+            },
+            {
+                "type":"dialogue",
+                "text":"Espero que haya valido la pena, hijo de puta."
+            }
+        ]
     }
 }

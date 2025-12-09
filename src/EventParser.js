@@ -420,7 +420,7 @@ export default class EventParser {
                 case "items":
                     {
 
-                        for (const item in value) {
+                        for (const item of value) {
                             returnString += this.jsonItems[item.item].name + " (x" + item.count + "), ";
                         }
 
