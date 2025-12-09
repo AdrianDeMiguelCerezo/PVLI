@@ -31,7 +31,7 @@ export default class MenuTest extends Phaser.Scene {
         //console.log(this.menu);
         //this.add.existing(this.menu);
 
-        this.goBackButton = new MenuButton(this, 100, 10, "Volver", null, ()=>{
+        this.goBackButton = new MenuButton(this, 50, 10, "Volver", null, ()=>{
             this.scene.start(this.oldScene);
             //this.scene.stop();
             //this.scene.resume(this.oldScene);

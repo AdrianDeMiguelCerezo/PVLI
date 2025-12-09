@@ -75,7 +75,6 @@
             "nombre_bandido_muerto_2": "_nombre_h",
             "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
-            "bandit_chest_rewards": [],
             "try_break_bandit_chest_cost": { "HP": -5 },
             "2Bandidos_rewards": [
                 {

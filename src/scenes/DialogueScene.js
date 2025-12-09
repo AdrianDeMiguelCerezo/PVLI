@@ -66,13 +66,13 @@ export default class DialogueScene extends Phaser.Scene {
         this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, () => {
             this.mainMenuButton.visible = !this.mainMenuButton.visible;
             this.inventoryButton.visible = !this.inventoryButton.visible;
-        }, 15, 0, "#c8d9d0", false).setOrigin(1);
+        }, 20, 0, "#c8d9d0", false).setOrigin(1);
         //boton de ir al inventario
         this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null,
-            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
         //boton de ir al menu principal
         this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null,
-            () => { this.scene.start('MainMenu') }, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+            () => { this.scene.start('MainMenu') }, 20, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
 
 
         //Se carga el evento del json
@@ -160,21 +160,39 @@ export default class DialogueScene extends Phaser.Scene {
                         break;
                     }
                     case "pago": {
+                        this.playerData.dinero -= value;
                         break;
                     }
                     case "HP": {
-                        console.log("HP" + value);
-                        this.playerData.HP += value;
+                        if(this.playerData.HP < 0)
+                            this.scene.start('GameOver');
+                        else{
+                            if(value >= this.playerData.HPMax){
+                                this.playerData.HP = this.playerData.HPMax;
+                            }
+                            else{
+                                this.playerData.HP += value;
+                            }
+                        }
                         break;
                     }
 
                     case "SP": {
-                        this.playerData.SP += value;
+                        if(value >= this.playerData.SPMax)
+                            this.playerData.SP = this.playerData.SPMax;
+                        else if(value < 0)
+                            this.playerData.SP = 0;
+                        else
+                            this.playerData.SP += value;
                         break;
                     }
 
                     case "hambre": {
                         this.playerData.hambre += value;
+                        if(this.playerData.hambre >= this.playerData.hambreMax)
+                            this.playerData.hambre = this.playerData.hambreMax;
+                        if(this.playerData.hambre < 0)
+                            this.scene.start('GameOver');
                         break;
                     }
 
@@ -206,7 +224,9 @@ export default class DialogueScene extends Phaser.Scene {
                     case "items": {
                         for (let i = 0; i < value.length; i++) {
                             let j = 0;
-                            while (j < this.playerData.items.length && this.playerData.items[i].item != value[i].item) {
+                            console.log("length: ", this.playerData.items.length);
+                            while (j < this.playerData.items.length && this.playerData.items[j].item != value[i].item) {
+                                console.log("j: ", j, "item: ", this.playerData.items[j].item, "value: ", value[i].item);
                                 j++;
                             }
                             if (j == this.playerData.items.length) {

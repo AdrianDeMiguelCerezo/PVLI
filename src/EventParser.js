@@ -64,6 +64,7 @@ export default class EventParser {
 
 
         for (const par_nombre in this.evento_Json["params"]) {
+            console.log(par_nombre);
             this.params[par_nombre] = this.GetJsonParamValue(this.evento_Json["params"][par_nombre]);
             //console.log(this.evento_Json["params"][par_nombre]);
         }
@@ -338,7 +339,7 @@ export default class EventParser {
         if (Array.isArray(paramValue)) {
             paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
         }
-
+        console.log(paramValue);
         //si el valor es el valor de un par�metro global:
         if (paramValue[0] == '_') {
             const infoGlobalParam = this.jsonEventos["globalParams"][paramValue.substring(1)];
