@@ -287,10 +287,10 @@ export default class EventParser {
                                 }
                         }
                     }
-
+                    eventFragmentNode.opciones[0]={}
                     //generar nodo de di�logo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialigue", undefined, "Has ganado el combate. \nRecompensas:"+this.WriteRewards(consecuencias),
+                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas:"+this.WriteRewards(consecuencias),
                             [{ texto: "Continuar", salto: this.GenerateEventFragment(++index) }],
                             consecuencias, undefined);
 

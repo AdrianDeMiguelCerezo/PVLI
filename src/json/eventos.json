@@ -1291,7 +1291,7 @@
                     }
                 ]
                 
-            },
+            }
 
 
 
@@ -1519,5 +1519,152 @@
             }
 
         ]
+    },
+    "GERALT":{
+        "params":{
+            "recompensas_quest_Geralt": [
+                {
+                    "dinero": 80
+
+                },
+                {
+                    "equipamiento": [ "ESPADA_PLATA" ]
+                },
+                {
+                    "dinero": 40,
+                    "items": [ "POTI_HP_GRANDE" ]
+                }
+            ]
+        },
+        "eventFragments":[
+            {
+                "type":"dialogue",
+                "text":"Mientras estás andando por el desierto, te encuentras un emblema que no te parece de por aquí cerca."
+            },
+            {
+                "type":"dialogue",
+                "text":"A lo mejor no deberías tocarlo, pero podría llevar a buenos resultados....",
+                "options":[
+                    {
+                        "text":"Llevarte el emblema.",
+                        "j":"GERALT"
+                    },
+                    {
+                        "text":"Explorar alrededor de la zona.",
+                        "j":"CAMPAMENTO"
+                    },
+                    {
+                        "text":"Irte sin tocar el emblema.",
+                        "j":"IRSE"
+                    }
+                ]
+            },
+            {
+                "tag":"IRSE",
+                "type":"dialogue",
+                "text":"No vale la pena.",
+                "options":[
+                    {
+                        "text":"Continuar",
+                        "j":null
+                    }
+                ]
+            },
+
+
+            {
+                "tag":"GERALT",
+                "type":"dialogue",
+                "text":"Antes de que puedas coger el emblema, un hombre con pelo blanco te para con su espada."
+            },
+            {
+                "type":"dialogue",
+                "text":"-¿Qué te crees que estás haciendo?\nAntes de que puedas responder, coge el emblema y se lo guarda."
+            },
+            {
+                "type":"dialogue",
+                "text":"Al ver que estás acojonado, se empieza a relajar.\n-JAJAJA. Soy Geralt de Rivia, vengo porque hay una bestia de por aquí que debo cazar."
+            },
+            {
+                "type":"dialogue",
+                "text":"-De hecho, necesito ayuda con una cosa. Verás, hay unos bandidos que me están molestando. ¿Podrías ir tú a encargarte de ellos?",
+                "options":[
+                    {
+                        "text":"Ni de coña",
+                        "j":"IRSE"
+                    },
+                    {
+                        "text":"Veré lo que puedo hacer"
+                    }
+                ]
+            },
+            {
+                "type":"dialogue",
+                "text":"-Bien. Los bandidos están por ahí. Cuidado que tienen perros."
+            },
+            {
+                "type":"dialogue",
+                "text":"Te encuentras con un grupo de bandidos que están estorbando un caballo. Decides estorbar tú a ellos."
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "PIROMANO", "PERRO_RABIOSO", "PERRO_RABIOSO" ],
+                    "rewards": {
+                        "dinero": 12
+                    },
+                    "ambush": false,
+                    "canFlee": false
+                },
+                "flee": null
+
+            },
+            {
+                "type":"dialogue",
+                "text":"Tras acabar la batalla, Geralt se acerca a ti y te da las gracias por un buen trabajo y te recompensa."
+            },
+            {
+                "type":"dialogue",
+                "text":"Consigues _recompensas_quest_Geralt y le dices adios a Geralt.",
+                "rewards":"recompensas_quest_Geralt",
+                "options":[
+                    {
+                        "text":"Avanzar",
+                        "j":null
+                    }
+                ]
+            },
+            {
+                "tag":"CAMPAMENTO",
+                "type":"dialogue",
+                "text":"Mientras caminas por los alrededores, te encuentras un campamento con un grupo de bandidos tochos.",
+                "options":[
+                    {
+                        "text":"Atacarlos"
+                    },
+                    {
+                        "text":"Nop",
+                        "j":"IRSE"
+                    }
+                ]
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "TANQUE", "BUFEADOR", "BANDIDO_COMUN"],
+                    "rewards": {
+                        "dinero": 35
+                    },
+                    "ambush": false,
+                    "canFlee": true
+                },
+                "flee":"IRSE"
+            },
+            {
+                "type":"dialogue",
+                "text":"Te vas antes de que vengan más, pillando de reojo un hombre con pelo blanco cortando otros bandidos."
+            }
+        ]
+        
     }
 }

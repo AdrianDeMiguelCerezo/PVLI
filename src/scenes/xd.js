@@ -22,7 +22,7 @@ export default class xd extends Phaser.Scene {
 
         let eventParser = new EventParser(this.jsonEventos, this.jsonHabilidades, this.jsonEquipamiento, this.jsonItems, this.jsonEfectos)
         console.log("jsonEventos:", this.jsonEventos)
-        let evento = eventParser.generateEvent("BANDIT_CANNON_OR_MOUNTAINS");
+        let evento = eventParser.generateEvent("GERALT");
         console.log("evento:", evento)
 
         this.scene.start("DialogueScene", evento, new PlayerData())
