@@ -71,7 +71,8 @@
                     "habilidades": [ "SUPREME_MEDITATION" ]
                 }
             ],
-            "nombre_bandido_muerto_1": "_nombre_h"
+            "nombre_bandido_muerto_1": "_nombre_h",
+            "nombre_bandido_muerto_2": "_nombre_h",
             "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
             "bandit_chest_rewards": [],
@@ -1337,7 +1338,7 @@
                 "combat": {
                     "enemies": [ "BANDIDO_TANQUE", "BANDIDO_BUFEADOR", "BANDIDO_NERFEADOR" ],
                     "rewards": "3Bandidos_rewards",
-                    "ambush": true,
+                    "ambush": false,
                     "canFlee": true
                 },
                 "flee": "intento_cuerno"
@@ -1415,29 +1416,13 @@
             {
                  "tag": "bandido_te_lleva_trampa",
                 "type": "dialogue",
-                "text": "Te das cuenta demasiado tarde de que el vandido te está llevando hacia donde están sus aliados.",
-                "rewards": "bandit_chest_rewards",
+                "text": "Te das cuenta demasiado tarde de que el vandido te está llevando hacia donde están sus aliados.\nBandido:\"¡ATACADLE! ¡Ha matado a _nombre_bandido_muerto_1 y a _nombre_bandido_muerto_2!\"",
                 "permanentOptions": [
                     {
-                        "text": "Asesinarle y seguir adelante",
-                        "j": "No_visto2"
+                        "text": "El combate ya es inevitable",
+                        "j": "llamar_aliados"
                     }
-                ],
-                "options": [
-                    {
-                        "text": "perdonarle y seguir adelante",
-                        "j": "No_visto2"
-                    },
-                    {
-                        "text": "perdonarle y seguir adelante",
-                        "j": "perdonar_cuerno"
-                    },
-                    {
-                        "text": "perdonarle y seguir adelante",
-                        "j": "perdonar_cuerno"
-                    }
-                ],
-                "optionsAmmount": 1
+                ]
             },
             {
 
@@ -1461,8 +1446,39 @@
                 "optionsAmmount": 1
 
             },
+            {
+                "tag": "3Bandidos_saludar",
+                "type": "dialogue",
+                "text": "\"Hola. ¿Sois los bandidos de _nombre_grupo_bandidos?\"\nBandido1:\"Sí ,lo somos. Para pasar por aquí tienes que pagar un peaje\"\n El bandido coge el cuerno de su cinturón y lo toca una vez.\nBandido1:\"Estate tranquilo mientras llegan los encargados de cobrarte.\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles por sorpresa",
+                        "j": "3Bandidos_atacar_saludar"
+                    },
+                    {
+                        "text": "\"Vale, esperaré aquí con vosotros\"",
+                        "j": "llegan_los_del_peaje"
+                    }
+                   
+                ]
 
-
+            },
+            {
+                "tag": "3Bandidos_atacar_saludar",
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_BUFEADOR", "BANDIDO_NERFEADOR" ],
+                    "rewards": "3Bandidos_rewards",
+                    "ambush": true,
+                    "canFlee": true
+                },
+                "flee": "intento_escapar_cuerno"
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras acabar la batalla, aparece un grupo más grande de bandidos. Ven a sus compañeros caídos y arremeten contra tí.",
+                    "permanentOptions": [{"text": "luchar","j": "llamar_aliados"}]
+            }
 
 
 
