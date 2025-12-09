@@ -976,7 +976,7 @@
             {
                 "tag": "2Bandidos_emboscada",
                 "type": "dialogue",
-                "text": "De repente, ves a uno de los bandidos tocar un cuerno una vez. \nBandido1:\"¡QUÉ CREES QUE HACES INTENTANDO ESCONDERTE DE NOSOTROS DETRÁS DE ESA ROCA CON UNA SILUETA CONVENIENTEMENTE PARECIDA A LA TUYA!\"\nLa silueta, no era convenientemente igual a la tuya.",
+                "text": "De repente, ves a uno de los bandidos tocar un cuerno una vez. \nBandido1:\"¡QUÉ CREES QUE HACES INTENTANDO ESCONDERTE DE NOSOTROS DETRÁS DE ESA ROCA CON UNA SILUETA CONVENIENTEMENTE PARECIDA A LA TUYA!\"\nLa silueta no era convenientemente igual a la tuya.",
                 "permanentOptions": [
                     {
                         "text": "Acercarte a ellos en son de paz",
@@ -993,8 +993,8 @@
                 "combat": {
                     "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
                     "rewards": "2Bandidos_rewards",
-                    "ambush": true, //empiezan los enemigos
-                    "canFlee": true //es posible huir?
+                    "ambush": true, 
+                    "canFlee": true 
                 },
                 "flee": "intento_escapar_cuerno"
 
@@ -1009,8 +1009,8 @@
                 "combat": {
                     "enemies": [ "BANDIDO_TANQUE", "BANDIDO_FUEGO", "BANDIDO_COMUN", "BANDIDO_BUFFER" ],
                     "rewards": "llamar_aliados_rewards",
-                    "ambush": false, //empiezan los enemigos
-                    "canFlee": true //es posible huir?
+                    "ambush": false, 
+                    "canFlee": true 
                 },
                 "flee": "llamar_aliados_2"
             },
@@ -1054,8 +1054,8 @@
                 "combat": {
                     "enemies": [ "BANDIDO_HEALER", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_HEALER" ],
                     "rewards": "llamar_aliados_2_rewards",
-                    "ambush": false, //empiezan los enemigos
-                    "canFlee": true //es posible huir?
+                    "ambush": false, 
+                    "canFlee": true 
                 },
                 "flee": "huir_llamar_aliados"
             },
@@ -1177,8 +1177,8 @@
                 "combat": {
                     "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
                     "rewards": "2Bandidos_rewards",
-                    "ambush": false, //empiezan los enemigos
-                    "canFlee": true //es posible huir?
+                    "ambush": false, 
+                    "canFlee": true 
                 },
                 "flee": "intento_cuerno"
             },
@@ -1205,7 +1205,7 @@
                 ]
             },
             {
-                {
+                
                     "tag": "intento_cuerno",
                     "type": "dialogue",
                     "text": "Huyes de los bandidos mientras estos soplan un cuerno 2 veces.",
@@ -1224,7 +1224,7 @@
                         }
                     ],
                     "optionsAmmount": 1
-                }
+                
             },
             {
                 "tag": "intento_escapar_cuerno",
@@ -1251,7 +1251,47 @@
                         "j": "llamar_aliados"
                     }
                 ]
-            }
+            },
+            {
+                "tag": "2Bandidos_saludar",
+                "type": "dialogue",
+                "text": "\"Hola. ¿Sois los bandidos de _nombre_grupo_bandidos?\"\nBandido1:\"Sí ,lo somos. ¿Qué estás haciendo por estos lares?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles por sorpresa",
+                        "j": "2Bandidos_noEmboscada"
+                    },
+                    {
+                        "text": "\"Necesito atravesar el cañón. ¿Hay un peaje?\"",
+                        "j": "hay_un_peaje?"
+                    },
+                    {
+                        "text": "\"Necesito atravesar el cañón. ¿Cuál es la cuota del peaje?\"",
+                        "j": "cuánto_cuesta_peaje"
+                    }
+                ]
+                
+            },
+            {
+                "tag": "2Bandidos_saludar",
+                "type": "dialogue",
+                "text": "\"Hola. ¿Sois los bandidos de _nombre_grupo_bandidos?\"\nBandido1:\"Sí ,lo somos. ¿Qué estás haciendo por estos lares?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles por sorpresa",
+                        "j": "2Bandidos_noEmboscada"
+                    },
+                    {
+                        "text": "\"Necesito atravesar el cañón. ¿Hay un peaje?\"",
+                        "j": "hay_un_peaje?"
+                    },
+                    {
+                        "text": "\"Necesito atravesar el cañón. ¿Cuál es la cuota del peaje?\"",
+                        "j": "cuánto_cuesta_peaje"
+                    }
+                ]
+                
+            },
 
 
 
