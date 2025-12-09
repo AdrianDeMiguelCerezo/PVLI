@@ -1931,5 +1931,80 @@
                 "text":"Espero que haya valido la pena, hijo de puta."
             }
         ]
+    },
+    "FABRICA":{
+        "params": {
+            "recompensas_fabrica": [
+                {
+                    "dinero": 33
+                },
+                {
+                    "equipamiento":["VAQUEROS"]
+                },
+                {
+                    "items":[{"item":"RACION_SECA","count":3}]
+                },
+                {
+                    "items": [{"item":"RACION_GOURMET","count":1}]
+                },
+                {
+                    "items": [{"item":"RACION_CALIDAD","count":1}]
+                },
+                {
+                    "items": [{"item":"MEJUNJE_EXTRAÑO","count":5}]
+                }
+            ]
+        },
+        "eventFragments":[
+            {
+                "type":"dialogue",
+                "text":"Mientras andas por el desierto, te encuentras con una fábrica abandonada. Tiene un agujero en su pared y podría ser útil saquearlo.",
+                "options":[
+                    {
+                        "text":"Entrar a saquearlo",
+                        "j":"SAQUEO"
+                    },
+                    {
+                        "text":"No entrar e irte por sea caso"
+                    }
+                ]
+            },
+            {
+                "type":"dialogue",
+                "text":"Decides irte de allí antes de que ningún robot malhumorado te pille.",
+                "options":[
+                    {
+                        "text":"Mejor",
+                        "j":null
+                    }
+                ]
+            },
+            {
+                "tag":"SAQUEO",
+                "type":"dialogue",
+                "text":"Decides entrar a la fábrica para ver lo que te puedes encontrar."
+            },
+            {
+                "type":"dialogue",
+                "text":"De repente, un escuadrón de robots todavía funcionales te asalta! Prepárate!"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "TORRETA", "TORRETA", "TORRETA", "TORRETA" ],
+                    "rewards": {
+                        "dinero": 20
+                    },
+                    "ambush": false,
+                    "canFlee": false
+                },
+                "flee": null
+            },
+            {
+                "type":"dialogue",
+                "text":"Tras derrotar los maleantes, te encuentras con _recompensas_fabrica. Decides irte antes de que aparezcan más.",
+                "rewards":"recompensas_fabrica"
+            }
+        ]
     }
 }
