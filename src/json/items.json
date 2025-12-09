@@ -62,7 +62,7 @@
             }
         ]
     },
-    "POTI_SP_MEDIA": {
+    "POTI_SP_MINI": {
         "nombre": "Poción de SP (pequeña)",
         "descripcion": "Restaura SP media.",
         "usedInCombat": true,
@@ -70,7 +70,7 @@
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffSp":75 },
+                "effect": { "diffSp":30 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"

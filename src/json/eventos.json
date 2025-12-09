@@ -75,6 +75,29 @@
             "cannon_day_cost": { "hambre": 2 },
             "bandit_chest_rewards": [],
             "try_break_bandit_chest_cost": { "HP": -5 },
+            "2Bandidos_rewards": [
+                {
+                    "dinero": 10,
+                    "items": [
+                        {
+                            "item": "MOLOTOV",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "dinero": 5,
+                    "items": [
+                        {
+                            "item": "MOLOTOV",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "dinero": 20
+                }
+            ],
             "llamar_aliados_rewards": [
                 {
                     "dinero": 20,
@@ -90,6 +113,29 @@
                     "items": [
                         {
                             "item": "MOLOTOV",
+                            "count": 2
+                        }
+                    ]
+                },
+                {
+                    "dinero": 35
+                }
+            ],
+            "llamar_aliados_2_rewards": [
+                {
+                    "dinero": 20,
+                    "items": [
+                        {
+                            "item": "POTI_HP_MEDIA",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "dinero": 15,
+                    "items": [
+                        {
+                            "item": "POTI_HP_MEDIA",
                             "count": 2
                         }
                     ]
@@ -942,16 +988,15 @@
                 ]
             },
             {
+                "tag": "2Bandidos_atacar_emboscada",
                 "type": "combat",
                 "combat": {
                     "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
-                    "rewards": { //se escribe en formato recompensa
-                        "dinero": 5
-                    },
+                    "rewards": "2Bandidos_rewards",
                     "ambush": true, //empiezan los enemigos
                     "canFlee": true //es posible huir?
                 },
-                "flee": "intento_bengala"
+                "flee": "intento_escapar_cuerno"
 
             },
             {
@@ -964,15 +1009,39 @@
                 "combat": {
                     "enemies": [ "BANDIDO_TANQUE", "BANDIDO_FUEGO", "BANDIDO_COMUN", "BANDIDO_BUFFER" ],
                     "rewards": "llamar_aliados_rewards",
-                    "ambush": true, //empiezan los enemigos
+                    "ambush": false, //empiezan los enemigos
                     "canFlee": true //es posible huir?
                 },
                 "flee": "llamar_aliados_2"
             },
             {
                 "type": "dialogue",
-                "text": "Tras derrotar a este grupo, te diriges a la salida del cañón lo más rápido que puedes."
-                "permanentOptions": 
+                "text": "Tras derrotar a este grupo, te diriges a la salida del cañón lo más rápido que puedes.",
+                "continue": "Seguir corriendo"
+            },
+            {
+                "tag": "salir_cañón_perseguido",
+                "type": "dialogue",
+                "text": "Al final, tras varias horas de ir a toda velocidad, consigues escapar del cañón.\n_climbing_day_cost",
+                "rewards": "climbing_day_cost",
+                "permanentOptions": [
+                    { "text": "seguir tu camino, corriendo durante un tiempo más. Nunca se sabe si te seguirán siguiendo" },
+                    {
+                        "text": "seguir tu camino, pero andando",
+                        "j": null
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Estás cansado de correr, te pones a descansar bajo un árbol.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Continue",
+                        "j": null
+                    }
+                ]
             },
             {
                 "tag": "llamar_aliados_2",
@@ -980,16 +1049,212 @@
                 "text": "Por tu espalda, uno de los bandidos de quienes acabas de escapar sopla un cuerno 2 veces. Poco tiempo después, ves a otro grupo de bandidos acercándose a toda velocidad hacia tí.\nLa batalla es inevitable."
             },
             {
-                "batalla_llamar_aliados_2"
+                "tag": "batalla_llamar_aliados_2",
                 "type": "combat",
                 "combat": {
                     "enemies": [ "BANDIDO_HEALER", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_HEALER" ],
-                    "rewards": {"dinero": 20,"items": [{"item":"POTI_HP_MINI"}]},
-                    "ambush": true, //empiezan los enemigos
+                    "rewards": "llamar_aliados_2_rewards",
+                    "ambush": false, //empiezan los enemigos
                     "canFlee": true //es posible huir?
                 },
                 "flee": "huir_llamar_aliados"
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras derrotar a este grupo, te diriges a la salida del cañón lo más rápido que puedes.",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir corriendo",
+                        "j": "salir_cañón_perseguido"
+                    }
+                ]
+            },
+            {
+                "tag": "huir_llamar_aliados",
+                "type": "dialogue",
+                "text": "Huyes con todas tus fuerzas, sin mirar atrás.\nSuenan los cuernos de los bandidos, pero no son más que ruido de fondo.",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir corriendo",
+                        "j": "salir_cañón_perseguido"
+                    }
+                ]
+            },
+            {
+                "tag": "huir_llamar_aliados",
+                "type": "dialogue",
+                "text": "Huyes con todas tus fuerzas, sin mirar atrás.\nSuenan los cuernos de los bandidos, pero no son más que ruido de fondo ante la sensación de muerte inminente.",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir corriendo",
+                        "j": "salir_cañón_perseguido"
+                    }
+                ]
+            },
+            {
+                "tag": "2Bandidos_saludar_refuerzos",
+                "type": "dialogue",
+                "text": "\"Vengo en son de paz, ¿qué queréis de mí? ¿un peaje? Estoy dispuesto a pagarlo\"\nBandido1:\"¿Entonces por qué te estabas escondiendo de nosotros, si se puede saber?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacar a los bandidos.",
+                        "j": "2Bandidos_atacar_emboscada"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "No sé si tendré suficiente dinero para pagar el peaje. ¿Cuánto es?",
+                        "j": "no_sé_si_puedo_peaje"
+                    },
+                    {
+                        "text": "Me dabais miedo.",
+                        "j": "me_dabais_miedo"
+                    },
+                    {
+                        "text": "Sois tan feos, que no quería ni veros.",
+                        "j": "sois_feos"
+                    },
+                    {
+                        "text": "Sois bandidos, esta era la única manera de atravesar el cañón sin tener que pagar un peaje",
+                        "j": "no_quiero_peaje"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "sois_feos",
+                "type": "dialogue",
+                "text": "Bandido2:\"FEO DICES!!!\"\nBandido1:\"Estás muerto\"\nAmbos bandidos te atacan a la vez.",
+                "permanentOptions": [
+                    {
+                        "text": "defenderte",
+                        "j": "2Bandidos_atacar_emboscada"
+                    }
+                ]
+            },
+            {
+                "tag": "me_dabais_miedo",
+                "type": "dialogue",
+                "text": "Bandido2:\"¿¡MIEDO DICES!? ¡JAJAJA QUÉ BEBÉ ERES!\"\nBandido2:\"¡UN NIÑO PEQUEÑO!\"\nBandido2:\"¿TE GUSTA LA LECHE MATERNA? ¡A QUE SÍ!\"\nBandido1:\"Hemos tocado el cuerno, espera a que llegue el grupo que se encarga del peaje. Nosotros estamos de guardia\"\n",
+                "permanentOptions": [
+                    {
+                        "text": "esperar",
+                        "j": "peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "no_quiero_peaje",
+                "type": "dialogue",
+                "text": "\nBandido1:\"Ajo y agua. Hemos tocado el cuerno, así que te tocará esperar a que llegue el grupo que se encarga del peaje. Nosotros estamos de guardia\"\n",
+                "permanentOptions": [
+                    {
+                        "text": "esperar",
+                        "j": "peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "no_sé_si_puedo_peaje",
+                "type": "dialogue",
+                "text": "\nBandido1:\"Eso habrá que verlo, no conocemos las tasas actuales.\"\nBandido1:\"Hemos tocado el cuerno, así que dentro de nada,cuando llegue el grupo que se encarga del peaje, ya lo hablas con ellos.\"\n",
+                "permanentOptions": [
+                    {
+                        "text": "esperar",
+                        "j": "peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "2Bandidos_noEmboscada",
+                "type": "dialogue",
+                "text": "Emboscas a los bandidos, que pasan a la defensiva sin poder dar la voz de alarma.",
+                "continue": "Luchar"
+            },
+            {
+                "tag": "2Bandidos_atacar_noEmboscada",
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
+                    "rewards": "2Bandidos_rewards",
+                    "ambush": false, //empiezan los enemigos
+                    "canFlee": true //es posible huir?
+                },
+                "flee": "intento_cuerno"
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras matar a los bandidos, escondes los cuerpos entre la maleza y sigues tu camino, aunque a un paso ligero por si los demás bandidos descubren lo que ha sucedido",
+                "continue": "seguir andando, pero rápido"
+            },
+            {
+                "tag": "huida_cañón",
+                "type": "dialogue",
+                "text": "Tras andar medio día, ves la salida del cañón.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "continue": "seguir andando, pero rápido"
+            },
+            {
+                "type": "dialogue",
+                "text": "Sales del cañón y continúas tu travesía.",
+                "permanentOptions": [
+                    {
+                        "text": "continue",
+                        "j": null
+                    }
+                ]
+            },
+            {
+                {
+                    "tag": "intento_cuerno",
+                    "type": "dialogue",
+                    "text": "Huyes de los bandidos mientras estos soplan un cuerno 2 veces.",
+                    "options": [
+                        {
+                            "text": "continuar andando rápido",
+                            "j": "huída_cañón"
+                        },
+                        {
+                            "text": "continuar andando rápido",
+                            "j": "huída_cañón"
+                        },
+                        {
+                            "text": "continuar andando rápido",
+                            "j": "cruce_con_aliados"
+                        }
+                    ],
+                    "optionsAmmount": 1
+                }
+            },
+            {
+                "tag": "intento_escapar_cuerno",
+                "type": "dialogue",
+                "text": "Huyes de los bandidos de momento.",
+                "options": [
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "huída_cañón"
+                    },
+                    {
+                        "text": "continuar andando rápido"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "cruce_con_aliados",
+                "type": "dialogue",
+                "text": "Te cruzas con los bandidos que se dirigen a tu ubicación anterior.\nParece que el sonido del cuerno fue un mensaje para sus compañeros.\nlos bandios se se acercan a tí.\nBandido:\"¡PRIMERO GOLPEAR Y LUEGO PREGUNTAR! ¡ATACADLE!\"",
+                "permanentOptions": [
+                    {
+                        "text": "entrar en combate",
+                        "j": "llamar_aliados"
+                    }
+                ]
             }
+
+
+
 
         ]
     },
