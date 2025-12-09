@@ -11,7 +11,6 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('map', 'assets/MapTemplate.png');
         this.load.image('fondo', 'assets/fondoPlaceholderDialogos.png');
         this.load.image('malo', 'assets/malo.png');
-        this.load.image('BANDIDO_COMUN', 'assets/bandido.png');
         this.load.image('player', 'assets/cowboy.png');
         this.load.image('cowboy','assets/cowboy.png');
         this.load.image('swimsuit','assets/swimsuit.png');
@@ -44,7 +43,17 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('HAMBRE_2', 'assets/HAMBRE_2.png');
 
         //Enemigos
-        //this.load.image('espada','assets/Espada.png');
+        this.load.image('BANDIDO_COMUN','assets/bandido_comun.png');
+        this.load.image('PIROMANO','assets/piromano.png');
+        this.load.image('MEDICO','assets/medico.png');
+        this.load.image('TANQUE','assets/tanque.png');
+        this.load.image('TORRETA','assets/torreta.png');
+        this.load.image('PERRO_RABIOSO','assets/perro.png');
+        this.load.image('MUJER_DESCONFIADA','assets/mujer.png');
+        this.load.image('SOLDADO_ESTADO','assets/soldado_estado.png');
+        this.load.image('BUFEADOR','assets/bufeador.png');
+        this.load.image('DEBUFEADOR','assets/debufeador.png');
+        this.load.image('GRAN_BLOQUEO','assets/gran_bloqueo.png');
 
 
 
