@@ -7,6 +7,12 @@ const NodeType = {
     CITY: 2
 }
 
+const DifficultyLimits = {
+    MEDIUM:100,
+    HARD:200,
+    FUCKED:300
+}
+
 const State = {
     OPEN: 0,
     LOCKED: 1,
@@ -21,7 +27,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} x
      * @param {any} y
      * @param {any} texture
-     * @param {any} targetScene
+     * @param {any} eventKeys
+     * @param {any} playerData
      * @param {any} nodeType
      * @param {any} state
      * @param {any} isFocus
@@ -30,7 +37,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture,eventKeys, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
+    constructor(scene, x, y, texture,eventKeys, playerData, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
@@ -40,7 +47,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         
         this.name = "node"
 
-        this.eventKeys = eventKeys;
+        //this.eventKeys = eventKeys;
+        this.playerData = playerData;
         this.nodeType = nodeType;
         this.state = state;
         this.radius = radius;
@@ -49,10 +57,51 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         this.difficulty = difficulty;
         this.isAwake = isAwake;
 
+        if(eventKeys === undefined){
+            let jsonEvent = Object.keys(this.scene.jsonEventos);
+            let easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(easyEvent === undefined){
+                easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(easyEvent), 1);
+            let midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(midEvent === undefined){
+                midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(midEvent), 1);
+            let hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(hardEvent === undefined){
+                hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(hardEvent), 1);
+            let fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(fkcedEvent === undefined){
+                fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(fkcedEvent), 1);
+            this.eventKeys = {easyEvent: easyEvent, midEvent: midEvent, hardEvent: hardEvent, fkcedEvent: fkcedEvent};
+            console.log(this.eventKeys);
+        }
+        else{
+            this.eventKeys = eventKeys;
+        }
+
         //if(this.difficulty )
         let eventoParserer = new EventParser(this.scene.jsonEventos,this.scene.jsonHabilidades,this.scene.jsonEquipamiento,this.scene.jsonItems,this.scene.jsonEfectos);
-        
-        let eventoParseado = eventoParserer.generateEvent(this.eventKeys);
+
+        if(this.difficulty < DifficultyLimits.MEDIUM){
+            this.chosenEvent = this.eventKeys.easyEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.HARD){
+            this.chosenEvent = this.eventKeys.midEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.FUCKED){
+            this.chosenEvent = this.eventKeys.hardEvent;
+        }
+        else{
+            this.chosenEvent = this.eventKeys.fkcedEvent;
+        }
+        let eventoParseado = eventoParserer.generateEvent(this.chosenEvent);
 
         scene.add.existing(this);
         this.setInteractive();
@@ -104,6 +153,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                         x: n.x,
                         y: n.y,
                         event: n.eventKeys,
+                        playerData: n.playerData,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
@@ -119,7 +169,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
                     this.scene.events.removeAllListeners("update_tint");
                     
-                    this.scene.scene.start('DialogueScene', eventoParseado, new PlayerData());
+                    this.scene.scene.start('DialogueScene', {fragmentoEvento: eventoParseado, playerData: this.playerData});
 
                 }
                 
@@ -139,12 +189,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
         }
         
-        if (this.scene.game.config.physics.arcade.debug) {
+        //if (this.scene.game.config.physics.arcade.debug) {
             if (this.difficulty < 100) { }
             else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
             else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
             else { this.setTintFill(0x8B1800) }
-        }
+        //}
 
     }
 

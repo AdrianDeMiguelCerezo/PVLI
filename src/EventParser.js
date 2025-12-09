@@ -272,6 +272,7 @@ export default class EventParser {
                             case "string":
                                 {
                                     console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
+                                    console.log(this.params);
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -421,10 +422,23 @@ export default class EventParser {
                 case "items":
                     {
 
-                        for (const item of value) {
-                            returnString += this.jsonItems[item.item].name + " (x" + item.count + "), ";
+                        for(let i = 0; i < value.length; i++){
+                            console.log(value[i], this.jsonItems[value[i].item]);
+                            returnString += this.jsonItems[value[i].item].name + " (x" + value[i].count + "), ";
                         }
 
+                        break;
+
+                    }
+                case "equipamiento":
+                    {
+
+                        returnString += value.length > 1 ? "los equipamientos " : "el equipamiento ";
+                        for (let j = 0; j < value.length; j++) {
+                            console.log("equipamiento:",value[j])
+                            console.log(value[j]);
+                            returnString += this.jsonEquipamiento[value[j]].name + ", ";
+                        }
                         break;
 
                     }

@@ -36,10 +36,10 @@ export default class DialogueScene extends Phaser.Scene {
      * @param {PlayerData} playerData
      * 
      */
-    init(fragmentoEvento, playerData) {
+    init(initParams) {
 
 
-        this.fragmentoEvento = !!fragmentoEvento ? fragmentoEvento : {
+        this.fragmentoEvento = !!initParams.fragmentoEvento ? initParams.fragmentoEvento : {
             tipo: "dialogue",
             texto: "ERROR: no hay un diálogo asociado a esta escena",
             opciones: [{
@@ -49,8 +49,8 @@ export default class DialogueScene extends Phaser.Scene {
         };
 
         //si le paso un playerdata, coge ese.
-        if (playerData) {
-            this.playerData = playerData
+        if (initParams.playerData) {
+            this.playerData = initParams.playerData
         }
         else {
             //si no, se lo paso y no lo tiene de antes, lo crea.
@@ -66,13 +66,13 @@ export default class DialogueScene extends Phaser.Scene {
         this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, () => {
             this.mainMenuButton.visible = !this.mainMenuButton.visible;
             this.inventoryButton.visible = !this.inventoryButton.visible;
-        }, 20, 0, "#c8d9d0", false).setOrigin(1);
+        }, 20, 0, "#828181", false).setOrigin(1);
         //boton de ir al inventario
         this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null,
-            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0, "#828181", false).setVisible(false).setOrigin(1);
         //boton de ir al menu principal
         this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null,
-            () => { this.scene.start('MainMenu') }, 20, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+            () => { this.scene.start('MainMenu') }, 20, 0, "#828181", false).setVisible(false).setOrigin(1);
 
 
         //Se carga el evento del json
@@ -373,7 +373,7 @@ export default class DialogueScene extends Phaser.Scene {
                     this.scene.start('Map');
                 }
                 else if (opt.salto.tipo == "dialogue") {
-                    this.scene.start(this.scene.key, opt.salto, this.playerData)
+                    this.scene.start(this.scene.key, {fragmentoEvento: opt.salto, playerData: this.playerData})
                 }
                 //si el tipo es combate comienza combate con los atributos
                 else if (opt.salto.tipo == "combat") {

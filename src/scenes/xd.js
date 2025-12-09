@@ -25,7 +25,7 @@ export default class xd extends Phaser.Scene {
         let evento = eventParser.generateEvent("PERRO_ATRAPADO");
         console.log("evento:", evento)
 
-        this.scene.start("DialogueScene", evento, new PlayerData())
+        this.scene.start("DialogueScene", {fragmentoEvento: evento, playerData: new PlayerData()})
 
     }
 
