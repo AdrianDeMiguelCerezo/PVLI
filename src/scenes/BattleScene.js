@@ -156,7 +156,7 @@ export default class BattleScene extends Phaser.Scene {
       this.player.playerData.HPMax,
       3
     );
-    this.add.existing(this.barraVida);
+    
     this.barraVida.targetValue = this.player.playerData.HP;
 
     this.barraSp = new HealthBar(
@@ -169,7 +169,7 @@ export default class BattleScene extends Phaser.Scene {
       3,
       0x1b73cf
     );
-    this.add.existing(this.barraSp);
+    
     this.barraSp.targetValue = this.player.playerData.SP;
 
     // === Listeners de eventos ===
