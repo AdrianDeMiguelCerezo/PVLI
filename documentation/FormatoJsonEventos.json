@@ -29,10 +29,6 @@
                 },
                 {
                     "equipamiento": [ "ESPADA_TABERNERO" ]
-                },
-                {
-                    "dinero": 20,
-                    "items": [ "POTI_HP_MINI" ]
                 }
             ] //se sustituye por un algo del array. Este es un ejemplo de array con recompensas.
 
