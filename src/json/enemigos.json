@@ -28,7 +28,7 @@
 
     ]
   },
-  "PIROMANO":{
+  "BANDIDO_PIROMANO":{
     "name": "Pirómano",
     "HpMax": 40,
     "habilidades": [
@@ -46,7 +46,7 @@
         }
     ]
   },
-  "MEDICO":{
+  "BANDIDO_MEDICO":{
     "name": "Médico",
     "HpMax": 30,
     "habilidades":[
@@ -74,7 +74,7 @@
         }
     ]
   },
-  "TANQUE":{
+  "BANDIDO_TANQUE":{
     "name":"Tanque",
     "HpMax":80,
     "habilidades":[
@@ -91,7 +91,7 @@
         }
     ]
   },
-  "BUFEADOR":{
+  "BANDIDO_BUFEADOR":{
     "name":"Bufeador",
     "HpMax":40,
     "habilidades":[
@@ -108,7 +108,7 @@
         }
     ]
   },
-  "DEBUFEADOR":{
+  "BANDIDO_NERFEADOR":{
     "name":"Debufeador",
     "HpMax":40,
     "habilidades":[

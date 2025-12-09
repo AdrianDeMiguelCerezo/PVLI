@@ -71,6 +71,7 @@
                     "habilidades": [ "SUPREME_MEDITATION" ]
                 }
             ],
+            "nombre_bandido_muerto_1": "_nombre_h"
             "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
             "bandit_chest_rewards": [],
@@ -991,10 +992,10 @@
                 "tag": "2Bandidos_atacar_emboscada",
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_PIROMANO" ],
                     "rewards": "2Bandidos_rewards",
-                    "ambush": true, 
-                    "canFlee": true 
+                    "ambush": true,
+                    "canFlee": true
                 },
                 "flee": "intento_escapar_cuerno"
 
@@ -1007,10 +1008,10 @@
                 "tag": "llamar_aliados",
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_FUEGO", "BANDIDO_COMUN", "BANDIDO_BUFFER" ],
+                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_PIROMANO", "BANDIDO_COMUN", "BANDIDO_BUFEADOR" ],
                     "rewards": "llamar_aliados_rewards",
-                    "ambush": false, 
-                    "canFlee": true 
+                    "ambush": false,
+                    "canFlee": true
                 },
                 "flee": "llamar_aliados_2"
             },
@@ -1052,10 +1053,10 @@
                 "tag": "batalla_llamar_aliados_2",
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "BANDIDO_HEALER", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_HEALER" ],
+                    "enemies": [ "BANDIDO_MEDICO", "BANDIDO_COMUN", "BANDIDO_COMUN", "BANDIDO_MEDICO" ],
                     "rewards": "llamar_aliados_2_rewards",
-                    "ambush": false, 
-                    "canFlee": true 
+                    "ambush": false,
+                    "canFlee": true
                 },
                 "flee": "huir_llamar_aliados"
             },
@@ -1073,17 +1074,6 @@
                 "tag": "huir_llamar_aliados",
                 "type": "dialogue",
                 "text": "Huyes con todas tus fuerzas, sin mirar atrás.\nSuenan los cuernos de los bandidos, pero no son más que ruido de fondo.",
-                "permanentOptions": [
-                    {
-                        "text": "Seguir corriendo",
-                        "j": "salir_cañón_perseguido"
-                    }
-                ]
-            },
-            {
-                "tag": "huir_llamar_aliados",
-                "type": "dialogue",
-                "text": "Huyes con todas tus fuerzas, sin mirar atrás.\nSuenan los cuernos de los bandidos, pero no son más que ruido de fondo ante la sensación de muerte inminente.",
                 "permanentOptions": [
                     {
                         "text": "Seguir corriendo",
@@ -1175,10 +1165,10 @@
                 "tag": "2Bandidos_atacar_noEmboscada",
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_FUEGO" ],
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_PIROMANO" ],
                     "rewards": "2Bandidos_rewards",
-                    "ambush": false, 
-                    "canFlee": true 
+                    "ambush": false,
+                    "canFlee": true
                 },
                 "flee": "intento_cuerno"
             },
@@ -1205,26 +1195,26 @@
                 ]
             },
             {
-                
-                    "tag": "intento_cuerno",
-                    "type": "dialogue",
-                    "text": "Huyes de los bandidos mientras estos soplan un cuerno 2 veces.",
-                    "options": [
-                        {
-                            "text": "continuar andando rápido",
-                            "j": "huída_cañón"
-                        },
-                        {
-                            "text": "continuar andando rápido",
-                            "j": "huída_cañón"
-                        },
-                        {
-                            "text": "continuar andando rápido",
-                            "j": "cruce_con_aliados"
-                        }
-                    ],
-                    "optionsAmmount": 1
-                
+
+                "tag": "intento_cuerno",
+                "type": "dialogue",
+                "text": "Huyes de los bandidos mientras estos soplan un cuerno 2 veces.",
+                "options": [
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "huída_cañón"
+                    },
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "huída_cañón"
+                    },
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "cruce_con_aliados"
+                    }
+                ],
+                "optionsAmmount": 1
+
             },
             {
                 "tag": "intento_escapar_cuerno",
@@ -1270,28 +1260,208 @@
                         "j": "cuánto_cuesta_peaje"
                     }
                 ]
-                
+
             },
             {
-                "tag": "2Bandidos_saludar",
+                "tag": "hay_un_peaje?",
                 "type": "dialogue",
-                "text": "\"Hola. ¿Sois los bandidos de _nombre_grupo_bandidos?\"\nBandido1:\"Sí ,lo somos. ¿Qué estás haciendo por estos lares?\"",
+                "text": "El bandido saca un cuerno de su cinturón y lo toca una vez.\nBandido1:\"No sabemos a cuánto está ahora, tendrás que esperar a que lleguen los que se encargan de cobrarlo. Están cerca, así que llegarán dentro de poco\"",
+                "permanentOptions": [
+                    {
+                        "text": "Intentar atacarles por sorpresa",
+                        "j": "2Bandidos_intento_ataque_peaje"
+                    },
+                    {
+                        "text": "Esperar a que lleguen los encargados del peaje",
+                        "j": "llegan_los_del_peaje"
+                    }
+
+                ]
+            },
+            {
+                "tag": "hay_un_peaje?",
+                "type": "dialogue",
+                "text": "Bandido1:\"Claro que hay un peaje. Es extraño que no lo sepas, sabiendo que este es el territorio de _nombre_grupo_bandidos.\"\nEl bandido saca un cuerno de su cinturón y lo toca una vez.\nBandido1:\"Igualmente, ahora te tocará esperar a que lleguen los encargados de cobrar del peaje.\"",
+                "permanentOptions": [
+                    {
+                        "text": "Intentar atacarles por sorpresa",
+                        "j": "2Bandidos_intento_ataque_peaje"
+                    },
+                    {
+                        "text": "Esperar a que lleguen los encargados del peaje",
+                        "j": "llegan_los_del_peaje"
+                    }
+
+                ]
+            },
+            {
+                "tag": "2Bandidos_intento_ataque_peaje",
+                "type": "dialogue",
+                "text": "Cuando acercas tu mano a tu arma, el segundo bandido, que estaba en guardia, arremete contra tí seguido por su compañero.",
+                "permanentOptions": [
+                    {
+                        "text": "Esquivar el ataque",
+                        "j": "2Bandidos_atacar_emboscada"
+                    },
+                    {
+                        "text": "Bloquearr el ataque",
+                        "j": "2Bandidos_atacar_emboscada"
+                    }
+                ]
+            },
+            {
+                "tag": "llegan_los_del_peaje",
+                "type": "dialogue",
+                "text": "Ves a un grupo de 4 bandidos que parecen fuertes acercarse desde la distancia.",
+                "permanentOptions": [
+                    {
+                        "text": "\"Hola.\"",
+                        "j": "peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "3Bandidos_noEmboscada",
+                "type": "dialogue",
+                "text": "Decides atacar por sorpresa a los bandidos.\nBandido1:\"¡¿QHÉ?!\"\nBandido2:\"¡¿CHÓMO?!\"\nBandido3:\"¡¿DÓNDE?!\"",
                 "permanentOptions": [
                     {
                         "text": "Atacarles por sorpresa",
-                        "j": "2Bandidos_noEmboscada"
-                    },
-                    {
-                        "text": "\"Necesito atravesar el cañón. ¿Hay un peaje?\"",
-                        "j": "hay_un_peaje?"
-                    },
-                    {
-                        "text": "\"Necesito atravesar el cañón. ¿Cuál es la cuota del peaje?\"",
-                        "j": "cuánto_cuesta_peaje"
+                        "j": "3Bandidos_atacar_noEmboscada"
                     }
                 ]
-                
-            }
+            },
+            {
+                "tag": "3Bandidos_atacar_noEmboscada",
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_BUFEADOR", "BANDIDO_NERFEADOR" ],
+                    "rewards": "3Bandidos_rewards",
+                    "ambush": true,
+                    "canFlee": true
+                },
+                "flee": "intento_cuerno"
+            },
+            {
+                "type": "dialogue",
+                "text": "Estás a punto de rematar al último bandido.\nBandido:\"¡Por favor, no me mates, que tengo a mi esposa e hijos esperándome en casa!\"",
+                "permanentOptions": [
+                    {
+                        "text": "Perdonarle la vida",
+                        "j": "perdonar_cuerno"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "\"Lo siento...\" Acabar con él."
+                    },
+                    {
+                        "text": "\"Haberte dedicado a otro trabajo\" Acabar con él"
+                    },
+                    {
+                        "text": "\"Así es la vida\" Acabar con él."
+                    },
+                    {
+                        "text": "\"Qué me darás a cambio de tu vida?\""
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido:\"¡¡U-UN TESORO!!\"\nBandido:\"¡¡TENGO UN TESORO CON LOS AHORROS DE MI VIDA ESCONDIDO EN ESTA ZONA. DÉJAME LLEVARTE A ÉL!!\"",
+                "permanentOptions": [
+                    {
+                        "text": "Acabar con él definitivamente y seguir tu camino",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "\"Te sigo\"",
+                        "tag": "bandido_te_lleva_trampa"
+                    },
+                    {
+                        "text": "\"Te sigo\""
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Sigues al bandido hasta una pequeña cueva.\nEl bandido aparta un poco de arena del suelo, destapa una caja de madera y te da sus contenidos. _bandit_chest_rewards.\nBandido:\"Puedes perdonarme la vida... por mi familia... sino, mi mujer se tendrá que prostituir y seguramente morirán de hambre a pesar de ello\"",
+                "rewards": "bandit_chest_rewards",
+                "permanentOptions": [
+                    {
+                        "text": "Asesinarle y seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "No_visto2"
+                    },
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "perdonar_cuerno"
+                    },
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "perdonar_cuerno"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                 "tag": "bandido_te_lleva_trampa",
+                "type": "dialogue",
+                "text": "Te das cuenta demasiado tarde de que el vandido te está llevando hacia donde están sus aliados.",
+                "rewards": "bandit_chest_rewards",
+                "permanentOptions": [
+                    {
+                        "text": "Asesinarle y seguir adelante",
+                        "j": "No_visto2"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "No_visto2"
+                    },
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "perdonar_cuerno"
+                    },
+                    {
+                        "text": "perdonarle y seguir adelante",
+                        "j": "perdonar_cuerno"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+
+                "tag": "perdonar_cuerno",
+                "type": "dialogue",
+                "text": "Le perdonas, y este sale corriendo. Pocos minutos después, oyes soplar un cuerno 2 veces.",
+                "options": [
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "huída_cañón"
+                    },
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "huída_cañón"
+                    },
+                    {
+                        "text": "continuar andando rápido",
+                        "j": "cruce_con_aliados"
+                    }
+                ],
+                "optionsAmmount": 1
+
+            },
+
 
 
 
@@ -1520,8 +1690,8 @@
 
         ]
     },
-    "GERALT":{
-        "params":{
+    "GERALT": {
+        "params": {
             "recompensas_quest_Geralt": [
                 {
                     "dinero": 80
@@ -1536,75 +1706,75 @@
                 }
             ]
         },
-        "eventFragments":[
+        "eventFragments": [
             {
-                "type":"dialogue",
-                "text":"Mientras estás andando por el desierto, te encuentras un emblema que no te parece de por aquí cerca."
+                "type": "dialogue",
+                "text": "Mientras estás andando por el desierto, te encuentras un emblema que no te parece de por aquí cerca."
             },
             {
-                "type":"dialogue",
-                "text":"A lo mejor no deberías tocarlo, pero podría llevar a buenos resultados....",
-                "options":[
+                "type": "dialogue",
+                "text": "A lo mejor no deberías tocarlo, pero podría llevar a buenos resultados....",
+                "options": [
                     {
-                        "text":"Llevarte el emblema.",
-                        "j":"GERALT"
+                        "text": "Llevarte el emblema.",
+                        "j": "GERALT"
                     },
                     {
-                        "text":"Explorar alrededor de la zona.",
-                        "j":"CAMPAMENTO"
+                        "text": "Explorar alrededor de la zona.",
+                        "j": "CAMPAMENTO"
                     },
                     {
-                        "text":"Irte sin tocar el emblema.",
-                        "j":"IRSE"
+                        "text": "Irte sin tocar el emblema.",
+                        "j": "IRSE"
                     }
                 ]
             },
             {
-                "tag":"IRSE",
-                "type":"dialogue",
-                "text":"No vale la pena.",
-                "options":[
+                "tag": "IRSE",
+                "type": "dialogue",
+                "text": "No vale la pena.",
+                "options": [
                     {
-                        "text":"Continuar",
-                        "j":null
+                        "text": "Continuar",
+                        "j": null
                     }
                 ]
             },
 
 
             {
-                "tag":"GERALT",
-                "type":"dialogue",
-                "text":"Antes de que puedas coger el emblema, un hombre con pelo blanco te para con su espada."
+                "tag": "GERALT",
+                "type": "dialogue",
+                "text": "Antes de que puedas coger el emblema, un hombre con pelo blanco te para con su espada."
             },
             {
-                "type":"dialogue",
-                "text":"-¿Qué te crees que estás haciendo?\nAntes de que puedas responder, coge el emblema y se lo guarda."
+                "type": "dialogue",
+                "text": "-¿Qué te crees que estás haciendo?\nAntes de que puedas responder, coge el emblema y se lo guarda."
             },
             {
-                "type":"dialogue",
-                "text":"Al ver que estás acojonado, se empieza a relajar.\n-JAJAJA. Soy Geralt de Rivia, vengo porque hay una bestia de por aquí que debo cazar."
+                "type": "dialogue",
+                "text": "Al ver que estás acojonado, se empieza a relajar.\n-JAJAJA. Soy Geralt de Rivia, vengo porque hay una bestia de por aquí que debo cazar."
             },
             {
-                "type":"dialogue",
-                "text":"-De hecho, necesito ayuda con una cosa. Verás, hay unos bandidos que me están molestando. ¿Podrías ir tú a encargarte de ellos?",
-                "options":[
+                "type": "dialogue",
+                "text": "-De hecho, necesito ayuda con una cosa. Verás, hay unos bandidos que me están molestando. ¿Podrías ir tú a encargarte de ellos?",
+                "options": [
                     {
-                        "text":"Ni de coña",
-                        "j":"IRSE"
+                        "text": "Ni de coña",
+                        "j": "IRSE"
                     },
                     {
-                        "text":"Veré lo que puedo hacer"
+                        "text": "Veré lo que puedo hacer"
                     }
                 ]
             },
             {
-                "type":"dialogue",
-                "text":"-Bien. Los bandidos están por ahí. Cuidado que tienen perros."
+                "type": "dialogue",
+                "text": "-Bien. Los bandidos están por ahí. Cuidado que tienen perros."
             },
             {
-                "type":"dialogue",
-                "text":"Te encuentras con un grupo de bandidos que están estorbando un caballo. Decides estorbar tú a ellos."
+                "type": "dialogue",
+                "text": "Te encuentras con un grupo de bandidos que están estorbando un caballo. Decides estorbar tú a ellos."
             },
             {
                 "type": "combat",
@@ -1620,51 +1790,51 @@
 
             },
             {
-                "type":"dialogue",
-                "text":"Tras acabar la batalla, Geralt se acerca a ti y te da las gracias por un buen trabajo y te recompensa."
+                "type": "dialogue",
+                "text": "Tras acabar la batalla, Geralt se acerca a ti y te da las gracias por un buen trabajo y te recompensa."
             },
             {
-                "type":"dialogue",
-                "text":"Consigues _recompensas_quest_Geralt y le dices adios a Geralt.",
-                "rewards":"recompensas_quest_Geralt",
-                "options":[
+                "type": "dialogue",
+                "text": "Consigues _recompensas_quest_Geralt y le dices adios a Geralt.",
+                "rewards": "recompensas_quest_Geralt",
+                "options": [
                     {
-                        "text":"Avanzar",
-                        "j":null
+                        "text": "Avanzar",
+                        "j": null
                     }
                 ]
             },
             {
-                "tag":"CAMPAMENTO",
-                "type":"dialogue",
-                "text":"Mientras caminas por los alrededores, te encuentras un campamento con un grupo de bandidos tochos.",
-                "options":[
+                "tag": "CAMPAMENTO",
+                "type": "dialogue",
+                "text": "Mientras caminas por los alrededores, te encuentras un campamento con un grupo de bandidos tochos.",
+                "options": [
                     {
-                        "text":"Atacarlos"
+                        "text": "Atacarlos"
                     },
                     {
-                        "text":"Nop",
-                        "j":"IRSE"
+                        "text": "Nop",
+                        "j": "IRSE"
                     }
                 ]
             },
             {
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "TANQUE", "BUFEADOR", "BANDIDO_COMUN"],
+                    "enemies": [ "TANQUE", "BUFEADOR", "BANDIDO_COMUN" ],
                     "rewards": {
                         "dinero": 35
                     },
                     "ambush": false,
                     "canFlee": true
                 },
-                "flee":"IRSE"
+                "flee": "IRSE"
             },
             {
-                "type":"dialogue",
-                "text":"Te vas antes de que vengan más, pillando de reojo un hombre con pelo blanco cortando otros bandidos."
+                "type": "dialogue",
+                "text": "Te vas antes de que vengan más, pillando de reojo un hombre con pelo blanco cortando otros bandidos."
             }
         ]
-        
+
     }
 }

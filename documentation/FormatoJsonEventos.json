@@ -3,8 +3,8 @@
     //Esto son parámetros que se van a usar mucho a la hora de decidir los par�metros, como posibles nombres de personas.
     //Los parámetros globales no pueden tener el valor de otros parámetros, ya sean globales o locales a un evento.
     "globalParams": {
-        "nombre_hombre": [],
-        "nombre_mujer": []
+        "nombre_h": [],
+        "nombre_m": []
     },
 
     "NOMBRE_EVENTO": {
@@ -16,8 +16,8 @@
         //Para ello, se les da el valor "_NombreDelParámetroGlobal"
         "params": {
 
-            "par�metro_1": "_nombre_hombre", //se sustituye por un nombre de nombres_hombre[]
-            "par�metro_2": "_nombre_mujer", //sese sustituye por un nombre de nombres_mujer[]
+            "par�metro_1": "_nombre_h", //se sustituye por un nombre de nombres_h[]
+            "par�metro_2": "_nombre_m", //sese sustituye por un nombre de nombres_m[]
 
             "par�metro_3": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ], //se sustituye por un algo random del array
 
