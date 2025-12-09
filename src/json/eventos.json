@@ -444,7 +444,7 @@
                 "type": "dialogue",
                 "text": "Al meter la mano en ta grieta, sientes una mordida, y al sacar la mano, ves a una serpiente despegarse de ella y volver a entrar en la grieta.\n Con el paso del tiempo, la mano se te va hinchando. Esa serpiente era venenosa, aunque por suerte, no parece un veneno demasiado fuerte. Sino, ya estarías muerto",
                 "rewards": {
-                    "efecto": [
+                    "efectos": [
                         {
                             "effect": "ENVENENADO",
                             "effectDuration": -1
@@ -1906,7 +1906,7 @@
                 "tag":"PERRO_LIBRE",
                 "type":"dialogue",
                 "text":"Decides liberar al perro, pero te haces daño en el proceso.",
-                "rewards":{"efecto":{"HP":-10}}
+                "rewards":{"HP":-10}
             },
             {
                 "type":"dialogue",

@@ -63,8 +63,8 @@
         ]
     },
     "POTI_SP_MINI": {
-        "nombre": "Poción de SP (pequeña)",
-        "descripcion": "Restaura SP media.",
+        "name": "Poción de SP (pequeña)",
+        "description": "Restaura SP media.",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -78,8 +78,8 @@
         ]
     },
     "NABO": {
-        "nombre": "Nabo",
-        "descripcion": "Restaura HP, y no poco.",
+        "name": "Nabo",
+        "description": "Restaura HP, y no poco.",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -93,8 +93,8 @@
         ]
     },
     "POTI_HP_GRANDE": {
-        "nombre": "Poción de HP(Grande)",
-        "descripcion": "Restaura mucho HP.",
+        "name": "Poción de HP(Grande)",
+        "description": "Restaura mucho HP.",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
