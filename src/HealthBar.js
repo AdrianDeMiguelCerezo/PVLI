@@ -40,11 +40,11 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.add(this.healthBackgroundRectangle);
         this.add(this.healthRectangle);
         this.add(this.hpText);
+
+        scene.add.existing(this);
         
     }
     preUpdate(t, dt) {
-
-        console.log(this.targetValue)
         
         if (this._actualValue > this.targetValue) {
             this._actualValue = this._actualValue - 20 * dt / 1000
@@ -60,8 +60,11 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         this.hpText.text = this.targetValue;
     }
-
-
+    /**
+     * hace que la barra se setee en un valor instantaneamente. Si no hay valor, se setea al targetValue de la barra.
+     * @param {any} targetValue
+     */
+    setInstantValue(targetValue=this.targetValue) { this._actualValue = targetValue; }
     
 
 }
