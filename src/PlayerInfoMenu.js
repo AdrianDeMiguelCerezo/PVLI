@@ -17,7 +17,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         scene.add.existing(this);
         this.scene=scene
         this.playerData=playerData
-console.log(this.scene);
+        console.log(this.playerData.HP)
         this.w=this.scene.sys.canvas.width;
         this.h=this.scene.sys.canvas.height;
 
@@ -64,6 +64,10 @@ console.log(this.scene);
         this.menuStats.add(this.player);
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
         
+        this.HPBar.targetValue=this.playerData.HP;
+        this.SPBar.targetValue=this.playerData.SP;
+        this.Hungerbar.targetValue=this.playerData.hambre;
+
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
         this.menuStats.add(this.HPBar);
@@ -72,9 +76,6 @@ console.log(this.scene);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(11/12),"Hambre: "));
         this.menuStats.add(this.Hungerbar);
 
-        this.HPBar.targetValue=this.playerData.HP;
-        this.SPBar.targetValue=this.playerData.SP;
-        this.Hungerbar.targetValue=this.playerData.hambre;
 
         //Usados en todos los menus
         this.scene.add.rectangle(23,this.h*0.4+50,5,this.h * 0.8,0xcf303f,1);
@@ -353,6 +354,10 @@ console.log(this.scene);
         this.menuStats.add(this.player);
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
 
+        this.HPBar.targetValue=this.playerData.HP;
+        this.SPBar.targetValue=this.playerData.SP;
+        this.Hungerbar.targetValue=this.playerData.hambre;
+
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
         this.menuStats.add(this.HPBar);
@@ -360,10 +365,6 @@ console.log(this.scene);
         this.menuStats.add(this.SPBar);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(11/12),"Hambre: "));
         this.menuStats.add(this.Hungerbar);
-
-        this.HPBar.targetValue=this.playerData.HP;
-        this.SPBar.targetValue=this.playerData.SP;
-        this.Hungerbar.targetValue=this.playerData.hambre;
 
         //Para el menuDesc
         this.scene.add.rectangle(this.w*(2.525/3),50,this.w*(0.85/3),2,0xcf303f,1);
