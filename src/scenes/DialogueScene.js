@@ -89,10 +89,10 @@ export default class DialogueScene extends Phaser.Scene {
             borderAlpha: 1,
             windowAlpha: 0.6,
             windowColor: 0x828181,
-            windowHeight: 150,
+            windowHeight: 200,
             padding: 32,
             closeBtnColor: 'darkgoldenrod',
-            dialogSpeed: 4.2,
+            dialogSpeed: 4.25,
             fontSize: 24,
             fontFamily: "Arial",
             posY: 175
@@ -112,7 +112,6 @@ export default class DialogueScene extends Phaser.Scene {
             this.rewardsGiven = true;
             this.handleConsecuencias(evento.consecuencias);
         }
-        console.log(evento);
         this.dialog.setText(evento.texto, true);
         this.createOptions(evento.opciones);
 
@@ -147,7 +146,7 @@ export default class DialogueScene extends Phaser.Scene {
 
         //si es un pago
         if (consecuencias.hasOwnProperty("pago") && consecuencias["pago"] > this.playerData.dinero) {
-            this.restart(this.fragmentoEvento.nodoNoPay, this.playerData);
+            this.scene.restart(this.fragmentoEvento.nodoNoPay, this.playerData);
         }
         else {
             for (let k = 0; k < objEntries.length; k++) {

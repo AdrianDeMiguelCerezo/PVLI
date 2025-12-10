@@ -73,9 +73,17 @@
             ],
             "nombre_bandido_muerto_1": "_nombre_h",
             "nombre_bandido_muerto_2": "_nombre_h",
-            "nombre_grupo_bandidos": [ "El Cuervo Negro", "Los Jinetes de la Sombra", "Los Fantasmas del Cañón", "Los Toros Negros", "Los sombreros de cáctus" ],
+            "nombre_grupo_bandidos": [ "el Cuervo Negro", "la Jinete de la Sombra", "los Fantasmas del Cañón", "la Vaca Negra", "los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
-            "try_break_bandit_chest_cost": { "HP": -5 },
+          "try_break_bandit_chest_cost": { "HP": -5 },
+          "bandit_chest_rewards": [
+            {
+              "dinero": 20,
+              "equipamiento": ["LATIGO"]
+            },
+            { "dinero": 50 },
+            {"dinero": 30}
+          ],
             "2Bandidos_rewards": [
                 {
                     "dinero": 10,
@@ -181,7 +189,7 @@
             {
                 "tag": "elecciónCaminos",
                 "type": "dialogue",
-                "text": "Podría ir por el cañón, dónde supuestamente habitan los bandidos, o podría tomar una ruta más larga y peligrosa a través de las escarpadas montañas para evitarlos.\nQué camino tomo?",
+                "text": "Podría ir por el cañón, donde supuestamente habitan los bandidos, o podría tomar una ruta más larga y peligrosa a través de las escarpadas montañas para evitarlos.\nQué camino tomo?",
                 "permanentOptions": [
                     {
                         "text": "Montañas (1 semana de viaje)",
@@ -1203,7 +1211,7 @@
                 "continue": "seguir andando, pero rápido"
             },
             {
-                "tag": "huida_cañón",
+                "tag": "huída_cañón",
                 "type": "dialogue",
                 "text": "Tras andar medio día, ves la salida del cañón.\n_cannon_day_cost",
                 "rewards": "cannon_day_cost",
@@ -1537,13 +1545,13 @@
             {
                 "tag": "Pre-peaje",
                 "type": "dialogue",
-                "text": "Mientras caminas por el cañón, ves a un grupo de 4 personas que te corta el paso."
+                "text": "Mientras caminas por el cañón, te encuentras con un grupo de 4 personas que te corta el paso."
 
             },
             {
                 "tag": "peaje",
                 "type": "dialogue",
-                "text": "Bandido1:\"Somos parte de _nombre_grupo_bandidos.Si quieres seguir por este camino, tendrás que pagar un peaje.\"",
+                "text": "Bandido1:\"Somos parte de _nombre_grupo_bandidos. Si quieres seguir por este camino, tendrás que pagar un peaje.\"",
                 "permanentOptions": [
                     {
                         "text": "\"¿Cual es la tarifa?\"",
@@ -1577,7 +1585,7 @@
             {
                 "tag": "pago_1",
                 "type": "dialogue",
-                "text": "Bandido1:\"Son _&pago_1\"",
+                "text": "Bandido1:\"Son _coste_peaje_1\"",
                 "permanentOptions": [
                     {
                         "text": "regatear el precio",
@@ -1654,7 +1662,7 @@
             {
                 "tag": "transacción_pago_1",
                 "type": "dialogue",
-                "text": "Pagas _$coste_peaje_1, y te dejan seguir tu camino",
+                "text": "Pagas _coste_peaje_1, y te dejan seguir tu camino",
                 "rewards": "coste_peaje_1",
                 "permanentOptions": [
                     {
@@ -1667,10 +1675,10 @@
             {
                 "tag": "pago_2",
                 "type": "dialogue",
-                "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\"\nBandido1:\"Así que no te convence...\"\nBandido1:\"El precio final es _&pago_2. O lo tomas, o lo tomamos.\"",
+                "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\"\nBandido1:\"Así que no te convence...\"\nBandido1:\"El precio final es _coste_peaje_2. O lo tomas, o lo tomamos.\"",
                 "permanentOptions": [
                     {
-                        "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\""
+                        "text": "Regatear de nuevo"
                     },
                     {
                         "text": "\"No tengo dinero suficiente\"",
@@ -1753,7 +1761,7 @@
             {
                 "tag": "transacción_pago_2",
                 "type": "dialogue",
-                "text": "Pagas _$coste_peaje_2, y te dejan seguir tu camino",
+                "text": "Pagas _coste_peaje_2, y te dejan seguir tu camino",
                 "rewards": "coste_peaje_2",
                 "permanentOptions": [
                     {

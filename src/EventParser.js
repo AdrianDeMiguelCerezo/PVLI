@@ -195,7 +195,7 @@ export default class EventParser {
                         //si es un string, se refiere al par�metro con ese nombre
                         case "string":
                             {
-                                //console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
+                                console.log(thisFragment_json, " params:", this.params, "rewards: ", thisFragment_json.rewards)
 
                                 for (const [key, value] of Object.entries(this.params[thisFragment_json.rewards])) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
@@ -205,7 +205,7 @@ export default class EventParser {
                         //si es un objeto, es un literal
                         case "object":
                             {
-                                //console.log(thisFragment_json, " params:", this.params, "reward: ", thisFragment_json.rewards)
+                                //console.log(thisFragment_json, " params:", this.params, "rewards: ", thisFragment_json.rewards)
                                 for (const [key, value] of Object.entries(thisFragment_json.rewards)) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                 }
@@ -370,14 +370,14 @@ export default class EventParser {
             for (let parameter of string.match(expReg)) {
 
 
-                //si tiene "&" delante y un objeto => Es una transacción.
-                if (parameter[1] === '&' && typeof (this.params[parameter.substring(2)]) === "object") {
-                    console.log("reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
+                //si tiene "__" delante y un objeto => Es una transacción.
+                if (parameter[1] === '_' && typeof (this.params[parameter.substring(2)]) === "object") {
+                    console.log("Pago. reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(2)]))
                 }
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 else if (typeof (this.params[parameter.substring(1)]) === "object") {
-                    console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
+                    console.log("Normal. reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(1)]))
                 }
 
@@ -413,7 +413,7 @@ export default class EventParser {
             if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
             switch (key) {
                 case "dinero": { returnString += value + " de dinero, "; break; }
-                case "pago": { returnString += "has pagado " + value + ", "; break; }
+                case "pago": { returnString += value + " de dinero, "; break; }
                 case "HP": { returnString += (value > 0 ? "+" : "") + value + " de vida, "; break; }
                 case "SP": { returnString += (value > 0 ? "+" : "") + value + " de sp, "; break; }
                 case "hambre": { returnString += (value > 0 ? "+" : "") + value + " de hambre, "; break; }
