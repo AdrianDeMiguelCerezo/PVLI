@@ -2112,7 +2112,7 @@
             {
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "BANDIDO_COMUN", "PIROMANO", "PERRO_RABIOSO", "PERRO_RABIOSO" ],
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_PIROMANO", "PERRO_RABIOSO", "PERRO_RABIOSO" ],
                     "rewards": {
                         "dinero": 12
                     },
@@ -2154,7 +2154,7 @@
             {
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "TANQUE", "BUFEADOR", "BANDIDO_COMUN" ],
+                    "enemies": [ "BANDIDO_TANQUE", "BANDIDO_BUFEADOR", "BANDIDO_COMUN" ],
                     "rewards": {
                         "dinero": 35
                     },
@@ -2361,6 +2361,38 @@
                 "type": "dialogue",
                 "text": "Tras derrotar los maleantes, te encuentras con _recompensas_fabrica. Decides irte antes de que aparezcan más.",
                 "rewards": "recompensas_fabrica"
+            }
+        ]
+    },
+    "FINAL":{
+        "eventFragments":[
+            {
+                "type":"dialogue",
+                "text":"Ha llegado la hora. Te encuentras en el borde sur, y sólo hay un guardia evitando tu escape."
+            },
+            {
+                "type":"dialogue",
+                "text":"El gran bloqueo, le llaman. El guardia más temido de todos. Esta será tu última batalla, ¿Estás preparado?",
+                "continue":"Siempre"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "GRAN_BLOQUEO" ],
+                    "ambush": false,
+                    "canFlee": false
+                },
+                "flee": null
+            },
+            {
+                "type":"dialogue",
+                "text":"Por fin consigues derrotar al grandioso bloqueo que te impedía tu libertad. Respiras fresco y disfrutas de tu nueva libertad.",
+                "options":[
+                    {
+                        "text":"Disfrutar",
+                        "j":"fin"
+                    }
+                ]
             }
         ]
     }
