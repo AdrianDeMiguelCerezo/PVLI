@@ -4,6 +4,7 @@ import BattleScene from './scenes/BattleScene.js';
 import DialogueScene from './scenes/DialogueScene.js';
 import MainMenu from './scenes/MainMenu.js';
 import GameOver from './scenes/GameOver.js';
+import WinScene from './scenes/WinScene.js';
 
 import MenuTest from './scenes/MenuTest.js';
 
@@ -25,14 +26,14 @@ let config = {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH
 	},
-	scene: [MainMenu,BootScene,Map,MenuTest, Test, BattleScene, DialogueScene, GameOver],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
+	scene: [MainMenu,BootScene,Map,MenuTest, Test, BattleScene, DialogueScene, GameOver, WinScene],//[{preload:preload, create:create}],	// Decimos a Phaser cual es nuestra escena, en este caso la escena es un 
 
-	scene: [MainMenu,BootScene,Map,xd,MenuTest, Test, BattleScene, DialogueScene, GameOver],										
+	scene: [MainMenu,BootScene,Map,xd,MenuTest, Test, BattleScene, DialogueScene, GameOver, WinScene],										
 	physics: { 
 		default: 'arcade', 
 		arcade: { 
 			gravity: { y: 0 }, 
-			debug: true 
+			debug: false
 		} 
 	}
 };

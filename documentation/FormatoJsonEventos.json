@@ -3,8 +3,8 @@
     //Esto son parámetros que se van a usar mucho a la hora de decidir los par�metros, como posibles nombres de personas.
     //Los parámetros globales no pueden tener el valor de otros parámetros, ya sean globales o locales a un evento.
     "globalParams": {
-        "nombre_hombre": [],
-        "nombre_mujer": []
+        "nombre_h": [],
+        "nombre_m": []
     },
 
     "NOMBRE_EVENTO": {
@@ -16,8 +16,8 @@
         //Para ello, se les da el valor "_NombreDelParámetroGlobal"
         "params": {
 
-            "par�metro_1": "_nombre_hombre", //se sustituye por un nombre de nombres_hombre[]
-            "par�metro_2": "_nombre_mujer", //sese sustituye por un nombre de nombres_mujer[]
+            "par�metro_1": "_nombre_h", //se sustituye por un nombre de nombres_h[]
+            "par�metro_2": "_nombre_m", //sese sustituye por un nombre de nombres_m[]
 
             "par�metro_3": [ "el Ciervo Blanco", "la banda de Pepe", "las Calaveras Rojas" ], //se sustituye por un algo random del array
 
@@ -29,10 +29,6 @@
                 },
                 {
                     "equipamiento": [ "ESPADA_TABERNERO" ]
-                },
-                {
-                    "dinero": 20,
-                    "items": [ "POTI_HP_MINI" ]
                 }
             ] //se sustituye por un algo del array. Este es un ejemplo de array con recompensas.
 
@@ -40,6 +36,7 @@
         //{
 
         //    "dinero": (int) cambio en el dinero del jugador
+        //    "pago": (int) dinero a pagar. Solo existe como recompensa en nodos de diálogo. Si no se tiene dinero suficiente, no te quita dinero y te lleva en el momento al fragmento de evento guardado en el atributo de este fragmento llamado "noPayFragment":"TAG QUE SEA".Si no pones tag, te lleva a un fragmento de evento con el mensaje: "no tengo dinero suficiente", cuyo continue es el primer fragmento. El pago es la primera recompensa del fragmento ergo si no pagas, no hay demás recompensas.
         //    "HP": (int) cambio en la vida del jugador(no se puede superar el máximo de hp)
         //    "SP": (int) cabio en la cantidad de puntos de habilidad del jugador(no se puede superar el máximo de Sp)
         //    "hambre": (int) cambio en el hambre del jugador.
@@ -49,15 +46,15 @@
         //    "efectos": [{ effect: "KEY_EFECTO", effectDuration: (int) }, ...]
 
         //    "dificultadGlobal": (int) aumento de la dificultad todos los focos despiertos.
-        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano.
-        //    "dificultadRadio"{ (int) r, (int) diff } la dificultad de los focos despiertos a r distancia de este nodo en diff.
+        //    "dificultadCercano": (int) aumento de la dificultad foco despierto más cercano. Si no hay despiertos, solamente despirta el más cercano con dificultad int.
+        //    "dificultadRadio"{ (int) r, (int) diff } aumenta la dificultad de los focos despiertos en un radio de r de este nodo en diff.
 
-        //    "despertarGlobal" (int) diff  despertar todos los focos dormidos, con diff dificultad
+        //    "despertarGlobal" (int) diff despertar todos los focos dormidos, con su dificultad base + con diff dificultad.
         //    "despertarCercano": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
         //    "despertarRadio": { (int) r, (int) diff } despertar todos los focos dormidos a menos de r distancia, con su dificultad base + diff dificultad.
              
         //    "despertarCercanoCrear": { (int) r, (int) diff } despertar foco dormido más cercano a menos de r distancia, con su dificultad base + con diff dificultad.
-        //     si no focos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con diff dificultad.
+        //     si no focos dormidos a menos de r distancia de el nodo en el que estás, crea foco en mi ubicación con su dificultad + diff dificultad.
         //}
         */
 
@@ -65,6 +62,11 @@
 
         },
 
+
+        //en todos los textos, formato:
+        //lo que diga el jugador, text:" \"cosas.\""
+        //lo que diga un npc, text: "NPC_tal:\"cosas.\""
+        //lo que ocurre, a secas, text: "cosas"
         "eventFragments": [
 
 
@@ -180,7 +182,7 @@
                     "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
                     "rewards": { //se escribe en formato recompensa
                         "dinero": 2,
-                      "items": [ "POTI_HP_MINI" ]
+                        "items": [ "POTI_HP_MINI" ]
                     },
                     "ambush": true, //empiezan los enemigos
                     "canFlee": false //es posible huir?
@@ -241,23 +243,29 @@
 }
 //
 {
+    "tag": "",
     "type": "dialogue",
     "text": "",
+    "permanentOptions": [],
     "options": [
         {
             "text": "",
             "j": "TAG"
         }
     ],
-    "optionAmmount": 1
+    "optionsAmmount": 1
 }
+
+
+
+
 , "nombre_evento": {
 
     "params": {
 
     },
 
-    "eventFractions": {
+    "eventFragments": {
 
     }
 }, //

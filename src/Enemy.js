@@ -45,7 +45,6 @@ export default class Enemy extends Phaser.GameObjects.Container {
       this.hp,
       2
     );
-    this.scene.add.existing(this.healthBar);
     this.add(this.healthBar);
 
     this.Pompa = new Phaser.GameObjects.Image(scene, -50, 0, "neutro").setOrigin(0, 0);

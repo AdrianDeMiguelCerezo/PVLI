@@ -33,28 +33,6 @@
         "crit_damage": 100,
         "crit_chance": 20
     },
-    "CHAQUETA_PIEL": {
-        "name": "Chaqueta de piel",
-        "description": "Abriga y protege algo más que una chaqueta de papel.",
-        "type": "TORSO",
-        "crit_damage": 0,
-        "crit_chance": 0,
-        "defense": 8
-    },
-    "PANTALONES_REFORZADOS": {
-        "name": "Pantalones reforzados",
-        "description": "Ahora con lana de mamut lanudo.",
-        "type": "LEGGINS",
-        "crit_damage": 0,
-        "crit_chance": 0,
-        "defense": 5
-    },
-    "PONCHO":{
-        "name": "Poncho",
-        "description": "Ahora más poncho que nunca.",
-        "type": "TORSO",
-        "defense":3
-    },
     "ESCOPETA":{
         "name":"Escopeta",
         "description":"Hace mucho daño.",
@@ -73,6 +51,7 @@
                 "name":"SuperShot",
                 "description":"2 acc, 15SP. Hace daño tremendo a un enemigo.",
                 "actionCost":2,
+                "spCost": 15,
                 "damage":30,
                 "type":"ACTIVE",
                 "target":"ENEMY",
@@ -82,11 +61,231 @@
         "crit_damage": 200,
         "crit_chance": 10
     },
+    "ESPADA_PLATA":{
+        "name":"Espada de plata",
+        "description":"Perteneciente a un cazador de bestias.",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque básico",
+                "description":"1 acc. Un golpe sencillo con el arma.",
+                "actionCost":1,
+                "damage":11,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            },
+            {
+                "name":"Barrido",
+                "description":"2 acc, 10SP. Hace un ataque cortante a todos los enemigos.",
+                "actionCost":2,
+                "spCost": 10,
+                "damage":12,
+                "type":"ACTIVE",
+                "target":"ALLENEMIES"
+            }
+        ],
+        "crit_damage": 100,
+        "crit_chance": 5
+    },
+    "RIFLE_CAZA":{
+        "name":"Rifle de caza",
+        "description":"Muy útil para largas distancias.",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque básico",
+                "description":"1 acc. Un golpe sencillo con el arma.",
+                "actionCost":1,
+                "damage":15,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            }       
+        ],
+        "crit_damage": 150,
+        "crit_chance": 20
+    },
+    "LATIGO":{
+        "name":"Látigo",
+        "description":"Bastante práctico para asaltar tumbas antiguas.",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque maldireccionado",
+                "description":"1 acc. Un golpe sencillo con el arma a un enemigo aleatorio.",
+                "actionCost":1,
+                "damage":9,
+                "type":"ACTIVE",
+                "target":"RNDENEMY"
+            }       
+        ],
+        "crit_damage": 180,
+        "crit_chance": 10
+    },
+    "MAZA_CACTUS":{
+        "name":"Maza cactus",
+        "description":"Pincha y aplasta, ¡Todo en uno!",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque punzante",
+                "description":"1 acc. Un pincho sencillo con el arma a un enemigo.",
+                "actionCost":1,
+                "damage":8,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            }, 
+            {
+                "name":"Ataque aplastante",
+                "description":"2 acc. 5SP. Un golpe para aplastar al oponente.",
+                "actionCost":1,
+                "spCost": 5,
+                "damage":22,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            }       
+        ],
+        "crit_damage": 200,
+        "crit_chance": 15
+    },
+    "ESPADA_NABO":{
+        "name":"Espada nabo",
+        "description":"No sé por qué hicieron una espada de esto.",
+        "type":"WEAPON",
+        "habilidades":[
+            {
+                "name":"Ataque nabo",
+                "description":"1 acc. Un ataque con la espada nabo. ¿Hace daño, supongo?",
+                "actionCost":1,
+                "damage":4,
+                "type":"ACTIVE",
+                "target":"ENEMY"
+            }, 
+            {
+                "name":"Ataque nabo prime",
+                "description":"2 acc. Ataca a todos los enemigos....con la espada nabo.",
+                "actionCost":1,
+                "damage":2,
+                "type":"ACTIVE",
+                "target":"ALLENEMIES"
+            }       
+        ],
+        "crit_damage": 500,
+        "crit_chance": 50
+    },
+    
+
+
+
+
+
+
+    
+    "CHAQUETA_PIEL": {
+        "name": "Chaqueta de piel",
+        "description": "Abriga y protege algo más que una chaqueta de papel.",
+        "type": "TORSO",
+        "defense": 8
+    },
+    "PONCHO":{
+        "name": "Poncho",
+        "description": "Ahora más poncho que nunca.",
+        "type": "TORSO",
+        "defense":3
+    },
+    "CAMISA":{
+        "name": "Camisa",
+        "description": "Una camisa de vestir. No preguntes cómo está aquí.",
+        "type": "TORSO",
+        "defense":5
+    },
+    "PECHERA":{
+        "name": "Pechera",
+        "description": "Usada por caballeros. Protege mucho.",
+        "type": "TORSO",
+        "defense":12
+    },
+    "NABO_PECHERA":{
+        "name": "Nabo Pechera",
+        "description": "¿Quién está haciendo tantas cosas con nabos?",
+        "type": "TORSO",
+        "defense":4,
+        "habilidades":[
+            {
+                "name": "Comer pechera",
+                "description": "1 acc. 5SP. Te comes una parte de tu propia pechera nabo.......maravilloso.",
+                "actionCost": 1,
+                "spCost": 5,
+                "damage": 0,
+                "effect": "HP+",
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+
+
+
+
+
+
+
+    "PANTALONES_REFORZADOS": {
+        "name": "Pantalones reforzados",
+        "description": "Ahora con lana de mamut lanudo.",
+        "type": "LEGGINS",
+        "defense": 5
+    },
     "VAQUEROS":{
         "name":"Vaqueros",
         "description":"Unos vaqueros para el vaquero.",
         "type":"LEGGINS",
         "defense":7
+    },
+    "XL":{
+        "name":"Pantalones XL",
+        "description":"Te quedan enormes.",
+        "type":"LEGGINS",
+        "defense":9
+    },
+    "GLOBO":{
+        "name":"Pantalones globo",
+        "description":"No tienen suficiente helio para sobrevolar el Sur, pero pueden servir.",
+        "type":"LEGGINS",
+        "defense":3,
+        "habilidades":[
+            {
+                "name": "Flotar",
+                "description": "1 acc. 15SP. Te pones a flotar y eso intimida a los enemigos.",
+                "actionCost": 1,
+                "spCost": 0,
+                "damage": 0,
+                "effect": "ATT+",
+                "effectDuration": 2,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "NABO_BAJOS":{
+        "name":"Pantalones nabo",
+        "description":"Esto ya es ridículo.",
+        "type":"LEGGINS",
+        "defense":1,
+        "habilidades":[
+            {
+                "name": "Plantar un nabo",
+                "description": "1 acc. 10SP. Pones un nabo en el suelo que te fortalece.",
+                "actionCost": 1,
+                "spCost": 10,
+                "damage": 0,
+                "effect": "ATT+",
+                "effectDuration": 3,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
     }
+
 
 }

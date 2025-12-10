@@ -1,9 +1,16 @@
-
+import EventParser from "./EventParser.js";
+import PlayerData from "./PlayerData.js";
 
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
     CITY: 2
+}
+
+const DifficultyLimits = {
+    MEDIUM:100,
+    HARD:200,
+    FUCKED:300
 }
 
 const State = {
@@ -20,7 +27,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} x
      * @param {any} y
      * @param {any} texture
-     * @param {any} targetScene
+     * @param {any} eventKeys
+     * @param {any} playerData
      * @param {any} nodeType
      * @param {any} state
      * @param {any} isFocus
@@ -29,25 +37,71 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture,eventKey, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
+    constructor(scene, x, y, texture,eventKeys, playerData, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
 
-        //genera un evento a partir de estr nodo con la key eventKey
-        if (!!event) { this.event = generateEvent(eventKey); }
-        else { this.event = event; }
+        
         this.name = "node"
 
+        //this.eventKeys = eventKeys;
+        this.playerData = playerData;
         this.nodeType = nodeType;
         this.state = state;
         this.radius = radius;
         this.visited = visited;
         this.isFocus = isFocus;
         this.difficulty = difficulty;
+        this.isAwake = isAwake;
 
+        if(eventKeys === undefined){
+            let jsonEvent = Object.keys(this.scene.jsonEventos);
+            let easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(easyEvent === undefined){
+                easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(easyEvent), 1);
+            let midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(midEvent === undefined){
+                midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(midEvent), 1);
+            let hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(hardEvent === undefined){
+                hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(hardEvent), 1);
+            let fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            while(fkcedEvent === undefined){
+                fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
+            }
+            jsonEvent.splice(jsonEvent.indexOf(fkcedEvent), 1);
+            this.eventKeys = {easyEvent: easyEvent, midEvent: midEvent, hardEvent: hardEvent, fkcedEvent: fkcedEvent};
+            console.log(this.eventKeys);
+        }
+        else{
+            this.eventKeys = eventKeys;
+        }
+
+        //if(this.difficulty )
+        let eventoParserer = new EventParser(this.scene.jsonEventos,this.scene.jsonHabilidades,this.scene.jsonEquipamiento,this.scene.jsonItems,this.scene.jsonEfectos);
+
+        if(this.difficulty < DifficultyLimits.MEDIUM){
+            this.chosenEvent = this.eventKeys.easyEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.HARD){
+            this.chosenEvent = this.eventKeys.midEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.FUCKED){
+            this.chosenEvent = this.eventKeys.hardEvent;
+        }
+        else{
+            this.chosenEvent = this.eventKeys.fkcedEvent;
+        }
+        let eventoParseado = eventoParserer.generateEvent(this.chosenEvent);
 
         scene.add.existing(this);
         this.setInteractive();
@@ -89,7 +143,7 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 
                 this.openNearbyNodes();
 
-                this.scene.UpdateFociDifficulties(50);
+                this.scene.UpdateFociDifficulties(10);
 
 
                 if (this.visited == false) {
@@ -98,10 +152,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
-                        event: n.event,
+                        event: n.eventKeys,
+                        playerData: n.playerData,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
+                        isAwake:n.isAwake,
                         visited: n.visited,
                         scale: n.scale,
                         difficulty: n.difficulty,
@@ -112,11 +168,9 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     this.scene.registry.set("nodes", nodeData);
 
                     this.scene.events.removeAllListeners("update_tint");
-
-                    this.scene.scene.start(this.targetScene);
                     
-                    this.scene.registry.set("nodes", nodeData)
-                    this.scene.scene.start(this.targetScene);
+                    this.scene.scene.start('DialogueScene', {fragmentoEvento: eventoParseado, playerData: this.playerData});
+
                 }
                 
             }
@@ -211,48 +265,5 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 }
             }
         }
-    }
-
-    /**
-     * 
-     * @param {string} eventKey
-     */
-    generateEvent(eventKey) {
-
-        const eventoJson = this.scene.jsonEventos[eventKey];
-        let params = {};
-
-        for (let par_nombre of eventoJson["params"]) {
-            this.SetParamValue(params[par_nombre], eventoJson["params"][par_nombre])
-        }
-
-        console.log(this.params);
-
-        return event;
-    }
-
-    /**Setea el valor del objeto "param" al parseo de paramValue seg�n la info del json de eventos.
-     * @param {string} param //nombre del par�metro del json
-     * @param {any} paramValue //valor en principio del par�metro del json
-     */
-    SetParamValue(param, paramValue) {
-        
-        if (Array.isArray(paramValue)) {
-            paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
-        }
-
-        //si el valor es el valor de un par�metro global:
-        if (paramValue[0] == '_') {
-            const infoGlobalParam = this.scene.jsonEventos["globalParams"][a.substring(1)];
-            if (Array.isArray(infoGlobalParam)) {
-                param = infoGlobalParam[Phaser.Math.RND.between(0, paramValue.length - 1)];
-            }
-            else {
-                param = infoGlobalParam;
-            }
-        }
-        else {
-            param = paramValue;
-        }
-    }
+    }  
 }

@@ -1,7 +1,7 @@
 {
   "BANDIDO_COMUN": {
     "name": "Bandido común",
-    "HpMax": 60,
+    "HpMax": 50,
     "habilidades": [
         {
             "name": "Ataque básico",
@@ -28,6 +28,114 @@
 
     ]
   },
+  "BANDIDO_PIROMANO":{
+    "name": "Pirómano",
+    "HpMax": 40,
+    "habilidades": [
+        {
+            "damage":5,
+            "effect":"QUEMADO",
+            "effectDuration": 3,
+            "type":"DEBUFF",
+            "target":"ENEMY"
+        },
+        {
+            "damage": 10,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "damage":10,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
+    ]
+  },
+  "BANDIDO_MEDICO":{
+    "name": "Médico",
+    "HpMax": 30,
+    "habilidades":[
+        {
+            "effect":{ "diffHealth": 20 },
+            "effectDuration": 0,
+            "type":"BUFF",
+            "target":"ALLENEMIES"
+        },
+        {
+            "effect":{ "diffHealth": 40 },
+            "effectDuration": 0,
+            "type":"BUFF",
+            "target":"RNDENEMY"
+        },
+        {
+            "damage":5,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        {
+            "damage":5,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
+    ]
+  },
+  "BANDIDO_TANQUE":{
+    "name":"Tanque",
+    "HpMax":80,
+    "habilidades":[
+        {
+            "damage":15,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        { 
+            "effect": "DEF+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "SELF"
+        }
+    ]
+  },
+  "BANDIDO_BUFEADOR":{
+    "name":"Bufeador",
+    "HpMax":40,
+    "habilidades":[
+        {
+            "damage":8,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        },
+        {
+            "effect": "ATT+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "RNDENEMY"
+        }
+    ]
+  },
+  "BANDIDO_NERFEADOR":{
+    "name":"Debufeador",
+    "HpMax":40,
+    "habilidades":[
+        {
+            "effect": "ATT-",
+            "effectDuration": 2,
+            "type": "DEBUFF",
+            "target": "ENEMY"
+        },
+        {
+            "effect": "DEF-",
+            "effectDuration":  2,
+            "type": "DEBUFF",
+            "target": "ENEMY"
+        },
+        {
+            "damage":7,
+            "type":"ATTACK",
+            "target":"ENEMY"
+        }
+    ]
+  },
   "SOLDADO_ESTADO": {
     "name": "Soldado del estado",
     "HpMax": 85,
@@ -42,19 +150,6 @@
         }
     ]
   },
-  "ASALTANTE_MADRUGADOR": {
-    "name": "Asaltante madrugador",
-    "HpMax": 50,
-    "habilidades": [
-        {
-            "name": "Ataque básico",
-            "description": "1 acc. Un golpe sencillo con el arma.",
-            "damage": 12,
-            "type": "ACTIVE",
-            "target": "ENEMY"
-        }
-    ]
-  },
   "MUJER_DESCONFIADA": {
     "name": "Mujer desconfiada",
     "HpMax": 70,
@@ -62,10 +157,74 @@
         {
             "name": "Ataque básico",
             "description": "1 acc. Un golpe sencillo con el arma.",
-            "damage": 12,
+            "damage": 18,
             "type": "ACTIVE",
             "target": "ENEMY"
         }
+    ]
+  },
+  "PERRO_RABIOSO": {
+    "name": "Perro rabioso",
+    "HpMax": 30,
+    "habilidades": [
+        {
+            "damage": 8,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "damage": 12,
+            "type": "SPECIAL_ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "effect": "ATT+",
+            "effectDuration":  2,
+            "type": "BUFF",
+            "target": "SELF"
+        }
+
+    ]
+  },
+  "TORRETA": {
+    "name": "Torreta",
+    "HpMax": 50,
+    "habilidades": [
+        {
+            "damage": 5,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        }
+
+    ]
+  },
+  "GRAN_BLOQUEO":{
+    "name": "Gran bloqueo",
+    "HpMax": 100,
+    "habilidades":[
+      {
+          "damage": 15,
+          "type": "ATTACK",
+          "target": "ENEMY"
+      },
+      {
+          "effect": "ATT+",
+          "effectDuration":  2,
+          "type": "BUFF",
+          "target": "SELF"
+      },
+      {
+          "effect": "HP+",
+          "effectDuration":  0,
+          "type": "BUFF",
+          "target": "SELF"
+      },
+      {
+          "effect": "ATT-",
+          "effectDuration":  2,
+          "type": "DEBUFF",
+          "target": "ENEMY"
+      }
     ]
   }
 }

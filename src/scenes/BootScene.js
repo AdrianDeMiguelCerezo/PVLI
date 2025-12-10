@@ -11,7 +11,6 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('map', 'assets/MapTemplate.png');
         this.load.image('fondo', 'assets/fondoPlaceholderDialogos.png');
         this.load.image('malo', 'assets/malo.png');
-        this.load.image('BANDIDO_COMUN', 'assets/bandido.png');
         this.load.image('player', 'assets/cowboy.png');
         this.load.image('cowboy','assets/cowboy.png');
         this.load.image('swimsuit','assets/swimsuit.png');
@@ -43,6 +42,19 @@ export default class BootScene extends Phaser.Scene {
         this.load.image('HAMBRE_1', 'assets/HAMBRE_1.png');
         this.load.image('HAMBRE_2', 'assets/HAMBRE_2.png');
 
+        //Enemigos
+        this.load.image('BANDIDO_COMUN','assets/bandido_comun.png');
+        this.load.image('BANDIDO_PIROMANO','assets/piromano.png');
+        this.load.image('BANDIDO_MEDICO','assets/medico.png');
+        this.load.image('BANDIDO_TANQUE','assets/tanque.png');
+        this.load.image('TORRETA','assets/torreta.png');
+        this.load.image('PERRO_RABIOSO','assets/perro.png');
+        this.load.image('MUJER_DESCONFIADA','assets/mujer.png');
+        this.load.image('SOLDADO_ESTADO','assets/soldado_estado.png');
+        this.load.image('BANDIDO_BUFEADOR','assets/bufeador.png');
+        this.load.image('BANDIDO_NERFEADOR','assets/debufeador.png');
+        this.load.image('GRAN_BLOQUEO','assets/gran_bloqueo.png');
+
 
 
 
@@ -59,11 +71,11 @@ export default class BootScene extends Phaser.Scene {
     }
     create() {
 
-        //this.playerData = new PlayerData();
-        this.uiButton(100, 400, "Go to Map", 'Map')
+        this.playerData = new PlayerData();
+        this.uiButton(100, 400, "Go to Map", 'Map', this.playerData)
         this.uiButton(100, 300, "Go to DialogueScene", 'DialogueScene')
         this.uiButton(100, 200, "Go to BattleScene", 'BattleScene', ['BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN',])
-        this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})
+        this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: this.playerData, oldScene: this.scene.key})
         this.uiButton(100, 500, "Go to xd", 'xd',)
 
         // --- PREPARACIÓN DEL JUGADOR DE PRUEBA (Veneno, Skin y Antídoto) ---

@@ -7,9 +7,9 @@ export default class HealthBar extends Phaser.GameObjects.Container {
 
         this.targetValue = initialValue;
 
-        this.actualValue = initialValue;
+        this._actualValue = initialValue;
 
-        this.p = (barWidth - 2 * borderThickness) / initialValue; //cuantos píxeles por cada value
+        this.p = (barWidth - 2 * borderThickness) / initialValue; //cuantos pï¿½xeles por cada value
 
         this.barHeight = barHeight
         this.barWidth = barWidth
@@ -40,22 +40,31 @@ export default class HealthBar extends Phaser.GameObjects.Container {
         this.add(this.healthBackgroundRectangle);
         this.add(this.healthRectangle);
         this.add(this.hpText);
+
+        scene.add.existing(this);
         
     }
     preUpdate(t, dt) {
         
-        if (this.actualValue > this.targetValue) {
-            this.actualValue = this.actualValue - 20 * dt / 1000
-        } else {
-            this.actualValue = this.targetValue;
+        if (this._actualValue > this.targetValue) {
+            this._actualValue = this._actualValue - 20 * dt / 1000
+        } else if(this._actualValue < this.targetValue) {
+            this._actualValue = this._actualValue + 20 * dt / 1000
         }
-        this.shownValue = Math.floor(this.actualValue)
-        this.healthRectangle.width = this.actualValue*this.p;
+        if (Math.abs(this._actualValue) < Math.abs(this.targetValue) + 1 && Math.abs(this._actualValue) > Math.abs(this.targetValue)-1)
+        {
+            this._actualValue = this.targetValue;
+        }
+        
+        this.healthRectangle.width = this._actualValue*this.p;
 
         this.hpText.text = this.targetValue;
     }
-
-
+    /**
+     * hace que la barra se setee en un valor instantaneamente. Si no hay valor, se setea al targetValue de la barra.
+     * @param {any} targetValue
+     */
+    setInstantValue(targetValue=this.targetValue) { this._actualValue = targetValue; }
     
 
 }
