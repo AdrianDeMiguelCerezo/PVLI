@@ -55,7 +55,7 @@
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
-
+            "nombre_cordillera": ["las montañas del viento seco","las montañas del viento húmedo","las montañas de Pepe","la cordillera de Kalú","la cordillera de la muerte"],
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
             "wounded_day_cost": { "HP": -10 },
@@ -99,6 +99,19 @@
                     "dinero": 20
                 }
             ],
+             "3Bandidos_rewards": [
+                {
+                    "dinero": 10
+                   
+                },
+                {
+                    "dinero": 15
+                    
+                },
+                {
+                    "dinero": 20
+                }
+            ],
             "llamar_aliados_rewards": [
                 {
                     "dinero": 20,
@@ -127,7 +140,7 @@
                     "dinero": 20,
                     "items": [
                         {
-                            "item": "POTI_HP_MEDIA",
+                            "item": "POTI_HP_MINI",
                             "count": 1
                         }
                     ]
@@ -136,7 +149,7 @@
                     "dinero": 15,
                     "items": [
                         {
-                            "item": "POTI_HP_MEDIA",
+                            "item": "POTI_HP_MINI",
                             "count": 2
                         }
                     ]
@@ -161,21 +174,22 @@
         "eventFragments": [
 
 
-
-
-
+            {
+                "type": "dialogue",
+                "text": "En tu camino, llegas a _nombre_cordillera. Te han advertido de que este es territorio de los bandidos de _nombre_grupo_bandidos, pero tienes que atravesarla."
+            },
             {
                 "tag": "elecciónCaminos",
                 "type": "dialogue",
-                "text": "Qué camino tomo?",
+                "text": "Podría ir por el cañón, dónde supuestamente habitan los bandidos, o podría tomar una ruta más larga y peligrosa a través de las escarpadas montañas para evitarlos.\nQué camino tomo?",
                 "permanentOptions": [
                     {
-                        "text": "Montaña (1 semana de viaje)",
+                        "text": "Montañas (1 semana de viaje)",
                         "j": "AvanceDia1"
                     },
                     {
                         "text": "Cañón (2 días de viaje)",
-                        "j": null
+                        "j": "Cañon 1"
                     }
                 ]
             },
@@ -1290,7 +1304,7 @@
                 ]
             },
             {
-                "tag": "hay_un_peaje?",
+                "tag": "cuánto_cuesta_peaje",
                 "type": "dialogue",
                 "text": "Bandido1:\"Claro que hay un peaje. Es extraño que no lo sepas, sabiendo que este es el territorio de _nombre_grupo_bandidos.\"\nEl bandido saca un cuerno de su cinturón y lo toca una vez.\nBandido1:\"Igualmente, ahora te tocará esperar a que lleguen los encargados de cobrar del peaje.\"",
                 "permanentOptions": [
@@ -1521,7 +1535,7 @@
                 ]
             },
             {
-                "tag": "Pre_peaje",
+                "tag": "Pre-peaje",
                 "type": "dialogue",
                 "text": "Mientras caminas por el cañón, ves a un grupo de 4 personas que te corta el paso."
 
@@ -1566,7 +1580,7 @@
                 "text": "Bandido1:\"Son _&pago_1\"",
                 "permanentOptions": [
                     {
-                        "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\"",
+                        "text": "regatear el precio",
                         "j": "pago_2"
                     },
                     {
@@ -1653,7 +1667,7 @@
             {
                 "tag": "pago_2",
                 "type": "dialogue",
-                "text": "Bandido1:\"Así que no te convence...\"\nBandido1:\"El precio final es _&pago_2. O lo tomas, o lo tomamos.\"",
+                "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\"\nBandido1:\"Así que no te convence...\"\nBandido1:\"El precio final es _&pago_2. O lo tomas, o lo tomamos.\"",
                 "permanentOptions": [
                     {
                         "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\""

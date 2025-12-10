@@ -214,16 +214,16 @@ export default class EventParser {
                     }
                 }
 
-                
+
                 //si el evento tiene un pago
                 if (eventFragmentNode.consecuencias.hasOwnProperty("pago")) {
-                    
+
                     //si hay un noPayFragment al que se salta, se salta a ese, si es null o undefined se vuelve al anterior(que es quien ha llamado a que se genere este fragmento).
                     if (thisFragment_json.noPayFragment) {
                         eventFragmentNode.nodoNoPay = this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment]);
                     }
                     else {
-                        if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) {console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
+                        if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
                         //genera el fragment oal que se va si no dinero suficiente
                         eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
                         eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", j: this.lastEventFragment }]
@@ -255,7 +255,7 @@ export default class EventParser {
                         }
                         //si la tag con este nombre no existe
                         else {
-                            console.warn("la tag llamada", jumpTag, " no existe. (se queda como null de momento). LLamada desde ",thisFragment_json);
+                            console.warn("la tag llamada", jumpTag, " no existe. (se queda como null de momento). LLamada desde ", thisFragment_json);
                             eventFragmentNode.nodoHuida = null;
                         }
                     }
@@ -270,7 +270,7 @@ export default class EventParser {
                             case "string":
                                 {
                                     console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
-                                    console.log(this.params);
+                                    if (!this.params.hasOwnProperty(combatRewards_json)) { throw "La recompensa:" + combatRewards_json + "no existe en el array de parámetros.", this.params }
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -287,15 +287,20 @@ export default class EventParser {
                                 }
                         }
                     }
-                    eventFragmentNode.opciones[0]={}
+                    eventFragmentNode.opciones[0] = {}
                     //generar nodo de di�logo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas:"+this.WriteRewards(consecuencias),
+                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas:" + this.WriteRewards(consecuencias),
                             [{ texto: "Continuar", salto: this.GenerateEventFragment(++index) }],
                             consecuencias, undefined);
 
                     break;
                 }
+            case "fin": {
+
+                eventFragmentNode.tipo = fin;
+                break;
+            }
             default: break;
         }
 
@@ -324,7 +329,7 @@ export default class EventParser {
         }
         //si la tag con este nombre no existe
         else {
-            console.warn("la tag llamada", jumpTag, " no existe. (se queda como null de momento). LLamada desde ", thisFragment_json);
+            console.warn("la tag llamada", jumpTag, " no existe. (se queda como null de momento). LLamada desde ", this.eventFragments_Json[index]);
             fragmentOption.salto = null;
         }
     }
@@ -366,13 +371,13 @@ export default class EventParser {
 
 
                 //si tiene "&" delante y un objeto => Es una transacción.
-                if (parameter[1]==='&'&& typeof (this.params[parameter.substring(2)]) === "object") {
-                    //console.log("reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
+                if (parameter[1] === '&' && typeof (this.params[parameter.substring(2)]) === "object") {
+                    console.log("reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(2)]))
                 }
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 else if (typeof (this.params[parameter.substring(1)]) === "object") {
-                    //console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
+                    console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(1)]))
                 }
 
@@ -426,25 +431,22 @@ export default class EventParser {
                     }
                 case "items":
                     {
+                        //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
                         let itemCount = 0;
-                        let secondaryReturnString = ""; 
+                        let secondaryReturnString = "";
                         for (const itemReward of value) {
                             secondaryReturnString += this.jsonItems[itemReward.item].name + " (x" + itemReward.count + "), ";
                             itemCount += itemReward.count;
                         }
-                        let primaryReturnString = itemCount > 1 ? "los objetos " : "el objeto "; 
-                        returnString+=primaryReturnString+secondaryReturnString
+                        let primaryReturnString = itemCount > 1 ? "+ los objetos " : "+ el objeto ";
+                        returnString += primaryReturnString + secondaryReturnString
                         break;
 
                     }
                 case "equipamiento":
                     {
-                        //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
-                        for (const itemReward of value) {
-                            returnString += this.jsonItems[itemReward.item].name + ", ";
-                        }
 
-                        returnString += value.length > 1 ? "los equipamientos " : "el equipamiento ";
+                        returnString += value.length > 1 ? "+ los equipamientos " : "+ el equipamiento ";
                         for (let j = 0; j < value.length; j++) {
                             //console.log("equipamiento:",value[j])
                             returnString += this.jsonEquipamiento[value[j]].name + ", ";
@@ -453,7 +455,7 @@ export default class EventParser {
 
                     }
                 case "efectos": {
-                    returnString += value.length > 1 ? "los efectos de " : "el efecto de ";
+                    returnString += value.length > 1 ? "+ los efectos de " : "+ el efecto de ";
                     for (const estado in value) {
                         returnString += this.jsonEfectos[estado.effect].name + ", ";
 
@@ -495,7 +497,7 @@ export default class EventParser {
 
         //decidido seg�n representaci�n en el json
         if (rewards.hasOwnProperty("pago")) {
-            primaryReturnString +=rewards["pago"]+"de dinero"
+            primaryReturnString += rewards["pago"] + "de dinero"
         }
         let hayRecompensa = false;
         for (let i = 0; i < array.length; i++) {
@@ -507,11 +509,13 @@ export default class EventParser {
             switch (key) {
                 case "equipamiento":
                     {
-                        //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
-                        for (const itemReward of value) {
-                            returnString += this.jsonItems[itemReward.item].name + ", ";
-                            
+
+                        returnString += value.length > 1 ? "los equipamientos " : "el equipamiento ";
+                        for (let j = 0; j < value.length; j++) {
+                            //console.log("equipamiento:",value[j])
+                            returnString += this.jsonEquipamiento[value[j]].name + ", ";
                         }
+
                         hayRecompensa = true;
                         break;
 
@@ -524,7 +528,7 @@ export default class EventParser {
                             console.log("habilidad:", value[j])
                             console.log(value[j]);
                             returnString += this.jsonHabilidades[value[j]].name + ", ";
-                            
+
                         }
                         hayRecompensa = true;
                         break;
