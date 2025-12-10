@@ -187,5 +187,21 @@
                 "target":"SELF"
             }
         ]
+    },
+    "ANTIDOTO": {
+        "name": "Antídoto",
+        "description": "Cura el envenenamiento.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "name": "Beber antídoto",
+                "description": "Elimina el veneno del cuerpo.",
+                "actions": 1,
+                "cureEffect": "ENVENENADO", 
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
     }
 }

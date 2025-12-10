@@ -38,16 +38,18 @@ export default class Enemy extends Phaser.GameObjects.Container {
 
     this.healthBar = new HealthBar(
       scene,
-      this.image.width / 2,
-      -22,
+      43,
+      -6,
       100,
       18,
       this.hp,
       2
     );
+    this.healthBar.setScale(0.3);
     this.add(this.healthBar);
 
-    this.Pompa = new Phaser.GameObjects.Image(scene, -50, 0, "neutro").setOrigin(0, 0);
+    this.Pompa = new Phaser.GameObjects.Image(scene, -15, 2, "neutro").setOrigin(0, 0);
+    this.Pompa.setScale(0.3);
     this.add(this.Pompa);
 
     // === INTERACCIÓN CLICK ENEMIGO ===

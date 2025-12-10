@@ -66,6 +66,9 @@ export default class BattleScene extends Phaser.Scene {
     this.enemiesTam = 0;
     for (let i = 0; i < enemyKeys.length; i++) {
       this.enemies[i] = new Enemy(enemyKeys[i], this, enemyKeys[i]);
+
+      this.enemies[i].setScale(3.5);
+
       this.enemiesTam++;
     }
 
@@ -92,7 +95,7 @@ export default class BattleScene extends Phaser.Scene {
           });
         } else {
           // Si es null, volvemos al mapa
-          this.scene.start("Map");
+          this.scene.start("Map", { playerData: this.player.playerData });
         }
       } 
       // FLEE: huida
@@ -103,7 +106,7 @@ export default class BattleScene extends Phaser.Scene {
             playerData: this.player.playerData
           });
         } else {
-          this.scene.start("Map");
+          this.scene.start("Map", { playerData: this.player.playerData });
         }
       } 
       // LOSE: derrota
@@ -198,6 +201,16 @@ export default class BattleScene extends Phaser.Scene {
     for (let i = 0; i < this.enemiesTam; i++) {
       this.add.existing(this.enemies[i]);
     }
+
+    // Si por error de generación el array de enemigos está vacío,
+    // ganamos automáticamente para no quedarnos pillados
+    if (this.enemiesTam === 0) {
+      console.warn("BattleScene iniciada sin enemigos. Auto-Win activado.");
+      this.combatManager.finishCombat("win");
+      return; // salimos para no pintar nada más
+    }
+
+
     this.add.existing(this.player.setOrigin(0, 0));
     this.RedrawEnemies();
 
@@ -473,9 +486,19 @@ export default class BattleScene extends Phaser.Scene {
 
     // items utilizables en combate
     for (let i = 0; i < this.player.playerData.items.length; i++) {
-      if (this.jsonItems[this.player.playerData.items[i].item].usedInCombat) {
+      const itemEntry = this.player.playerData.items[i];
+      const itemKey = itemEntry.item;
+      const itemDef = this.jsonItems[itemKey];
+
+      // Si el item no existe en el JSON, avisamos por consola y saltamos al siguiente
+      if (!itemDef) {
+        console.warn(`[BattleScene] ¡CUIDADO! El jugador tiene el item '${itemKey}' pero NO está definido en items.json`);
+        continue; 
+      }
+
+      if (itemDef.usedInCombat) {
         this.menuItems.AddButton(
-          new MenuButton(this, 0, 0, this.player.playerData.items[i])
+          new MenuButton(this, 0, 0, itemEntry)
         );
       }
     }

@@ -12,7 +12,6 @@
         "texture": "HAMBRE_1",
         "diffDmgPercent": -30,
         "diffDefensePercent": -30
-
     },
     "PARALIZADO": {
         "name": "Paralizado",

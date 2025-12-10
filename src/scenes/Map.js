@@ -1,5 +1,6 @@
 import MapNode from '../MapNode.js'
 import MenuButton from '../MenuButton.js'
+import Player from '../Player.js'
 import PlayerData from '../PlayerData.js'
 
 
@@ -25,13 +26,23 @@ export default class Map extends Phaser.Scene {
         super({ key: 'Map' })
     }
 
-    init(playerData) {
+    init(data) {
         this.jsonEventos = this.cache.json.get("eventos");
         this.jsonHabilidades = this.cache.json.get('habilidades');
         this.jsonEquipamiento = this.cache.json.get('equipamiento');
         this.jsonItems = this.cache.json.get('items');
         this.jsonEfectos = this.cache.json.get('efectos');
-        this.playerData = playerData;
+
+        // Si 'data' tiene playerData, se usa
+        // Si no, mira si es el objeto directo (legacy) o crea uno nuevo
+        if (data && data.playerData) {
+            this.playerData = data.playerData;
+        } else if (data instanceof PlayerData) {
+            this.playerData = data;
+        } else {
+            // Si no hay datos, intentamos recuperar del registro o creamos uno nuevo
+            this.playerData = new PlayerData();
+        }
     }
 
     create() {
@@ -50,7 +61,7 @@ export default class Map extends Phaser.Scene {
         }, 20, 0, "#e08b1cff", false).setOrigin(1).setDepth(4);
         //boton de ir al inventario
         this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null, 
-            ()=>{ this.scene.start('MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})}, 20, 0, "#e08b1cff", false).setVisible(false).setOrigin(1).setDepth(4);
+            ()=>{ this.scene.start('MenuTest', {playerData: this.playerData, oldScene: this.scene.key})}, 20, 0, "#e08b1cff", false).setVisible(false).setOrigin(1).setDepth(4);
         //boton de ir al menu principal
         this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null, 
             ()=>{ this.scene.start('MainMenu')}, 20, 0, "#e08b1cff", false).setVisible(false).setOrigin(1).setDepth(4);
@@ -119,11 +130,20 @@ export default class Map extends Phaser.Scene {
             }
         }
 
+        /**
+         * Búsqueda del nodo Current protegido
+         * @type {MapNode}
+         * */
+        let nodoActual = this.nodes.find(n => n.state === State.CURRENT);
+        
+        // Si no hay nodo Current (bug de registro), forzamos el primero o el último visitado
+        if (!nodoActual) {
+            console.warn("¡ALERTA! No se encontró nodo CURRENT en el Registry. Restaurando nodo por defecto");
+            // Intentamos buscar uno visitado, si no, el primero (Home)
+            nodoActual = this.nodes.find(n => n.visited) || this.nodes[0];
+            nodoActual.state = State.CURRENT; // lo forzamos a CURRENT
+        }
 
-
-        /**@type {MapNode}*/
-        const nodoActual = this.nodes.find(n => n.state === State.CURRENT);
-        if (!nodoActual) throw "No hay nodo current. xd";
         nodoActual.openNearbyNodes();
         nodoActual.drawConnectionsFromCurrent();
 
@@ -132,8 +152,6 @@ export default class Map extends Phaser.Scene {
             console.log(node.difficulty)
         }
         this.GenerateDifficultyZones();
-
-
     }
 
     UpdateFociDifficulties(ammount) {
