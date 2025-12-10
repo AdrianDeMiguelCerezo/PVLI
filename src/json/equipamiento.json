@@ -54,8 +54,7 @@
                 "spCost": 15,
                 "damage":30,
                 "type":"ACTIVE",
-                "target":"ENEMY",
-                "spCost":15
+                "target":"ENEMY"
             }
         ],
         "crit_damage": 200,
@@ -148,8 +147,8 @@
         "crit_chance": 15
     },
     "ESPADA_NABO":{
-        "name":"Espada nabo",
-        "description":"No sé por qué hicieron una espada de esto.",
+        "name":"Espada nabo pocho",
+        "description":"No sé por qué hicieron una espada de esto. Ya empieza a oler mal",
         "type":"WEAPON",
         "habilidades":[
             {

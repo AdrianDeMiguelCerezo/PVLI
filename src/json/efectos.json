@@ -13,6 +13,13 @@
         "diffDmgPercent": -30,
         "diffDefensePercent": -30
     },
+    "HAMBRE_2": {
+        "name": "Hambriento 1",
+        "texture": "HAMBRE_1",
+        "diffDmgPercent": -30,
+        "diffDefensePercent": -30,
+        "isParalysis": true
+    },
     "PARALIZADO": {
         "name": "Paralizado",
         "texture": "SP+",
