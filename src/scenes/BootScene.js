@@ -71,11 +71,11 @@ export default class BootScene extends Phaser.Scene {
     }
     create() {
 
-        //this.playerData = new PlayerData();
-        this.uiButton(100, 400, "Go to Map", 'Map')
+        this.playerData = new PlayerData();
+        this.uiButton(100, 400, "Go to Map", 'Map', this.playerData)
         this.uiButton(100, 300, "Go to DialogueScene", 'DialogueScene')
         this.uiButton(100, 200, "Go to BattleScene", 'BattleScene', ['BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN',])
-        this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})
+        this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: this.playerData, oldScene: this.scene.key})
         this.uiButton(100, 500, "Go to xd", 'xd',)
 
         
