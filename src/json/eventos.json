@@ -144,7 +144,18 @@
                 {
                     "dinero": 35
                 }
+            ],
+            "coste_peaje_1": [
+                { "pago": 30 },
+                { "pago": 45 },
+                { "pago": 60 }
+            ],
+            "coste_peaje_2": [
+                { "pago": 25 },
+                { "pago": 40 },
+                { "pago": 55 }
             ]
+
         },
 
         "eventFragments": [
@@ -1413,7 +1424,7 @@
                 "optionsAmmount": 1
             },
             {
-                 "tag": "bandido_te_lleva_trampa",
+                "tag": "bandido_te_lleva_trampa",
                 "type": "dialogue",
                 "text": "Te das cuenta demasiado tarde de que el vandido te está llevando hacia donde están sus aliados.\nBandido:\"¡ATACADLE! ¡Ha matado a _nombre_bandido_muerto_1 y a _nombre_bandido_muerto_2!\"",
                 "permanentOptions": [
@@ -1458,7 +1469,7 @@
                         "text": "\"Vale, esperaré aquí con vosotros\"",
                         "j": "llegan_los_del_peaje"
                     }
-                   
+
                 ]
 
             },
@@ -1476,11 +1487,313 @@
             {
                 "type": "dialogue",
                 "text": "Tras acabar la batalla, aparece un grupo más grande de bandidos. Ven a sus compañeros caídos y arremeten contra tí.",
-                    "permanentOptions": [{"text": "luchar","j": "llamar_aliados"}]
+                "permanentOptions": [
+                    {
+                        "text": "luchar",
+                        "j": "llamar_aliados"
+                    }
+                ]
+            },
+            {
+                "tag": "3Bandidos_emboscada",
+                "type": "dialogue",
+                "text": "A pesar de que estás detrás de una roca con una silueta convenientemente igual a la tuya, los bandidos te descubren.\nBandido3:\"¿¡QUÉ HACEEES!?\"\nBandido2:\"Te hemos pillao con las manos en la masa, o mejor, en la roca\" Badum-tsss...",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarlos repentinamente",
+                        "tag": "3Bandidos_atacar_noEmboscada"
+                    },
+                    { "text": "esperar" }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido1:\"No sé a qué vienes, pero te va a tocar pagar el peaje. Espera que lleguen nuestros compañeros, ellos tienen las cuotas.\" Acto seguido, el bandido se saca un cuerno del cinturón y lo toca una vez. El estruendo del cuerno resuena por todo el cañón.",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarlos repentinamente",
+                        "tag": "3Bandidos_atacar_Saludar"
+                    },
+                    {
+                        "text": "esperar",
+                        "j": "llegan_los_del_peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "Pre_peaje",
+                "type": "dialogue",
+                "text": "Mientras caminas por el cañón, ves a un grupo de 4 personas que te corta el paso."
+
+            },
+            {
+                "tag": "peaje",
+                "type": "dialogue",
+                "text": "Bandido1:\"Somos parte de _nombre_grupo_bandidos.Si quieres seguir por este camino, tendrás que pagar un peaje.\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"¿Cual es la tarifa?\"",
+                        "j": "pago_1"
+                    },
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    },
+                    {
+                        "text": "Dar la vuelta",
+                        "j": "vuelta_tras_peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "vuelta_tras_peaje",
+                "type": "dialogue",
+                "text": "Intentas dar la vuelta e ir hacia atrás, pero los bandidos te cortan el paso.\nBandido1:\"Ya te lo hemos dicho, este cañón es territorio de _nombre_grupo_bandidos. La decisión es sencilla: o pagas, o no vivirás para contar esta experiencia.\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"¿Cual es la tarifa?\"",
+                        "j": "pago_1"
+                    },
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    }
+                ]
+            },
+            {
+                "tag": "pago_1",
+                "type": "dialogue",
+                "text": "Bandido1:\"Son _&pago_1\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\"",
+                        "j": "pago_2"
+                    },
+                    {
+                        "text": "\"No tengo dinero suficiente\"",
+                        "j": "no_hay_dinero_pago1"
+                    },
+                    {
+                        "text": "\"Pagar\"",
+                        "j": "transacción_pago_1"
+                    },
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    }
+                ]
+
+            },
+            {
+                "tag": "no_hay_dinero_pago1",
+                "type": "dialogue",
+                "text": "Bandido1:\"¿No será mentira...?\"",
+                "options": [
+                    {
+                        "text": "\"¡Claro que no es mentira!\"",
+                        "j": "te_creen_no_tenías_dinero"
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    }
+
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido1:\"Pues tocará comprobarlo.Deja tus armas, tu ropa y tus pertenencias en el suelo. Puedes quedarte con tu ropa inerior\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    },
+                    {
+                        "text": "Hacerles caso"
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "3 de ellos se ponen a rebuscar entre tus pertenencias mientras uno te vigila"
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido3:\"Jefe, he encontrado el dinero. ¡Nos estaba engañando!\"\nBandido1:\"Ya sabéis qué hacer con él\"",
+                "rewards": "coste_peaje_1",
+                "noPayFragment": "no_tenías_dinero"
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido3:\"¿Qué hacemos con él, jefe?\"\nBandido1:\"¡Devolvedle sus pertenencias y luego matadle! No queremos que el jefazo nos regañe por matar a alguien indefenso. Somos _nombre_grupo_bandidos, un poco de decencia.\"",
+                "permanentOptions": {
+                    "text": "recoger tus pertenencias y prepararte para el combate",
+                    "j": "llamar_aliados"
+                }
+            },
+            {
+                "tag": "transacción_pago_1",
+                "type": "dialogue",
+                "text": "Pagas _$coste_peaje_1, y te dejan seguir tu camino",
+                "rewards": "coste_peaje_1",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar tu camino",
+                        "j": "fin_peaje"
+                    }
+                ]
+                    
+            },
+            {
+                "tag": "pago_2",
+                "type": "dialogue",
+                "text": "Bandido1:\"Así que no te convence...\"\nBandido1:\"El precio final es _&pago_2. O lo tomas, o lo tomamos.\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"Podríais darme otro precio, por favor. ¡No hay manera de que la archiconocida banda de _nombre_grupo_bandidos se rebaje a este nivel!\""
+                    },
+                    {
+                        "text": "\"No tengo dinero suficiente\"",
+                        "j": "no_hay_dinero_pago2"
+                    },
+                    {
+                        "text": "\"Pagar\"",
+                        "j": "transacción_pago_2"
+                    },
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    }
+                ]
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido1:\"¡Esto ya es un cachondeo! Mi amabilidad se acaba aquí.\"\nBandido1:\"Matadle.\"\nA continuación, los bandidos se abalanzan sobre tí.",
+                "permanentOptions": [
+                    {
+                        "text": "luchar",
+                        "j": "llama_aliados"
+                    }
+                ]
+            },
+            {
+                "tag": "no_hay_dinero_pago2",
+                "type": "dialogue",
+                "text": "Bandido1:\"¿No será mentira...?\"",
+                "options": [
+                    {
+                        "text": "\"¡Claro que no es mentira!\"",
+                        "j": "te_creen_no_tenías_dinero"
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    },
+                    {
+                        "text": "\"¡Claro que no es mentira!\""
+                    }
+
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido1:\"Pues tocará comprobarlo.Deja tus armas, tu ropa y tus pertenencias en el suelo. Puedes quedarte con tu ropa inerior\"",
+                "permanentOptions": [
+                    {
+                        "text": "Atacarles",
+                        "j": "llamar_aliados"
+                    },
+                    {
+                        "text": "Hacerles caso"
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "3 de ellos se ponen a rebuscar entre tus pertenencias mientras uno te vigila"
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido3:\"Jefe, he encontrado el dinero. ¡Nos estaba engañando!\"\nBandido1:\"Ya sabéis qué hacer con él\"",
+                "rewards": "coste_peaje_2",
+                "noPayFragment": "no_tenías_dinero"
+            },
+            {
+                "type": "dialogue",
+                "text": "Bandido3:\"¿Qué hacemos con él, jefe?\"\nBandido1:\"¡Devolvedle sus pertenencias y luego matadle! No queremos que el jefazo nos regañe por matar a alguien indefenso.\n Somos _nombre_grupo_bandidos, un poco de decencia.\"",
+                "permanentOptions": {
+                    "text": "recoger tus pertenencias y prepararte para el combate",
+                    "j": "llamar_aliados"
+                }
+            },
+            {
+                "tag": "transacción_pago_2",
+                "type": "dialogue",
+                "text": "Pagas _$coste_peaje_2, y te dejan seguir tu camino",
+                "rewards": "coste_peaje_2",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar tu camino",
+                        "j": "fin_peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "no_tenías_dinero",
+                "type": "dialogue",
+                "text": "Bandido3:\"Jefe, no he encontrado el dinero, decía la verdad.\"\nBandido1:\"Qué raro, nos suelen intentar engañar. Cuando lo intentan, les devolvemos sus cosas y luego les matamos. Órdenes del jefe jefe\".",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar tu camino",
+                        "j": "fin_peaje_incómodo"
+                    }
+                ]
+            },
+            {
+                "tag": "te_creen_no_tenías_dinero",
+                "type": "dialogue",
+                "text": "Bandido1:\"Pues mejor que mejor, así no llenamos más las arcas de el nuevo jefazo, que no es un bandido de pura cepa.\"\nBandido1:\"¡Y vosotros! No le contéis a nadie lo que acaba de pasar ni lo que acabo de decir, eh...\".",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar tu camino",
+                        "j": "fin_peaje"
+                    }
+                ]
+            },
+            {
+                "tag": "fin_peaje_incómodo",
+                "type": "dialogue",
+                "text": "Tras pasar por algunos momentos tensos y por una situación bastante incómoda, continúas andando hasta salir del cañón sin más contratiempos.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar",
+                        "j": null
+                    }
+                ]
+            },
+             {
+                "tag": "fin_peaje",
+                "type": "dialogue",
+                "text": "Tras pasar por algunos momentos tensos, continúas andando hasta salir del cañón sin más contratiempos.\n_cannon_day_cost",
+                "rewards": "cannon_day_cost",
+                "permanentOptions": [
+                    {
+                        "text": "Continuar",
+                        "j": null
+                    }
+                ]
             }
-
-
-
         ]
     },
     "PUEBLO_MEDIANO": {
@@ -1717,7 +2030,12 @@
                 },
                 {
                     "dinero": 40,
-                    "items": [ {"item":"POTI_HP_GRANDE","count":1} ]
+                    "items": [
+                        {
+                            "item": "POTI_HP_GRANDE",
+                            "count": 1
+                        }
+                    ]
                 }
             ]
         },
@@ -1852,7 +2170,7 @@
         ]
 
     },
-    "PERRO_ATRAPADO":{
+    "PERRO_ATRAPADO": {
         "params": {
             "recompensas_perro_atrapado": [
                 {
@@ -1860,132 +2178,172 @@
 
                 },
                 {
-                    "items":[{"item":"NABO","count":2}]
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 2
+                        }
+                    ]
                 },
                 {
-                    "items": [{"item":"POTI_SP_MINI","count":1}]
+                    "items": [
+                        {
+                            "item": "POTI_SP_MINI",
+                            "count": 1
+                        }
+                    ]
                 }
             ],
-            "recompensas_perro_libre":[
+            "recompensas_perro_libre": [
                 {
-                    "dinero":5
+                    "dinero": 5
                 },
                 {
-                    "items":[{"item":"POTI_HP_MINI","count":1}]
+                    "items": [
+                        {
+                            "item": "POTI_HP_MINI",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
-                    "items":[{"item":"FLASHBANG","count":1}]
+                    "items": [
+                        {
+                            "item": "FLASHBANG",
+                            "count": 1
+                        }
+                    ]
                 }
             ]
         },
-        "eventFragments":[
+        "eventFragments": [
             {
-                "type":"dialogue",
-                "text":"Te encuentras un perro atrapado dentro de una casa en una trampa claramente hecha para un humano. Está sangrando bastante."
+                "type": "dialogue",
+                "text": "Te encuentras un perro atrapado dentro de una casa en una trampa claramente hecha para un humano. Está sangrando bastante."
             },
             {
-                "type":"dialogue",
-                "text":"Oyes ruido de fondo de gente que seguramente vaya hacia el perro. La casa está vacía. Podrías saquearla, pero solo tienes tiempo para una cosa.",
-                "options":[
+                "type": "dialogue",
+                "text": "Oyes ruido de fondo de gente que seguramente vaya hacia el perro. La casa está vacía. Podrías saquearla, pero solo tienes tiempo para una cosa.",
+                "options": [
                     {
-                        "text":"Liberar al perro",
-                        "j":"PERRO_LIBRE"
+                        "text": "Liberar al perro",
+                        "j": "PERRO_LIBRE"
                     },
                     {
-                        "text":"Saquear la casa",
-                        "j":"LOOT_CASA"
+                        "text": "Saquear la casa",
+                        "j": "LOOT_CASA"
                     },
                     {
-                        "text":"Salir corriendo",
-                        "j":null
+                        "text": "Salir corriendo",
+                        "j": null
                     }
                 ]
             },
             {
-                "tag":"PERRO_LIBRE",
-                "type":"dialogue",
-                "text":"Decides liberar al perro, pero te haces daño en el proceso.",
-                "rewards":{"HP":-10}
+                "tag": "PERRO_LIBRE",
+                "type": "dialogue",
+                "text": "Decides liberar al perro, pero te haces daño en el proceso.",
+                "rewards": { "HP": -10 }
             },
             {
-                "type":"dialogue",
-                "text":"Al liberarlo, descubres que estaba guardando _recompensas_perro_libre. Te lo da y te despides de él con caricias.",
-                "rewards":"recompensas_perro_libre",
-                "options":[
+                "type": "dialogue",
+                "text": "Al liberarlo, descubres que estaba guardando _recompensas_perro_libre. Te lo da y te despides de él con caricias.",
+                "rewards": "recompensas_perro_libre",
+                "options": [
                     {
-                        "text":"Adiós, chucho",
-                        "j":null
+                        "text": "Adiós, chucho",
+                        "j": null
                     }
                 ]
             },
 
             {
-                "tag":"LOOT_CASA",
-                "type":"dialogue",
-                "text":"Pasas del perro para saquear la casa, y encuentras _recompensas_perro_atrapado. Te vas antes de que te vean los otros.",
-                "rewards":"recompensas_perro_atrapado"
+                "tag": "LOOT_CASA",
+                "type": "dialogue",
+                "text": "Pasas del perro para saquear la casa, y encuentras _recompensas_perro_atrapado. Te vas antes de que te vean los otros.",
+                "rewards": "recompensas_perro_atrapado"
             },
             {
-                "type":"dialogue",
-                "text":"Espero que haya valido la pena, hijo de puta."
+                "type": "dialogue",
+                "text": "Espero que haya valido la pena, hijo de puta."
             }
         ]
     },
-    "FABRICA":{
+    "FABRICA": {
         "params": {
             "recompensas_fabrica": [
                 {
                     "dinero": 33
                 },
                 {
-                    "equipamiento":["VAQUEROS"]
+                    "equipamiento": [ "VAQUEROS" ]
                 },
                 {
-                    "items":[{"item":"RACION_SECA","count":3}]
+                    "items": [
+                        {
+                            "item": "RACION_SECA",
+                            "count": 3
+                        }
+                    ]
                 },
                 {
-                    "items": [{"item":"RACION_GOURMET","count":1}]
+                    "items": [
+                        {
+                            "item": "RACION_GOURMET",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
-                    "items": [{"item":"RACION_CALIDAD","count":1}]
+                    "items": [
+                        {
+                            "item": "RACION_CALIDAD",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
-                    "items": [{"item":"MEJUNJE_EXTRAÑO","count":5}]
+                    "items": [
+                        {
+                            "item": "MEJUNJE_EXTRAÑO",
+                            "count": 5
+                        }
+                    ]
                 }
             ]
         },
-        "eventFragments":[
+        "eventFragments": [
             {
-                "type":"dialogue",
-                "text":"Mientras andas por el desierto, te encuentras con una fábrica abandonada. Tiene un agujero en su pared y podría ser útil saquearlo.",
-                "options":[
+                "type": "dialogue",
+                "text": "Mientras andas por el desierto, te encuentras con una fábrica abandonada. Tiene un agujero en su pared y podría ser útil saquearlo.",
+                "options": [
                     {
-                        "text":"Entrar a saquearlo",
-                        "j":"SAQUEO"
+                        "text": "Entrar a saquearlo",
+                        "j": "SAQUEO"
                     },
                     {
-                        "text":"No entrar e irte por sea caso"
+                        "text": "No entrar e irte por sea caso"
                     }
                 ]
             },
             {
-                "type":"dialogue",
-                "text":"Decides irte de allí antes de que ningún robot malhumorado te pille.",
-                "options":[
+                "type": "dialogue",
+                "text": "Decides irte de allí antes de que ningún robot malhumorado te pille.",
+                "options": [
                     {
-                        "text":"Mejor",
-                        "j":null
+                        "text": "Mejor",
+                        "j": null
                     }
                 ]
             },
             {
-                "tag":"SAQUEO",
-                "type":"dialogue",
-                "text":"Decides entrar a la fábrica para ver lo que te puedes encontrar."
+                "tag": "SAQUEO",
+                "type": "dialogue",
+                "text": "Decides entrar a la fábrica para ver lo que te puedes encontrar."
             },
             {
-                "type":"dialogue",
-                "text":"De repente, un escuadrón de robots todavía funcionales te asalta! Prepárate!"
+                "type": "dialogue",
+                "text": "De repente, un escuadrón de robots todavía funcionales te asalta! Prepárate!"
             },
             {
                 "type": "combat",
@@ -2000,9 +2358,9 @@
                 "flee": null
             },
             {
-                "type":"dialogue",
-                "text":"Tras derrotar los maleantes, te encuentras con _recompensas_fabrica. Decides irte antes de que aparezcan más.",
-                "rewards":"recompensas_fabrica"
+                "type": "dialogue",
+                "text": "Tras derrotar los maleantes, te encuentras con _recompensas_fabrica. Decides irte antes de que aparezcan más.",
+                "rewards": "recompensas_fabrica"
             }
         ]
     }

@@ -37,7 +37,7 @@ export default class EventParser {
 
         }
         this.MAX_OPTIONS = 3;
-
+        this.lastEventFragment = null;
     }
 
 
@@ -94,7 +94,7 @@ export default class EventParser {
 
         /**@type {SubStateNode} */
         let eventFragmentNode = new SubStateNode();
-
+        this.lastEventFragment = eventFragmentNode;
 
 
         //si no soy, al mapa
@@ -214,21 +214,19 @@ export default class EventParser {
                     }
                 }
 
+                
                 //si el evento tiene un pago
                 if (eventFragmentNode.consecuencias.hasOwnProperty("pago")) {
-
-                    //genera el fragment oal que se va si no dinero suficiente
-                    eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
-
-                    //si hay un noPayFragment al que se salta, se salta a ese, si es null o undefined se vuelve al anterior.
+                    
+                    //si hay un noPayFragment al que se salta, se salta a ese, si es null o undefined se vuelve al anterior(que es quien ha llamado a que se genere este fragmento).
                     if (thisFragment_json.noPayFragment) {
-                        eventFragmentNode.nodoNoPay.opciones = [{
-                            texto: "\"No tengo dinero suficiente\"",
-                            j: this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment])
-                        }]
+                        eventFragmentNode.nodoNoPay = this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment]);
                     }
                     else {
-                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", j: eventFragmentNode }]
+                        if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) {console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
+                        //genera el fragment oal que se va si no dinero suficiente
+                        eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
+                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", j: this.lastEventFragment }]
                     }
 
                 }
@@ -257,7 +255,7 @@ export default class EventParser {
                         }
                         //si la tag con este nombre no existe
                         else {
-                            console.log("la tag llamada", jumpTag, " no existe. (se queda como null de momento)");
+                            console.warn("la tag llamada", jumpTag, " no existe. (se queda como null de momento). LLamada desde ",thisFragment_json);
                             eventFragmentNode.nodoHuida = null;
                         }
                     }
@@ -367,15 +365,23 @@ export default class EventParser {
             for (let parameter of string.match(expReg)) {
 
 
+                //si tiene "&" delante y un objeto => Es una transacción.
+                if (parameter[1]==='&'&& typeof (this.params[parameter.substring(2)]) === "object") {
+                    console.log("reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
+                    string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(2)]))
+                }
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
-                if (typeof (this.params[parameter.substring(1)]) === "object") {
+                else if (typeof (this.params[parameter.substring(1)]) === "object") {
                     console.log("reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(1)]))
                 }
+
                 else {
-                    console.log("Written Reward:", this.params[parameter.substring(1)])
-                    //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
-                    string = string.replace(parameter, this.params[parameter.substring(1)])
+                    {
+                        console.log("Written Reward:", this.params[parameter.substring(1)])
+                        //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
+                        string = string.replace(parameter, this.params[parameter.substring(1)])
+                    }
                 }
             }
         }
@@ -421,17 +427,23 @@ export default class EventParser {
                     }
                 case "items":
                     {
-
-                        for(let i = 0; i < value.length; i++){
-                            console.log(value[i], this.jsonItems[value[i].item]);
-                            returnString += this.jsonItems[value[i].item].name + " (x" + value[i].count + "), ";
+                        let itemCount = 0;
+                        let secondaryReturnString = ""; 
+                        for (const itemReward of value) {
+                            secondaryReturnString += this.jsonItems[itemReward.item].name + " (x" + itemReward.count + "), ";
+                            itemCount += itemReward.count;
                         }
-
+                        let primaryReturnString = itemCount > 1 ? "los objetos " : "el objeto "; 
+                        returnString+=primaryReturnString+secondaryReturnString
                         break;
 
                     }
                 case "equipamiento":
                     {
+                        //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
+                        for (const itemReward of value) {
+                            returnString += this.jsonItems[itemReward.item].name + ", ";
+                        }
 
                         returnString += value.length > 1 ? "los equipamientos " : "el equipamiento ";
                         for (let j = 0; j < value.length; j++) {
@@ -467,6 +479,85 @@ export default class EventParser {
         }
         //quitar el �ltimo ", "
         returnString = returnString.slice(0, -2);
+
+        return returnString;
+
+    }
+
+    /**
+     * 
+     * @param {object} rewards
+     */
+    WriteTransaction(rewards) {
+
+        let returnString = "";
+        let primaryReturnString = "";
+        let array = Object.entries(rewards);
+
+
+        //decidido seg�n representaci�n en el json
+        if (rewards.hasOwnProperty("pago")) {
+            primaryReturnString +=rewards["pago"]+"de dinero"
+        }
+        let hayRecompensa = false;
+        for (let i = 0; i < array.length; i++) {
+            const key = array[i][0]
+            const value = array[i][1]
+
+            //console.log(key, ":", value);
+            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
+            switch (key) {
+                case "equipamiento":
+                    {
+                        //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
+                        for (const itemReward of value) {
+                            returnString += this.jsonItems[itemReward.item].name + ", ";
+                            
+                        }
+                        hayRecompensa = true;
+                        break;
+
+                    }
+                case "habilidades":
+                    {
+
+                        returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
+                        for (let j = 0; j < value.length; j++) {
+                            console.log("habilidad:", value[j])
+                            console.log(value[j]);
+                            returnString += this.jsonHabilidades[value[j]].name + ", ";
+                            
+                        }
+                        hayRecompensa = true;
+                        break;
+
+                    }
+                case "items":
+                    {
+                        let itemCount = 0;
+                        let secondaryReturnString = "";
+                        for (const itemReward of value) {
+                            secondaryReturnString += this.jsonItems[itemReward.item].name + " (x" + itemReward.count + "), ";
+                            itemCount += itemReward.count;
+                        }
+                        let primaryReturnString = itemCount > 1 ? "los objetos " : "el objeto ";
+                        returnString += primaryReturnString + secondaryReturnString;
+                        hayRecompensa = true;
+                        break;
+
+                    }
+
+            }
+
+        }
+        //quitar el �ltimo ", "
+        returnString = returnString.slice(0, -2);
+
+        if (!hayRecompensa) {
+            returnString = primaryReturnString;
+        } else {
+            returnString = primaryReturnString + " a cambio de " + returnString;
+        }
 
         return returnString;
 

@@ -40,7 +40,12 @@
             "target":"ENEMY"
         },
         {
-            "damage":3,
+            "damage": 10,
+            "type": "ATTACK",
+            "target": "ENEMY"
+        },
+        {
+            "damage":10,
             "type":"ATTACK",
             "target":"ENEMY"
         }
@@ -63,12 +68,12 @@
             "target":"RNDENEMY"
         },
         {
-            "damage":3,
+            "damage":5,
             "type":"ATTACK",
             "target":"ENEMY"
         },
         {
-            "damage":3,
+            "damage":5,
             "type":"ATTACK",
             "target":"ENEMY"
         }
@@ -79,7 +84,7 @@
     "HpMax":80,
     "habilidades":[
         {
-            "damage":6,
+            "damage":15,
             "type":"ATTACK",
             "target":"ENEMY"
         },
@@ -96,7 +101,7 @@
     "HpMax":40,
     "habilidades":[
         {
-            "damage":4,
+            "damage":8,
             "type":"ATTACK",
             "target":"ENEMY"
         },
@@ -114,6 +119,12 @@
     "habilidades":[
         {
             "effect": "ATT-",
+            "effectDuration": 2,
+            "type": "DEBUFF",
+            "target": "ENEMY"
+        },
+        {
+            "effect": "DEF-",
             "effectDuration":  2,
             "type": "DEBUFF",
             "target": "ENEMY"
