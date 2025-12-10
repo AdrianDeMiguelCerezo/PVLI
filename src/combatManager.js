@@ -36,6 +36,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
     console.log("[CM] CombatManager inicializado");
 
+    this.addStatusToPlayer("ENVENENADO", 5); // para probar efecto envenamiento
+
     // primer turno del jugador
     this.startPlayerTurn();
   }
@@ -58,6 +60,46 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   startPlayerTurn() {
     if (this.ended) return;
 
+    const pd = this.player.playerData;
+
+    // Lógica de muerte por hambre
+    if (pd.hambre >= 100) {
+      console.log("[CM] El jugador ha muerto de inanición.");
+      this.finishCombat("lose");
+      return;
+    }
+
+    // Lógica de efecto hambriento 1 (>= 50 de hambre)
+    // Hambriento 1 aplica debuffs de stats (definido en efectos.json)
+    const umbralHambre = 50;
+    const keyHambre1 = "HAMBRE_1";
+    const yaTieneHambre1 = pd.efectos.some(e => e.key === keyHambre1);
+
+    if (pd.hambre >= umbralHambre) {
+      if (!yaTieneHambre1) {
+        // Aplicamos el efecto con duración "infinita" (ej. 999 turnos) mientras dure el hambre
+        this.addStatusToPlayer(keyHambre1, 999);
+        console.log(`[CM] Aplicado efecto ${keyHambre1}`);
+      }
+    } else {
+      if (yaTieneHambre1) {
+        // Si bajó el habre (ej. por comer), quitamos el efecto manualmente
+        pd.efectos = pd.efectos.filter(e => e.key !== keyHambre1);
+        pd.efectosTam = pd.efectos.length;
+        console.log(`[CM] Retirado efecto ${keyHambre1}`);
+      }
+    }
+
+    // Lógica de Hambriento 2 (>= 80 de hambre)
+    // Según el GDD: "El jugador solo tiene una acción por turno"
+    if (pd.hambre >= 80) {
+      this.maxActionsPerTurn = 1;
+    } else {
+      // Restaurar a dos si baja el hambre
+      this.maxActionsPerTurn = 2;
+    }
+
+    // Asignar accidones disponibles basadas en el recálculo anterior
     this.actionsLeft = this.maxActionsPerTurn;
 
     // aplicar efectos de estado al principio del turno
@@ -78,6 +120,44 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
     // vuelve el menú de habilidades
     this.scene.events.emit("select_skill");
+  }
+
+  /**
+   * Calcula la defensa total del jugador (equipamiento + modificadores de estado)
+   */
+  getPlayerDefense() {
+    const pd = this.player.playerData;
+    // Accedemos al JSON de equipamiento cargado en la escena
+    const equipJson = this.scene.jsonEquipamiento; 
+    const efectosJson = this.scene.jsonEfectos;
+
+    let totalDef = 0;
+
+    // Defensa base por equipamiento (Torso + Pantalones)
+    if (pd.torso && equipJson[pd.torso]) {
+        totalDef += equipJson[pd.torso].defense || 0;
+    }
+    if (pd.pantalones && equipJson[pd.pantalones]) {
+        totalDef += equipJson[pd.pantalones].defense || 0;
+    }
+
+    // Modificadores por efectos de estado (Ej: HAMBRIENTO_1 baja defensa %)
+    let percentMod = 0;
+    if (pd.efectos) {
+        pd.efectos.forEach(eff => {
+            const def = efectosJson[eff.key];
+            if (def && def.diffDefensePercent) {
+                percentMod += def.diffDefensePercent;
+                console.log(`[CM] Defensa: ` + def.diffDefensePercent);
+            }
+        });
+    }
+
+    // Aplicar porcentaje (Ej: Si percentMod es -30, multiplicamos por 0.7)
+    // Math.max(0, ...) evita defensa negativa si los debuffs son muy fuertes
+    totalDef = Math.max(0, Math.floor(totalDef * (1 + percentMod / 100)));
+
+    return totalDef;
   }
 
   // =================== Entrada desde UI ===================
@@ -294,11 +374,22 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
       // efectos secundarios (estado / curas / pociones)
       this.applySecondaryEffects(skill, arr);
+
+      if (skill.cureEffect) {
+        arr.forEach(t => this.removeStatusFromEntity(t, skill.cureEffect));
+      }
     };
 
     switch (skill.target) {
       case Target.SELF:
+        // Aplicar efectos normales (HP, SP, Buffs...)
         this.applySecondaryEffectsToPlayer(skill);
+
+        // Aplicar cura (antídoto)
+        if (skill.cureEffect) {
+          console.log(`[CM] Aplicando cura a JUGADOR: ${skill.cureEffect}`);
+          this.removeStatusFromEntity(this.player, skill.cureEffect);
+        }
         break;
 
       case Target.ENEMY:
@@ -469,6 +560,38 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     pd.efectosTam = pd.efectos.length;
   }
 
+  /**
+   * Elimina un efecto de estado de una entidad (Player o Enemy) por su clave
+   * @param {*} entity 
+   * @param {*} keyToRemove 
+   */
+  removeStatusFromEntity(entity, keyToRemove) {
+    // Detectar si es Player o Enemy y localizar su array de efectos
+    let dataCtx = null;
+
+    // Si la entidad tiene 'playerData', es el Player
+    if (entity.playerData) {
+      dataCtx = entity.playerData;
+    } else {
+      // Si no, asumimmos que es un Enemy
+      dataCtx = entity;
+    }
+
+    if (!dataCtx || !Array.isArray(dataCtx.efectos)) return;
+
+    // Comprobar si tiene el efecto
+    const antes = dataCtx.efectos.length;
+    dataCtx.efectos = dataCtx.efectos.filter(e => e.key !== keyToRemove);
+    dataCtx.efectosTam = dataCtx.efectos.length;
+
+    if (dataCtx.efectos.length < antes) {
+      console.log(`[CM] Efecto ${keyToRemove} eliminado de ${dataCtx.name || "entidad"}`);
+    }
+
+    // Actualizar la UI inmediantamente
+    this.scene.RedrawEnemies?.();
+  }
+
   addStatusToEnemy(enemy, key, duration) {
     if (!enemy.efectos) enemy.efectos = [];
     enemy.efectos.push({ key, duration });
@@ -484,7 +607,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       const maxHp = pd.HPMax ?? pd.HP ?? 0;
       const delta = Math.round(maxHp * (def.diffHealthPercent / 100));
       if (delta < 0) {
-        this.damagePlayer(-delta);
+        // Pasamos a 'true' para ignorar defensa
+        this.damagePlayer(-delta, true);
       } else {
         pd.HP = clamp((pd.HP ?? maxHp) + delta, 0, maxHp);
       }
@@ -492,7 +616,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
     if (Number.isFinite(def.diffHealth)) {
       if (def.diffHealth < 0) {
-        this.damagePlayer(-def.diffHealth);
+        // Pasamos a 'true' para ignorar defensa
+        this.damagePlayer(-def.diffHealth, true);
       } else {
         const maxHp = pd.HPMax ?? pd.HP ?? 0;
         pd.HP = clamp((pd.HP ?? maxHp) + def.diffHealth, 0, maxHp);
@@ -650,6 +775,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       ? obj.actionCost
       : (Number.isFinite(obj.actions) ? obj.actions : 1);
 
+    const cureEffect = obj.cureEffect ?? obj.curarEfecto ?? null;
+
     return {
       key: keyHint,
       name: obj.name ?? obj.nombre ?? keyHint,
@@ -660,6 +787,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       target,
       actionCost,
       actions: actionCost,
+
+      cureEffect: cureEffect,
 
       spCost: obj.spCost ?? obj.coste ?? 0,
       effect: obj.effect ?? obj.efecto ?? null,
@@ -720,7 +849,7 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       }
 
       const enemy  = this.enemies[index];
-      const damage = 5; // TODO: sacar de enemigos.json
+      const damage = 20; // TODO: sacar de enemigos.json
 
       const onHit = () => {
         if (player && typeof player.setTint === "function") {
@@ -760,28 +889,31 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
     );
   }
 
-  damagePlayer(amount) {
+  damagePlayer(amount, ignoreDefense = false) {
     const pd = this.player?.playerData;
     if (!pd) return;
 
-    const dmg = Math.max(0, Math.floor(amount));
-    const currentHp =
-      pd.HP ??
-      pd.Hp ??
-      pd.hp ??
-      50;
+    // Calculamos daño bruto
+    let incomingDmg = Math.max(0, Math.floor(amount));
 
-    const newHp = Math.max(0, currentHp - dmg);
+    // Solo aplicamos la defensa SI NO es daño verdadero (ignoreDefense es false)
+    if (incomingDmg > 0 && !ignoreDefense) {
+      const defense = this.getPlayerDefense();
+      // Fórmula simple: daño - defensa (mínimo 1 de daño siempre que golpeen)
+      incomingDmg = Math.max(0, incomingDmg - defense);
 
+      console.log(`[CM] Daño recibido: ${amount} | Defensa: ${defense} | Daño final: ${incomingDmg}`);
+    } else if (ignoreDefense) {
+      console.log(`[CM] Daño VERDADERO recibido (ignora defensa) : ${incomingDmg}`);
+    }
+
+    const currentHp = pd.HP ?? pd.Hp ?? pd.hp ?? 50;
+    const newHp = Math.max(0, currentHp - incomingDmg);
+
+    // Unificar propiedades de HP por si acaso
     pd.HP = newHp;
     pd.Hp = newHp;
     pd.hp = newHp;
-
-    console.log("[CM] damagePlayer", {
-      amount: dmg,
-      hpAntes: currentHp,
-      hpDespues: newHp
-    });
 
     if (newHp <= 0) {
       this.finishCombat("lose");

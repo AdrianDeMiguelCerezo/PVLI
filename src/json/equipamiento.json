@@ -66,7 +66,8 @@
                 "actionCost":1,
                 "damage":18,
                 "type":"ACTIVE",
-                "target":"ENEMY"
+                "target":"ENEMY",
+                "spCost":0
             },
             {
                 "name":"SuperShot",
@@ -74,7 +75,8 @@
                 "actionCost":2,
                 "damage":30,
                 "type":"ACTIVE",
-                "target":"ENEMY"
+                "target":"ENEMY",
+                "spCost":15
             }
         ],
         "crit_damage": 200,

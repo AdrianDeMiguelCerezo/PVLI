@@ -10,16 +10,19 @@ import ImageWithText from "../ImageWithText.js";
 
 export default class BattleScene extends Phaser.Scene {
   /**
+   * Jugador de la escena
    * @type {Player}
    */
   player;
 
   /**
+   * Listado de enemigos
    * @type {Enemy[]}
    */
   enemies;
 
   /**
+   * Puntero al gestor de combates
    * @type {CombatManager}
    */
   combatManager;
@@ -27,6 +30,10 @@ export default class BattleScene extends Phaser.Scene {
   constructor() {
     super({ key: "BattleScene" });
     this.enemies = [];
+
+    // NUEVO: referencias a los menús de efectos
+    this.enemyEffectMenus = [];
+    this.playerEffectMenu = null;
   }
 
   /**
@@ -281,7 +288,18 @@ export default class BattleScene extends Phaser.Scene {
   }
 
   RedrawEnemies() {
-    // recolocar sprites de enemigos
+    // 1) Limpiar menús de efectos anteriores
+    if (this.enemyEffectMenus) {
+      this.enemyEffectMenus.forEach(m => m.destroy(true));
+    }
+    this.enemyEffectMenus = [];
+
+    if (this.playerEffectMenu) {
+      this.playerEffectMenu.destroy(true);
+      this.playerEffectMenu = null;
+    }
+
+    // 2) Recolocar sprites de enemigos
     for (let i = 0; i < this.enemiesTam; i++) {
       this.enemies[i].updateEnemy(
         500 + 35 * i,
@@ -289,12 +307,14 @@ export default class BattleScene extends Phaser.Scene {
       );
     }
 
-    // menús de efectos de los enemigos
+    // 3) Menús de efectos de los enemigos
     for (let i = 0; i < this.enemiesTam; i++) {
+      const enemy = this.enemies[i];
+
       const menuEffects = new Menu(
         this,
-        this.enemies[i].x + this.enemies[i].image.width + 5,
-        this.enemies[i].y,
+        enemy.x + enemy.image.width + 5,
+        enemy.y,
         80,
         50,
         2,
@@ -303,24 +323,28 @@ export default class BattleScene extends Phaser.Scene {
         0,
         1
       );
-      for (let j = 0; j < this.enemies[i].efectosTam; j++) {
+
+      for (let j = 0; j < enemy.efectosTam; j++) {
+        const efecto = enemy.efectos[j];
         menuEffects.AddItem(
           new ImageWithText(
             this,
             0,
             0,
-            this.enemies[i].efectos[j].duration,
-            this.enemies[i].efectos[j].key,
+            efecto.duration,
+            efecto.key,
             true,
             2,
             0.8
           )
         );
       }
+
+      this.enemyEffectMenus.push(menuEffects);
     }
 
-    // menú de efectos del jugador
-    const menuEffectsPlayer = new Menu(
+    // 4) Menú de efectos del jugador
+    this.playerEffectMenu = new Menu(
       this,
       this.player.x + this.player.width + 5,
       this.player.y,
@@ -332,14 +356,16 @@ export default class BattleScene extends Phaser.Scene {
       0,
       1
     );
+
     for (let j = 0; j < this.player.playerData.efectosTam; j++) {
-      menuEffectsPlayer.AddItem(
+      const efecto = this.player.playerData.efectos[j];
+      this.playerEffectMenu.AddItem(
         new ImageWithText(
           this,
           0,
           0,
-          this.player.playerData.efectos[j].duration,
-          this.player.playerData.efectos[j].key,
+          efecto.duration,
+          efecto.key,
           true,
           2,
           0.8
@@ -347,6 +373,7 @@ export default class BattleScene extends Phaser.Scene {
       );
     }
   }
+
 
   OnSelectTarget(skillKey) {
     this.blackFullRect.setVisible(true);
