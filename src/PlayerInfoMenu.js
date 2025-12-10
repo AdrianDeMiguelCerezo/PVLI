@@ -481,21 +481,66 @@ console.log(this.scene);
      * Usa el item que tengas seleccionado
      */
     usar(){
-        const item=this.scene.jsonItems[this.k];
-        if(item.usedOutOfCombat){
-            //codigo para usar item
+        const itemJson = this.scene.jsonItems[this.k];
 
+        if (itemJson && itemJson.usedOutOfCombat) {
+            // Buscamos la referencia en el inventario del jugador
             const entry = this.playerData.items.find(obj => obj.item === this.k);
+            if (!entry) return; // Por seguridad
 
+            // Aplicar efectos del ítem
+            // Leemos la primera 'habilidad' definida en el JSON del ítem
+            if (itemJson.habilidades && itemJson.habilidades.length > 0) {
+                const skill = itemJson.habilidades[0];
+
+                // A) Efectos instantáneos (Curar HP / Recuperar SP)
+                if (itemJson.habilidades && typeof skill.effect === 'object') {
+                    // Vida
+                    if (skill.effect.diffHealth) {
+                        const newHp = this.playerData.HP + skill.effect.diffHealth;
+                        // Clamp entre 0 y HPMax
+                        this.playerData.HP = Math.max(0, Math.min(newHp, this.playerData.HPMax));
+                    }
+                    // SP
+                    if (skill.effect.diffSp) {
+                        const newSp = this.playerData.SP + skill.effect.diffSp;
+                        // Clamp entre 0 y SPMax
+                        this.playerData.SP = Math.max(0, Math.min(newSp, this.playerData.SPMax));
+                    }
+                }
+
+                // B) Efecto de cura (antídoto)
+                // Leemos cureEffect (o curarEfecto, por si acaso)
+                const effectToRemove = skill.cureEffect || skill.curarEfecto;
+                if (effectToRemove) {
+                    // Filtramos el array de efectos para quitar el que coincida
+                    const prevLength = this.playerData.efectos.length;
+                    this.playerData.efectos = this.playerData.efectos.filter(
+                        e => e.key !== effectToRemove);
+                    this.playerData.efectosTam = this.playerData.efectos.length;
+
+                    if (this.playerData.efectos.length < prevLength) {
+                        console.log(`[MENU] Efecto ${effectToRemove} curado.`);
+                    }
+                }
+            }
+
+            // Consumir el ítem (lógica original)
             entry.count--;
-            if(entry.count<=0){
-                this.playerData.items.splice(this.playerData.items.indexOf(entry),1);
-                this.desc="";
+
+            if (entry.count <= 0) {
+                this.playerData.items.splice(this.playerData.items.indexOf(entry), 1);
+                this.desc = "";
+                // Si se acaba, refrescamos el menú pero sin selección
+                this.k = null;
+            } else {
+                this.desc = itemJson.name + "\n-" + itemJson.description + "\n-Cantidad: " + entry.count;
             }
-            else{
-                this.desc=this.scene.jsonItems[this.k].name+"\n-"+this.scene.jsonItems[this.k].description+"\n-Cantidad: "+entry.count;
-            }
+
+            // Actualizar interfaz
+            // Primero actualizamos los valores locales (this.HP, this.SP...) desde PlayerData
             this.updateValues();
+            // Luego redibujamos el menú de ítems (índice 2)
             this.updateMenus(2);
         }
     }

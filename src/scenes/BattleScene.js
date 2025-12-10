@@ -39,20 +39,42 @@ export default class BattleScene extends Phaser.Scene {
   /**
    * @param {string[]} enemyKeys
    */
-  init(enemyKeys) {
+  init(data) {
     this.jsonEquipamiento = this.cache.json.get("equipamiento");
     this.jsonEfectos = this.cache.json.get("efectos");
     this.jsonItems = this.cache.json.get("items");
     this.jsonHabilidades = this.cache.json.get("habilidades");
     this.jsonEnemigos = this.cache.json.get("enemigos");
 
+    // Desempaquetar datos
+    let enemyKeys = [];
+    let initialPlayerData = null;
+
+    // Detectamos si nos pasan un array (modo antiguo) o un objeto (modo nuevo)
+    if (Array.isArray(data)) {
+      enemyKeys = data;
+      this.winNode = null;
+      this.fleeNode = null;
+    } else {
+      enemyKeys = data.enemies || [];
+      this.winNode = data.winNode; // Nodo para cuando se gana
+      this.fleeNode = data.fleeNode; // Nodo para cuando se huye
+      initialPlayerData = data.playerData;
+    }
+
+    // Inicializar enemigos
     this.enemiesTam = 0;
     for (let i = 0; i < enemyKeys.length; i++) {
       this.enemies[i] = new Enemy(enemyKeys[i], this, enemyKeys[i]);
       this.enemiesTam++;
     }
 
-    this.player = new Player(new PlayerData(), this, 200, 200, "player");
+    // Inicializar jugador (usando el playerData recibido para no perder vida / ítems)
+    const pd = initialPlayerData || new PlayerData();
+    const skinKey = pd.skins[pd.skinIndex] || "player";
+
+    this.player = new Player(pd, this, 200, 200, skinKey);
+    this.player.setScale(3.5);
   }
 
   create() {
@@ -60,9 +82,32 @@ export default class BattleScene extends Phaser.Scene {
     this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
     this.events.on("combat_ended", ({ result }) => {
+      // WIN: victoria
       if (result === "win") {
-        this.scene.start("Map");
-      } else {
+        if (this.winNode) {
+          // Si hay nodo definido, volvemos al diálogo con ese nodo
+          this.scene.start("DialogueScene", {
+            fragmentoEvento: this.winNode,
+            playerData: this.player.playerData
+          });
+        } else {
+          // Si es null, volvemos al mapa
+          this.scene.start("Map");
+        }
+      } 
+      // FLEE: huida
+      else if (result === "flee") {
+        if (this.fleeNode) {
+          this.scene.start("DialogueScene", {
+            fragmentoEvento: this.fleeNode,
+            playerData: this.player.playerData
+          });
+        } else {
+          this.scene.start("Map");
+        }
+      } 
+      // LOSE: derrota
+      else {
         this.scene.start("GameOver");
       }
     });

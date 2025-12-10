@@ -66,7 +66,47 @@ export default class BootScene extends Phaser.Scene {
         this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})
         this.uiButton(100, 500, "Go to xd", 'xd',)
 
+        // --- PREPARACIÓN DEL JUGADOR DE PRUEBA (Veneno, Skin y Antídoto) ---
+        const testPlayer = new PlayerData();
+        testPlayer.HP = 80; // Vida un poco baja
+        testPlayer.skinIndex = 6; // 0 = Cowboy, 6 = Cat, etc.
         
+        // Inyectamos veneno para probar el daño verdadero y el antídoto
+        testPlayer.efectos.push({ key: "ENVENENADO", duration: 99 }); 
+        
+        // Aseguramos antídoto
+        if (!testPlayer.items.some(i => i.item === "ANTIDOTO")) {
+            testPlayer.items.push({ item: "ANTIDOTO", count: 3 });
+        }
+
+
+        // --- BOTÓN 1: TEST COMBATE -> MAPA (Caso estándar) ---
+        // Al ganar, debería llevarte a la escena 'Map' directamente.
+        this.uiButton(400, 100, "TEST: Battle -> Map", 'BattleScene', {
+            enemies: ['BANDIDO_COMUN'], // Un enemigo facilito
+            playerData: testPlayer,
+            winNode: null,  // null significa "volver al mapa"
+            fleeNode: null
+        });
+
+
+        // --- BOTÓN 2: TEST COMBATE -> DIÁLOGO (Caso evento encadenado) ---
+        // Al ganar, debería llevarte a una nueva escena de diálogo.
+        
+        // Creamos un "nodo falso" para simular el siguiente paso de la historia
+        const nodoVictoria = {
+            tipo: "dialogue",
+            texto: "¡Has vencido al bandido! Encuentras una nota en su bolsillo...",
+            opciones: [], // Aquí podrías poner opciones de salir
+            consecuencias: {} // ej: { dinero: 50 }
+        };
+
+        this.uiButton(400, 200, "TEST: Battle -> Dialog", 'BattleScene', {
+            enemies: ['BANDIDO_COMUN'],
+            playerData: testPlayer,
+            winNode: nodoVictoria, // Al ganar, pasamos este nodo
+            fleeNode: null
+        });
     }
     /**
      * 

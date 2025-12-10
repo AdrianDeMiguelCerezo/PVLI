@@ -22,10 +22,16 @@ export default class DialogueScene extends Phaser.Scene {
 	 * @param {PlayerData} playerData
 	 * 
 	 */
-	init(fragmentoEvento, playerData) {
-		this.fragmentoEvento = fragmentoEvento;
-		
-		this.playerData = playerData;
+	init(data) {
+		// Soporte dual: por si acaso se llama de la forma antigua o nueva
+		if (data.fragmentoEvento || data.playerData) {
+			this.fragmentoEvento = data.fragmentoEvento;
+			this.playerData = data.playerData;
+		} else {
+			// Fallback por si data es directamente el fragmento (antiguo)
+			this.fragmentoEvento = data;
+			if (!this.playerData) this.playerData = new PlayerData();
+		}
 	}
 	create() {
 		this.add.image(0, 0, 'fondo').setOrigin(0, 0);
@@ -36,7 +42,7 @@ export default class DialogueScene extends Phaser.Scene {
 		}, 15, 0, "#c8d9d0", false).setOrigin(1);
 		//boton de ir al inventario
 		this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null, 
-			()=>{ this.scene.start('MenuTest', {playerData: new PlayerData(), oldScene: this.scene.key})}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
+			()=>{ this.scene.start('MenuTest', {playerData: this.playerData, oldScene: this.scene.key})}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
 		//boton de ir al menu principal
 		this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null, 
 			()=>{ this.scene.start('MainMenu')}, 15, 0, "#c8d9d0", false).setVisible(false).setOrigin(1);
@@ -85,9 +91,18 @@ export default class DialogueScene extends Phaser.Scene {
 			this.dialog.setText(textoConsequencias + evento.texto, true);
 			this.createOptions(evento.opciones);
 		}
-		//si el tipo es combate comienza combate con los atributos
+		// Empaquetar datos para el combate
 		else if(evento.tipo == "combat"){
-			this.scene.start('BattleScene', evento.combate.enemies, evento.opciones[0].salto, evento.nodoHuida);
+			// Obtenemos el nodo de victoria (primer salto en opciones)
+			const winNode = (evento.opciones && 
+				evento.opciones.length > 0) ? evento.opciones[0].salto : null;
+
+			this.scene.start('BattleScene', {
+				enemies: evento.combate.enemies,
+				winNode: winNode,
+				fleeNode: evento.nodoHuida,
+				playerData: this.playerData // Pasamos el estado actual del jugador
+			});
 		}
 	}
 
