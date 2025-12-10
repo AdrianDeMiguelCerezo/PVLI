@@ -2389,24 +2389,20 @@
                 "text":"El gran bloqueo, le llaman. El guardia más temido de todos. Esta será tu última batalla, ¿Estás preparado?",
                 "continue":"Siempre"
             },
-            {
-                "type": "combat",
-                "combat": {
-                    "enemies": [ "GRAN_BLOQUEO" ],
-                    "ambush": false,
-                    "canFlee": false
-                },
-                "flee": null
-            },
+            
             {
                 "type":"dialogue",
                 "text":"Por fin consigues derrotar al grandioso bloqueo que te impedía tu libertad. Respiras fresco y disfrutas de tu nueva libertad.",
                 "options":[
                     {
                         "text":"Disfrutar",
-                        "j":"fin"
+                        "j":"FIN"
                     }
                 ]
+            },
+            {
+                "tag":"FIN",
+                "type":"fin"
             }
         ]
     }
