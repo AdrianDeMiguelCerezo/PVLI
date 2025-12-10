@@ -298,7 +298,7 @@ export default class EventParser {
                 }
             case "fin": {
 
-                eventFragmentNode.tipo = fin;
+                eventFragmentNode.tipo = "fin";
                 break;
             }
             default: break;
