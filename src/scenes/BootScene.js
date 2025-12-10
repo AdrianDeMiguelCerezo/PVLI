@@ -44,15 +44,15 @@ export default class BootScene extends Phaser.Scene {
 
         //Enemigos
         this.load.image('BANDIDO_COMUN','assets/bandido_comun.png');
-        this.load.image('PIROMANO','assets/piromano.png');
-        this.load.image('MEDICO','assets/medico.png');
-        this.load.image('TANQUE','assets/tanque.png');
+        this.load.image('BANDIDO_PIROMANO','assets/piromano.png');
+        this.load.image('BANDIDO_MEDICO','assets/medico.png');
+        this.load.image('BANDIDO_TANQUE','assets/tanque.png');
         this.load.image('TORRETA','assets/torreta.png');
         this.load.image('PERRO_RABIOSO','assets/perro.png');
         this.load.image('MUJER_DESCONFIADA','assets/mujer.png');
         this.load.image('SOLDADO_ESTADO','assets/soldado_estado.png');
-        this.load.image('BUFEADOR','assets/bufeador.png');
-        this.load.image('DEBUFEADOR','assets/debufeador.png');
+        this.load.image('BANDIDO_BUFEADOR','assets/bufeador.png');
+        this.load.image('BANDIDO_NERFEADOR','assets/debufeador.png');
         this.load.image('GRAN_BLOQUEO','assets/gran_bloqueo.png');
 
 
