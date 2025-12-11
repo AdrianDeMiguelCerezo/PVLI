@@ -64,7 +64,7 @@ export default class HealthBar extends Phaser.GameObjects.Container {
      * hace que la barra se setee en un valor instantaneamente. Si no hay valor, se setea al targetValue de la barra.
      * @param {any} targetValue
      */
-    setInstantValue(targetValue=this.targetValue) { this._actualValue = targetValue; }
+    setInstantValue(targetValue = this.targetValue) { this.targetValue = targetValue; this._actualValue = targetValue; }
     
 
 }

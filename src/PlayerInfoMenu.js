@@ -37,7 +37,11 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         this.HPBar=new HealthBar(this.scene,100,this.h*(0.89/3)*(9/12),150,15,this.playerData.HPMax);
         this.SPBar=new HealthBar(this.scene,100,this.h*(0.89/3)*(10/12),150,15,this.playerData.SPMax,2,0x0000ff);
-        this.Hungerbar=new HealthBar(this.scene,150,this.h*(0.89/3)*(11/12),150,15,100,2,0xd09f2f);
+        this.Hungerbar = new HealthBar(this.scene, 150, this.h * (0.89 / 3) * (11 / 12), 150, 15, 100, 2, 0xd09f2f);
+
+        this.HPBar.setInstantValue(this.playerData.HP);
+        this.SPBar.setInstantValue(this.playerData.SP);
+        this.Hungerbar.setInstantValue(this.playerData.hambre);
 
         
         this.menuSelect=new Menu(this.scene, 0,this.h*0.9,this.w,this.h*0.2,1,3);
@@ -64,13 +68,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(this.player);
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
         
-        this.HPBar.targetValue=this.playerData.HP;
-        this.SPBar.targetValue=this.playerData.SP;
-        this.Hungerbar.targetValue = this.playerData.hambre;
-
-        this.HPBar.setInstantValue();
-        this.SPBar.setInstantValue();
-        this.Hungerbar.setInstantValue();
+        
 
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
@@ -357,9 +355,21 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(this.player);
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
 
-        this.HPBar.targetValue=this.playerData.HP;
-        this.SPBar.targetValue=this.playerData.SP;
-        this.Hungerbar.targetValue=this.playerData.hambre;
+        const HPBarTempValue = this.HPBar._actualValue;
+        const SPBarTempValue = this.SPBar._actualValue;
+        const HungerbarTempValue = this.Hungerbar._actualValue;
+
+        this.HPBar = new HealthBar(this.scene, 100, this.h * (0.89 / 3) * (9 / 12), 150, 15, this.playerData.HPMax);
+        this.SPBar = new HealthBar(this.scene, 100, this.h * (0.89 / 3) * (10 / 12), 150, 15, this.playerData.SPMax, 2, 0x0000ff);
+        this.Hungerbar = new HealthBar(this.scene, 150, this.h * (0.89 / 3) * (11 / 12), 150, 15, 100, 2, 0xd09f2f);
+
+        this.HPBar.setInstantValue(HPBarTempValue);
+        this.SPBar.setInstantValue(SPBarTempValue);
+        this.Hungerbar.setInstantValue(HungerbarTempValue);
+
+        this.HPBar.targetValue = this.playerData.HP;
+        this.SPBar.targetValue = this.playerData.SP;
+        this.Hungerbar.targetValue = this.playerData.hambre;
 
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(8/12),"Dinero: "+this.dinero));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(9/12),"HP: "));
@@ -368,7 +378,7 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(this.SPBar);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(11/12),"Hambre: "));
         this.menuStats.add(this.Hungerbar);
-
+        
         //Para el menuDesc
         this.scene.add.rectangle(this.w*(2.525/3),50,this.w*(0.85/3),2,0xcf303f,1);
         this.scene.add.rectangle(this.w*(2.525/3),50+this.h*(0.8/3),this.w*(0.85/3),2,0xcf303f,1);
