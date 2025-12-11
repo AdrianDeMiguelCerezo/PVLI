@@ -819,14 +819,14 @@
                 ],
                 "options": [
                     {
-                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya",
+                        "text": "Esconderte detrás de una roca",
                         "j": "3Bandidos_emboscada"
                     },
                     {
-                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya"
+                        "text": "Esconderte detrás de una roca"
                     },
                     {
-                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya"
+                        "text": "Esconderte detrás de una roca"
                     }
                 ],
                 "optionsAmmount": 1
@@ -979,21 +979,21 @@
                 ],
                 "options": [
                     {
-                        "text": "Esconderte detrás de una roca con una silueta convenientemente igual a la tuya",
+                        "text": "Esconderte detrás de otra roca",
                         "j": "2Bandidos_emboscada"
                     },
                     {
-                        "text": "Esconderte detrás de otra roca con una silueta convenientemente igual a la tuya"
+                        "text": "Esconderte detrás de otra roca"
                     },
                     {
-                        "text": "Esconderte detrás de otra roca con una silueta convenientemente igual a la tuya"
+                        "text": "Esconderte detrás de otra rocaa"
                     }
                 ],
                 "optionsAmmount": 1
             },
             {
                 "type": "dialogue",
-                "text": "\"Qué extraño, no esperaba encontrarme otra roca con una silueta convenientemente igual a la mía, y menos que funcionara de nuevo la estartegia.\"\n\"¡Hoy debe ser mi día de suerte!\"",
+                "text": "\"Qué extraño, no esperaba encontrarme otra roca con una silueta convenientemente igual a la mía, y menos que funcionara de nuevo la estrategia.\"\n\"¡Hoy debe ser mi día de suerte!\"",
                 "continue": "Seguir andando"
             },
             {
@@ -1874,7 +1874,7 @@
                 "text": "-¡Qué buena cerveza tenéis aquí!",
                 "actions": {
                     "SP": 10,
-                    "dinero": -5
+                    "pago": 5
                 }
             },
             {
@@ -2039,6 +2039,73 @@
             }
 
         ]
+    },
+    "EVENTO_MERCADERES": {
+        "params": {
+            "precio_nabo": [
+                {
+                    "pago": 5,
+                    "items": [ {"item": "NABO","count": 1 } ]
+                }
+            ],
+            "precio_nabos":[15,16,17,18,19,20] 
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Mientras caminas por el desierto, encuentras una caravana de mercaderes.",
+                "options": [
+                    {
+                        "text": "Acercarse al vendedor de comida",
+                        "j": "comida"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "comida",
+                "type": "dialogue",
+                "text": "Mercader de comida:\"Hola, vendo comida y bebida.¿Qué quieres comprar? Esta es mi mercancía\"\nEl vendedor te muestra lo que vende.",
+                "options": [
+                    {
+                        "text": "Nabos",
+                        "j": "nabos"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "nabos",
+                "type": "dialogue",
+                "text": "Mercader de comida:\"Cuántos quieres\"",
+                "options": [
+                    {
+                        "text": "1 nabo a _precio_nabo",
+                        "j": "1_nabo"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "nabos",
+                "type": "dialogue",
+                "text": "__precio_nabo",
+                "rewards": "precio_nabo",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
+                        "j": "nabos"
+                    }
+                ],
+                "optionsAmmount": 2
+            }
+        ]
+    },
+    "EVENTO_NABOS": {
+        "PARAMS": {
+
+        }
+        
     },
     "GERALT": {
         "params": {

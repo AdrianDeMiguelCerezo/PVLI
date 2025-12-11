@@ -94,7 +94,7 @@ export default class EventParser {
 
         /**@type {SubStateNode} */
         let eventFragmentNode = new SubStateNode();
-        this.lastEventFragment = eventFragmentNode;
+        
 
 
         //si no soy, al mapa
@@ -225,8 +225,9 @@ export default class EventParser {
                     else {
                         if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
                         //genera el fragment oal que se va si no dinero suficiente
+                        console.log("lastEventFragment:",this.lastEventFragment)
                         eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
-                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", j: this.lastEventFragment }]
+                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", salto: this.lastEventFragment }]
                     }
 
                 }

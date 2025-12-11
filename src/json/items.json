@@ -79,13 +79,28 @@
     },
     "NABO": {
         "name": "Nabo",
-        "description": "Restaura HP, y no poco.",
+        "description": "Restaura HP y mata el hambre.",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffHealth": 30 },
+                "effect": { "diffHambre": 20,"diffHealth": 5 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+     "NABO_POCHO": {
+        "name": "Nabo",
+        "description": "Debería restaurar HP y matar el hambre, pero está pocho. Quizá no sea buena idea comerlo.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHambre": 5,"diffHealth": -5 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"

@@ -146,7 +146,7 @@ export default class DialogueScene extends Phaser.Scene {
 
         //si es un pago
         if (consecuencias.hasOwnProperty("pago") && consecuencias["pago"] > this.playerData.dinero) {
-            this.scene.restart(this.fragmentoEvento.nodoNoPay, this.playerData);
+            this.scene.start(this.scene.key, { fragmentoEvento: this.fragmentoEvento.nodoNoPay, playerData: this.playerData })
         }
         else {
             for (let k = 0; k < objEntries.length; k++) {
