@@ -83,7 +83,7 @@ export default class EventParser {
 
 
 
-    GenerateEventFragment(index) {
+    GenerateEventFragment(index,callerEventFragment) {
         /** abreviatura de this.eventFragments_Json[index] */
         const thisFragment_json = this.eventFragments_Json[index];
 
@@ -94,7 +94,7 @@ export default class EventParser {
 
         /**@type {SubStateNode} */
         let eventFragmentNode = new SubStateNode();
-        
+
 
 
         //si no soy, al mapa
@@ -134,7 +134,7 @@ export default class EventParser {
 
                             //en eventFragmentNode.opciones[i] hay un objeto
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg, index)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.permanentOptions[j], expReg, index,eventFragmentNode)
                             i++;
                             j++;
 
@@ -164,7 +164,7 @@ export default class EventParser {
                         j = 0;
                         while (i < this.MAX_OPTIONS && j < thisFragment_json.options.length && j < optionsAmmount) {
                             eventFragmentNode.opciones[i] = {};
-                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg, index)
+                            this.SetFragmentOption(eventFragmentNode.opciones[i], thisFragment_json.options[array[j]], expReg, index,eventFragmentNode)
                             i++;
                             j++;
                         }
@@ -185,7 +185,7 @@ export default class EventParser {
                         eventFragmentNode.opciones[0].texto = "Continue";
                     }
 
-                    eventFragmentNode.opciones[0].salto = this.GenerateEventFragment(++index)
+                    eventFragmentNode.opciones[0].salto = this.GenerateEventFragment(++index,eventFragmentNode)
 
                 }
 
@@ -220,14 +220,14 @@ export default class EventParser {
 
                     //si hay un noPayFragment al que se salta, se salta a ese, si es null o undefined se vuelve al anterior(que es quien ha llamado a que se genere este fragmento).
                     if (thisFragment_json.noPayFragment) {
-                        eventFragmentNode.nodoNoPay = this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment]);
+                        eventFragmentNode.nodoNoPay = this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment],eventFragmentNode);
                     }
                     else {
                         if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
                         //genera el fragment oal que se va si no dinero suficiente
-                        console.log("lastEventFragment:",this.lastEventFragment)
+                        console.log("callerEventFragment:", callerEventFragment)
                         eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
-                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", salto: this.lastEventFragment }]
+                        eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", salto: callerEventFragment }]
                     }
 
                 }
@@ -248,11 +248,11 @@ export default class EventParser {
                         //saltar al fragmento que est� directamente a continuaci�n de este en el json.
                         else if (jumpTag === undefined || jumpTag === "undefined") {
                             const indexSalto = ++index;
-                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(indexSalto)
+                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(indexSalto,eventFragmentNode)
                         }
                         //saltar a la tag tal si existe
                         else if (this.tags.hasOwnProperty(jumpTag)) {
-                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(this.tags[jumpTag])
+                            eventFragmentNode.nodoHuida = this.GenerateEventFragment(this.tags[jumpTag],eventFragmentNode)
                         }
                         //si la tag con este nombre no existe
                         else {
@@ -292,7 +292,7 @@ export default class EventParser {
                     //generar nodo de di�logo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
                         new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas:" + this.WriteRewards(consecuencias),
-                            [{ texto: "Continuar", salto: this.GenerateEventFragment(++index) }],
+                            [{ texto: "Continuar", salto: this.GenerateEventFragment(++index,eventFragmentNode) }],
                             consecuencias, undefined);
 
                     break;
@@ -308,7 +308,7 @@ export default class EventParser {
         return eventFragmentNode;
     }
 
-    SetFragmentOption(fragmentOption, jsonOption, expReg, index) {
+    SetFragmentOption(fragmentOption, jsonOption, expReg, index,eventFragmentNode) {
         //seteo su texto
         fragmentOption.texto = this.ParseStringWithParams(jsonOption.text, expReg);
 
@@ -322,11 +322,11 @@ export default class EventParser {
         //saltar al fragmento que est� directamente a continuaci�n de este en el json.
         else if (jumpTag === undefined || jumpTag === "undefined") {
             const indexSalto = ++index;
-            fragmentOption.salto = this.GenerateEventFragment(indexSalto)
+            fragmentOption.salto = this.GenerateEventFragment(indexSalto,eventFragmentNode)
         }
         //saltar a la tag tal si existe
         else if (this.tags.hasOwnProperty(jumpTag)) {
-            fragmentOption.salto = this.GenerateEventFragment(this.tags[jumpTag])
+            fragmentOption.salto = this.GenerateEventFragment(this.tags[jumpTag],eventFragmentNode)
         }
         //si la tag con este nombre no existe
         else {
