@@ -23,7 +23,7 @@ export default class xd extends Phaser.Scene {
         let eventParser = new EventParser(this.jsonEventos, this.jsonHabilidades, this.jsonEquipamiento, this.jsonItems, this.jsonEfectos)
         console.log("jsonEventos:", this.jsonEventos)
 
-        let evento = eventParser.generateEvent("EVENTO_MERCADERES");
+        let evento = eventParser.generateEvent("EVENTO_MERCADERES_DESIERTO");
 
         console.log("evento:", evento)
 

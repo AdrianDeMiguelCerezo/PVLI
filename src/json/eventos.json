@@ -55,7 +55,7 @@
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
-            "nombre_cordillera": ["las montañas del viento seco","las montañas del viento húmedo","las montañas de Pepe","la cordillera de Kalú","la cordillera de la muerte"],
+            "nombre_cordillera": [ "las montañas del viento seco", "las montañas del viento húmedo", "las montañas de Pepe", "la cordillera de Kalú", "la cordillera de la muerte" ],
             "climbing_day_cost": { "hambre": 5 },
             "scratch_day_cost": { "HP": -5 },
             "wounded_day_cost": { "HP": -10 },
@@ -75,15 +75,15 @@
             "nombre_bandido_muerto_2": "_nombre_h",
             "nombre_grupo_bandidos": [ "el Cuervo Negro", "la Jinete de la Sombra", "los Fantasmas del Cañón", "la Vaca Negra", "los sombreros de cáctus" ],
             "cannon_day_cost": { "hambre": 2 },
-          "try_break_bandit_chest_cost": { "HP": -5 },
-          "bandit_chest_rewards": [
-            {
-              "dinero": 20,
-              "equipamiento": ["LATIGO"]
-            },
-            { "dinero": 50 },
-            {"dinero": 30}
-          ],
+            "try_break_bandit_chest_cost": { "HP": -5 },
+            "bandit_chest_rewards": [
+                {
+                    "dinero": 20,
+                    "equipamiento": [ "LATIGO" ]
+                },
+                { "dinero": 50 },
+                { "dinero": 30 }
+            ],
             "2Bandidos_rewards": [
                 {
                     "dinero": 10,
@@ -107,14 +107,14 @@
                     "dinero": 20
                 }
             ],
-             "3Bandidos_rewards": [
+            "3Bandidos_rewards": [
                 {
                     "dinero": 10
-                   
+
                 },
                 {
                     "dinero": 15
-                    
+
                 },
                 {
                     "dinero": 20
@@ -1670,7 +1670,7 @@
                         "j": "fin_peaje"
                     }
                 ]
-                    
+
             },
             {
                 "tag": "pago_2",
@@ -1804,7 +1804,7 @@
                     }
                 ]
             },
-             {
+            {
                 "tag": "fin_peaje",
                 "type": "dialogue",
                 "text": "Tras pasar por algunos momentos tensos, continúas andando hasta salir del cañón sin más contratiempos.\n_cannon_day_cost",
@@ -2040,24 +2040,106 @@
 
         ]
     },
-    "EVENTO_MERCADERES": {
+    "EVENTO_MERCADERES_DESIERTO": {
         "params": {
             "precio_nabo": [
                 {
                     "pago": 5,
-                    "items": [ {"item": "NABO","count": 1 } ]
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "pago": 7,
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "pago": 9,
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 1
+                        }
+                    ]
                 }
             ],
-            "precio_nabos":[15,16,17,18,19,20] 
+            "precio_nabos": [
+                {
+                    "pago": 17,
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 3
+                        },
+                        {
+                            "item": "NABO_POCHO",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "pago": 20,
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 3
+                        },
+                        {
+                            "item": "NABO_POCHO",
+                            "count": 1
+                        }
+                    ]
+                },
+                {
+                    "pago": 24,
+                    "items": [
+                        {
+                            "item": "NABO",
+                            "count": 4
+                        }
+                    ]
+                }
+            ]
         },
         "eventFragments": [
             {
                 "type": "dialogue",
-                "text": "Mientras caminas por el desierto, encuentras una caravana de mercaderes.",
+                "text": "Mientras caminas por el desierto, encuentras una pareja de mercaderes.\nTe explican lo que venden.\n_precio_nabos\n__precio_nabos"
+            },
+            {
+                "tag": "encuentro_mercaderes",
+                "type": "dialogue",
+                "text": "Te diriges a un mercader:",
+                "permanentOptions": [
+                    {
+                        "text": "Decirle que te vas, e irte",
+                        "j": null
+                    }
+                ],
                 "options": [
                     {
                         "text": "Acercarse al vendedor de comida",
                         "j": "comida"
+                    },
+                    {
+                        "text": "Acercarse al vendedor de protecciones",
+                        "j": "armaduras"
+                    },
+                    {
+                        "text": "Acercarse al vendedor de armas",
+                        "j": "armas"
+                    },
+                    {
+                        "text": "Acercarse al vendedor de objetos útiles",
+                        "j": "items"
                     }
                 ],
                 "optionsAmmount": 2
@@ -2066,35 +2148,66 @@
                 "tag": "comida",
                 "type": "dialogue",
                 "text": "Mercader de comida:\"Hola, vendo comida y bebida.¿Qué quieres comprar? Esta es mi mercancía\"\nEl vendedor te muestra lo que vende.",
+                "permanentOptions": [
+                    {
+                        "text": "Dejar de comprar",
+                        "j": "encuentro_mercaderes"
+                    }
+                ],
                 "options": [
                     {
-                        "text": "Nabos",
+                        "text": "__precio_nabo",
+                        "j": "nabo"
+                    },
+                    {
+                        "text": "__precio_nabos",
+                        "j": "nabos"
+                    },
+                    {
+                        "text": "__precio_comida_gourmet",
+                        "j": "nabos"
+                    },
+                    {
+                        "text": "__precio_comida_básica",
+                        "j": "nabos"
+                    },
+                    {
+                        "text": "__precio_nabos",
                         "j": "nabos"
                     }
                 ],
-                "optionsAmmount": 2
+                "optionsAmmount": 3
             },
             {
-                "tag": "nabos",
+                "tag": "nabo",
                 "type": "dialogue",
-                "text": "Mercader de comida:\"Cuántos quieres\"",
-                "options": [
-                    {
-                        "text": "1 nabo a _precio_nabo",
-                        "j": "1_nabo"
-                    }
-                ],
-                "optionsAmmount": 2
-            },
-            {
-                "tag": "nabos",
-                "type": "dialogue",
-                "text": "__precio_nabo",
+                "text": "Has pagado __precio_nabo",
                 "rewards": "precio_nabo",
                 "options": [
                     {
                         "text": "Comprar de nuevo",
+                        "j": "nabo"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "comida"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "nabos",
+                "type": "dialogue",
+                "text": "Has pagado __precio_nabos",
+                "rewards": "precio_nabos",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
                         "j": "nabos"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "comida"
                     }
                 ],
                 "optionsAmmount": 2
@@ -2105,7 +2218,7 @@
         "PARAMS": {
 
         }
-        
+
     },
     "GERALT": {
         "params": {
@@ -2453,31 +2566,31 @@
             }
         ]
     },
-    "FINAL":{
-        "eventFragments":[
+    "FINAL": {
+        "eventFragments": [
             {
-                "type":"dialogue",
-                "text":"Ha llegado la hora. Te encuentras en el borde sur, y sólo hay un guardia evitando tu escape."
+                "type": "dialogue",
+                "text": "Ha llegado la hora. Te encuentras en el borde sur, y sólo hay un guardia evitando tu escape."
             },
             {
-                "type":"dialogue",
-                "text":"El gran bloqueo, le llaman. El guardia más temido de todos. Esta será tu última batalla, ¿Estás preparado?",
-                "continue":"Siempre"
+                "type": "dialogue",
+                "text": "El gran bloqueo, le llaman. El guardia más temido de todos. Esta será tu última batalla, ¿Estás preparado?",
+                "continue": "Siempre"
             },
-            
+
             {
-                "type":"dialogue",
-                "text":"Por fin consigues derrotar al grandioso bloqueo que te impedía tu libertad. Respiras fresco y disfrutas de tu nueva libertad.",
-                "options":[
+                "type": "dialogue",
+                "text": "Por fin consigues derrotar al grandioso bloqueo que te impedía tu libertad. Respiras fresco y disfrutas de tu nueva libertad.",
+                "options": [
                     {
-                        "text":"Disfrutar",
-                        "j":"FIN"
+                        "text": "Disfrutar",
+                        "j": "FIN"
                     }
                 ]
             },
             {
-                "tag":"FIN",
-                "type":"fin"
+                "tag": "FIN",
+                "type": "fin"
             }
         ]
     }

@@ -368,13 +368,14 @@ export default class EventParser {
 
         //si no matchea con nada, devuelve null
         if (string.match(expReg) != null) {
+            console.log("string.match(expReg): ", string.match(expReg))
             for (let parameter of string.match(expReg)) {
 
 
                 //si tiene "__" delante y un objeto => Es una transacción.
                 if (parameter[1] === '_' && typeof (this.params[parameter.substring(2)]) === "object") {
                     console.log("Pago. reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
-                    string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(2)]))
+                    string = string.replace(parameter, this.WriteTransaction(this.params[parameter.substring(2)]))
                 }
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 else if (typeof (this.params[parameter.substring(1)]) === "object") {
@@ -395,7 +396,7 @@ export default class EventParser {
     }
 
 
-    /**
+    /**Escribe las recompensas en formato raw (+tal,-tal,+objetos: A, B y C)
      * 
      * @param {object} rewards
      */
@@ -404,17 +405,16 @@ export default class EventParser {
         let returnString = "";
         let array = Object.entries(rewards);
 
-        //console.log("WriteRewards() array:",array)
+        console.log("WriteRewards() array:",array)
         //decidido seg�n representaci�n en el json
         for (let i = 0; i < array.length; i++) {
             const key = array[i][0]
             const value = array[i][1]
 
             //console.log(key, ":", value);
-            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
             switch (key) {
                 case "dinero": { returnString += value + " de dinero, "; break; }
-                case "pago": { returnString += value + " de dinero, "; break; }
+                case "pago": { returnString += "-" +value + " de dinero, "; break; }
                 case "HP": { returnString += (value > 0 ? "+" : "") + value + " de vida, "; break; }
                 case "SP": { returnString += (value > 0 ? "+" : "") + value + " de sp, "; break; }
                 case "hambre": { returnString += (value > 0 ? "+" : "") + value + " de hambre, "; break; }
@@ -422,10 +422,11 @@ export default class EventParser {
                 case "habilidades":
                     {
 
-                        returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
+                        returnString += value.length > 1 ? "las habilidades: " : "la habilidad: ";
                         for (let j = 0; j < value.length; j++) {
                             //console.log("habilidad:",value[j])
                             returnString += this.jsonHabilidades[value[j]].name + ", ";
+                            if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
                         }
                         break;
 
@@ -435,11 +436,12 @@ export default class EventParser {
                         //console.log("itemKeyValue:",value,"jsonItems:",this.jsonItems)
                         let itemCount = 0;
                         let secondaryReturnString = "";
-                        for (const itemReward of value) {
-                            secondaryReturnString += this.jsonItems[itemReward.item].name + " (x" + itemReward.count + "), ";
-                            itemCount += itemReward.count;
+                        for (let i = 0; i < value.length; i++) {
+                            secondaryReturnString += this.jsonItems[value[i].item].name + " (x" + value[i].count + "), ";
+                            if (i == value.length - 2) { secondaryReturnString = secondaryReturnString.slice(0, -2); secondaryReturnString += " y " }
+                            itemCount += value[i].count;
                         }
-                        let primaryReturnString = itemCount > 1 ? "+ los objetos " : "+ el objeto ";
+                        let primaryReturnString = itemCount > 1 ? "+ los objetos: " : "+ el objeto: ";
                         returnString += primaryReturnString + secondaryReturnString
                         break;
 
@@ -447,10 +449,11 @@ export default class EventParser {
                 case "equipamiento":
                     {
 
-                        returnString += value.length > 1 ? "+ los equipamientos " : "+ el equipamiento ";
+                        returnString += value.length > 1 ? "+ los equipamientos: " : "+ el equipamiento: ";
                         for (let j = 0; j < value.length; j++) {
                             //console.log("equipamiento:",value[j])
                             returnString += this.jsonEquipamiento[value[j]].name + ", ";
+                            if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
                         }
                         break;
 
@@ -459,6 +462,7 @@ export default class EventParser {
                     returnString += value.length > 1 ? "+ los efectos de " : "+ el efecto de ";
                     for (const estado in value) {
                         returnString += this.jsonEfectos[estado.effect].name + ", ";
+                        if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
 
                         //falta incluir la duraci�n del efecto.
                     }
@@ -485,7 +489,7 @@ export default class EventParser {
 
     }
 
-    /**
+    /**Escribe las recompensas de pagos en formato natural: si solo hay pago, dice "x de dinero"; si te dan algo a cambio, dice: "x de dinero a cambio de A, B, y C "
      * 
      * @param {object} rewards
      */
@@ -494,11 +498,11 @@ export default class EventParser {
         let returnString = "";
         let primaryReturnString = "";
         let array = Object.entries(rewards);
-
+        console.log("WriteTransaction() array:", array)
 
         //decidido seg�n representaci�n en el json
         if (rewards.hasOwnProperty("pago")) {
-            primaryReturnString += rewards["pago"] + "de dinero"
+            primaryReturnString += rewards["pago"] + " de dinero"
         }
         let hayRecompensa = false;
         for (let i = 0; i < array.length; i++) {
@@ -506,15 +510,16 @@ export default class EventParser {
             const value = array[i][1]
 
             //console.log(key, ":", value);
-            if (i == array.length - 2) { returnString = returnString.slice(0, -2); returnString += "y " }
+            if (i == array.length - 2 && array.length >2) { returnString = returnString.slice(0, -2); returnString += " y " }
             switch (key) {
                 case "equipamiento":
                     {
 
-                        returnString += value.length > 1 ? "los equipamientos " : "el equipamiento ";
+                        returnString += value.length > 1 ? "los equipamientos: " : "el equipamiento: ";
                         for (let j = 0; j < value.length; j++) {
                             //console.log("equipamiento:",value[j])
                             returnString += this.jsonEquipamiento[value[j]].name + ", ";
+                            if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
                         }
 
                         hayRecompensa = true;
@@ -524,12 +529,12 @@ export default class EventParser {
                 case "habilidades":
                     {
 
-                        returnString += value.length > 1 ? "las habilidades " : "la habilidad ";
+                        returnString += value.length > 1 ? "las habilidades: " : "la habilidad: ";
                         for (let j = 0; j < value.length; j++) {
                             console.log("habilidad:", value[j])
                             console.log(value[j]);
                             returnString += this.jsonHabilidades[value[j]].name + ", ";
-
+                            if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
                         }
                         hayRecompensa = true;
                         break;
@@ -539,12 +544,15 @@ export default class EventParser {
                     {
                         let itemCount = 0;
                         let secondaryReturnString = "";
-                        for (const itemReward of value) {
-                            secondaryReturnString += this.jsonItems[itemReward.item].name + " (x" + itemReward.count + "), ";
-                            itemCount += itemReward.count;
+                        
+
+                        for (let i = 0; i < value.length;i++) {
+                            secondaryReturnString += value[i].count + " " + this.jsonItems[value[i].item].name + ", ";
+                            if (i == value.length - 2) { secondaryReturnString = secondaryReturnString.slice(0, -2); secondaryReturnString += " y " }
+                            itemCount += value[i].count;
                         }
-                        let primaryReturnString = itemCount > 1 ? "los objetos " : "el objeto ";
-                        returnString += primaryReturnString + secondaryReturnString;
+                        
+                        returnString += secondaryReturnString;
                         hayRecompensa = true;
                         break;
 
