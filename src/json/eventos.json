@@ -2111,70 +2111,88 @@
             "precio_racion_seca": [
                 {
                     "pago": 5,
-                    "items": {
-                        "item": "RACION_SECA",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_SECA",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 8,
-                    "items": {
-                        "item": "RACION_SECA",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_SECA",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 13,
-                    "items": {
-                        "item": "RACION_SECA",
-                        "count": 2
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_SECA",
+                            "count": 2
+                        }
+                    ]
                 }
             ],
             "precio_racion_calidad": [
                 {
                     "pago": 15,
-                    "items": {
-                        "item": "RACION_CALIDAD",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_CALIDAD",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 20,
-                    "items": {
-                        "item": "RACION_CALIDAD",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_CALIDAD",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 22,
-                    "items": {
-                        "item": "RACION_CALIDAD",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_CALIDAD",
+                            "count": 1
+                        }
+                    ]
                 }
             ],
             "precio_racion_gourmet": [
                 {
                     "pago": 35,
-                    "items": {
-                        "item": "RACION_GOURMET",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_GOURMET",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 38,
-                    "items": {
-                        "item": "RACION_GOURMET",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_GOURMET",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 42,
-                    "items": {
-                        "item": "RACION_GOURMET",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "RACION_GOURMET",
+                            "count": 1
+                        }
+                    ]
                 }
             ],
             "precio_escopeta": [
@@ -2272,58 +2290,73 @@
             "precio_poti": [
                 {
                     "pago": 25,
-                    "items": {
-                        "item": "POTI_HP_MINI",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "POTI_HP_MINI",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 20,
-                    "items": {
-                        "item": "POTI_SP_MINI",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "POTI_SP_MINI",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
-                     "pago": 55,
-                    "items": {
-                        "item": "POTI_HP_GRANDE",
-                        "count": 1
-                    }
+                    "pago": 55,
+                    "items": [
+                        {
+                            "item": "POTI_HP_GRANDE",
+                            "count": 1
+                        }
+                    ]
                 }
-            ], "precio_item_extra": [
+            ],
+            "precio_item_extra": [
                 {
                     "pago": 20,
-                    "items": {
-                        "item": "ANTIDOTO",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "ANTIDOTO",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 11,
-                    "items": {
-                        "item": "FLASHBANG",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "FLASHBANG",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
                     "pago": 5,
-                    "items": {
-                        "item": "DARDO_ENVENENADO",
-                        "count": 1
-                    }
+                    "items": [
+                        {
+                            "item": "DARDO_ENVENENADO",
+                            "count": 1
+                        }
+                    ]
                 },
                 {
-                     "pago": 8,
-                    "items": {
-                        "item": "MOLOTOV",
-                        "count": 1
-                    }
+                    "pago": 8,
+                    "items": [
+                        {
+                            "item": "MOLOTOV",
+                            "count": 1
+                        }
+                    ]
                 }
-               ]
-           
-              
-            
+            ]
+
+
+
 
         },
         "eventFragments": [
@@ -2698,9 +2731,252 @@
         ]
     },
     "EVENTO_NABOS": {
-        "PARAMS": {
 
-        }
+        "params": {
+            "nabo_pocho_comer": {
+                "HP": -5,
+                "hambre": 5
+            },
+            "recompensa": [
+                { "equipamiento": [ "ESPADA_NABO_POCHO" ] },
+                { "equipamiento": [ "NABO_PECHERA" ] },
+                { "equipamiento": [ "NABO_POCHO_PECHERA" ] },
+                { "equipamiento": [ "NABO_BAJOS" ] },
+                { "equipamiento": [ "NABO_POCHO_BAJOS" ] }
+
+            ]
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Actualmente te estás dirigiendo a un pueblo en un oasis, ya deberías estar cerca.\nDesde la distancia, ves lo que parece ser un nabo gigante que llega hasta las nubes.\nAl menos no es un brócoli, los nabos son mil veces mejores que el brócoli."
+            },
+            {
+                "type": "dialogue",
+                "text": "Legas a lo que debería haber sido el pueblo en el oasis, pero eso no parece un pueblo. La mayoría de las casas están cubiertas de maleza y enredaderas, y un nabo gigante tampoco es algo muy común de ver.",
+                "options": [
+                    {
+                        "text": "Irme pitando de aquí",
+                        "j": "te_vas_bien"
+                    },
+                    { "text": "investigar el pueblo" }
+                ],
+                "optionAmmount": 2
+            },
+            {
+                "type": "dialogue",
+                "text": "Mientras caminas por el pueblo ebandonado, oyes una voz extraña.\nVoz\"Ven... Ven aquí... Vamos... Cosas gratis 100% real no fake...\"",
+                "permanentOptions": [
+                    {
+                        "text": "Dar media vuelta e irse del pueblo",
+                        "j": "te_vas_bien"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Ir hacia la voz",
+                        "j": "nabo"
+                    }
+
+
+                ],
+                "optionAmmount": 1
+            },
+            {
+                "tag": "nabo",
+                "type": "dialogue",
+                "text": "Cuando te acercas más al lugar de donde viene la voz, te das cuenta de que te está hablando algo que parece un nabo pocho.\nNabo pocho?:\"Si adivinas qué soy, ganarás un nabo de recompensas, sino, sufrirás un nabo. ¿Quieres intentar adivinar?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Coger el nabo y comértelo",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "\"Sí\"",
+                        "j": "adivinar_nabo"
+                    },
+                    {
+                        "text": "\"No, me voy de aquí\"",
+                        "j": "te_vas_bien"
+                    }
+                ]
+
+            },
+            {
+                "tag": "te_vas_bien",
+                "type": "dialogue",
+                "text": "Te vas del pueblo, reanudando la marcha hacia la frontera sur.",
+                "permanentOptions": [
+                    {
+                        "text": "continuar",
+                        "j": null
+                    }
+                ]
+            },
+            {
+                "tag": "adivinar_nabo",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"Te doy una pista: soy comestible. ¿ué soy?\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"Un nabo pocho\"",
+                        "j": "no_estoy_pocho"
+                    },
+                    {
+                        "text": "\"Un nabo en perfectas condiciones\"",
+                        "j": "correcto"
+                    },
+                    {
+                        "text": "\"Una bruja\"",
+                        "j": "no_soy_bruja"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "\"Comida de emergencia\"",
+                        "j": "no_soy_comida"
+                    },
+                    {
+                        "text": "\"Comida de emergencia\"",
+                        "j": "no_soy_comida"
+                    },
+                    {
+                        "text": "\"Paimon?\"",
+                        "j": "quien_paimon"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "no_estoy_pocho",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"¡¡¿ME ESTÁS LLAMANOD POCHO?!!\"\nNabo pocho?:\"¡¡¿POCHA TU MADRE?!!\"\nNabo pocho?:\"ADIÓS, TE QUEDAS SIN RECOMPENSAS\"",
+                "permanentOptions": [
+                    {
+                        "text": "Darle un mordisco",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "Irte",
+                        "j": "te_vas_bien"
+                    }
+
+                ]
+            },
+            {
+                "tag": "no_soy_bruja",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"Yo,¿una bruja?\"\nNabo pocho?:\"¿Acaso te comerías a una bruja?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Darle un mordisco",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "\"Depende\""
+                    },
+                    {
+                        "text": "Irte",
+                        "j": "te_vas_bien"
+                    }
+
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"¿Depende de qué?\"",
+                "continue": "Cosas de mayores"
+            },
+            {
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"¡Yo soy MAYOOORR!\"\n\"No lo pareces.\"\nNabo pocho?:\"¡Pues adiós a tus recompensas!\"",
+                "permanentOptions": [
+                    {
+                        "text": "Darle un mordisco",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "Irte",
+                        "j": "te_vas_bien"
+                    }
+                ]
+            },
+            {
+                "tag": "quien_paimon",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"Quién es Paimon?\"",
+                "permanentOptions": [
+                    {
+                        "text": "Darle un mordisco",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "Comida de emergencia",
+                        "j": "no_soy_comida"
+                    },
+                    {
+                        "text": "Irte"
+                    }
+
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Le ignoras y te vas del pueblo mientras el nabo te sigue preguntando quién es Paimon.\nNo te puede seguir porque no tiene piernas",
+                "permanentOptions": [
+                    {
+                        "text": "continuar",
+                        "j": null
+                    }
+                ]
+            },
+            {
+                "tag": "no_soy_comida",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"¡¿COMIDA DE EMERGENCIA?!\"\nNabo pocho?:\"¡¡NO SOY COMIDA DE EMERGENCIAAAA!!\"\nNabo pocho?:\"ADIÓS, TE QUEDAS SIN NADA\"\nEl nabo está haciendo un berrinche.",
+                "permanentOptions": [
+                    {
+                        "text": "Darle un mordisco",
+                        "j": "comer_nabo"
+                    },
+                    {
+                        "text": "Irte",
+                        "j": "te_vas_bien"
+                    }
+
+                ]
+            },
+            {
+                "tag": "comer_nabo",
+                "type": "dialogue",
+                "text": "Le das un mordisco al nabo mientras este hace un grito apagado.\n¡PUAJ,estaba pocho!\n_nabo_pocho_comer",
+                "rewards": "nabo_pocho_comer",
+                "permanentOptions": [
+                    {
+                        "text": "Irte",
+                        "j": "te_vas_bien"
+                    }
+                ]
+            },
+            {
+                "tag": "correcto",
+                "type": "dialogue",
+                "text": "Nabo pocho?:\"¡COOOOORRRECTOOOU!\"\nNabo pocho?:\"Gracias por jugar, toma tu recompensa\"\n_recompensa",
+                "rewards": "recompensa",
+                "permanentOptions": [
+                    {
+                        "text": "\"Gracias\"",
+                        "j": "te_vas_bien"
+                    },
+                    {
+                        "text": "Darle un mordisco, de despedida por supuesto",
+                        "j": "comer_nabo"
+                    }
+                ]
+            }
+
+
+        ]
 
     },
     "GERALT": {

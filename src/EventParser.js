@@ -542,14 +542,12 @@ export default class EventParser {
                     }
                 case "items":
                     {
-                        let itemCount = 0;
                         let secondaryReturnString = "";
                         
-
-                        for (let i = 0; i < value.length;i++) {
+                        
+                        for (let i = 0; i < value.length; i++) {
                             secondaryReturnString += value[i].count + " " + this.jsonItems[value[i].item].name + ", ";
                             if (i == value.length - 2) { secondaryReturnString = secondaryReturnString.slice(0, -2); secondaryReturnString += " y " }
-                            itemCount += value[i].count;
                         }
                         
                         returnString += secondaryReturnString;
