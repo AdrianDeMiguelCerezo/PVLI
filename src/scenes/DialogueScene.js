@@ -123,6 +123,8 @@ export default class DialogueScene extends Phaser.Scene {
      * @param {{}} consecuencias 
      */
     handleConsecuencias(consecuencias) {
+        // Si no hay consecuencias (null o undefined), salimos inmediatamente para evitar crasheos
+        if (!consecuencias) return;
 
         /**
          * @type {{x: number ,y: number ,event: SubStateNode,nodeType: NodeType ,state: State,isFocus:boolean,isAwake:boolean,visited: boolean,scale:idk,difficulty: number, radius: number}[]}
