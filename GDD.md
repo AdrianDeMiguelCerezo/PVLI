@@ -9,27 +9,27 @@ Juegas como un forajido en el salvaje oeste intentando llegar a la frontera sur 
 
 ## MAPA
 
-El jugador se mueve viajando entre nodos a menos de una distancia determinada en un mapa. Estos nodos representan lugares como ciudades, pueblos, etc. Empiezas en el nodo verde de arriba y debes llegar a uno de los nodos de abajo rojos. Se viaja a un nodo desde la pantalla de “mapa” haciendo click en el nodo destino. 
+El jugador se mueve viajando entre nodos a menos de una distancia determinada en un mapa. Estos nodos representan lugares como ciudades, pueblos, etc. Empiezas en el nodo verde de arriba y debes llegar a uno de los nodos de abajo rojos. Se viaja a un nodo desde la pantalla de “mapa” haciendo click en el nodo destino. Hay líneas que indican visualmente a qué nodo puedes ir desde tu nodo actual.
 
 * Objetivo primario: 35 nodos de los cuales, 4 son ciudades y 15, pueblos; Pre Colocados en el mapa por el dev; Con el evento que ocurre al entrar al nodo ya puesto por el dev;   
 * Objetivo secundario:Al ser el propio mapa más grande que la pantalla, también se puede hacer scroll vertical y horizontal para ver el mapa entero.
 
-En este caso, nodo verde \= inicio, nodo morado \= jefe, nodo azul oscuro= ciudad, nodo azul claro=pueblo.  
+En este caso, nodo verde \= inicio, nodo morado \= jefe, nodo azul oscuro= ciudad, nodo azul claro=pueblo. 
 <img width="512" height="469" alt="unnamed" src="https://github.com/user-attachments/assets/6d8287a4-a010-4585-af00-107520a4152f" />
 
 ## NODOS Y EVENTOS
 
 Cuando entras en un nodo, se sale automáticamente de la pantalla de mapa y ocurre algún evento.   
-Los eventos son una serie de cosas que pueden ser líneas de diálogo, de elecciones, combates o visitas a tiendas.   
-Estas decisiones pueden ser cosas sencillas como elegir si ir a una tienda, a otra o pasearse por el pueblo; pueden haber elecciones que desencadenan combates (salvar a alguien de unos bandidos, por ej.); y pueden haber otras que desencadenan quests u otras cadenas de elecciones.   
-Los eventos son plantillas y son parametrizables. Pueden tener parámetros predefinidos, o aleatorios. Algunos ejemplos de parámetros son la dificultad o el tipo de nodo en el que están, nombres de lugares, personajes, etc, fechas, dinero que cuesta algo, recompensas,etc.  
-¿Cuándo el resultado de una elección es otro evento y cuándo es una continuación de el mismo? En principio cada situación es un evento hasta que se cambie a otra situación grande que vale como evento en sí mismo. Se deja a discreción del programador/diseñador. (EJEMPLOS LUEGO)
+Los eventos son una serie de cosas que pueden ser escenas de diálogo con o sin elecciones, combates o tienda.  
+Estas decisiones pueden ser cosas sencillas como elegir si ir a una tienda, o salvar a alguien, atacar, …; pueden haber elecciones que desencadenan combates (salvar a alguien de unos bandidos, por ej.); y pueden haber otras que desencadenan quests u otras cadenas de elecciones.   
+Los eventos son plantillas y son parametrizables. Pueden tener parámetros predefinidos fijos o aleatorios. Algunos ejemplos de parámetros son nombres de lugares, personajes, etc, fechas, dinero que cuesta algo, recompensas,etc.  
+¿Cuándo el resultado de una elección es otro evento y cuándo es una continuación de el mismo? En principio cada situación es un evento hasta que se cambie a otra situación grande que vale como evento en sí mismo (tiene sentido por sí mismo). Se deja a discreción del programador/diseñador. (EJEMPLOS LUEGO)
 
 Cuando se acaba la cadena de elecciones del nodo, puedes volver a abrir la pestaña “mapa” para viajar al siguiente nodo en tu camino.
 
-La mayoría de las elecciones son de no retorno (no puedes volver al momento de antes de la elección), pero algunas, como visitar una tienda, pueden saltarse esta regla.También existe la posibilidad de encontrarse en combates forzados nada más llegar a un nodo.
+La mayoría de las elecciones son de no retorno (no puedes volver al momento de antes de la elección), pero algunas, como las tiendas, pueden saltarse esta regla.También existe la posibilidad de encontrarse en combates forzados nada más llegar a un nodo.
 
-Las quests son cadenas de eventos(la mayoría con recompensas al final) que pueden desarrollarse enteramente a un único nodo, o pueden extenderse durante varios nodos. En este último caso, se marcará en el mapa el nodo en el que continúa la quest, y al llegar a ese nodo, alguna de las elecciones que se te presenten en los eventos del nodo formarán parte de y por ende continuarán la cadena de eventos de la quest.
+Las quests son cadenas de eventos(la mayoría con recompensas al final) que pueden desarrollarse enteramente a un único nodo.
 
 Cantidad de quests/eventos:
 
@@ -40,7 +40,7 @@ Cantidad de quests/eventos:
 
 
 Hay 3 tipos de nodos: los nodos de pueblo, ciudad y comunes.  
-Los tipos de eventos que ocurran en el nodo dependen del tipo de nodo en el que estés y de la zona de peligro de este. Por lo general, en pueblos y ciudades hay más tiendas y quests, pero también hay más presencia del ejército, ergo más dificultad.
+Los tipos de eventos que ocurran en el nodo dependen del tipo de nodo en el que estés y de la zona de peligro de este. Por lo general, en pueblos y ciudades hay más quests, pero también hay más presencia del ejército, ergo más dificultad.
 
 Ejemplos de quests y eventos:  
 Leyenda:
@@ -137,7 +137,7 @@ Hay 4 zonas de peligro. Las zonas de peligro representan principalmente los terr
 * Objetivo primario: Cuanta mayor sea la zona de dificultad, mayor es la probabilidad de que ocurra un evento de combate con el ejército al entrar al nodo. Cuanta mayor sea la dificultad, más recompensas obtienes.   
   Ubicación y tamaño de zonas de dificultad iniciales predefinidos. Las zonas de dificultad cuyo foco está activo crecen cada **n** viajes.  
   Cuando huyes de un combate (con enemigos que avisen al estado de ello(unos bandidos no van a avisar al estado)) o como resultado de eventos, el foco más cercano se activa, y las zonas de dificultad crecen hacia ese nodo(se crea un nuevo foco activo a partir del que crecen las zonas de dificultad en ese nodo. Las zonas de dificultad alrededor de este foco aumentan más lentamente).  
-* Objetivo secundario: Aumentar las diferencias entre zonas de dificultad y generación procedural de el estado inicial.
+* Objetivo secundario: Aumentar las diferencias entre zonas de dificultad y generación procedural del estado inicial.
 
 Estas son las diferentes zonas de peligro que pueden existir:
 
@@ -148,25 +148,26 @@ Estas son las diferentes zonas de peligro que pueden existir:
 
 ## INVENTARIO
 
-Existe como lista de objetos.  
-Venda: Habilidad: cura bastante hp. Fuera del combate.
+El inventario contiene una lista de equipamiento, los items y las habilidades que el jugador posee. Aquí el jugador puede equipar/desequipar el equipamiento que tiene equipado, usar items y mirar los efectos que causan las habilidades se usan en combate.  
+La escena de inventario se puede acceder desde el mapa y desde los eventos. 
 
-Mejunje extraño:Descripción:”comestible,”, Habilidad:quita 20 de hambre y no restaura sp al jugador. Fuera del combate.  
-Ración seca: Descripción:”comestible,”, Habilidad:quita 20 de hambre y restaura muy pocos sp al jugador. Fuera del combate.  
-Ración de calidad: Descripción:”comestible,”, Habilidad:quita 30 de hambre y restaura pocos sp al jugador. Fuera del combate.  
-Ración gourmet: Descripción:”comestible,”, Habilidad:quita 60 de hambre y restaura medios sp al jugador. Fuera del combate.  
-Cerveza:Descripción:”comestible,”,  Habilidad:da 5 de hambre y restaura bajo sp al jugador. Fuera del combate.  
-Vodka: Descripción:”comestible,”, Habilidad:da 5 de hambre y restaura medio-alto sp al jugador. Fuera del combate.
+Lista de items:
 
-Poción de salud mini: Habilidad:cura poca hp al jugador. Dentro y fuera de combate.  
-Poción de salud fuerte: Habilidad:cura bastante hp al jugador. Dentro y fuera de combate.  
-Poción de recuperación de SP pequeña: Habilidad: Restaura una cantidad media de sp al jugador. Dentro y fuera del combate.  
-Poción de recuperación de SP fuerte: Habilidad: Restaura una cantidad alta de sp al jugador. Dentro y fuera del combate.  
-Antídoto: Habilidad: cura veneno al jugador. Dentro y fuera del combate.
+- Mejunje extraño:Descripción:”comestible,”, Habilidad:quita 20 de hambre y no restaura sp al jugador. Fuera del combate.  
+- Ración seca: Descripción:”comestible,”, Habilidad:quita 20 de hambre y restaura muy pocos sp al jugador. Fuera del combate.  
+- Ración de calidad: Descripción:”comestible,”, Habilidad:quita 30 de hambre y restaura pocos sp al jugador. Fuera del combate.  
+- Ración gourmet: Descripción:”comestible,”, Habilidad:quita 60 de hambre y restaura medios sp al jugador. Fuera del combate.  
+- Poción de salud mini: Habilidad:cura poca hp al jugador. Dentro y fuera de combate.  
+- Poción de salud fuerte: Habilidad:cura bastante hp al jugador. Dentro y fuera de combate.  
+- Poción de recuperación de SP pequeña: Habilidad: Restaura una cantidad media de sp al jugador. Dentro y fuera del combate.  
+- Poción de recuperación de SP fuerte: Habilidad: Restaura una cantidad alta de sp al jugador. Dentro y fuera del combate.  
+- Antídoto: Habilidad: cura veneno al jugador. Dentro y fuera del combate.
 
-Dardo envenenao:Habilidad: Daño: poco, Efecto: aplica veneno a un enemigo. Dentro del combate.  
-Molotov :Habilidad: Daño: poco, Efecto: aplica quemado a un enemigo. Dentro del combate.  
-Extraño coso que brilla: Habilidad: Efecto: aplica paralizado a un enemigo durante 2 turnos. Dentro del combate.
+- Dardo envenenado:Habilidad: Daño: poco, Efecto: aplica veneno a un enemigo. Dentro del combate.  
+- Molotov :Habilidad: Daño: poco, Efecto: aplica quemado a un enemigo. Dentro del combate.  
+- Extraño coso que brilla: Habilidad: Efecto: aplica paralizado a un enemigo durante 2 turnos. Dentro del combate.  
+- Nabo: Cura poca HP y cura algo de hambre  
+- Nabo pocho: Quita poca HP y cura algo de hambre
 
 ## HAMBRE
 
@@ -187,13 +188,15 @@ En el juego y en combate sólo hay un personaje controlable.
 El orden de turnos en combate es este: primero es el turno jugador y luego juegan su turno todos los enemigos de izquierda a derecha.  
 Al principio del combate siempre es el turno del jugador, salvo en casos especiales(una emboscada enemiga por ejemplo). 
 
+## HABILIDADES
+
 Las habilidades son todas las acciones que pueden realizar el jugador y los enemigos. Se pueden utilizar dentro y fuera del combate(La mayoría de estas solo dentro). Pueden hacer daño y o aplicar una serie de efectos de estado, o curar.
 
 El jugador puede hacer dos acciones por turno, mientras que los enemigos solo una.  
 Durante el turno del jugador, puede realizar las siguientes acciones. Todas son habilidades:
 
 * Ataque básico: No gasta puntos de habilidad.  
-* Defender:Puede gastar 1 o 2 acciones dependiendo de cuántas te queden. Aumenta la defensa en n.No gasta puntos de habilidad.  
+* Defender:Puede gastar 1 o 2 acciones dependiendo de cuántas te queden. Te da el efecto de DEF+ / DEF++ dependiendo de si gastas 1 o 2 acciones.No gasta puntos de habilidad.  
 * Usar la habilidad de un objeto. Gasta 1 acción.  
 * Huir: Usas tus 2 acciones. Cuando vuelva a ser tu turno, huyes del combate y no consigues recompensas. Hay combates de los que no se puede huir. Si huyes de un combate, el juego actúa como si te hubieras pasado el nodo, pero no recibes recompensas.  
 * Objetivo secundario: Equipar o intercambiar un objeto equipado por otro. Gasta 1 acción.
@@ -215,8 +218,8 @@ En principio estos son:
 
 * Quemado: quita 5% hp por turno en el combate aprox. 3 turnos.  
 * Envenenado: quita 2% hp por turno en el combate, hasta que te lo cures. Persiste entre combates, por lo cual te lo tienes que quitar usando un objeto de un solo uso “antídoto” que se puede conseguir en combates, quests o tiendas.  
-* Hambriento 1: disminuye tu defensa en un 30% y todos tus ataques hacen un 30% menos de daño. Se te da cuando el hambre pasa a ser \>= 50%. Se quita cuando baja del 50%.  
-* Hambriento 2: El jugador solo tiene una acción por turno. Se te aplica cuando el hambre pasa a ser \>= 80%. Se quita cuando baja del 80%.  
+* Hambre 1: disminuye tu defensa en un 30% y todos tus ataques hacen un 30% menos de daño. Se te da cuando el hambre pasa a ser \>= 50%. Se quita cuando baja del 50%.  
+* Hambre 2: El jugador solo tiene una acción por turno. Se te aplica cuando el hambre pasa a ser \>= 80%. Se quita cuando baja del 80%.  
 * Att-: todos tus ataques hacen un 30% menos de daño. Dura 2 turnos.  
 * Def-: 30% disminuye el daño recibido en un 30%. Dura 2 turnos.  
 * Paralizado: Solo lo puede aplicar el jugador.Si los enemigos están paralizados, no actúan. Dura n turnos.  
@@ -233,9 +236,8 @@ Puedes equipar objetos de equipamiento tanto dentro como(obj.secundario) fuera d
 
 Las armas mejoran sobre todo lo relacionado con el daño. Las armaduras se centran más en la defensa.  
 El equipamiento puede tener efectos adicionales, desde simples aumentos de otras stats, por ejemplo.  
-El equipamiento se puede conseguir en tiendas, como resultado de quests o como loot de un combate.  
-<img width="1287" height="962" alt="4444" src="https://github.com/user-attachments/assets/5a359769-f38e-4393-a578-b498a73a3401" />
-
+El equipamiento se puede conseguir en tiendas,como resultado de quests o como loot de un combate.  
+<img width="602" height="320" alt="Imagen2" src="https://github.com/user-attachments/assets/8db504cb-3d8c-4707-940d-c537729cbc20" />
 
 
 # DINÁMICA 
@@ -255,8 +257,7 @@ En tu camino a la derrota del boss se interponen:
 El juego es difícil.   
 Es un juego más castigador que permisivo.  
 En general la curación es escasa, lo que hace que la salud pase a ser un recurso más que gestionar a la hora de tomar decisiones.   
-Los enemigos dan relativamente poco loot. Hay una mecánica de hambre que disminuye lentamente que hace que el jugador tenga que gestionar mejor el dinero.   
-Está incentivado estudiar los enemigos en el bestiario, ya que tienen un máximo de 3 acciones entre las que van a usar una en cada turno y el juego solo te dice el tipo de acción que van a hacer en su turno, sin concretar.
+Los enemigos dan relativamente poco loot. Hay una mecánica de hambre que disminuye lentamente que hace que el jugador tenga que gestionar mejor el dinero. 
 
 ## SISTEMAS RIESGO-RECOMPENSA
 
@@ -280,8 +281,14 @@ Interfaz
 
 Interfaz de combate
 
+Cuando usas una habilidad o item singleTarget, se pone todo oscuro menos los enemigos y todo se vuelve no interactuable menos los enemigos, cuando clikes en uno usas la habilidad o item sobre ese, el fondo vuelve a ser normal y puedes volver a pulsar los botones.  
+Los enemigos tienen barras de vida encima de siu cabeza y un indicador con el tipo de ataque de su siguiente ataque (básico, especial,...).  
+La barra de vida (roja) y de sp(puntos de habilidad, azul oscuro) del jugador se sitúan una al lado de otra a la izquierda, encima del menú de selección de acciones en combate.  
 Cuando pasas el ratón por encima de una habilidad activa o item, sale un pop-up en el ratón diciendo sus características.  
 Cuando empieza tu turno, el menú NO scrolleable de la derecha está vacío, se llena cuando clicas "items" o "habilidades" si pasas el ratón por encima de cualquier botón, te dice en un pequeño cuadro adonde está el ratón el nombre y la descripción la habilidad en última instancia, asociada. El estilo de las 2 segundas imágenes es el de la primera.  
+<img width="301" height="276" alt="Imagen3" src="https://github.com/user-attachments/assets/320c59fc-3b80-45a2-aad3-939c225ccf38" />
+<img width="301" height="276" alt="Imagen4" src="https://github.com/user-attachments/assets/1a65441b-ea41-45d3-b0e9-92aff6da0e89" />
+<img width="301" height="295" alt="Imagen5" src="https://github.com/user-attachments/assets/9967bd6f-b39f-48aa-8795-c692284bc5e2" />
 
 # Esquemas de implementación
 ![Imagen de WhatsApp 2025-10-27 a las 23 14 41_b3f3e360](https://github.com/user-attachments/assets/d8f0ed4e-b624-47d1-b7be-4685d152b5fe)
