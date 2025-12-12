@@ -1,4 +1,8 @@
 import MenuButton from "./MenuButton.js"
+
+
+
+/**Es básicamente una matriz rectangular de objetos de phaser/MenuButtons*/
 export default class Menu extends Phaser.GameObjects.Container {
 
     /**
@@ -49,7 +53,10 @@ export default class Menu extends Phaser.GameObjects.Container {
 
         scene.add.existing(this);
     }
-    /**
+    /**Añade un botón en la posición dada. 
+     * Si no das fila ni columna (o son -1), lo coloca en la primera posición libre que encuentre (busca de izq. a der. y de arriba a abajo)
+     * Si solamente das fila o columna (no dar == que sea -1), lo coloca en la primera posición libre la fila/columna determinada.
+     * Si le das la fila y la columna, coloca en esa posición del menú. Sobreescribe si está ocupada.
      * 
      * @param {MenuButton} button
      * @param {number} row
@@ -82,7 +89,7 @@ export default class Menu extends Phaser.GameObjects.Container {
                 let i = 0;
                 let found = false;
                 while (i < this.rows && !found) { found = !this.positions[i][column]; i++; }
-                i--; j--;
+                i--;
                 if (!this.positions[i][column]) { this._AddButton(button, i, column) }
                 else { button.destroy(); }
             }
@@ -126,6 +133,15 @@ export default class Menu extends Phaser.GameObjects.Container {
 
     }
 
+    /**Añade un GameObject de Phaser en la posición dada.
+     * Si no das fila ni columna (o son -1), lo coloca en la primera posición libre que encuentre (busca de izq. a der. y de arriba a abajo)
+     * Si solamente das fila o columna (no dar == que sea -1), lo coloca en la primera posición libre la fila/columna determinada.
+     * Si le das la fila y la columna, coloca en esa posición del menú. Sobreescribe si está ocupada.
+     * 
+     * @param {Phaser.GameObjects.GameObject} item
+     * @param {number} row
+     * @param {number} column
+     */
     AddItem(item, row = -1, column = -1) {
         if (row == -1) {
             if (column == -1) {
@@ -170,4 +186,11 @@ export default class Menu extends Phaser.GameObjects.Container {
         item.y = this.SBMEAB + (this.height - 2 * this.SBMEAB / this.rows ) * row;
 
     }
+
+    removeAllButtons() {
+        this.list.forEach(child => {
+            child.destroy();
+        });
+    }
+
 }

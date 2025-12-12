@@ -35,8 +35,6 @@ export default class DialogText{
 		
 		// si la ventana de diálogo se muestra
 		this.visible = true;
-		
-		this.speakerText;
 		// texto que hay en la ventana
 		this.text;
 		
@@ -62,7 +60,7 @@ export default class DialogText{
 	
 	// con esta función se nos permite añadir texto a la ventana
 	// Este método se llamara desde la escena que corresponda
-	setText(speaker, text, animate) {
+	setText(text, animate) {
 		this.closeBtn.visible = false;
 		//el parametro animate nos permite saber si el texto sera animado o no
 		this.eventCounter = 0;
@@ -77,12 +75,6 @@ export default class DialogText{
 		}
 		//esta variable es un string vacio si animate es true, de otra manera es la variable text
 		var tempText = animate ? '' : text;
-		if(this.speakerText)
-			this.speakerText.destroy();
-		this.speakerText = this.scene.add.text(this.padding + 10, this._getGameHeight() - this.windowHeight - this.padding, speaker,  {
-				fontSize: this.fontSize,
-				fontFamily: this.fontFamily
-			});
 		//llama al metodo que calcula la pos del texto y lo crea
 		this._setText(tempText); 
 

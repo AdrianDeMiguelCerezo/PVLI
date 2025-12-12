@@ -1,7 +1,16 @@
+import EventParser from "./EventParser.js";
+import PlayerData from "./PlayerData.js";
+
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
     CITY: 2
+}
+
+const DifficultyLimits = {
+    MEDIUM:100,
+    HARD:200,
+    FUCKED:300
 }
 
 const State = {
@@ -18,7 +27,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} x
      * @param {any} y
      * @param {any} texture
-     * @param {any} targetScene
+     * @param {any} eventKeys
+     * @param {any} playerData
      * @param {any} nodeType
      * @param {any} state
      * @param {any} isFocus
@@ -27,21 +37,46 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
      * @param {any} difficulty
      * @param {any} radius
      */
-    constructor(scene, x, y, texture, targetScene, nodeType, state, isFocus = false, difficulty = 0, visited = false, scale = 0.2,  radius = 130) {
+    constructor(scene, x, y, texture,eventKeys, playerData, nodeType, state, isFocus = false,isAwake = false, difficulty = 0, visited = false, scale = 0.2, radius = 130,event = null) {
         super(scene, x, y, texture)
         /**
          * Guarda la escena que carga al entrar al nodo
          * @type {Scene}
          */
-        this.targetScene = targetScene;
 
+        
+        this.name = "node"
+
+        //this.eventKeys = eventKeys;
+        this.playerData = playerData;
         this.nodeType = nodeType;
         this.state = state;
         this.radius = radius;
         this.visited = visited;
         this.isFocus = isFocus;
         this.difficulty = difficulty;
+        this.isAwake = isAwake;
 
+        
+        this.eventKeys = eventKeys;
+        
+
+        //if(this.difficulty )
+        let eventoParserer = new EventParser(this.scene.jsonEventos,this.scene.jsonHabilidades,this.scene.jsonEquipamiento,this.scene.jsonItems,this.scene.jsonEfectos);
+
+        if(this.difficulty < DifficultyLimits.MEDIUM){
+            this.chosenEvent = this.eventKeys.easyEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.HARD){
+            this.chosenEvent = this.eventKeys.midEvent;
+        }
+        else if(this.difficulty < DifficultyLimits.FUCKED){
+            this.chosenEvent = this.eventKeys.hardEvent;
+        }
+        else{
+            this.chosenEvent = this.eventKeys.fkcedEvent;
+        }
+        let eventoParseado = eventoParserer.generateEvent(this.chosenEvent);
 
         scene.add.existing(this);
         this.setInteractive();
@@ -78,9 +113,12 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 this.state = State.CURRENT;
 
                 this.updateTint();
+                this.drawConnectionsFromCurrent();
 
                 
                 this.openNearbyNodes();
+
+                this.scene.UpdateFociDifficulties(10);
 
 
                 if (this.visited == false) {
@@ -89,23 +127,31 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     let nodeData = this.scene.nodes.map(n => ({
                         x: n.x,
                         y: n.y,
-                        targetScene: n.targetScene,
+                        event: n.eventKeys,
+                        playerData: n.playerData,
                         nodeType: n.nodeType,
                         state: n.state,
                         isFocus: n.isFocus,
+                        isAwake:n.isAwake,
                         visited: n.visited,
                         scale: n.scale,
                         difficulty: n.difficulty,
                         radius: n.radius
 
                     }));
+
+                    this.scene.registry.set("nodes", nodeData);
+
+                    this.scene.events.removeAllListeners("update_tint");
                     
-                    this.scene.registry.set("nodes", nodeData)
-                    this.scene.scene.start(this.targetScene);
+                    this.scene.scene.start('DialogueScene', {fragmentoEvento: eventoParseado, playerData: this.playerData});
+
                 }
                 
             }
         });
+
+        this.scene.events.on("update_tint", this.updateTint,this)
     }
 
 
@@ -117,6 +163,13 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
             else if (this.state === State.OPEN) this.setTintFill(0x000000);
             else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
         }
+        
+        //if (this.scene.game.config.physics.arcade.debug) {
+            if (this.difficulty < 100) { }
+            else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
+            else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
+            else { this.setTintFill(0x8B1800) }
+        //}
 
     }
 
@@ -187,5 +240,5 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                 }
             }
         }
-    }
+    }  
 }

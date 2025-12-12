@@ -18,12 +18,14 @@ export default class PlayerData
  * @param {any} torso
  * @param {any} pantalones
  */
-    constructor(name = "", HP = 200, HPMax = 200, SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0,
+    constructor(name = "", HP = 200, HPMax = 200, SP = 100, SPMax = 100, critDMG = 0, critRate = 0, dinero = 0, hambre = 0, hambreMax = 100,
         habilidades = ["GRITO_BATALLA", 'DISPARO_MULTIPLE', 'ATAQUE_FURIOSO', 'CURACION'],
-        items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 1 }], 
+        items = [{ item: 'MOLOTOV', count: 2 }, { item: "POTI_HP_MINI", count: 3 }, { item: "ANTIDOTO", count: 3 }], 
         efectos = [],
-        equipamiento = ["PANTALONES_REFORZADOS"],
+        equipamiento = ["PANTALONES_REFORZADOS","PONCHO","ESCOPETA","VAQUEROS"],
         arma = "REVOLVER_OXIDADO", torso = "CHAQUETA_PIEL", pantalones = null, 
+        skins=['cowboy','swimsuit','halloween','christmas','butler','school','cat'],
+        skinIndex=0
     )
 
     {
@@ -39,6 +41,9 @@ export default class PlayerData
         this.critRate=critRate;
         this.dinero=dinero;
         this.hambre=hambre;
+        this.hambreMax = this.hambreMax;
+        this.skins=skins;
+        this.skinIndex=skinIndex;
 
         /**keys de equipamiento no equipado
          * @type {Array<string>} 

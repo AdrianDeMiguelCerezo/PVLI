@@ -1,5 +1,6 @@
-
-
+import SubStateNode from "../SubStateNode.js"
+import PlayerData from "../PlayerData.js"
+import EventParser from "../EventParser.js"
 
 export default class xd extends Phaser.Scene {
 
@@ -7,37 +8,29 @@ export default class xd extends Phaser.Scene {
         super({ key: 'xd' })
     }
 
-    preload() {
-        this.load.image('sky', 'https://labs.phaser.io/assets/skies/gradient11.png');
-    }
 
+    init() {
+        console.log("init1")
+        this.jsonEventos = this.cache.json.get('eventos');
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEquipamiento = this.cache.json.get('equipamiento');
+        this.jsonItems = this.cache.json.get('items');
+        this.jsonEfectos = this.cache.json.get('efectos');
+        console.log("init2")
+    }
     create() {
 
-        let rt;
-        let graphics;
-        this.add.image(400, 300, 'sky');
+        let eventParser = new EventParser(this.jsonEventos, this.jsonHabilidades, this.jsonEquipamiento, this.jsonItems, this.jsonEfectos)
+        console.log("jsonEventos:", this.jsonEventos)
 
-        graphics = new Phaser.GameObjects.Graphics(this);
-        graphics.lineStyle(4, 0x00ff00);
-        graphics.fillStyle(0x00ff00); // how to fill it??
+        let evento = eventParser.generateEvent("FINAL");
 
-        rt = this.add.renderTexture(100, 100, 100, 100).setOrigin(0.5);
+        console.log("evento:", evento)
 
-        var circle = this.add
-            .circle(0, 0, 50, 0xff7e00)
-            .setAlpha(0.8)
-            .setVisible(false);
+        this.scene.start("DialogueScene", {fragmentoEvento: evento, playerData: new PlayerData()})
 
-        rt.draw(circle, 50, 50);
-
-        const path = new Phaser.Curves.Path();
-        path.lineTo(50, 0);
-        path.lineTo(50, 50);
-        path.add(new Phaser.Curves.QuadraticBezier(new Phaser.Math.Vector2(50, 50), new Phaser.Math.Vector2(100, 50), new Phaser.Math.Vector2(100, 100)));
-        path.closePath();
-        graphics.fillPoints(path.getPoints())
-        this.add.existing(graphics);
-        
     }
 
+
 }
+

@@ -15,6 +15,38 @@
             }
         ]
     },
+    "DARDO_ENVENENADO": {
+        "name": "Dardo envenenado",
+        "description": "Aplica veneno.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [
+            {
+                "actions": 1,
+                "damage": 8,
+                "effect": "ENVENENADO",
+                "effectDuration": 10,
+                "type": "ACTIVE",
+                "target": "ENEMY"
+            }
+        ]
+    },
+    "FLASHBANG": {
+        "name": "Flashbang",
+        "description": "Paraliza a un enemigo.",
+        "usedInCombat": true,
+        "usedOutOfCombat": false,
+        "habilidades": [
+            {
+                "actions": 1,
+                "damage": 5,
+                "effect": "PARALIZADO",
+                "effectDuration": 1,
+                "type": "ACTIVE",
+                "target": "ALLENEMIES"
+            }
+        ]
+    },
     "POTI_HP_MINI": {
         "name": "Poción de salud (mini)",
         "description": "Cura poca HP.",
@@ -23,23 +55,144 @@
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffHealth": 10 },
+                "effect": { "diffHealth": 40 },
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
             }
         ]
     },
-    "POTI_SP_MEDIA": {
-        "nombre": "Poción de SP (pequeña)",
-        "descripcion": "Restaura SP media.",
+    "POTI_SP_MINI": {
+        "name": "Poción de SP (pequeña)",
+        "description": "Restaura SP media.",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
             {
                 "actions": 1,
-                "effect": { "diffSp": 20 },
+                "effect": { "diffSp":30 },
                 "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "NABO": {
+        "name": "Nabo",
+        "description": "Restaura HP y mata el hambre.",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHambre": 10,"diffHealth": 5 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+     "NABO_POCHO": {
+        "name": "Nabo pocho",
+        "description": "Debería restaurar HP y matar el hambre, pero está pocho. Quizá no sea buena idea comerlo.",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHambre": 5,"diffHealth": -5 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "POTI_HP_GRANDE": {
+        "name": "Poción de HP(Grande)",
+        "description": "Restaura mucho HP.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "actions": 1,
+                "effect": { "diffHealth": 150 },
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "MEJUNJE_EXTRAÑO":{
+        "name":"Mejunje extraño",
+        "description":"Restaura muy poco hambre hambre",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades":[
+            {
+                "actions":1,
+                "effect":{"diffHambre": 10},
+                "effectDuration":0,
+                "type":"ACTIVE",
+                "target":"SELF"
+            }
+        ]
+    },
+    "RACION_SECA":{
+        "name":"Ración seca",
+        "description":"Restaura muy poco hambre y SP",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades":[
+            {
+                "actions":1,
+                "effect":{"diffHambre": 10,"diffSP":5},
+                "effectDuration":0,
+                "type":"ACTIVE",
+                "target":"SELF"
+            }
+        ]
+    },
+    "RACION_CALIDAD":{
+        "name":"Ración de calidad",
+        "description":"Restaura poco hambre y SP",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades":[
+            {
+                "actions":1,
+                "effect":{"diffHambre": 20,"diffSP":20},
+                "effectDuration":0,
+                "type":"ACTIVE",
+                "target":"SELF"
+            }
+        ]
+    },
+    "RACION_GOURMET":{
+        "name":"Ración gourmet",
+        "description":"Restaura medio hambre y SP",
+        "usedInCombat": false,
+        "usedOutOfCombat": true,
+        "habilidades":[
+            {
+                "actions":1,
+                "effect":{"diffHambre": 60,"diffSP":50},
+                "effectDuration":0,
+                "type":"ACTIVE",
+                "target":"SELF"
+            }
+        ]
+    },
+    "ANTIDOTO": {
+        "name": "Antídoto",
+        "description": "Cura el envenenamiento.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "name": "Antídoto",
+                "description": "Elimina el veneno del cuerpo.",
+                "actions": 1,
+                "cureEffect": "ENVENENADO", 
                 "type": "ACTIVE",
                 "target": "SELF"
             }

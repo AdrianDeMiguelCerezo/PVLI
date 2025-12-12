@@ -1,8 +1,8 @@
-import PlayerData from "../PlayerData.js";
+import MenuButton from "../MenuButton.js";
 
-export default class MainMenu extends Phaser.Scene{
+export default class WinScene extends Phaser.Scene{
     constructor(){
-        super({key:'MainMenu'});
+        super({key:'WinScene'});
     }
 
     create(){
@@ -10,7 +10,7 @@ export default class MainMenu extends Phaser.Scene{
 
         this.add.rectangle(0, 0, width * 2, height * 2, 0x202040).setOrigin(0);
 
-        this.add.text(width / 2, height / 3 - 50, 'The South Border', {
+        this.add.text(width / 2, height / 3 - 50, 'HAS GANADO', {
             fontFamily: 'Arial',
             fontSize: '48px',
             color: '#ffffff',
@@ -36,9 +36,8 @@ export default class MainMenu extends Phaser.Scene{
             return button;
         };
 
-        makeButton(height / 2, 'Play', () => {
-            this.playerData = new PlayerData();
-            this.scene.start('BootScene');
+        makeButton(height / 2, 'Volver al menú principal', () => {
+            this.scene.start('MainMenu');
         });
     }
 }

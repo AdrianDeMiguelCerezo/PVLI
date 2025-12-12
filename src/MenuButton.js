@@ -8,10 +8,16 @@ export default class MenuButton extends Phaser.GameObjects.Text {
    * @param {BattleScene} scene
    * @param {number} x
    * @param {number} y
-   * @param {any} key Indica o la key de la habilidad si se guarda en habilidades.json,
-   *                  o la key de equipamiento, o es una tupla { item, count }
-   * @param {string} skill Indica la skill a utilizar si se trata de una pieza de equipamiento
-   * @param {Function} pointerDownAction Acción directa si NO es un botón de combate
+   * @param {any} key   Si pointerDownAction es null:
+   *                    - string: key de habilidad en habilidades.json
+   *                    - string: key de equipamiento
+   *                    - { item, count }: item de PlayerData.items
+   * @param {string} skill   Nombre de la habilidad interna si es equipamiento
+   * @param {Function} pointerDownAction Acción directa si NO es botón de combate
+   * @param {number} fontSize
+   * @param {number} fixedWidth
+   * @param {string} backgroundColor
+   * @param {boolean} isCombat
    */
   constructor(
     scene,
@@ -41,133 +47,160 @@ export default class MenuButton extends Phaser.GameObjects.Text {
       }
     );
 
-    // ==== BOTONES GENÉRICOS (Atacar / Defender / Habilidades / Items...) ====
-    if (!!pointerDownAction) {
+    this.scene = scene;
+    this.canBeClicked = true;
+
+    // =================== BOTONES GENÉRICOS (Atacar, Defender, pestañas...) ===================
+    if (pointerDownAction) {
       this.text = key;
       scene.add.existing(this);
 
       this.setInteractive();
+
       this.on("pointerdown", () => {
-        if (this.canBeClicked) {
-          pointerDownAction();
-          this.preFX.clear();
-        }
+        if (!this.canBeClicked) return;
+        if (this.preFX) this.preFX.clear();
+        pointerDownAction();
       });
+
       this.on("pointerover", () => {
-        if (this.canBeClicked) {
-          this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+        if (this.canBeClicked && this.preFX) {
+          this.preFX.addGlow(0xfaf255, 1, 1, false, 1, 1);
         }
       });
+
       this.on("pointerout", () => {
-        this.preFX.clear();
+        if (this.preFX) this.preFX.clear();
       });
     } else {
-      // ==== BOTONES DE COMBATE (habilidades / items / equipamiento) ====
+      // =================== BOTONES DE COMBATE (skills, equipamiento, items) ===================
       if (isCombat) {
-        // --- Habilidad de equipamiento (arma, torso, etc.) ---
-        if (!!skill) {
-          this.text = scene.jsonEquipamiento[key].habilidades[skill].name;
+        // --- EQUIPAMIENTO (arma / torso / pantalones con habilidades activas) ---
+        if (skill) {
+          const eq = scene.jsonEquipamiento[key];
+          this.text = eq.habilidades[skill].name;
           scene.add.existing(this);
 
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
-              scene.events.emit(
-                "use_skill",
-                scene.jsonEquipamiento[key].habilidades[skill]
-              );
-              this.preFX.clear();
-            }
+            if (!this.canBeClicked) return;
+            const raw = eq.habilidades[skill];
+            this.scene.events.emit("use_skill", raw);
+            if (this.preFX) this.preFX.clear();
           });
 
           this.on("pointerover", () => {
-            if (this.canBeClicked) {
-              scene.ShowTextbox(
-                scene.jsonEquipamiento[key].habilidades[skill].description
-              );
-              this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+            if (!this.canBeClicked) return;
+            if (typeof this.scene.ShowTextbox === "function") {
+              this.scene.ShowTextbox(eq.habilidades[skill].description);
+            }
+            if (this.preFX) {
+              this.preFX.addGlow(0xfaf255, 1, 1, false, 1, 1);
             }
           });
 
           this.on("pointerout", () => {
-            if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
+            if (this.canBeClicked && typeof this.scene.HideTextbox === "function") {
+              this.scene.HideTextbox();
+            }
+            if (this.preFX) this.preFX.clear();
           });
         }
-        // --- Habilidad definida en habilidades.json ---
-        else if (scene.jsonHabilidades.hasOwnProperty(key)) {
-          this.text = scene.jsonHabilidades[key].name;
+        // --- HABILIDAD de habilidades.json ---
+        else if (scene.jsonHabilidades && scene.jsonHabilidades.hasOwnProperty(key)) {
+          const hab = scene.jsonHabilidades[key];
+          this.text = hab.name;
           scene.add.existing(this);
 
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
-              // Aquí emitimos la KEY, el CombatManager ya la resuelve en jsonHabilidades
-              scene.events.emit("use_skill", key);
-              this.preFX.clear();
-            }
+            if (!this.canBeClicked) return;
+            // emitimos la KEY; CombatManager ya la mira en jsonHabilidades
+            this.scene.events.emit("use_skill", key);
+            if (this.preFX) this.preFX.clear();
           });
 
           this.on("pointerover", () => {
-            if (this.canBeClicked) {
-              scene.ShowTextbox(scene.jsonHabilidades[key].description);
-              this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+            if (!this.canBeClicked) return;
+            if (typeof this.scene.ShowTextbox === "function") {
+              this.scene.ShowTextbox(hab.description);
+            }
+            if (this.preFX) {
+              this.preFX.addGlow(0xfaf255, 1, 1, false, 1, 1);
             }
           });
 
           this.on("pointerout", () => {
-            if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
+            if (this.canBeClicked && typeof this.scene.HideTextbox === "function") {
+              this.scene.HideTextbox();
+            }
+            if (this.preFX) this.preFX.clear();
           });
         }
-        // --- Botón de item (MOLOTOV, pociones, etc.) ---
+        // --- ITEM de PlayerData.items: { item, count } ---
         else {
-          this.itemKey = key.item;
-          this.itemCount = key.count;
-          this.text = scene.jsonItems[key.item].name + ": " + key.count;
+          // key = { item: 'MOLOTOV', count: 2, ... }
+          this.itemRef = key;
+          const itemKey = key.item;
+          const def = scene.jsonItems[itemKey];
+
+          this.text = def.name + ": " + key.count;
           scene.add.existing(this);
 
           this.setInteractive();
 
           this.on("pointerdown", () => {
-            if (this.canBeClicked) {
-              // De momento usamos la primera habilidad del item
-              scene.events.emit(
-                "use_skill",
-                scene.jsonItems[key.item].habilidades[0]
-              );
-              this.preFX.clear();
-            }
+            if (!this.canBeClicked) return;
+            // primera habilidad del item, pero pasando metadato para que el CombatManager reste usos
+            const raw = def.habilidades[0];
+            const skillWithMeta = {
+              ...raw,
+              _sourceItemRef: this.itemRef
+            };
+            this.scene.events.emit("use_skill", skillWithMeta);
+            if (this.preFX) this.preFX.clear();
           });
 
           this.on("pointerover", () => {
-            if (this.canBeClicked) {
-              scene.ShowTextbox(scene.jsonItems[key.item].description);
-              this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+            if (!this.canBeClicked) return;
+            if (typeof this.scene.ShowTextbox === "function") {
+              this.scene.ShowTextbox(def.description);
+            }
+            if (this.preFX) {
+              this.preFX.addGlow(0xfaf255, 1, 1, false, 1, 1);
             }
           });
 
           this.on("pointerout", () => {
-            if (this.canBeClicked) scene.HideTextbox();
-            this.preFX.clear();
+            if (this.canBeClicked && typeof this.scene.HideTextbox === "function") {
+              this.scene.HideTextbox();
+            }
+            if (this.preFX) this.preFX.clear();
           });
         }
       } else {
-        // ==== BOTONES DE MENÚ (fuera de combate, bestiario, inventario...) ====
-        if (scene.jsonHabilidades.hasOwnProperty(key)) {
-          if (!!skill) {
-            this.text = scene.jsonEquipamiento[key].habilidades[skill].name;
+        // =================== BOTONES FUERA DE COMBATE (inventario, info jugador, etc.) ===================
+        const je = scene.jsonEquipamiento || {};
+        const jh = scene.jsonHabilidades || {};
+        const ji = scene.jsonItems || {};
+
+        if (je[key]) {
+          // equipamiento
+          if (skill && je[key].habilidades && je[key].habilidades[skill]) {
+            this.text = je[key].habilidades[skill].name;
           } else {
-            this.text = scene.jsonEquipamiento[key].name;
+            this.text = je[key].name;
           }
-        } else if (scene.jsonEquipamiento.hasOwnProperty(key)) {
-          this.text = scene.jsonEquipamiento[key].name;
-        } else if (scene.jsonItems.hasOwnProperty(key)) {
-          this.text = scene.jsonItems[key].name;
+        } else if (jh[key]) {
+          this.text = jh[key].name;
+        } else if (ji[key]) {
+          this.text = ji[key].name;
         } else {
-          throw "esta key no es un item, equipamiento, ni habilidad ubicada en habilidades.json";
+          throw new Error(
+            "Esta key no es un item, equipamiento ni habilidad conocida: " + key
+          );
         }
 
         scene.add.existing(this);
@@ -175,43 +208,68 @@ export default class MenuButton extends Phaser.GameObjects.Text {
         this.setInteractive();
 
         this.on("pointerdown", () => {
-          scene.events.emit("show_description", key, skill);
-          this.preFX.clear();
+          if (this.preFX) this.preFX.clear();
+          // PlayerInfoMenu escucha este evento y enseña la descripción
+          this.scene.events.emit("show_description", key, skill);
         });
 
         this.on("pointerover", () => {
-          this.preFX.addGlow("0xfaf255", 1, 1, false, 1, 1);
+          if (this.preFX) {
+            this.preFX.addGlow(0xfaf255, 1, 1, false, 1, 1);
+          }
         });
 
         this.on("pointerout", () => {
-          this.preFX.clear();
+          if (this.preFX) this.preFX.clear();
         });
       }
     }
 
-    // ====== GESTIÓN DE HABILITAR / DESHABILITAR BOTONES ======
+    this.name = this.text;
 
-    this.canBeClicked = true;
+    // =================== Gestión de habilitar/deshabilitar (turnos de combate) ===================
 
-    // OJO: antes se hacía this.canBeClicked = false en 'use_skill' y
-    // luego no siempre se reactivaban bien. Ahora solo cerramos el tooltip;
-    // el bloqueo real lo gestionan 'select_target' y 'select_skill'.
-    this.scene.events.on("use_skill", () => {
-      this.scene.HideTextbox();
-    });
-
-    this.scene.events.on("select_skill", () => {
+    // Usamos funciones guardadas para poder hacer off() en destroy()
+    this._onUseSkill = () => {
+      if (typeof this.scene?.HideTextbox === "function") {
+        this.scene.HideTextbox();
+      }
+    };
+    this._onSelectSkill = () => {
       this.canBeClicked = true;
-    });
-
-    this.scene.events.on("select_target", () => {
+    };
+    this._onSelectTarget = () => {
       this.canBeClicked = false;
-    });
-
-    this.scene.events.on("target_selected", () => {
+    };
+    this._onTargetSelected = () => {
       this.canBeClicked = true;
-    });
+    };
+
+    scene.events.on("use_skill", this._onUseSkill);
+    scene.events.on("select_skill", this._onSelectSkill);
+    scene.events.on("select_target", this._onSelectTarget);
+    scene.events.on("target_selected", this._onTargetSelected);
   }
 
-  // (los métodos Equipar / Desequipar los dejo tal cual estaban; no influyen en el bug)
+  destroy(fromScene) {
+    // quitar listeners de puntero propios
+    this.removeAllListeners();
+
+    // quitar listeners globales a la escena
+    if (this.scene && this.scene.events) {
+      if (this._onUseSkill) this.scene.events.off("use_skill", this._onUseSkill);
+      if (this._onSelectSkill) this.scene.events.off("select_skill", this._onSelectSkill);
+      if (this._onSelectTarget) this.scene.events.off("select_target", this._onSelectTarget);
+      if (this._onTargetSelected) {
+        this.scene.events.off("target_selected", this._onTargetSelected);
+      }
+    }
+
+    this._onUseSkill = null;
+    this._onSelectSkill = null;
+    this._onSelectTarget = null;
+    this._onTargetSelected = null;
+
+    super.destroy(fromScene);
+  }
 }

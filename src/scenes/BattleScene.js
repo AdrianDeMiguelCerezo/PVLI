@@ -9,40 +9,75 @@ import HealthBar from "../HealthBar.js";
 import ImageWithText from "../ImageWithText.js";
 
 export default class BattleScene extends Phaser.Scene {
-  /** @type {Player} */
+  /**
+   * Jugador de la escena
+   * @type {Player}
+   */
   player;
 
-  /** @type {Enemy[]} */
+  /**
+   * Listado de enemigos
+   * @type {Enemy[]}
+   */
   enemies;
 
-  /** @type {CombatManager} */
+  /**
+   * Puntero al gestor de combates
+   * @type {CombatManager}
+   */
   combatManager;
-
-  /** @type {object} */
-  jsonHabilidades;
 
   constructor() {
     super({ key: "BattleScene" });
     this.enemies = [];
+
+    // NUEVO: referencias a los menús de efectos
+    this.enemyEffectMenus = [];
+    this.playerEffectMenu = null;
   }
 
   /**
-   * @param {string[]} enemyKeys Array de keys de enemigos para este combate
+   * @param {string[]} enemyKeys
    */
-  init(enemyKeys) {
+  init(data) {
     this.jsonEquipamiento = this.cache.json.get("equipamiento");
     this.jsonEfectos = this.cache.json.get("efectos");
     this.jsonItems = this.cache.json.get("items");
     this.jsonHabilidades = this.cache.json.get("habilidades");
     this.jsonEnemigos = this.cache.json.get("enemigos");
 
+    // Desempaquetar datos
+    let enemyKeys = [];
+    let initialPlayerData = null;
+
+    // Detectamos si nos pasan un array (modo antiguo) o un objeto (modo nuevo)
+    if (Array.isArray(data)) {
+      enemyKeys = data;
+      this.winNode = null;
+      this.fleeNode = null;
+    } else {
+      enemyKeys = data.enemies || [];
+      this.winNode = data.winNode; // Nodo para cuando se gana
+      this.fleeNode = data.fleeNode; // Nodo para cuando se huye
+      initialPlayerData = data.playerData;
+    }
+
+    // Inicializar enemigos
     this.enemiesTam = 0;
     for (let i = 0; i < enemyKeys.length; i++) {
       this.enemies[i] = new Enemy(enemyKeys[i], this, enemyKeys[i]);
+
+      this.enemies[i].setScale(3.5);
+
       this.enemiesTam++;
     }
 
-    this.player = new Player(new PlayerData(), this, 200, 200, "player");
+    // Inicializar jugador (usando el playerData recibido para no perder vida / ítems)
+    const pd = initialPlayerData || new PlayerData();
+    const skinKey = pd.skins[pd.skinIndex] || "player";
+
+    this.player = new Player(pd, this, 200, 200, skinKey);
+    this.player.setScale(3.5);
   }
 
   create() {
@@ -50,9 +85,32 @@ export default class BattleScene extends Phaser.Scene {
     this.combatManager = new CombatManager(0, this.enemies, this.player, this);
 
     this.events.on("combat_ended", ({ result }) => {
+      // WIN: victoria
       if (result === "win") {
-        this.scene.start("Map");
-      } else {
+        if (this.winNode) {
+          // Si hay nodo definido, volvemos al diálogo con ese nodo
+          this.scene.start("DialogueScene", {
+            fragmentoEvento: this.winNode,
+            playerData: this.player.playerData
+          });
+        } else {
+          // Si es null, volvemos al mapa
+          this.scene.start("Map", { playerData: this.player.playerData });
+        }
+      } 
+      // FLEE: huida
+      else if (result === "flee") {
+        if (this.fleeNode) {
+          this.scene.start("DialogueScene", {
+            fragmentoEvento: this.fleeNode,
+            playerData: this.player.playerData
+          });
+        } else {
+          this.scene.start("Map", { playerData: this.player.playerData });
+        }
+      } 
+      // LOSE: derrota
+      else {
         this.scene.start("GameOver");
       }
     });
@@ -68,7 +126,7 @@ export default class BattleScene extends Phaser.Scene {
       .rectangle(this.fondoUI.x + 200, 400, 10, 200, 0x1f4d4f)
       .setOrigin(0, 0);
 
-    // === Botones principales ===
+    // === Botones generales ===
     const botonAtacar = new MenuButton(
       this,
       this.fondoUI.x + 10,
@@ -108,10 +166,10 @@ export default class BattleScene extends Phaser.Scene {
       }
     );
 
-    // Menús de habilidades / items
+    // === Menús de habilidades / items ===
     this.UpdateMenus();
 
-    // Tooltip de descripción
+    // === Tooltip de descripción ===
     this.descriptionTextbox = this.add
       .text(0, 0, "", {
         fontFamily: "Arial",
@@ -139,10 +197,20 @@ export default class BattleScene extends Phaser.Scene {
       .setOrigin(0, 0)
       .setVisible(false);
 
-    // Añadir enemigos y jugador a la escena
+    // Añadir enemigos y jugador
     for (let i = 0; i < this.enemiesTam; i++) {
       this.add.existing(this.enemies[i]);
     }
+
+    // Si por error de generación el array de enemigos está vacío,
+    // ganamos automáticamente para no quedarnos pillados
+    if (this.enemiesTam === 0) {
+      console.warn("BattleScene iniciada sin enemigos. Auto-Win activado.");
+      this.combatManager.finishCombat("win");
+      return; // salimos para no pintar nada más
+    }
+
+
     this.add.existing(this.player.setOrigin(0, 0));
     this.RedrawEnemies();
 
@@ -156,7 +224,7 @@ export default class BattleScene extends Phaser.Scene {
       this.player.playerData.HPMax,
       3
     );
-    this.add.existing(this.barraVida);
+    
     this.barraVida.targetValue = this.player.playerData.HP;
 
     this.barraSp = new HealthBar(
@@ -169,20 +237,36 @@ export default class BattleScene extends Phaser.Scene {
       3,
       0x1b73cf
     );
-    this.add.existing(this.barraSp);
+    
     this.barraSp.targetValue = this.player.playerData.SP;
 
-    // === Listeners de eventos ===
+    // === Círculos de acciones disponibles ===
+    this.actionCircles = [];
+    const baseX = this.fondoUI.x + 450;
+    const baseY = this.fondoUI.y - 15;
+    for (let i = 0; i < this.combatManager.maxActionsPerTurn; i++) {
+      const circle = this.add.circle(
+        baseX + i * 25,
+        baseY,
+        8,
+        0xffff00,
+        1
+      );
+      this.actionCircles.push(circle);
+    }
+
+    // === Eventos de combate / UI ===
     this.events.on("select_skill", this.OnSelectSkill, this);
     this.events.on("select_target", this.OnSelectTarget, this);
     this.events.on("target_selected", this.OnTargetSelected, this);
 
-    // IMPORTANTE: antes se hacía UpdateMenus() en 'use_skill',
-    // lo que mezclado con el bloqueo de botones daba problemas.
-    // Ahora sólo refrescamos cuando vuelve a tocar elegir habilidad.
-    // this.events.on("use_skill", this.UpdateMenus, this);  // <- eliminado
+    // enemigos enviados a tomar viento cuando mueren
+    this.events.on("enemy_dead", this.OnDeleteEnemy, this);
 
-    // Teclas de debug rápido
+    // actualizar circulitos cuando cambian acciones
+    this.events.on("actions_updated", this.OnActionsUpdated, this);
+
+    // teclas debug
     const q = this.input.keyboard.addKey("Q");
     q.on(
       "down",
@@ -202,6 +286,12 @@ export default class BattleScene extends Phaser.Scene {
       },
       this
     );
+
+    // estado inicial de circulitos
+    this.OnActionsUpdated(
+      this.combatManager.actionsLeft,
+      this.combatManager.maxActionsPerTurn
+    );
   }
 
   update() {
@@ -219,14 +309,23 @@ export default class BattleScene extends Phaser.Scene {
         ) + this.descriptionTextbox.height;
     }
 
-    // Sincronizar barra de vida del jugador
+    // barras del jugador
     this.barraVida.targetValue = this.player.playerData.HP;
+    this.barraSp.targetValue = this.player.playerData.SP;
   }
 
-  // Cuando el CombatManager emite "select_skill":
-  // refrescamos menús de habilidades/items.
   OnSelectSkill() {
+    // cuando el CombatManager dice "elige skill", refrescamos menús
     this.UpdateMenus();
+  }
+
+  OnActionsUpdated(remaining, max) {
+    if (!this.actionCircles) return;
+    for (let i = 0; i < this.actionCircles.length; i++) {
+      const circle = this.actionCircles[i];
+      if (!circle) continue;
+      circle.setAlpha(i < remaining ? 1 : 0.2);
+    }
   }
 
   /**
@@ -234,36 +333,46 @@ export default class BattleScene extends Phaser.Scene {
    * @param {Enemy} enemy
    */
   OnDeleteEnemy(enemy) {
-    let i = 0;
-    let encontrado = false;
-    while (i < this.enemiesTam && !encontrado) {
-      encontrado = this.enemies[i] === enemy;
-      i++;
-    }
-    if (encontrado) {
-      enemy.destroy();
-      for (i; i < this.enemiesTam; i++) {
-        this.enemies[i - 1] = this.enemies[i];
-      }
-      this.enemies[this.enemiesTam] = null;
-      this.enemiesTam--;
-    }
+    const idx = this.enemies.indexOf(enemy);
+    if (idx === -1) return;
+
+    enemy.destroy();
+
+    // eliminar del array sin dejar nulls
+    this.enemies.splice(idx, 1);
+    this.enemiesTam = this.enemies.length;
 
     this.RedrawEnemies();
   }
 
   RedrawEnemies() {
+    // 1) Limpiar menús de efectos anteriores
+    if (this.enemyEffectMenus) {
+      this.enemyEffectMenus.forEach(m => m.destroy(true));
+    }
+    this.enemyEffectMenus = [];
+
+    if (this.playerEffectMenu) {
+      this.playerEffectMenu.destroy(true);
+      this.playerEffectMenu = null;
+    }
+
+    // 2) Recolocar sprites de enemigos
     for (let i = 0; i < this.enemiesTam; i++) {
       this.enemies[i].updateEnemy(
         500 + 35 * i,
         220 - 85 * (this.enemiesTam / 2 - i)
       );
     }
+
+    // 3) Menús de efectos de los enemigos
     for (let i = 0; i < this.enemiesTam; i++) {
+      const enemy = this.enemies[i];
+
       const menuEffects = new Menu(
         this,
-        this.enemies[i].x + this.enemies[i].image.width + 5,
-        this.enemies[i].y,
+        enemy.x + enemy.image.width + 5,
+        enemy.y,
         80,
         50,
         2,
@@ -272,22 +381,28 @@ export default class BattleScene extends Phaser.Scene {
         0,
         1
       );
-      for (let j = 0; j < this.enemies[i].efectosTam; j++) {
+
+      for (let j = 0; j < enemy.efectosTam; j++) {
+        const efecto = enemy.efectos[j];
         menuEffects.AddItem(
           new ImageWithText(
             this,
             0,
             0,
-            this.enemies[i].efectos[j].duration,
-            this.enemies[i].efectos[j].key,
+            efecto.duration,
+            efecto.key,
             true,
             2,
             0.8
           )
         );
       }
+
+      this.enemyEffectMenus.push(menuEffects);
     }
-    const menuEffectsPlayer = new Menu(
+
+    // 4) Menú de efectos del jugador
+    this.playerEffectMenu = new Menu(
       this,
       this.player.x + this.player.width + 5,
       this.player.y,
@@ -299,14 +414,16 @@ export default class BattleScene extends Phaser.Scene {
       0,
       1
     );
+
     for (let j = 0; j < this.player.playerData.efectosTam; j++) {
-      menuEffectsPlayer.AddItem(
+      const efecto = this.player.playerData.efectos[j];
+      this.playerEffectMenu.AddItem(
         new ImageWithText(
           this,
           0,
           0,
-          this.player.playerData.efectos[j].duration,
-          this.player.playerData.efectos[j].key,
+          efecto.duration,
+          efecto.key,
           true,
           2,
           0.8
@@ -314,6 +431,7 @@ export default class BattleScene extends Phaser.Scene {
       );
     }
   }
+
 
   OnSelectTarget(skillKey) {
     this.blackFullRect.setVisible(true);
@@ -323,8 +441,16 @@ export default class BattleScene extends Phaser.Scene {
     this.blackFullRect.setVisible(false);
   }
 
+  // ⬇️ MÉTODO FUSIONADO SIN CONFLICTOS
   UpdateMenus() {
-    // Menú de habilidades
+    // conservar qué menú estaba abierto antes de refrescar
+    const menuItemsVisible = !!this.menuItems?.visible;
+    const menuHabilidadesVisible = !!this.menuHabilidades?.visible;
+
+    // destruir menús antiguos (y sus hijos)
+    if (this.menuHabilidades) this.menuHabilidades.destroy(true);
+    if (this.menuItems) this.menuItems.destroy(true);
+
     this.menuHabilidades = new Menu(
       this,
       this.fondoUI.x + 210,
@@ -335,10 +461,9 @@ export default class BattleScene extends Phaser.Scene {
       3,
       0xb7b7b7
     )
-      .setVisible(false)
+      .setVisible(menuHabilidadesVisible)
       .setDepth(1);
 
-    // Menú de items
     this.menuItems = new Menu(
       this,
       this.fondoUI.x + 210,
@@ -349,21 +474,31 @@ export default class BattleScene extends Phaser.Scene {
       2,
       0xb7b7b7
     )
-      .setVisible(false)
+      .setVisible(menuItemsVisible)
       .setDepth(1);
 
-    // Habilidades del jugador
+    // habilidades del jugador
     for (let i = 0; i < this.player.playerData.habilidades.length; i++) {
       this.menuHabilidades.AddButton(
         new MenuButton(this, 0, 0, this.player.playerData.habilidades[i])
       );
     }
 
-    // Items utilizables en combate
+    // items utilizables en combate
     for (let i = 0; i < this.player.playerData.items.length; i++) {
-      if (this.jsonItems[this.player.playerData.items[i].item].usedInCombat) {
+      const itemEntry = this.player.playerData.items[i];
+      const itemKey = itemEntry.item;
+      const itemDef = this.jsonItems[itemKey];
+
+      // Si el item no existe en el JSON, avisamos por consola y saltamos al siguiente
+      if (!itemDef) {
+        console.warn(`[BattleScene] ¡CUIDADO! El jugador tiene el item '${itemKey}' pero NO está definido en items.json`);
+        continue; 
+      }
+
+      if (itemDef.usedInCombat) {
         this.menuItems.AddButton(
-          new MenuButton(this, 0, 0, this.player.playerData.items[i])
+          new MenuButton(this, 0, 0, itemEntry)
         );
       }
     }
