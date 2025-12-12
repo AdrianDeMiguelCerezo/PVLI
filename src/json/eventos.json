@@ -3405,16 +3405,16 @@
             {
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "SOLDADO_ESTADO", "GRAN_BLOQUEO","SOLDADO_ESTADO","SOLDADO_ESTADO" ],
+                    "enemies": [ "SOLDADO_ESTADO", "GRAN_BLOQUEO", "SOLDADO_ESTADO", "SOLDADO_ESTADO" ],
                     "rewards": {
                         "dinero": 100
                     },
                     "ambush": false,
                     "canFlee": false
-                }
+                },
+                "flee": null
 
             },
-
             {
                 "type": "dialogue",
                 "text": "Por fin consigues derrotar al grandioso bloqueo que te impedía tu libertad. Respiras fresco y disfrutas de tu nueva libertad.",
