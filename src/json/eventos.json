@@ -2786,7 +2786,7 @@
                 "options": [
                     {
                         "text": "continuar",
-                    "j": "batalla"
+                        "j": "batalla"
                     }
                 ]
             },
@@ -2856,19 +2856,19 @@
                 "tag": "no_huyes",
                 "type": "dialogue",
                 "text": "Los soldados te alcanzan",
-                "options": {
+                "options": [{
                     "text": "continuar",
                     "j": "batalla"
-                }
+                }]
             },
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": {
+                "options": [{
                     "text": "continuar",
                     "j": null
-                }
+                }]
             }
 
 
@@ -2922,19 +2922,19 @@
                 "tag": "no_huyes",
                 "type": "dialogue",
                 "text": "Los soldados te alcanzan",
-                "options": {
+                "options": [{
                     "text": "continuar",
                     "j": "batalla"
-                }
+                }]
             },
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": {
+                "options": [{
                     "text": "continuar",
                     "j": null
-                }
+                }]
             }
 
 
