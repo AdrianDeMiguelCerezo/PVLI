@@ -36,7 +36,7 @@ export default class EventParser {
             "despertarCercanoCrear": "despertarCercanoCrear",
 
         }
-        this.MAX_OPTIONS = 3;
+        this.MAX_OPTIONS = 4;
         this.lastEventFragment = null;
     }
 

@@ -2765,7 +2765,7 @@
             },
             {
                 "type": "dialogue",
-                "text": "Mientras caminas por el pueblo ebandonado, oyes una voz extraña.\nVoz\"Ven... Ven aquí... Vamos... Cosas gratis 100% real no fake...\"",
+                "text": "Mientras caminas por el pueblo abandonado, oyes una voz extraña.\nVoz\"Ven... Ven aquí... Vamos... Cosas gratis 100% real no fake...\"",
                 "permanentOptions": [
                     {
                         "text": "Dar media vuelta e irse del pueblo",
@@ -2816,7 +2816,7 @@
             {
                 "tag": "adivinar_nabo",
                 "type": "dialogue",
-                "text": "Nabo pocho?:\"Te doy una pista: soy comestible. ¿ué soy?\"",
+                "text": "Nabo pocho?:\"Te doy una pista: soy comestible. ¿Qué soy?\"",
                 "permanentOptions": [
                     {
                         "text": "\"Un nabo pocho\"",
@@ -2850,7 +2850,7 @@
             {
                 "tag": "no_estoy_pocho",
                 "type": "dialogue",
-                "text": "Nabo pocho?:\"¡¡¿ME ESTÁS LLAMANOD POCHO?!!\"\nNabo pocho?:\"¡¡¿POCHA TU MADRE?!!\"\nNabo pocho?:\"ADIÓS, TE QUEDAS SIN RECOMPENSAS\"",
+                "text": "Nabo pocho?:\"¡¡¿ME ESTÁS LLAMANDO POCHO?!!\"\nNabo pocho?:\"¡¡¿POCHA TU MADRE?!!\"\nNabo pocho?:\"ADIÓS, TE QUEDAS SIN RECOMPENSAS\"",
                 "permanentOptions": [
                     {
                         "text": "Darle un mordisco",
