@@ -873,6 +873,22 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       }
 
       const enemy  = this.enemies[index];
+
+      // Comprobamos si el enemigo actual tiene el efecto "PARALIZADO"
+      const isParalyzed = enemy.efectos && enemy.efectos.some(e => e.key === "PARALIZADO");
+
+      if (isParalyzed) {
+        console.log(`[CM] Enemigo ${enemy.key || index} está PARALIZADO. Salta turno.`);
+
+        // Hacemos una pequeña espera para que el jugador note que el enemigo ha perdido el turno
+        scene.time.delayedCall(500, () => {
+          // Pasamos al siguiente enemigo sin atacar
+          doAttack(index + 1);
+        });
+        return;
+      }
+      
+      // Lógica de ataque normal (si no está paralizado)
       const damage = 20; // TODO: sacar de enemigos.json
 
       const onHit = () => {
