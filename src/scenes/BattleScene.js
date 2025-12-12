@@ -266,27 +266,6 @@ export default class BattleScene extends Phaser.Scene {
     // actualizar circulitos cuando cambian acciones
     this.events.on("actions_updated", this.OnActionsUpdated, this);
 
-    // teclas debug
-    const q = this.input.keyboard.addKey("Q");
-    q.on(
-      "down",
-      () => {
-        return this.OnDeleteEnemy(this.enemies[0]);
-      },
-      this
-    );
-
-    const e = this.input.keyboard.addKey("E");
-    e.on(
-      "down",
-      () => {
-        console.log(this);
-        this.enemies[1].hp -= 20;
-        this.RedrawEnemies();
-      },
-      this
-    );
-
     // estado inicial de circulitos
     this.OnActionsUpdated(
       this.combatManager.actionsLeft,
@@ -393,7 +372,7 @@ export default class BattleScene extends Phaser.Scene {
             efecto.key,
             true,
             2,
-            0.8
+            1.5
           )
         );
       }
@@ -426,7 +405,7 @@ export default class BattleScene extends Phaser.Scene {
           efecto.key,
           true,
           2,
-          0.8
+          1.5
         )
       );
     }

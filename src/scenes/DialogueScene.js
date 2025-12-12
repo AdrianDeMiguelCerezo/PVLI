@@ -335,7 +335,7 @@ export default class DialogueScene extends Phaser.Scene {
 
 
             }
-            console.log(this.playerData);
+            // console.log(this.playerData);
             this.registry.set("nodes", mapNodes);
         }
 
