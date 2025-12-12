@@ -376,7 +376,24 @@ export default class DialogueScene extends Phaser.Scene {
                 }
                 //si el tipo es combate comienza combate con los atributos
                 else if (opt.salto.tipo == "combat") {
-                    this.scene.start('BattleScene', opt.salto, this.playerData);
+                    // Extraemos el array de enemigos
+                    let enemiesArray = opt.salto.combate;
+                    if (enemiesArray && !Array.isArray(enemiesArray) && enemiesArray.enemies) {
+                        enemiesArray = enemiesArray.enemies;
+                    }
+
+                    // Extraemos el nodo de victoria
+                    const winNode = (opt.salto.opciones && opt.salto.opciones[0])
+                        ? opt.salto.opciones[0].salto
+                        : null;
+
+                    // Llamamos a la escena pasando UN único objeto con los datos estructurados
+                    this.scene.start('BattleScene', {
+                        enemies: enemiesArray, // La lista de enemigos
+                        winNode: winNode, // A dónde ir si ganas
+                        fleeNode: opt.salto.modoHuida, // A dónde ir si huyes
+                        playerData: this.playerData // Los datos (vida, ítems)
+                    });
                 }
                 else if (opt.salto.tipo == "fin") {
                     this.scene.start('WinScene');
