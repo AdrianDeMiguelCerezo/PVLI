@@ -2732,7 +2732,7 @@
     },
     "EVENTO_ESTADO_1": {
         "params": {
-            "consec_huir": {"dificultadCercano": 30}
+            "consec_huir": { "dificultadCercano": 30 }
         },
         "eventFragments": [
             {
@@ -2778,13 +2778,19 @@
                 "tag": "no_huyes",
                 "type": "dialogue",
                 "text": "Los soldados te alcanzan",
-                "options": {"text": "continuar","j": "batalla"}
+                "options": {
+                    "text": "continuar",
+                    "j": "batalla"
+                }
             },
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": {"text": "continuar","j": null}
+                "options": {
+                    "text": "continuar",
+                    "j": null
+                }
             }
 
 
@@ -3395,6 +3401,18 @@
                 "type": "dialogue",
                 "text": "El gran bloqueo, le llaman. El guardia más temido de todos. Esta será tu última batalla, ¿Estás preparado?",
                 "continue": "Siempre"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "SOLDADO_ESTADO", "GRAN_BLOQUEO","SOLDADO_ESTADO","SOLDADO_ESTADO" ],
+                    "rewards": {
+                        "dinero": 100
+                    },
+                    "ambush": false,
+                    "canFlee": false
+                }
+
             },
 
             {
