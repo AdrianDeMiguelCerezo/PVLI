@@ -138,7 +138,7 @@
   },
   "SOLDADO_ESTADO": {
     "name": "Soldado del estado",
-    "HpMax": 85,
+    "HpMax": 50,
     "habilidades": [
         {
             "name": "Quemación",
@@ -147,6 +147,11 @@
             "effectDuration": 3,
             "type": "DEBUFF",
             "target": "ENEMY"
+        },
+         {
+            "damage":15,
+            "type":"ATTACK",
+            "target":"ENEMY"
         }
     ]
   },

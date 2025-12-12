@@ -470,11 +470,11 @@ export default class EventParser {
 
                 case "dificultadGlobal": { returnString += "se han aumentado en gran medida los esfuerzos del estado por capturate"; break; }
 
-                case "dificultadCercano": { returnString += "el estado ha aumentado los esfuerzos de b�squeda desde un cuartel cercano, "; break; }
+                case "dificultadCercano": { returnString += "el estado ha aumentado los esfuerzos de búsqueda desde un cuartel cercano, "; break; }
                 case "dificultadRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
-                case "despertarGlobal": { returnString += "el estado est� llevando a cabo una persecuci�n a gran escala, "; break; }
-                case "despertarCercano": { returnString += "los esfuerzos de b�squeda se est�n focalizando en un cuartel cercano, "; break; }
-                case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicaci�n cercana, "; break; }
+                case "despertarGlobal": { returnString += "el estado está llevando a cabo una persecución a gran escala, "; break; }
+                case "despertarCercano": { returnString += "los esfuerzos de búsqueda se están focalizando en un cuartel cercano, "; break; }
+                case "despertarCercanoCrear": { returnString += "el estado ha establecido un cuartel en una ubicación cercana, "; break; }
 
                 case "despertarRadio": { returnString += "el estado conoce la zona aproximada en la que te encuentras, "; break; }
 

@@ -2730,6 +2730,66 @@
 
         ]
     },
+    "EVENTO_ESTADO_1": {
+        "params": {
+            "consec_huir": {"dificultadCercano": 30}
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Mientras caminas por el desierto, te topas con un un escuadrón militar que te reconoce y te empieza a perseguir.",
+                "permanentOptions": [
+                    {
+                        "text": "Luchar",
+                        "j": "batalla"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Intentar huir",
+                        "j": "huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "no_huyes"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "batalla",
+                "combat": {
+                    "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO" ],
+                    "rewards": {
+                        "dinero": 25,
+                        "items": "POTI_HP_MINI"
+                    },
+                    "ambush": false,
+                    "canFlee": true
+                },
+                "flee": "huyes"
+
+            },
+            {
+                "tag": "no_huyes",
+                "type": "dialogue",
+                "text": "Los soldados te alcanzan",
+                "options": {"text": "continuar","j": "batalla"}
+            },
+            {
+                "tag": "huyes",
+                "type": "dialogue",
+                "text": "Consigue huir del estado, pero _consec_huir.",
+                "options": {"text": "continuar","j": null}
+            }
+
+
+        ]
+    },
     "EVENTO_NABOS": {
 
         "params": {
