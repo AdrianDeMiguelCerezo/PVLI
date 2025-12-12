@@ -101,7 +101,7 @@
             }       
         ],
         "crit_damage": 150,
-        "crit_chance": 20
+        "crit_chance": 25
     },
     "LATIGO":{
         "name":"Látigo",
@@ -112,7 +112,7 @@
                 "name":"Ataque maldireccionado",
                 "description":"1 acc. Un golpe sencillo con el arma a un enemigo aleatorio.",
                 "actionCost":1,
-                "damage":9,
+                "damage":25,
                 "type":"ACTIVE",
                 "target":"RNDENEMY"
             }       
@@ -129,7 +129,7 @@
                 "name":"Ataque punzante",
                 "description":"1 acc. Un pincho sencillo con el arma a un enemigo.",
                 "actionCost":1,
-                "damage":8,
+                "damage":11,
                 "type":"ACTIVE",
                 "target":"ENEMY"
             }, 
@@ -146,7 +146,7 @@
         "crit_damage": 200,
         "crit_chance": 15
     },
-    "ESPADA_NABO":{
+    "ESPADA_NABO_POCHO":{
         "name":"Espada nabo pocho",
         "description":"No sé por qué hicieron una espada de esto. Ya empieza a oler mal",
         "type":"WEAPON",
@@ -203,12 +203,12 @@
         "type": "TORSO",
         "defense":12
     },
-    "NABO_PECHERA":{
+    "NABO_PECHERA": {
         "name": "Nabo Pechera",
         "description": "¿Quién está haciendo tantas cosas con nabos?",
         "type": "TORSO",
-        "defense":4,
-        "habilidades":[
+        "defense": 4,
+        "habilidades": [
             {
                 "name": "Comer pechera",
                 "description": "1 acc. 5SP. Te comes una parte de tu propia pechera nabo.......maravilloso.",
@@ -216,6 +216,25 @@
                 "spCost": 5,
                 "damage": 0,
                 "effect": "HP+",
+                "effectDuration": 0,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "NABO_POCHO_PECHERA":{
+        "name": "Pechera nabo pocho",
+        "description": "¿AHORA POCHOS?",
+        "type": "TORSO",
+        "defense":5,
+        "habilidades":[
+            {
+                "name": "Comer pechera",
+                "description": "1 acc. 5SP. Te comes una parte de tu propia pechera nabo.......maravilloso.",
+                "actionCost": 1,
+                "spCost": 5,
+                "damage": 0,
+                "effect": {"diffHealth": -5},
                 "effectDuration": 0,
                 "type": "ACTIVE",
                 "target": "SELF"
@@ -259,19 +278,19 @@
                 "actionCost": 1,
                 "spCost": 0,
                 "damage": 0,
-                "effect": "ATT+",
+                "effect": "ATT-",
                 "effectDuration": 2,
                 "type": "ACTIVE",
-                "target": "SELF"
+                "target": "ALLENEMIES"
             }
         ]
     },
-    "NABO_BAJOS":{
-        "name":"Pantalones nabo",
-        "description":"Esto ya es ridículo.",
-        "type":"LEGGINS",
-        "defense":1,
-        "habilidades":[
+    "NABO_BAJOS": {
+        "name": "Pantalones nabo",
+        "description": "Esto ya es ridículo.",
+        "type": "LEGGINS",
+        "defense": 1,
+        "habilidades": [
             {
                 "name": "Plantar un nabo",
                 "description": "1 acc. 10SP. Pones un nabo en el suelo que te fortalece.",
@@ -279,6 +298,25 @@
                 "spCost": 10,
                 "damage": 0,
                 "effect": "ATT+",
+                "effectDuration": 3,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "NABO_POCHO_BAJOS":{
+        "name":"Pantalones nabo pocho",
+        "description":"Ahora podrás deir que tienes un nabo más grande que un brazo entre las piernas.",
+        "type":"LEGGINS",
+        "defense":1,
+        "habilidades":[
+            {
+                "name": "Plantar un nabo pocho",
+                "description": "1 acc. 10SP. Pones un nabo en el suelo que no te fortalece, te endurece.",
+                "actionCost": 1,
+                "spCost": 10,
+                "damage": 0,
+                "effect": "DEF+",
                 "effectDuration": 3,
                 "type": "ACTIVE",
                 "target": "SELF"
