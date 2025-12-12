@@ -2766,7 +2766,149 @@
                     "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO" ],
                     "rewards": {
                         "dinero": 25,
-                        "items": "POTI_HP_MINI"
+                        "items": [
+                            {
+                                "item": "POTI_HP_MINI",
+                                "count": 1
+                            }
+                        ]
+                    },
+                    "ambush": false,
+                    "canFlee": true
+                },
+                "flee": "huyes"
+
+            },
+            {
+                "tag": "no_huyes",
+                "type": "dialogue",
+                "text": "Los soldados te alcanzan",
+                "options": {
+                    "text": "continuar",
+                    "j": "batalla"
+                }
+            },
+            {
+                "tag": "huyes",
+                "type": "dialogue",
+                "text": "Consigue huir del estado, pero _consec_huir.",
+                "options": {
+                    "text": "continuar",
+                    "j": null
+                }
+            }
+
+
+        ]
+    },
+    "EVENTO_ESTADO_2": {
+        "params": {
+            "consec_huir": { "dificultadCercano": 30 }
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Mientras caminas por el desierto, te topas con un un escuadrón militar que te reconoce y te empieza a perseguir.",
+                "permanentOptions": [
+                    {
+                        "text": "Luchar",
+                        "j": "batalla"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Intentar huir",
+                        "j": "huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "no_huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "no_huyes"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "batalla",
+                "combat": {
+                    "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO", "SOLDADO_ESTADO" ],
+                    "rewards": {
+                        "dinero": 35,
+                        "items": [
+                            {
+                                "item": "POTI_HP_MINI",
+                                "count": 3
+                            }
+                        ]
+                    },
+                    "ambush": false,
+                    "canFlee": true
+                },
+                "flee": "huyes"
+
+            },
+            {
+                "tag": "no_huyes",
+                "type": "dialogue",
+                "text": "Los soldados te alcanzan",
+                "options": {
+                    "text": "continuar",
+                    "j": "batalla"
+                }
+            },
+            {
+                "tag": "huyes",
+                "type": "dialogue",
+                "text": "Consigue huir del estado, pero _consec_huir.",
+                "options": {
+                    "text": "continuar",
+                    "j": null
+                }
+            }
+
+
+        ]
+    },
+    "EVENTO_ESTADO_3": {
+        "params": {
+            "consec_huir": { "dificultadCercano": 30 }
+        },
+        "eventFragments": [
+            {
+                "type": "dialogue",
+                "text": "Mientras caminas por el desierto, te topas con un un escuadrón militar que te reconoce y te empieza a perseguir.",
+                "permanentOptions": [
+                    {
+                        "text": "Luchar",
+                        "j": "batalla"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "Intentar huir",
+                        "j": "huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "no_huyes"
+                    },
+                    {
+                        "text": "Intentar huir",
+                        "j": "no_huyes"
+                    }
+                ],
+                "optionsAmmount": 1
+            },
+            {
+                "tag": "batalla",
+                "combat": {
+                    "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO", "SOLDADO_ESTADO","SOLDADO_ESTADO" ],
+                    "rewards": {
+                        "dinero": 50,
+                        "items": [ {"item":"POTI_HP_GRANDE","count": 1} ]
                     },
                     "ambush": false,
                     "canFlee": true
