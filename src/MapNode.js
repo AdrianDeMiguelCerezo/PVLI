@@ -57,34 +57,9 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         this.difficulty = difficulty;
         this.isAwake = isAwake;
 
-        if(eventKeys === undefined){
-            let jsonEvent = Object.keys(this.scene.jsonEventos);
-            let easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            while(easyEvent === undefined){
-                easyEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            }
-            jsonEvent.splice(jsonEvent.indexOf(easyEvent), 1);
-            let midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            while(midEvent === undefined){
-                midEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            }
-            jsonEvent.splice(jsonEvent.indexOf(midEvent), 1);
-            let hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            while(hardEvent === undefined){
-                hardEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            }
-            jsonEvent.splice(jsonEvent.indexOf(hardEvent), 1);
-            let fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            while(fkcedEvent === undefined){
-                fkcedEvent = jsonEvent[Phaser.Math.Between(1, jsonEvent.length)];
-            }
-            jsonEvent.splice(jsonEvent.indexOf(fkcedEvent), 1);
-            this.eventKeys = {easyEvent: easyEvent, midEvent: midEvent, hardEvent: hardEvent, fkcedEvent: fkcedEvent};
-            console.log(this.eventKeys);
-        }
-        else{
-            this.eventKeys = eventKeys;
-        }
+        
+        this.eventKeys = eventKeys;
+        
 
         //if(this.difficulty )
         let eventoParserer = new EventParser(this.scene.jsonEventos,this.scene.jsonHabilidades,this.scene.jsonEquipamiento,this.scene.jsonItems,this.scene.jsonEfectos);

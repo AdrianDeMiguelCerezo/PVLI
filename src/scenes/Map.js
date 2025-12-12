@@ -69,47 +69,47 @@ export default class Map extends Phaser.Scene {
         if (!this.registry.get("nodes")) {
             this.nodes = []
 
-            this.nodes.push(new MapNode(this, 100, 100, 'node', undefined, this.playerData, NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
-            this.nodes.push(new MapNode(this, 200, 120, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false,false));
-            this.nodes.push(new MapNode(this, 150, 200, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 80, 250, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, true,true,250));
-            this.nodes.push(new MapNode(this, 250, 250, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 100, 100, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "FABRICA", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
+            this.nodes.push(new MapNode(this, 200, 120, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "GERALT"}, this.playerData, NodeType.COMMON, State.LOCKED, false,false));
+            this.nodes.push(new MapNode(this, 150, 200, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "FABRICA", hardEvent: "EVENTO_ESTADO_1", fkcedEvent: "PUEBLO_MEDIANO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 80, 250, 'node', {easyEvent: "PUEBLO_MEDIANO", midEvent: "PUEBLO_MEDIANO", hardEvent: "PUEBLO_MEDIANO", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, true,true,250));
+            this.nodes.push(new MapNode(this, 250, 250, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 320, 150, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 400, 100, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 420, 200, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 300, 300, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 380, 280, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 320, 150, 'node', {easyEvent: "PUEBLO_MEDIANO", midEvent: "PUEBLO_MEDIANO", hardEvent: "PUEBLO_MEDIANO", fkcedEvent: "PUEBLO_MEDIANO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 400, 100, 'node', {easyEvent:"EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_1", hardEvent: "EVENTO_ESTADO_1", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 420, 200, 'node', {easyEvent: "EVENTO_NABOS", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 300, 300, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 380, 280, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 500, 100, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 480, 180, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 520, 260, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 450, 320, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 550, 350, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 500, 100, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "FABRICA", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 480, 180, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "EVENTO_NABOS", hardEvent: "FABRICA", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 520, 260, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent:"EVENTO_ESTADO_1", hardEvent: "EVENTO_NABOS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 450, 320, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_1", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "EVENTO_NABOS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 550, 350, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 600, 120, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 650, 200, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 600, 280, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, true, false,350));
-            this.nodes.push(new MapNode(this, 680, 320, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 720, 240, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 600, 120, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "GERALT"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 650, 200, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_1", hardEvent: "EVENTO_ESTADO_1", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 600, 280, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, true, false,350));
+            this.nodes.push(new MapNode(this, 680, 320, 'node', {easyEvent: "GERALT", midEvent: "PERRO_ATRAPADO", hardEvent: "GERALT", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 720, 240, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 700, 100, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 740, 180, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 740, 360, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 700, 420, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 620, 400, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 700, 100, 'node', {easyEvent: "GERALT", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 740, 180, 'node', {easyEvent: "GERALT", midEvent: "EVENTO_NABOS", hardEvent: "EVENTO_NABOS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 740, 360, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "EVENTO_NABOS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 700, 420, 'node', {easyEvent: "EVENTO_NABOS", midEvent: "PERRO_ATRAPADO", hardEvent: "PUEBLO_MEDIANO", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 620, 400, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 540, 440, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 460, 420, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 400, 480, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 320, 440, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 250, 400, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 540, 440, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent:"PUEBLO_MEDIANO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 460, 420, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent:"EVENTO_ESTADO_1", hardEvent: "EVENTO_ESTADO_1", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 400, 480, 'node', {easyEvent: "EVENTO_NABOS", midEvent: "EVENTO_NABOS", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "EVENTO_NABOS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 320, 440, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 250, 400, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
-            this.nodes.push(new MapNode(this, 180, 350, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 100, 400, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 150, 500, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 250, 520, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 350, 550, 'node', undefined, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 180, 350, 'node', {easyEvent: "PUEBLO_MEDIANO", midEvent: "PUEBLO_MEDIANO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 100, 400, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 150, 500, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_1", hardEvent:"EVENTO_ESTADO_1", fkcedEvent: "EVENTO_ESTADO_1"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 250, 520, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 350, 550, 'node', {easyEvent: "FINAL", midEvent: "FINAL", hardEvent: "FINAL", fkcedEvent: "FINAL"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
             for(let node of this.nodes){
                 console.log(node);
