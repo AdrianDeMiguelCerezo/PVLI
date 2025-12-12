@@ -2233,50 +2233,97 @@
                     "equipamiento": [ "MAZA_CACTUS" ]
                 }
             ],
-            "precio_camisa": [
-                {
-                    "pago": 29,
-                    "equipamiento": [ "CAMISA" ]
-                },
+            "precio_pieza_arriba": [
                 {
                     "pago": 35,
                     "equipamiento": [ "CAMISA" ]
                 },
                 {
-                    "pago": 39,
-                    "equipamiento": [ "CAMISA" ]
+                    "pago": 60,
+                    "equipamiento": [ "CHAQUETA_PIEL" ]
+                },
+                {
+                    "pago": 20,
+                    "equipamiento": [ "PONCHO" ]
+                },
+                {
+                    "pago": 100,
+                    "equipamiento": [ "PECHERA" ]
                 }
             ],
-            "precio_chaqueta_piel": [
+            "precio_pieza_abajo": [
                 {
-                    "pago": 29,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                    "pago": 20,
+                    "equipamiento": [ "PANTALONES_REFORZADOS" ]
                 },
                 {
-                    "pago": 35,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                    "pago": 55,
+                    "equipamiento": [ "VAQUEROS" ]
                 },
                 {
-                    "pago": 41,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                    "pago": 65,
+                    "equipamiento": [ "XL" ]
+                },
+                {
+                    "pago": 55,
+                    "equipamiento": [ "GLOBO" ]
                 }
-
             ],
-             "precio_poncho": [
+            "precio_poti": [
                 {
-                    "pago": 29,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                    "pago": 25,
+                    "items": {
+                        "item": "POTI_HP_MINI",
+                        "count": 1
+                    }
                 },
                 {
-                    "pago": 35,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                    "pago": 20,
+                    "items": {
+                        "item": "POTI_SP_MINI",
+                        "count": 1
+                    }
                 },
-                  {
-                    "pago": 41,
-                    "equipamiento": [ "CAQUETA_PIEL" ]
+                {
+                     "pago": 55,
+                    "items": {
+                        "item": "POTI_HP_GRANDE",
+                        "count": 1
+                    }
                 }
+            ], "precio_item_extra": [
+                {
+                    "pago": 20,
+                    "items": {
+                        "item": "ANTIDOTO",
+                        "count": 1
+                    }
+                },
+                {
+                    "pago": 11,
+                    "items": {
+                        "item": "FLASHBANG",
+                        "count": 1
+                    }
+                },
+                {
+                    "pago": 5,
+                    "items": {
+                        "item": "DARDO_ENVENENADO",
+                        "count": 1
+                    }
+                },
+                {
+                     "pago": 8,
+                    "items": {
+                        "item": "MOLOTOV",
+                        "count": 1
+                    }
+                }
+               ]
+           
               
-            ]
+            
 
         },
         "eventFragments": [
@@ -2533,8 +2580,6 @@
                 ],
                 "optionsAmmount": 2
             },
-
-
             {
                 "tag": "protecciones",
                 "type": "dialogue",
@@ -2547,13 +2592,108 @@
                 ],
                 "options": [
                     {
-                        "text": "__precio_nabo",
-                        "j": "nabo"
+                        "text": "__precio_pieza_abajo",
+                        "j": "pieza_abajo"
+                    },
+                    {
+                        "text": "__precio_pieza_arriba",
+                        "j": "pieza_arriba"
                     }
 
                 ],
-                "optionsAmmount": 3
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "pieza_abajo",
+                "type": "dialogue",
+                "text": "Has pagado __precio_pieza_abajo",
+                "rewards": "precio_pieza_abajo",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
+                        "j": "pieza_abajo"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "protecciones"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "pieza_arriba",
+                "type": "dialogue",
+                "text": "Has pagado __precio_pieza_arriba",
+                "rewards": "precio_pieza_arriba",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
+                        "j": "pieza_arriba"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "protecciones"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "items",
+                "type": "dialogue",
+                "text": "Mercader de objetos útiles:\"Hola, vendo objetos varios que te serán útiles.¿Qué quieres comprar? Te presento la mercancía\"\nEl vendedor te muestra lo que vende.",
+                "permanentOptions": [
+                    {
+                        "text": "Dejar de comprar",
+                        "j": "encuentro_mercaderes"
+                    }
+                ],
+                "options": [
+                    {
+                        "text": "__precio_poti",
+                        "j": "precio_poti"
+                    },
+                    {
+                        "text": "__precio_item_extra",
+                        "j": "item_extra"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "poti",
+                "type": "dialogue",
+                "text": "Has pagado __precio_poti",
+                "rewards": "precio_poti",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
+                        "j": "poti"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "items"
+                    }
+                ],
+                "optionsAmmount": 2
+            },
+            {
+                "tag": "item_extra",
+                "type": "dialogue",
+                "text": "Has pagado __precio_item_extra",
+                "rewards": "precio_item_extra",
+                "options": [
+                    {
+                        "text": "Comprar de nuevo",
+                        "j": "item_extra"
+                    },
+                    {
+                        "text": "Volver",
+                        "j": "items"
+                    }
+                ],
+                "optionsAmmount": 2
             }
+
 
         ]
     },

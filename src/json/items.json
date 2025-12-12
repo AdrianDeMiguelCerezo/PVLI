@@ -43,7 +43,7 @@
                 "effect": "PARALIZADO",
                 "effectDuration": 1,
                 "type": "ACTIVE",
-                "target": "ENEMY"
+                "target": "ALLENEMIES"
             }
         ]
     },

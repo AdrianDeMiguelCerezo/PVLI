@@ -274,9 +274,9 @@
         "habilidades":[
             {
                 "name": "Flotar",
-                "description": "1 acc. 15SP. Te pones a flotar y eso intimida a los enemigos.",
+                "description": "1 acc. 10SP. Te pones a flotar y eso intimida a los enemigos.",
                 "actionCost": 1,
-                "spCost": 0,
+                "spCost": 10,
                 "damage": 0,
                 "effect": "ATT-",
                 "effectDuration": 2,
