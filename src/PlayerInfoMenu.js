@@ -353,6 +353,30 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         
         this.menuStats.add(this.player);
+
+        // Mostrar efectos de estado
+        // Posicionamos los iconos a la derecha del jugador (que está en x=40 aprox)
+        if (this.playerData.efectos && this.playerData.efectos.length > 0) {
+            let xOffset = 90; // Empezar un poco a la derecha del jugador
+            const yPos = this.h * (0.89 / 3) * (6/12); // Misma altura Y que en el player
+
+            this.playerData.efectos.forEach(eff => {
+                // Intentamos buscar textura en jsonEfectos o usamos la key directamente
+                // Si no hay iconos cargados con el nombre de la key (ej: "ENVENENDADO")
+                // usa una imagen genérica o texto temporalmente
+                const def = this.scene.jsonEfectos ? this.scene.jsonEfectos[eff.key] : null;
+                const textureKey = def && def.texture ? def.texture : eff.key; // Fallback
+
+                // Verificar si la textura existe en Paher, sino usar una por defecto
+                if (this.scene.textures.exists(textureKey)) {
+                    const icon = new Phaser.GameObjects.Image(this.scene, xOffset, yPos, textureKey);
+                    icon.setDisplaySize(32, 32); // Forzar tamaño pequeño
+                    this.menuStats.add(icon);
+                    xOffset += 35; // Separación entre iconos
+                }
+            });
+        }
+
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
 
         const HPBarTempValue = this.HPBar._actualValue;
@@ -535,6 +559,14 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                         const newSp = this.playerData.SP + skill.effect.diffSp;
                         // Clamp entre 0 y SPMax
                         this.playerData.SP = Math.max(0, Math.min(newSp, this.playerData.SPMax));
+                    }
+                    // Lógica de hambre
+                    if (skill.effect.diffHambre) {
+                        // Restamos hambre (o sumamos si es negativo), clamp entre 0 y 100
+                        const current = this.playerData.hambre || 0;
+                        // Si en items.json "diffHambre": 10 significa "recupera 10 de comida", restamos al contador de hambre
+                        const newHambre = current - skill.effect.diffHambre;
+                        this.playerData.hambre = Math.max(0, Math.min(newHambre, 100));
                     }
                 }
 

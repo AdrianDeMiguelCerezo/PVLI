@@ -69,57 +69,65 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
       return;
     }
 
-    // Lógica de efecto hambriento 1 (>= 50 de hambre)
-    // Hambriento 1 aplica debuffs de stats (definido en efectos.json)
-    const umbralHambre = 50;
-    const keyHambre1 = "HAMBRE_1";
-    const yaTieneHambre1 = pd.efectos.some(e => e.key === keyHambre1);
+    // Gestión de estados de HAMBRE (1 y 2)
+    const umbralHambre1 = 50;
+    const umbralHambre2 = 80;
 
-    if (pd.hambre >= umbralHambre) {
-      if (!yaTieneHambre1) {
-        // Aplicamos el efecto con duración "infinita" (ej. 999 turnos) mientras dure el hambre
-        this.addStatusToPlayer(keyHambre1, 999);
-        console.log(`[CM] Aplicado efecto ${keyHambre1}`);
-      }
-    } else {
-      if (yaTieneHambre1) {
-        // Si bajó el habre (ej. por comer), quitamos el efecto manualmente
-        pd.efectos = pd.efectos.filter(e => e.key !== keyHambre1);
-        pd.efectosTam = pd.efectos.length;
-        console.log(`[CM] Retirado efecto ${keyHambre1}`);
-      }
-    }
+    // Helper para saber si ya tiene el efecto
+    const tieneHambre1 = pd.efectos.some(e => e.key === "HAMBRE_1");
+    const tieneHambre2 = pd.efectos.some(e => e.key === "HAMBRE_2");
 
-    // Lógica de Hambriento 2 (>= 80 de hambre)
-    // Según el GDD: "El jugador solo tiene una acción por turno"
-    if (pd.hambre >= 80) {
+    // Limpiar estados según el nivel actual
+    if (pd.hambre >= umbralHambre2) {
+      // Fase 2: 1 Acción, quita fase 1
+      if (!tieneHambre2) this.addStatusToPlayer("HAMBRE_2", 999);
+      if (tieneHambre1) this.removeStatusFromEntity(this.player, "HAMBRE_1");
+
       this.maxActionsPerTurn = 1;
+      console.log("[CM] HAMBRE_2 activo: acciones reducidas a 1");
+    } else if (pd.hambre >= umbralHambre1) {
+      // Fase 1: stats bajos, quita fase 2 si la hubiera
+      if (!tieneHambre1) this.addStatusToPlayer("HAMBRE_1", 999);
+      if (tieneHambre2) this.removeStatusFromEntity(this.player, "HAMBRE_2");
+
+      this.maxActionsPerTurn = 2; // Recupera acciones normales is baja de 80
+      console.log("[CM] HAMBRE_1 activo");
     } else {
-      // Restaurar a dos si baja el hambre
+      // Sano: quitar ambos
+      if (tieneHambre1) this.removeStatusFromEntity(this.player, "HAMBRE_1");
+      if (tieneHambre2) this.removeStatusFromEntity(this.player, "HAMBRE_2");
       this.maxActionsPerTurn = 2;
     }
 
-    // Asignar accidones disponibles basadas en el recálculo anterior
-    this.actionsLeft = this.maxActionsPerTurn;
+    // Gestión de parálisis (anula el turno)
+    const estaParalizado = pd.efectos.some(e => e.key === "PARALIZADO");
+    if (estaParalizado) {
+      console.log("[CM] Jugador PARALIZADO. Pierde el turno.");
+      this.actionsLeft = 0;
+    } else {
+      // Si no está paralizado, asignamos las acciones calculadas (1 o 2)
+      this.actionsLeft = this.maxActionsPerTurn;
+    }
 
-    // aplicar efectos de estado al principio del turno
+    // Aplicar efectos (reduce duraciones, aplica dots)
     this.applyStatusEffectsAtTurnStart();
 
-    // re-telegrafiar intenciones enemigos
+    // UI y telegrafiado
     this.prepareEnemyIntentions();
-
-    // refrescar UI (enemigos + iconos de estados)
     this.scene.RedrawEnemies?.();
+    this.scene.events.emit("actions_updated", this.actionsLeft, this.maxActionsPerTurn);
 
-    // actualizar circulitos de acciones
-    this.scene.events.emit(
-      "actions_updated",
-      this.actionsLeft,
-      this.maxActionsPerTurn
-    );
-
-    // vuelve el menú de habilidades
-    this.scene.events.emit("select_skill");
+    // Decidir flujo
+    if (this.actionsLeft <= 0) {
+      // Si parálisis o hambre extrema nos dejó a 0, pasamos turno automáticamente
+      // Pequeño delay para que se note
+      this.scene.time.delayedCall(1000, () => {
+        this.startEnemyTurns();
+      });
+    } else {
+      // Habilitiar input
+      this.scene.events.emit("select_skill");
+    }
   }
 
   /**
@@ -424,14 +432,30 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
     const efectosDef = this.scene.jsonEfectos || {};
     let percent = 0;
+    let flatDamage = 0; // Acumulador para daño directo
 
     for (const eff of pd.efectos) {
       const def = efectosDef[eff.key];
-      if (!def || !def.diffDmgPercent) continue;
-      percent += def.diffDmgPercent;
+      if (!def) continue;
+
+      // Acumular porcentajes
+      if (def.diffDmgPercent) {
+        percent += def.diffDmgPercent;
+      }
+
+      // Acumular daño plano directo
+      if (def.diffDmg) {
+        flatDamage += def.diffDmg;
+      }
     }
 
-    const final = Math.round(baseDamage * (1 + percent / 100));
+    // Fórmula: (base + plano) * porcentaje
+    // Primero se aplica el modificador plano
+    let final = baseDamage + flatDamage;
+
+    // Luego aplicamos el porcentaje
+    final = Math.round(final * (1 + percent / 100));
+
     return Math.max(0, final);
   }
 
