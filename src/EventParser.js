@@ -46,7 +46,7 @@ export default class EventParser {
         this.evento_Json = this.jsonEventos[eventKey];
 
 
-        console.log("eventKey:", eventKey, "\nthis.jsonEventos[eventKey]", this.jsonEventos[eventKey])
+       //console.log("eventKey:", eventKey, "\nthis.jsonEventos[eventKey]", this.jsonEventos[eventKey])
 
         if (this.evento_Json == undefined) { throw "No hay un evento con el nombre: " + eventKey }
 
@@ -58,7 +58,7 @@ export default class EventParser {
         for (let i = 0; i < this.eventFragments_Json.length; i++) {
             if (!!this.eventFragments_Json[i].tag) { this.tags[this.eventFragments_Json[i].tag] = i }
         }
-        console.log("Tags: ", this.tags);
+       //console.log("Tags: ", this.tags);
 
         this.params = {};
 
@@ -68,7 +68,7 @@ export default class EventParser {
             this.params[par_nombre] = this.GetJsonParamValue(this.evento_Json["params"][par_nombre]);
             //console.log(this.evento_Json["params"][par_nombre]);
         }
-        console.log("Params: ", this.params);
+       //console.log("Params: ", this.params);
 
         this.taggedEventFragmentsArray = {}
 
@@ -195,7 +195,7 @@ export default class EventParser {
                         //si es un string, se refiere al par�metro con ese nombre
                         case "string":
                             {
-                                console.log(thisFragment_json, " params:", this.params, "rewards: ", thisFragment_json.rewards)
+                               //console.log(thisFragment_json, " params:", this.params, "rewards: ", thisFragment_json.rewards)
 
                                 for (const [key, value] of Object.entries(this.params[thisFragment_json.rewards])) {
                                     eventFragmentNode.consecuencias[this.rewardsJsonToAttribute[key]] = value;
@@ -225,7 +225,7 @@ export default class EventParser {
                     else {
                         if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.") }
                         //genera el fragment oal que se va si no dinero suficiente
-                        console.log("callerEventFragment:", callerEventFragment)
+                       //console.log("callerEventFragment:", callerEventFragment)
                         eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
                         eventFragmentNode.nodoNoPay.opciones = [{ texto: "\"No tengo dinero suficiente\"", salto: callerEventFragment }]
                     }
@@ -270,7 +270,7 @@ export default class EventParser {
                             //si es un string, se refiere al par�metro con ese nombre
                             case "string":
                                 {
-                                    console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
+                                   //console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
                                     if (!this.params.hasOwnProperty(combatRewards_json)) { throw "La recompensa:" + combatRewards_json + "no existe en el array de parámetros.", this.params }
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
@@ -280,7 +280,7 @@ export default class EventParser {
                             //si es un objeto, es un literal
                             case "object":
                                 {
-                                    console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
+                                   //console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
                                     for (const [key, value] of Object.entries(combatRewards_json)) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -344,7 +344,7 @@ export default class EventParser {
         if (Array.isArray(paramValue)) {
             paramValue = paramValue[Phaser.Math.RND.between(0, paramValue.length - 1)];
         }
-        console.log(paramValue);
+       //console.log(paramValue);
         //si el valor es el valor de un par�metro global:
         if (paramValue[0] == '_') {
             const infoGlobalParam = this.jsonEventos["globalParams"][paramValue.substring(1)];
@@ -368,24 +368,24 @@ export default class EventParser {
 
         //si no matchea con nada, devuelve null
         if (string.match(expReg) != null) {
-            console.log("string.match(expReg): ", string.match(expReg))
+           //console.log("string.match(expReg): ", string.match(expReg))
             for (let parameter of string.match(expReg)) {
 
 
                 //si tiene "__" delante y un objeto => Es una transacción.
                 if (parameter[1] === '_' && typeof (this.params[parameter.substring(2)]) === "object") {
-                    console.log("Pago. reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
+                   //console.log("Pago. reward:", this.params[parameter.substring(2)], "WrittenReward:", this.WriteTransaction(this.params[parameter.substring(2)]))
                     string = string.replace(parameter, this.WriteTransaction(this.params[parameter.substring(2)]))
                 }
                 //si es un objeto => es algo de tipo recompensa (un objeto con... explicado en FormatoJsonEventos)
                 else if (typeof (this.params[parameter.substring(1)]) === "object") {
-                    console.log("Normal. reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
+                   //console.log("Normal. reward:", this.params[parameter.substring(1)], "WrittenReward:", this.WriteRewards(this.params[parameter.substring(1)]))
                     string = string.replace(parameter, this.WriteRewards(this.params[parameter.substring(1)]))
                 }
 
                 else {
                     {
-                        console.log("Written Reward:", this.params[parameter.substring(1)])
+                       //console.log("Written Reward:", this.params[parameter.substring(1)])
                         //console.log("Reemplazo " + parameter + " por ", this.params[parameter.substring(1)])
                         string = string.replace(parameter, this.params[parameter.substring(1)])
                     }
@@ -405,7 +405,7 @@ export default class EventParser {
         let returnString = "";
         let array = Object.entries(rewards);
 
-        console.log("WriteRewards() array:",array)
+       //console.log("WriteRewards() array:",array)
         //decidido seg�n representaci�n en el json
         for (let i = 0; i < array.length; i++) {
             const key = array[i][0]
@@ -498,7 +498,7 @@ export default class EventParser {
         let returnString = "";
         let primaryReturnString = "";
         let array = Object.entries(rewards);
-        console.log("WriteTransaction() array:", array)
+       //console.log("WriteTransaction() array:", array)
 
         //decidido seg�n representaci�n en el json
         if (rewards.hasOwnProperty("pago")) {
@@ -531,8 +531,8 @@ export default class EventParser {
 
                         returnString += value.length > 1 ? "las habilidades: " : "la habilidad: ";
                         for (let j = 0; j < value.length; j++) {
-                            console.log("habilidad:", value[j])
-                            console.log(value[j]);
+                           //console.log("habilidad:", value[j])
+                           //console.log(value[j]);
                             returnString += this.jsonHabilidades[value[j]].name + ", ";
                             if (j == value.length - 2) { returnString = returnString.slice(0, -2); returnString += " y " }
                         }

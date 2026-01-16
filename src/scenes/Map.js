@@ -112,7 +112,6 @@ export default class Map extends Phaser.Scene {
             this.nodes.push(new MapNode(this, 350, 550, 'node', {easyEvent: "FINAL", midEvent: "FINAL", hardEvent: "FINAL", fkcedEvent: "FINAL"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
 
             for(let node of this.nodes){
-                console.log(node);
                 node.setDepth(3);
             }
 
@@ -121,7 +120,7 @@ export default class Map extends Phaser.Scene {
             this.nodes = []
             for (const n of this.registry.get("nodes"))
             {
-                console.log(n);
+
                 this.nodes.push(new MapNode(this, n.x, n.y, "node", n.event, n.playerData, n.nodeType, n.state, n.isFocus,n.isAwake, n.difficulty, n.visited, n.scale, n.radius))
                 
             }
@@ -148,9 +147,7 @@ export default class Map extends Phaser.Scene {
         nodoActual.drawConnectionsFromCurrent();
 
         this.RecalculateNodeDifficulties();
-        for (let node of this.nodes) {
-            console.log(node.difficulty)
-        }
+        
         this.GenerateDifficultyZones();
     }
 
@@ -227,7 +224,7 @@ export default class Map extends Phaser.Scene {
             if (n.isFocus) this.fociNodes.push(n)
             else this.nonFociNodes.push(n)
         }
-        console.log(this.fociNodes)
+
 
         for (const n of this.nonFociNodes){
             n.difficulty = 0;
