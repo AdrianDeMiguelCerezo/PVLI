@@ -4,8 +4,8 @@ import Enemy from "./Enemy.js";
 const Target = {
   SELF: 0,
   ENEMY: 1,
-  RND_ENEMY: 2,
-  ALL_ENEMIES: 3
+  RNDENEMY: 2,
+  ALLENEMIES: 3
 };
 
 export default class CombatManager extends Phaser.Events.EventEmitter {
@@ -207,25 +207,25 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
         return this.afterPlayerAction(actionsCost);
       }
 
-      case Target.RND_ENEMY: {
+      case Target.RNDENEMY: {
         const rnd = this.getRandomAliveEnemy();
         if (rnd) {
           this.resolvePlayerSkill(skill, rnd);
           this.spendResourcesForSkill(skill);
         } else {
-          console.log("[CM] No hay enemigos vivos para RND_ENEMY");
+          console.log("[CM] No hay enemigos vivos para RNDENEMY");
         }
         this.scene.events.emit("target_selected");
         return this.afterPlayerAction(actionsCost);
       }
 
-      case Target.ALL_ENEMIES: {
+      case Target.ALLENEMIES: {
         const vivos = this.getAliveEnemies();
         if (vivos.length) {
           this.resolvePlayerSkill(skill, vivos);
           this.spendResourcesForSkill(skill);
         } else {
-          console.log("[CM] No hay enemigos vivos para ALL_ENEMIES");
+          console.log("[CM] No hay enemigos vivos para ALLENEMIES");
         }
         this.scene.events.emit("target_selected");
         return this.afterPlayerAction(actionsCost);
@@ -401,13 +401,13 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
         break;
 
       case Target.ENEMY:
-      case Target.RND_ENEMY:
+      case Target.RNDENEMY:
         if (enemyOrArray && enemyOrArray.isAlive) {
           applyAll(enemyOrArray);
         }
         break;
 
-      case Target.ALL_ENEMIES:
+      case Target.ALLENEMIES:
         applyAll(enemyOrArray ?? this.getAliveEnemies());
         break;
 

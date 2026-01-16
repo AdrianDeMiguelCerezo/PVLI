@@ -65,6 +65,11 @@ export default class HealthBar extends Phaser.GameObjects.Container {
      * @param {any} targetValue
      */
     setInstantValue(targetValue = this.targetValue) { this.targetValue = targetValue; this._actualValue = targetValue; }
-    
+
+    destroy() {
+        this.removeAllListeners();
+
+        super.destroy();
+    }
 
 }

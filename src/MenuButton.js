@@ -251,7 +251,7 @@ export default class MenuButton extends Phaser.GameObjects.Text {
     scene.events.on("target_selected", this._onTargetSelected);
   }
 
-  destroy(fromScene) {
+  destroy() {
     // quitar listeners de puntero propios
     this.removeAllListeners();
 
@@ -265,11 +265,11 @@ export default class MenuButton extends Phaser.GameObjects.Text {
       }
     }
 
-    this._onUseSkill = null;
-    this._onSelectSkill = null;
-    this._onSelectTarget = null;
-    this._onTargetSelected = null;
+    //this._onUseSkill = null; NACHEADA
+    //this._onSelectSkill = null;
+    //this._onSelectTarget = null;
+    //this._onTargetSelected = null;
 
-    super.destroy(fromScene);
+    super.destroy();
   }
 }

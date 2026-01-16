@@ -223,9 +223,17 @@ export default class BattleScene extends Phaser.Scene {
       30,
       this.player.playerData.HPMax,
       3
-    );
+      );
+      this.barraVida.on("pointerover", () => {
+          console.log(this, "(HP) Tu vida actual")
+          this.ShowTextbox("(HP) Tu vida actual");
+      });
+
+      this.barraVida.on("pointerout", () => {
+          this.HideTextbox();
+      });
     
-    this.barraVida.targetValue = this.player.playerData.HP;
+    this.barraVida.setInstantValue(this.player.playerData.HP)
 
     this.barraSp = new HealthBar(
       this,
@@ -236,9 +244,16 @@ export default class BattleScene extends Phaser.Scene {
       this.player.playerData.SPMax,
       3,
       0x1b73cf
-    );
-    
-    this.barraSp.targetValue = this.player.playerData.SP;
+      );
+      this.barraSp.on("pointerover", () => {
+              this.ShowTextbox("(SP) Se gasta al usar habilidades");
+      });
+
+      this.barraSp.on("pointerout", () => {
+              this.HideTextbox();
+      });
+
+      this.barraSp.setInstantValue(this.player.playerData.SP)
 
     // === Círculos de acciones disponibles ===
     this.actionCircles = [];
