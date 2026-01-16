@@ -52,12 +52,27 @@ export default class ImageWithText extends Phaser.GameObjects.Container {
         }
         text.alpha = alpha;
         this.add(text)
+
+        console.log(this.image.width + 10, this.image.height + 10)
+
+        this.setInteractive(
+            new Phaser.Geom.Rectangle(0, 0, this.image.width+10, this.image.height+10),
+            Phaser.Geom.Rectangle.Contains
+        );
+
         scene.add.existing(this)
+
     }
     get width() {
         return this.image.width;
     }
     get height() {
-        return this.image.difficulty;
+        return this.image.height;
+    }
+
+    destroy() {
+        this.removeAllListeners();
+
+        super.destroy();
     }
 }

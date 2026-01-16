@@ -48,7 +48,7 @@ export default class Enemy extends Phaser.GameObjects.Container {
     this.healthBar.setScale(0.3);
     this.add(this.healthBar);
 
-    this.Pompa = new Phaser.GameObjects.Image(scene, -15, 2, "neutro").setOrigin(0, 0);
+    this.Pompa = new Phaser.GameObjects.Image(scene, -15, 2, "NULL").setOrigin(0, 0);
     this.Pompa.setScale(0.3);
     this.add(this.Pompa);
 
@@ -115,8 +115,10 @@ export default class Enemy extends Phaser.GameObjects.Container {
     }
   }
 
-  setIntention(textureKey = "neutro") {
-    this.cambiaPompa(textureKey);
+    chooseIntention() {
+        n = Phaser.Math.Between(0, this.scene.jsonEnemigos[key].habilidades.length);
+        this.sigHabilidad = n;
+        this.cambiaPompa(this.scene.jsonEnemigos[key].habilidades[n].type);
   }
 
   updateEnemy(x, y) {

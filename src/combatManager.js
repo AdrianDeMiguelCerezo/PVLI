@@ -911,7 +911,7 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
   prepareEnemyIntentions() {
     this.enemies.forEach(e =>
-      e.setIntention(e.isAlive ? "espada" : "neutro")
+      e.ChooseIntention()
     );
   }
 

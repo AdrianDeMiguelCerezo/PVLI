@@ -34,7 +34,10 @@ export default class HealthBar extends Phaser.GameObjects.Container {
             }
         )
 
-
+        this.setInteractive(
+            new Phaser.Geom.Rectangle(0, 0, barWidth, barHeight),
+            Phaser.Geom.Rectangle.Contains
+        );
         
         this.add(this.backgroundRectangle);
         this.add(this.healthBackgroundRectangle);
