@@ -5,161 +5,176 @@ import HealthBar from "./HealthBar.js";
  * Representa un enemigo en la escena del combate
  */
 export default class Enemy extends Phaser.GameObjects.Container {
-  /**
-   * @description Guarda la última habilidad que ha pasado el select_target
-   * para poder devolverla en el evento target_selected
-   */
-  skillKey;
-
-  /**
-   * @param {string} key  Key del enemigo en jsonEnemigos
-   * @param {Phaser.Scene} scene
-   * @param {string} image Key de la textura del enemigo
-   */
-  constructor(key, scene, image) {
-    super(scene, 100, 100);
-
-    this.scene = scene;
-
-    this.image = new Phaser.GameObjects.Image(scene, 0, 0, image).setOrigin(0, 0);
-    this.add(this.image);
-
-    this.key = key;
-    this.hp = this.scene.jsonEnemigos[key].HpMax;
-    this.sigHabilidad = 0;
-    this.turno = 0;
+    /**
+     * @description Guarda la última habilidad que ha pasado el select_target
+     * para poder devolverla en el evento target_selected
+     */
+    skillKey;
 
     /**
-     * Guarda todos sus StatusEffects
-     * @type {{key:string, duration:number}[]}
+     * @param {string} key  Key del enemigo en jsonEnemigos
+     * @param {Phaser.Scene} scene
+     * @param {string} image Key de la textura del enemigo
      */
-    this.efectos = this.efectos || [];
-    this.efectosTam = this.efectos.length;
+    constructor(key, scene, image) {
+        super(scene, 100, 100);
 
-    this.healthBar = new HealthBar(
-      scene,
-      43,
-      -6,
-      100,
-      18,
-      this.hp,
-      2
-    );
-    this.healthBar.setScale(0.3);
-    this.add(this.healthBar);
+        this.scene = scene;
 
-    this.Pompa = new Phaser.GameObjects.Image(scene, -15, 2, "NULL").setOrigin(0, 0);
-    this.Pompa.setScale(0.3);
-    this.add(this.Pompa);
+        this.image = new Phaser.GameObjects.Image(scene, 0, 0, image).setOrigin(0, 0);
+        this.add(this.image);
 
-    // === INTERACCIÓN CLICK ENEMIGO ===
-    this.canBeClicked = false;
+        this.key = key;
+        this.hp = this.scene.jsonEnemigos[key].HpMax;
+        this.sigHabilidad = 0;
+        this.turno = 0;
 
-    this.setInteractive(
-      new Phaser.Geom.Rectangle(0, 0, this.image.width, this.image.height),
-      Phaser.Geom.Rectangle.Contains
-    );
+        /**
+         * Guarda todos sus StatusEffects
+         * @type {{key:string, duration:number}[]}
+         */
+        this.efectos = this.efectos || [];
+        this.efectosTam = this.efectos.length;
 
-    this.on("pointerdown", () => {
-      if (this.canBeClicked && this.isAlive) {
-        this.scene.events.emit("target_selected", this, this.skillKey);
-        if (this.image.preFX) {
-          this.image.preFX.clear();
-        }
-      }
-    });
+        this.healthBar = new HealthBar(
+            scene,
+            43,
+            -6,
+            100,
+            18,
+            this.hp,
+            2
+        );
+        this.healthBar.setScale(0.3);
+        this.add(this.healthBar);
 
-    this.scene.events.on("target_selected", () => {
-      this.canBeClicked = false;
-    });
-
-    this.scene.events.on("select_target", skillKey => {
-      if (this.isAlive) {
-        this.canBeClicked = true;
-        this.skillKey = skillKey;
-      } else {
+        this.pompa = new Phaser.GameObjects.Image(scene, -15, 2, "NULL").setOrigin(0, 0);
+        this.pompa.setScale(0.3);
+        this.add(this.pompa);
+        this.pompa.setInteractive({
+            pixelPerfect: true,
+            alphaTolerance: 1
+        });
+        this.pompa.on("pointerover", () => {
+            switch (this.scene.jsonEnemigos[this.key].habilidades[this.sigHabilidad].type) {
+                case "ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque sencillo"); break;
+                case "SPECIAL_ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque especial"); break;
+                case "BUFF": this.scene.ShowTextbox("El enemigo va a potenciar a sus aliados"); break;
+                case "DEBUFF": this.scene.ShowTextbox("El enemigo va a debilitarte"); break;
+                case "NULL": this.scene.ShowTextbox("El enemigo no va a hacer nada"); break;
+            }
+        });
+        this.pompa.on("pointerout", () => {
+            this.scene.HideTextbox();
+        });
+        // === INTERACCIÓN CLICK ENEMIGO ===
         this.canBeClicked = false;
-      }
-    });
 
-    this.on("pointerout", () => {
-      if (this.image.preFX) {
-        this.image.preFX.clear();
-      }
-    });
+        this.setInteractive(
+            new Phaser.Geom.Rectangle(0, 0, this.image.width, this.image.height),
+            Phaser.Geom.Rectangle.Contains
+        );
 
-    this.on("pointerover", () => {
-      if (this.canBeClicked && this.isAlive && this.image.preFX) {
-        this.image.preFX.addGlow("0xfaf255", 1, 1, false, 1, 0);
-      }
-    });
-  }
+        this.on("pointerdown", () => {
+            if (this.canBeClicked && this.isAlive) {
+                this.scene.events.emit("target_selected", this, this.skillKey);
+                if (this.image.preFX) {
+                    this.image.preFX.clear();
+                }
+            }
+        });
 
-  get isAlive() {
-    return (this.hp ?? 0) > 0;
-  }
+        this.scene.events.on("target_selected", () => {
+            this.canBeClicked = false;
+        });
 
-  takeDamage(amount) {
-    const dmg = Math.max(0, Math.floor(amount));
-    this.hp = Math.max(0, (this.hp ?? 0) - dmg);
+        this.scene.events.on("select_target", skillKey => {
+            if (this.isAlive) {
+                this.canBeClicked = true;
+                this.skillKey = skillKey;
+            } else {
+                this.canBeClicked = false;
+            }
+        });
 
-    if (this.healthBar) {
-      this.healthBar.targetValue = this.hp;
+        this.on("pointerout", () => {
+            if (this.image.preFX) {
+                this.image.preFX.clear();
+            }
+        });
+
+        this.on("pointerover", () => {
+            if (this.canBeClicked && this.isAlive && this.image.preFX) {
+                this.image.preFX.addGlow("0xfaf255", 1, 1, false, 1, 0);
+            }
+        });
     }
 
-    if (this.hp <= 0) {
-      this.canBeClicked = false;
-      this.setAlpha(0.6);
-      // avisar a la escena para que lo quite de la lista y reordene
-      this.scene.events.emit("enemy_dead", this);
+    get isAlive() {
+        return (this.hp ?? 0) > 0;
     }
-  }
+
+    takeDamage(amount) {
+        const dmg = Math.max(0, Math.floor(amount));
+        this.hp = Math.max(0, (this.hp ?? 0) - dmg);
+
+        if (this.healthBar) {
+            this.healthBar.targetValue = this.hp;
+        }
+
+        if (this.hp <= 0) {
+            this.canBeClicked = false;
+            this.setAlpha(0.6);
+            // avisar a la escena para que lo quite de la lista y reordene
+            this.scene.events.emit("enemy_dead", this);
+        }
+    }
 
     chooseIntention() {
-        const n = Phaser.Math.Between(0, this.scene.jsonEnemigos[this.key].habilidades.length-1);
+        const n = Phaser.Math.Between(0, this.scene.jsonEnemigos[this.key].habilidades.length - 1);
         this.sigHabilidad = n;
         console.log(this.scene.jsonEnemigos[this.key], this.scene.jsonEnemigos[this.key].habilidades[n].type)
         this.cambiaPompa(this.scene.jsonEnemigos[this.key].habilidades[n].type);
-  }
-
-  updateEnemy(x, y) {
-    this.x = x;
-    this.y = y;
-    if (this.healthBar) {
-      this.healthBar.targetValue = this.hp;
-    }
-  }
-
-  cambiaPompa(newTexture) {
-    this.Pompa.setTexture(newTexture);
-  }
-
-  /**
-   * Animación de ataque simple: se lanza hacia el jugador y vuelve
-   * y luego llama a onHit.
-   * @param {Phaser.GameObjects.Image|Phaser.GameObjects.Container} target
-   * @param {Function} onHit
-   */
-  playAttackAnimation(target, onHit) {
-    const scene = this.scene;
-    const originalX = this.x;
-    const originalY = this.y;
-
-    let offsetX = 30;
-    if (target && typeof target.x === "number") {
-      offsetX = target.x < this.x ? -30 : 30;
     }
 
-    scene.tweens.add({
-      targets: this,
-      x: originalX + offsetX,
-      y: originalY,
-      duration: 120,
-      yoyo: true,
-      ease: "Quad.easeOut",
-      onComplete: () => {
-        if (onHit) onHit();
-      }
-    });
-  }
+    updateEnemy(x, y) {
+        this.x = x;
+        this.y = y;
+        if (this.healthBar) {
+            this.healthBar.targetValue = this.hp;
+        }
+    }
+
+    cambiaPompa(newTexture) {
+        this.pompa.setTexture(newTexture);
+    }
+
+    /**
+     * Animación de ataque simple: se lanza hacia el jugador y vuelve
+     * y luego llama a onHit.
+     * @param {Phaser.GameObjects.Image|Phaser.GameObjects.Container} target
+     * @param {Function} onHit
+     */
+    playAttackAnimation(target, onHit) {
+        const scene = this.scene;
+        const originalX = this.x;
+        const originalY = this.y;
+
+        let offsetX = 30;
+        if (target && typeof target.x === "number") {
+            offsetX = target.x < this.x ? -30 : 30;
+        }
+
+        scene.tweens.add({
+            targets: this,
+            x: originalX + offsetX,
+            y: originalY,
+            duration: 120,
+            yoyo: true,
+            ease: "Quad.easeOut",
+            onComplete: () => {
+                if (onHit) onHit();
+            }
+        });
+    }
 }
