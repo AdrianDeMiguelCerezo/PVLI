@@ -116,9 +116,10 @@ export default class Enemy extends Phaser.GameObjects.Container {
   }
 
     chooseIntention() {
-        n = Phaser.Math.Between(0, this.scene.jsonEnemigos[key].habilidades.length);
+        const n = Phaser.Math.Between(0, this.scene.jsonEnemigos[this.key].habilidades.length-1);
         this.sigHabilidad = n;
-        this.cambiaPompa(this.scene.jsonEnemigos[key].habilidades[n].type);
+        console.log(this.scene.jsonEnemigos[this.key], this.scene.jsonEnemigos[this.key].habilidades[n].type)
+        this.cambiaPompa(this.scene.jsonEnemigos[this.key].habilidades[n].type);
   }
 
   updateEnemy(x, y) {

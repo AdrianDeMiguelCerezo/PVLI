@@ -910,8 +910,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   // =================== Utilidades / fin combate ===================
 
   prepareEnemyIntentions() {
-    this.enemies.forEach(e =>
-      e.ChooseIntention()
+      this.enemies.forEach(e =>
+          e.chooseIntention()
     );
   }
 
