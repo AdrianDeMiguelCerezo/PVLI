@@ -177,7 +177,8 @@ export default class BattleScene extends Phaser.Scene {
                 color: "#000000",
                 align: "center",
                 fixedWidth: 0,
-                backgroundColor: "#fadd87",
+                backgroundColor: "#DDDDDDAA",
+                
                 padding: { x: 3 }
             })
             .setOrigin(0, 1)

@@ -48,6 +48,14 @@ export default class Enemy extends Phaser.GameObjects.Container {
         this.healthBar.setScale(0.3);
         this.add(this.healthBar);
 
+        this.healthBar.on("pointerover", () => {
+            this.scene.ShowTextbox("(HP) Vida restante de este enemigo");
+        }).on("pointerout", () => {
+            this.scene.HideTextbox();
+        });
+
+        
+
         this.pompa = new Phaser.GameObjects.Image(scene, -15, 2, "NULL").setOrigin(0, 0);
         this.pompa.setScale(0.3);
         this.add(this.pompa);
@@ -57,11 +65,11 @@ export default class Enemy extends Phaser.GameObjects.Container {
         });
         this.pompa.on("pointerover", () => {
             switch (this.scene.jsonEnemigos[this.key].habilidades[this.sigHabilidad].type) {
-                case "ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque sencillo"); break;
-                case "SPECIAL_ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque especial"); break;
-                case "BUFF": this.scene.ShowTextbox("El enemigo va a potenciar a sus aliados"); break;
-                case "DEBUFF": this.scene.ShowTextbox("El enemigo va a debilitarte"); break;
-                case "NULL": this.scene.ShowTextbox("El enemigo no va a hacer nada"); break;
+                case "ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque sencillo en su siguiente turno"); break;
+                case "SPECIAL_ATTACK": this.scene.ShowTextbox("El enemigo va a hacer un ataque especial en su siguiente turno"); break;
+                case "BUFF": this.scene.ShowTextbox("El enemigo va a potenciar a sus aliados en su siguiente turno"); break;
+                case "DEBUFF": this.scene.ShowTextbox("El enemigo va a debilitarte en su siguiente turno"); break;
+                case "NULL": this.scene.ShowTextbox("El enemigo no va a hacer nada en su siguiente turno"); break;
             }
         });
         this.pompa.on("pointerout", () => {
