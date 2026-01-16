@@ -79,7 +79,10 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
         let eventoParseado = eventoParserer.generateEvent(this.chosenEvent);
 
         scene.add.existing(this);
-        this.setInteractive();
+        this.setInteractive({
+            pixelPerfect: true,
+            alphaTolerance: 1
+        });
         this.setScale(scale);
 
         if (this.state === State.CURRENT) {
