@@ -1,5 +1,4 @@
 import PlayerData from "../PlayerData.js";
-
 export default class MainMenu extends Phaser.Scene{
     constructor(){
         super({key:'MainMenu'});
@@ -36,9 +35,37 @@ export default class MainMenu extends Phaser.Scene{
             return button;
         };
 
-        makeButton(height / 2, 'Play', () => {
-            this.playerData = new PlayerData();
-            this.scene.start('BootScene');
-        });
+        /*makeButton(height / 2, 'Play', () => {
+            this.scene.start('Map',new PlayerData());
+        });*/
+
+        this.playerData=new PlayerData();
+        this.uiButton(width/2,height/2,'Play','Map',this.playerData);
+    }
+
+    /**
+     * 
+     * @param {number} x
+     * @param {number} y
+     * @param {string} message
+     * @param {string} sceneKey
+     * @param {any} paramsInit
+     */
+    uiButton(x, y, message,sceneKey,paramsInit) {
+        //crea el texto del boton con la posicion y el texto
+        let botonFondo = this.add.rectangle(x, y, 100, 25, 0x15C6CC).setOrigin(0, 0);
+        let boton = this.add.text(x, y, message);
+        boton.setFontSize(25);
+        botonFondo.width = boton.width;
+        //establece interaccion
+        boton.setInteractive();
+        boton.on('pointerdown', () => {
+            this.registry.reset();
+            this.scene.stop('Map');
+
+            this.scene.start(sceneKey, {
+                playerData: new PlayerData()
+            });
+        })
     }
 }

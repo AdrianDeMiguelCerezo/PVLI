@@ -71,15 +71,15 @@ export default class BootScene extends Phaser.Scene {
     }
     create() {
 
-        this.playerData = new PlayerData();
+        /*this.playerData = new PlayerData();
         this.uiButton(100, 400, "Go to Map", 'Map', this.playerData)
         this.uiButton(100, 300, "Go to DialogueScene", 'DialogueScene')
         this.uiButton(100, 200, "Go to BattleScene", 'BattleScene', ['BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN', 'BANDIDO_COMUN',])
         this.uiButton(100, 100, "Go to MenuTest", 'MenuTest', {playerData: this.playerData, oldScene: this.scene.key})
-        this.uiButton(100, 500, "Go to xd", 'xd',)
+        this.uiButton(100, 500, "Go to xd", 'xd',)*/
 
         // --- PREPARACIÓN DEL JUGADOR DE PRUEBA (Veneno, Skin y Antídoto) ---
-        const testPlayer = new PlayerData();
+       /* const testPlayer = new PlayerData();
         testPlayer.HP = 80; // Vida un poco baja
         testPlayer.skinIndex = 6; // 0 = Cowboy, 6 = Cat, etc.
         
@@ -89,12 +89,12 @@ export default class BootScene extends Phaser.Scene {
         // Aseguramos antídoto
         if (!testPlayer.items.some(i => i.item === "ANTIDOTO")) {
             testPlayer.items.push({ item: "ANTIDOTO", count: 3 });
-        }
+        }*/
 
 
         // --- BOTÓN 1: TEST COMBATE -> MAPA (Caso estándar) ---
         // Al ganar, debería llevarte a la escena 'Map' directamente.
-        this.uiButton(400, 100, "TEST: Battle -> Map", 'BattleScene', {
+        /*this.uiButton(400, 100, "TEST: Battle -> Map", 'BattleScene', {
             enemies: ['BANDIDO_COMUN'], // Un enemigo facilito
             playerData: testPlayer,
             winNode: null,  // null significa "volver al mapa"
@@ -118,28 +118,10 @@ export default class BootScene extends Phaser.Scene {
             playerData: testPlayer,
             winNode: nodoVictoria, // Al ganar, pasamos este nodo
             fleeNode: null
-        });
+        });*/
+
+
+        this.scene.start('MainMenu');
     }
-    /**
-     * 
-     * @param {number} x
-     * @param {number} y
-     * @param {string} message
-     * @param {string} sceneKey
-     * @param {any} paramsInit
-     */
-    uiButton(x, y, message,sceneKey,paramsInit) {
-        //crea el texto del boton con la posicion y el texto
-        let botonFondo = this.add.rectangle(x, y, 100, 25, 0x15C6CC).setOrigin(0, 0);
-        let boton = this.add.text(x, y, message);
-        boton.setFontSize(25);
-        botonFondo.width = boton.width;
-        //establece interaccion
-        boton.setInteractive();
-        boton.on('pointerdown', () => {
-            this.scene.start(sceneKey,paramsInit);
-            //this.scene.launch(sceneKey, paramsInit);
-            //this.scene.pause();
-        })
-    }
+    
 };
