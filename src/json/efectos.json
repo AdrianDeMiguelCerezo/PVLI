@@ -1,21 +1,25 @@
 {
     "QUEMADO": {
         "name": "Quemado",
+        "description": "-5% HP/turno",
         "diffHealthPercent": -5
     },
      "ENVENENADO": {
         "name": "Envenenado",
+        "description": "-2% HP/turno, persiste entre combates",
         "diffHealthPercent": -2
     },
     "HAMBRE_1": {
         "name": "Hambriento 1",
         "texture": "HAMBRE_1",
+        "description": "-30% DAÑO INFLIGIDO, -30% DEF",
         "diffDmgPercent": -30,
         "diffDefensePercent": -30
     },
     "HAMBRE_2": {
-        "name": "Hambriento 1",
-        "texture": "HAMBRE_1",
+        "name": "Hambriento 2",
+        "texture": "HAMBRE_2",
+        "description": "-30% DAÑO INFLIGIDO, -30% DEF, solo tienes 1 acc/turno",
         "diffDmgPercent": -30,
         "diffDefensePercent": -30,
         "isParalysis": true
@@ -23,34 +27,38 @@
     "PARALIZADO": {
         "name": "Paralizado",
         "texture": "SP+",
+        "description": "Solo tienes 1 acc/turno",
         "isParalysis": true
     },
     "HP+": {
         "name": "Heal",
-        "texture": "SP+",
+
+        "description": "+30 HP",
         "diffHealth": 30
     },
     "SP+": {
         "name": "Sp+",
         "texture": "SP+",
+        "description": "+30 SP",
         "diffSp": 30
 
     },
     "DEF+": {
         "name": "Def+",
-        "texture": "SP+",
+
+        "description": "+30% DEF",
         "diffDefensePercent": 30
 
     },
     "ATT-": {
         "name": "Att-",
-        "texture": "SP+",
+        "description": "-30% DAÑO INFLIGIDO",
         "diffDmgPercent": -30
 
     },
     "ATT+": {
         "name": "Att+",
-        "texture": "SP+",
+        "description": "+30% DAÑO INFLIGIDO",
         "diffDmgPercent": 30
 
     }
