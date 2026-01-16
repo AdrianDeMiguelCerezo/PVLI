@@ -829,22 +829,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
   mapTargetToEnum(objetivoStr, description, skillKey) {
     const s = (objetivoStr || "").toUpperCase();
 
-    if (s === "SELF") return Target.SELF;
-    if (s === "ENEMY") return Target.ENEMY;
-    if (s === "RNDENEMY") return Target.RND_ENEMY;
-    if (s === "ALLENEMIES") return Target.ALL_ENEMIES;
-
-    if (s === "RND_ENEMY" || s === "RANDOM_ENEMY") return Target.RND_ENEMY;
-    if (s === "ALL" || s === "ALL_ENEMIES") return Target.ALL_ENEMIES;
-
-    if (description && /todos|all/i.test(description)) {
-      return Target.ALL_ENEMIES;
-    }
-
-    if (skillKey === "DISPARO_MULTIPLE") {
-      return Target.ALL_ENEMIES;
-    }
-
+      if (s !== "") {return Target[s] }
+    
     return Target.ENEMY;
   }
 

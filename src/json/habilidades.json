@@ -47,10 +47,11 @@
         "actionCost": 2,
         "spCost": 30,
         "damage": 0,
-        "effect": "ATT+",
-        "effectDuration": 2,
+        "effect": "HP+",
+        "effectDuration": 0,
         "type": "ACTIVE",
         "target": "SELF"
+
     },
     "SUPREME_MEDITATION": {
         "name": "Meditación suprema",
