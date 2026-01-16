@@ -271,7 +271,7 @@ export default class EventParser {
                             case "string":
                                 {
                                    //console.log(thisFragment_json, " params:", this.params, "reward: ", combatRewards_json)
-                                    if (!this.params.hasOwnProperty(combatRewards_json)) { throw "La recompensa:" + combatRewards_json + "no existe en el array de parámetros.", this.params }
+                                    if (!this.params.hasOwnProperty(combatRewards_json)) { throw "La recompensa: " + combatRewards_json + "no existe en el array de parámetros.", this.params }
                                     for (const [key, value] of Object.entries(this.params[combatRewards_json])) {
                                         consecuencias[this.rewardsJsonToAttribute[key]] = value;
                                     }
@@ -291,7 +291,7 @@ export default class EventParser {
                     eventFragmentNode.opciones[0] = {}
                     //generar nodo de di�logo al que se va al ganar
                     eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas:" + this.WriteRewards(consecuencias),
+                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas: " + this.WriteRewards(consecuencias),
                             [{ texto: "Continuar", salto: this.GenerateEventFragment(++index,eventFragmentNode) }],
                             consecuencias, undefined);
 

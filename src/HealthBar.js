@@ -50,9 +50,9 @@ export default class HealthBar extends Phaser.GameObjects.Container {
     preUpdate(t, dt) {
         
         if (this._actualValue > this.targetValue) {
-            this._actualValue = this._actualValue - 20 * dt / 1000
+            this._actualValue = this._actualValue - 40 * dt / 1000
         } else if(this._actualValue < this.targetValue) {
-            this._actualValue = this._actualValue + 20 * dt / 1000
+            this._actualValue = this._actualValue + 40 * dt / 1000
         }
         if (Math.abs(this._actualValue) < Math.abs(this.targetValue) + 1 && Math.abs(this._actualValue) > Math.abs(this.targetValue)-1)
         {
