@@ -4,7 +4,8 @@ import PlayerData from "./PlayerData.js";
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
-    CITY: 2
+    CITY: 2,
+    BOSS:3
 }
 
 const DifficultyLimits = {
@@ -160,19 +161,23 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
     updateTint() {
         this.clearTint();
-        if (this.visited == true && this.state !== State.CURRENT) this.setTintFill(0x8b0000);
-        else {
-            if (this.state === State.LOCKED) this.setTintFill(0x555555);
-            else if (this.state === State.OPEN) this.setTintFill(0x000000);
-            else if (this.state === State.CURRENT) this.setTintFill(0x00ff00);
+        if(this.nodeType==NodeType.BOSS){
+            this.setTintFill(0x861d96);
+        }
+        else{
+            if(this.visited==true){
+                if(this.state===State.CURRENT){
+                    this.setTintFill(0x25ff1a);
+                }
+                else{
+                    this.setTintFill(0xbdbfbd);
+                }
+            }
+            else {
+                this.setTintFill(0x000000);
+            }
         }
         
-        //if (this.scene.game.config.physics.arcade.debug) {
-            if (this.difficulty < 100) { }
-            else if (this.difficulty < 200) { this.setTintFill(0x8B6300) }
-            else if (this.difficulty < 300) { this.setTintFill(0x8B4800) }
-            else { this.setTintFill(0x8B1800) }
-        //}
 
     }
 

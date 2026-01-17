@@ -7,7 +7,8 @@ import PlayerData from '../PlayerData.js'
 const NodeType = {
     COMMON: 0,
     TOWN: 1,
-    CITY: 2
+    CITY: 2,
+    BOSS:3
 }
 
 const DifficultyLimits = {
@@ -109,7 +110,7 @@ export default class Map extends Phaser.Scene {
             this.nodes.push(new MapNode(this, 100, 400, 'node', {easyEvent: "EVENTO_MERCADERES_DESIERTO", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
             this.nodes.push(new MapNode(this, 150, 500, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_2", hardEvent: "EVENTO_ESTADO_3", fkcedEvent: "EVENTO_ESTADO_3"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
             this.nodes.push(new MapNode(this, 250, 520, 'node', {easyEvent: "PERRO_ATRAPADO", midEvent: "PERRO_ATRAPADO", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
-            this.nodes.push(new MapNode(this, 350, 550, 'node', {easyEvent: "FINAL", midEvent: "FINAL", hardEvent: "FINAL", fkcedEvent: "FINAL"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
+            this.nodes.push(new MapNode(this, 350, 550, 'node', {easyEvent: "FINAL", midEvent: "FINAL", hardEvent: "FINAL", fkcedEvent: "FINAL"}, this.playerData, NodeType.BOSS, State.LOCKED, false, false));
 
             for(let node of this.nodes){
                 node.setDepth(3);
