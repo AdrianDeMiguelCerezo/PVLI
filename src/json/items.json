@@ -192,7 +192,24 @@
                 "name": "Antídoto",
                 "description": "Elimina el veneno del cuerpo.",
                 "actions": 1,
-                "cureEffect": "ENVENENADO", 
+                "cureEffect": "ENVENENADO",
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "SETA": {
+        "name": "Hongo mágico",
+        "description": "Debería darme un subidón que pa qué",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "name": "Comer seta",
+                "description": "Ñam!",
+                "actions": 1,
+                "effect": "ENVENENADO", 
+                "effectDuration": -1,
                 "type": "ACTIVE",
                 "target": "SELF"
             }
