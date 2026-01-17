@@ -166,8 +166,7 @@ export default class BattleScene extends Phaser.Scene {
             }
         );
 
-        // === Menús de habilidades / items ===
-        this.UpdateMenus();
+
 
         // === Tooltip de descripción ===
         this.descriptionTextbox = this.add
@@ -184,6 +183,8 @@ export default class BattleScene extends Phaser.Scene {
             .setOrigin(0, 1)
             .setVisible(false)
             .setDepth(2);
+        // === Menús de habilidades / items ===
+        this.UpdateMenus();
 
         // Rectángulo negro al elegir target
         this.blackFullRect = this.add
@@ -417,7 +418,7 @@ export default class BattleScene extends Phaser.Scene {
                 )
                 menuEffects.AddItem(newEfecto)
                 newEfecto.on("pointerover", () => {
-                    this.ShowTextbox(this.jsonEfectos[efecto.key].name + ": " +this.jsonEfectos[efecto.key].description);
+                    this.ShowTextbox(this.jsonEfectos[efecto.key].name + ": " + this.jsonEfectos[efecto.key].description,newEfecto);
                 });
                 newEfecto.on("pointerout", () => {
                     this.HideTextbox();
@@ -431,10 +432,10 @@ export default class BattleScene extends Phaser.Scene {
         // 4) Menú de efectos del jugador
         this.playerEffectMenu = new Menu(
             this,
-            this.player.x + this.player.width + 5,
+            this.player.x + this.player.displayWidth-5,
             this.player.y,
-            80,
-            50,
+            100,
+            40,
             2,
             5,
             null,
@@ -456,7 +457,7 @@ export default class BattleScene extends Phaser.Scene {
             )
             this.playerEffectMenu.AddItem(newEfecto)
             newEfecto.on("pointerover", () => {
-                this.ShowTextbox(this.jsonEfectos[efecto.key].name + ": "+this.jsonEfectos[efecto.key].description);
+                this.ShowTextbox(this.jsonEfectos[efecto.key].name + ": "+this.jsonEfectos[efecto.key].description,newEfecto);
             });
             newEfecto.on("pointerout", () => {
                 this.HideTextbox();
@@ -534,9 +535,14 @@ export default class BattleScene extends Phaser.Scene {
                 );
             }
         }
+        if (this.descriptionTextbox.callerObject!=null && this.descriptionTextbox.callerObject.scene === undefined) {
+            this.HideTextbox()
+        }
+        
     }
 
-    ShowTextbox(text) {
+    ShowTextbox(text, callerObj= null) {
+        this.descriptionTextbox.callerObject = callerObj;
         this.descriptionTextbox.text = text;
         this.descriptionTextbox.setVisible(true);
     }
