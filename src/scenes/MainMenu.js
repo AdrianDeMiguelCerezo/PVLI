@@ -20,12 +20,12 @@ export default class MainMenu extends Phaser.Scene{
             const button = this.add.text(width / 2, y, text, {
                 fontFamily: 'Arial',
                 fontSize: '32px',
-                color: '#00ff99',
+                color: '#0066ff',
                 backgroundColor: '#00000055',
                 padding: { x: 20, y: 10 },
                 align: 'center'
             })
-            .setOrigin(0.5)
+            .setOrigin(0)
             .setInteractive({ useHandCursor: true });
 
             button.on('pointerover', () => button.setStyle({ color: '#ffff00', backgroundColor: '#00000099' }));
@@ -53,8 +53,8 @@ export default class MainMenu extends Phaser.Scene{
      */
     uiButton(x, y, message,sceneKey,paramsInit) {
         //crea el texto del boton con la posicion y el texto
-        let botonFondo = this.add.rectangle(x, y, 100, 25, 0x15C6CC).setOrigin(0, 0);
-        let boton = this.add.text(x, y, message);
+        let botonFondo = this.add.rectangle(x+20, y, 100, 25, 0x15C6CC).setOrigin(0.5);
+        let boton = this.add.text(x, y, message).setOrigin(0.5);
         boton.setFontSize(25);
         botonFondo.width = boton.width;
         //establece interaccion
