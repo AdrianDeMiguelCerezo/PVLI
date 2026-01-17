@@ -60,8 +60,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,2,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG+"%"));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate+"%"));
 
         this.player=new Phaser.GameObjects.Image(this.scene,40,this.h*(0.89/3)*(6/12),'player');
         this.player.setScale(4);
@@ -348,8 +348,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 
         this.menuStats=new Menu(this.scene,this.w*(2.1/3),60+this.h*(0.86/3)+this.h*(0.6/3),this.w*(0.85/3),this.h*(0.89/3),12,2,0x6f9090);
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,0,"Defensa: "+this.def));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG));
-        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG+"%"));
+        this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate+"%"));
 
         
         this.menuStats.add(this.player);
