@@ -145,7 +145,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      * Realiza las cosas que no se deberían hacer en el constructor al principio de la escena
      */
     start(){
-        this.scene.events.on("show_description",this.OnButtonClicked,this);   
+        this._sceneEvents = this.scene.events;
+        this._sceneEvents.on("show_description", this.OnButtonClicked, this); 
     }
 
     preUpdate() {
@@ -676,7 +677,8 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
     }
 
     destroy(fromScene) {
-        this.scene.events.off("show_description", this.OnButtonClicked, this);
+        this._sceneEvents?.off("show_description", this.OnButtonClicked, this);
+        this._sceneEvents = null;
         super.destroy(fromScene);
     }
 }
