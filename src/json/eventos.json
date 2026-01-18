@@ -239,7 +239,7 @@
             {
                 "type": "dialogue",
                 "text": "Intentas dormir un poco, pero no puedes parar de pensar en tu padre, en su forma de hablar, en su personalidad, en los buenos momentos, en los malos momentos, en lo que sufrísteis cuando murió tu madre, en su calor cuando le abrazabas de en una noche fría...\nPero él ya no está. Sabes que es imposible que haya sobrevivido a eso, aunque te encantaría creer que no es así. ",
-                "permanentOptions": [
+                "options": [
                     {
                         "text": "Deprimirte más"
                     },
@@ -279,7 +279,7 @@
             },
             {
                 "type": "dialogue",
-                "text": "Tras una depresiva noche en la que no has dormido nada, te planteas volver al lugar de los hechos para ver si en verdad está muerto tu padre, pero sabes que es una idea estúpida. Desearías volver a comprobarlo, pero los bandidos podrían seguir buscándote o rondando por la zona, y no encontrar el cuerpo de tu padre no te daría certezas de nada.\nA pesar del dolor de la decisión, decides viajar a un pueblo cercano a descansar."
+                "text": "Tras una depresiva noche en la que no has dormido nada, te planteas volver al lugar de los hechos para ver si en verdad está muerto tu padre, pero sabes que es una idea estúpida. Desearías volver a comprobarlo, pero los bandidos podrían seguir buscándote o rondando por la zona, y no encontrar el cuerpo de tu padre no te daría certezas de nada.\nA pesar del dolor de tomar esta decisión, decides viajar a un pueblo cercano a descansar."
             },
             {
                 "type": "dialogue",
@@ -292,7 +292,7 @@
             {
                 "type": "dialogue",
                 "text": "3 semanas después, llega el representante del Estado con los nuevos pósteres de \"se busca\".\nTe das cuenta de que hay una recompensa por tu cabeza por haber matado a un hombre importante. No has hecho nada, pero nunca podrás escapar del Estado. Prefieres huir del país que vivir escondido toda la vida, intranquilo por si alguien vendrá un día a atraparte.",
-                "continue": "Ir a comprarle información a una conocida del pueblo que trabaja con información."
+                "continue": "Ir a comprarle información a una conocida que trabaja con información."
             },
             {
                 "type": "dialogue",
