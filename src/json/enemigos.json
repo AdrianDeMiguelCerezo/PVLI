@@ -163,7 +163,7 @@
             "name": "Ataque básico",
             "description": "1 acc. Un golpe sencillo con el arma.",
             "damage": 18,
-            "type": "ACTIVE",
+            "type": "ATTACK",
             "target": "ENEMY"
         }
     ]

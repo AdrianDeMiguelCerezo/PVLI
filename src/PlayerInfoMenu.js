@@ -1,7 +1,8 @@
 import HealthBar from './HealthBar.js';
 import Menu from './Menu.js'
 import MenuButton from './MenuButton.js';
-import PlayerData from './PlayerData.js'
+import PlayerData from './PlayerData.js';
+import ImageWithText from './ImageWithText.js';
 export default class PlayerInfoMenu extends Phaser.GameObjects.Container
 {
     /**
@@ -67,6 +68,36 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.player.setScale(4);
         this.menuStats.add(this.player);
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
+
+
+        this.descriptionTextbox = this.scene.add
+            .text(0, 0, "", {
+                fontFamily: "Arial",
+                fontSize: "15px",
+                color: "#000000",
+                align: "center",
+                fixedWidth: 0,
+                backgroundColor: "#DDDDDDAA",
+                
+                padding: { x: 3 }
+            })
+            .setOrigin(0, 1)
+            .setVisible(false)
+            .setDepth(2);
+
+        let pos=0
+        for(let i of this.playerData.efectos){
+            let efecto=new ImageWithText(this.scene,20*pos + 80,this.h*(0.89/3)*(4/12),i.duration,i.key,true,2,0.8);
+            this.menuStats.add(efecto);
+            efecto.on("pointerover", () => {
+                this.ShowTextbox(this.scene.jsonEfectos[i.key].name + ": " + this.scene.jsonEfectos[i.key].description,efecto);
+            });
+            efecto.on("pointerout", () => {
+                this.HideTextbox();
+            }); 
+            pos++;
+        }
+        
         
         
 
@@ -114,8 +145,27 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
      * Realiza las cosas que no se deberían hacer en el constructor al principio de la escena
      */
     start(){
-        this.scene.events.on("show_description",this.OnButtonClicked,this);
+        this.scene.events.on("show_description",this.OnButtonClicked,this);   
     }
+
+    preUpdate() {
+        if (!this.descriptionTextbox.visible) return;
+
+        const pointer = this.scene.input.activePointer;
+
+        this.descriptionTextbox.x =
+            Math.min(
+                pointer.x + this.descriptionTextbox.width,
+                this.w
+            ) - this.descriptionTextbox.width;
+
+        this.descriptionTextbox.y =
+            Math.max(
+                pointer.y - this.descriptionTextbox.height,
+                0
+            ) + this.descriptionTextbox.height;
+    }
+
 
     /**
      * Solo deja visible el menu de equipamiento
@@ -351,31 +401,21 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(1/12),"Daño crítico: "+this.critDMG+"%"));
         this.menuStats.add(new Phaser.GameObjects.Text(this.scene,0,this.h*(0.89/3)*(2/12),"Prob. crítica: "+this.critRate+"%"));
 
+        let pos=0
+        for(let i of this.playerData.efectos){
+            let efecto=new ImageWithText(this.scene,20*pos + 80,this.h*(0.89/3)*(4/12),i.duration,i.key,true,2,0.8);
+            this.menuStats.add(efecto);
+            efecto.on("pointerover", () => {
+                this.ShowTextbox(this.scene.jsonEfectos[i.key].name + ": " + this.scene.jsonEfectos[i.key].description,efecto);
+            });
+            efecto.on("pointerout", () => {
+                this.HideTextbox();
+            }); 
+            pos++;
+        }
+
         
         this.menuStats.add(this.player);
-
-        // Mostrar efectos de estado
-        // Posicionamos los iconos a la derecha del jugador (que está en x=40 aprox)
-        if (this.playerData.efectos && this.playerData.efectos.length > 0) {
-            let xOffset = 90; // Empezar un poco a la derecha del jugador
-            const yPos = this.h * (0.89 / 3) * (6/12); // Misma altura Y que en el player
-
-            this.playerData.efectos.forEach(eff => {
-                // Intentamos buscar textura en jsonEfectos o usamos la key directamente
-                // Si no hay iconos cargados con el nombre de la key (ej: "ENVENENDADO")
-                // usa una imagen genérica o texto temporalmente
-                const def = this.scene.jsonEfectos ? this.scene.jsonEfectos[eff.key] : null;
-                const textureKey = def && def.texture ? def.texture : eff.key; // Fallback
-
-                // Verificar si la textura existe en Paher, sino usar una por defecto
-                if (this.scene.textures.exists(textureKey)) {
-                    const icon = new Phaser.GameObjects.Image(this.scene, xOffset, yPos, textureKey);
-                    icon.setDisplaySize(32, 32); // Forzar tamaño pequeño
-                    this.menuStats.add(icon);
-                    xOffset += 35; // Separación entre iconos
-                }
-            });
-        }
 
         this.menuStats.AddButton(new MenuButton(this.scene,0,0,"Cambiar skin",null,()=>this.changeSkin(),15,0,"#c8d9d0",false),6,1);
 
@@ -614,6 +654,16 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
         const item=this.scene.jsonEquipamiento[this.k].habilidades[index];
         this.desc=item.name+"\n-"+item.description+"\n-Daño: "+item.damage;
         this.updateMenus(0,index+1);
+    }
+
+    ShowTextbox(text, callerObj= null) {
+        this.descriptionTextbox.callerObject = callerObj;
+        this.descriptionTextbox.text = text;
+        this.descriptionTextbox.setVisible(true);
+    }
+
+    HideTextbox() {
+        this.descriptionTextbox.setVisible(false);
     }
 
     /**
