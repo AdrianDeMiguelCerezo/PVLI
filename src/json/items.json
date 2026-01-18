@@ -169,7 +169,7 @@
     },
     "RACION_GOURMET":{
         "name":"Ración gourmet",
-        "description":"Restaura medio hambre y SP \n Acc: 1",
+        "description":"Restaura medio hambre y SP\n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades":[
@@ -184,7 +184,7 @@
     },
     "ANTIDOTO": {
         "name": "Antídoto",
-        "description": "Cura el envenenamiento. \n Acc: 1",
+        "description": "Cura el envenenamiento.\n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -200,7 +200,7 @@
     },
     "SETA": {
         "name": "Hongo mágico",
-        "description": "Debería darme un subidón que pa qué \n Acc: 1",
+        "description": "Debería darme un subidón que pa qué\n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -208,8 +208,25 @@
                 "name": "Comer seta",
                 "description": "Ñam!",
                 "actions": 1,
+                "effect": "ENVENENADO",
+                "effectDuration": 8,
+                "type": "ACTIVE",
+                "target": "SELF"
+            }
+        ]
+    },
+    "CACTUS_VENENOSO": {
+        "name": "Cáctus",
+        "description": "Es un cáctus. Se puede comer, creo.",
+        "usedInCombat": true,
+        "usedOutOfCombat": true,
+        "habilidades": [
+            {
+                "name": "Comer cáctus",
+                "description": "Ñam!",
+                "actions": 1,
                 "effect": "ENVENENADO", 
-                "effectDuration": 3,
+                "effectDuration": -1,
                 "type": "ACTIVE",
                 "target": "SELF"
             }

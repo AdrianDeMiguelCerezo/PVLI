@@ -199,7 +199,7 @@
     },
     "PECHERA":{
         "name": "Pechera",
-        "description": "Usada por caballeros. Protege mucho.",
+        "description": "Usada por personas. Protege mucho.",
         "type": "TORSO",
         "defense":12
     },

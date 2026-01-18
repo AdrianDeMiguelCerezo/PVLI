@@ -265,10 +265,8 @@
 
     },
 
-    "eventFragments": {
-
-    }
-}, //
+    "eventFragments": []
+},
 
 
 //combate

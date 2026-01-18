@@ -52,6 +52,268 @@
 
 
     },
+    "TUTORIAL": {
+
+        "params": {
+
+        },
+        "eventFragments": [
+
+            {
+                "type": "dialogue",
+                "text": "Eres hijo de cazarrecompensas, perdiste a tu madre hace años enferma."
+            },
+            {
+                "type": "dialogue",
+                "text": "Hoy has alcanzado la mayoría de edad.\nPadre: \"Feliz cumpleaños hijo. Toma, este es tu regalo\"\nTu padre saca un poncho de debajo de un tablón del suelo y lo guarda en tu bolsa.",
+                "rewards": { "equipamiento": [ "PONCHO" ] }
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Bueno, pues lo dejo en tu inventario. Cuando quieras equipártelo ya sabes dónde encontrarlo\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras la celebración, tu padre te dice que ha llegado el momento de que te unas al negocio familiar.\nTe llenas de ilusión, tu padre ya te va a dejar ayudarle en su trabajo."
+            },
+            {
+                "type": "dialogue",
+                "text": "Varios días después, tu padre te dice que ha encontrado un trabajo sencillo persiguiendo a un dúo de criminales que haa sido visto a tres semanas de distancia desde aquí. Emprendeis la marcha."
+            },
+            {
+                "type": "dialogue",
+                "text": "Por el camino, tu padre te va entrenando para luchar. \nComo ya tenías una buena condición física, el entrenamiento se centra más en la técnica."
+            },
+            {
+                "tag": "explicacionAcciones",
+                "type": "dialogue",
+                "text": "Padre: \"La lucha se basa en acciones y reacciones. ¿A qué me refiero con esto?\nSería una tontería que tú y tu contrincante atacarais a la vez, acabaríais muertos los dos.\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Debido a eso, surge naturalmente una dinámica en la que primero ataca un bando, y luego ataca el otro, y luego ataca el primero... Os iréis turnando.\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"En tu turno, no puedes hacer todo lo que quieras, no hay tiempo. \nPara organizarnos bien, dividimos lo que podemos hacer antes de que el enemigo nos ataque en acciones(Acc.). Generalmente tienes 2 por turno.\nCuando hayas usado todas tus acciones pasará a ser el turno del/os contrincante.\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Estas acciones las puedes usar de muchas maneras.\nPuedes usarlas atacar a un enemigo con el ataque báscico del arma que estás utilizando, \npuedes usarlas para defenderte y que te hagan menos daño durante su siguiente turno, \npuedes usar algunas habilidades especiales,\no puedes usar items de un solo uso.\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Estas acciones las puedes usar de muchas maneras.\nPuedes usarlas atacar a un enemigo con el ataque báscico del arma que estás utilizando, \npuedes usarlas para defenderte y que te hagan menos daño durante su siguiente turno, \npuedes usar algunas habilidades especiales,\no puedes usar objetos de un solo uso.\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Piensa también que algunas de las habilidades que puedes usar requerirán que uses las dos acciones de tu turno, así que tenlo en cuenta a la hora de planear qué hacer en tu turno\""
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"¿Lo vas pillando?\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"Sí\""
+                    },
+                    {
+                        "text": "\"Explícamelo de nuevo por favor\"",
+                        "j": "explicacionAcciones"
+                    }
+                ]
+            },
+            {
+                "tag": "explicacionExtra",
+                "type": "dialogue",
+                "text": "Padre: \"También deberías saber cuenta que muchas habilidades gastan maná, energía, puntos de habilidad... en cada sitio lo llaman distinto, pero se suele abreviar como SP.\nTen cuidado porque si no te quedan los necesarios para usar una habilidad, se te hará imposible usarla.\n Los SP se recuperan con el tiempo, comiendo, descansando, etc; y también hay algunos brebajes que ayudan con ello.\" "
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Otra cosa que deberías saber es que cualquiera puede ser afectado por efectos de estado, tanto buenos como malos, que normalmente desaparecen al final del combate.\nTu padre te explica los efectos de estado que conoce\""
+
+            },
+            {
+                "type": "dialogue",
+                "text": "Padre: \"Si algún dia te envenenan, tendrás que usar un antídoto para deshacerte del veneno, aunque los venenos de por aquí no son muy fuertes por lo que no suele merecer la pena arriesgar la vida por un antídoto.\nSi consigues ese u otros muchos objetos, los podrás usar desde el inventario.\""
+
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"¿Has entendido esto último?\"",
+                "permanentOptions": [
+                    {
+                        "text": "\"Sí\""
+                    },
+                    {
+                        "text": "\"No, ¿me lo puedes explicar de nuevo?\"",
+                        "j": "explicacionExtra"
+                    }
+                ]
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"Pues mañana seguiremos con las explicaciones\""
+
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Al día siguiente, tu padre te despierta más temprano de lo habitual\n\"¿Por qué me despiertas tan temprano, Papa?\"\nPadre: \"Te voy a estar enseñando la técnica secreta familiar que seguramente sea la única razón por la que nuestra familia ha sobrevivido tanto tiempo, aun siendo cazarrecompensas.\nLa técnica de previsión de movimientos\"",
+                "continue": "\"¿La técnica de previsión de movimientos?\""
+
+
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"Sí hijo. La técnica de previsión de movimientos\"\n...\nPadre: \"Cuando la tengas controlada, podrás preveer las acciones de los oponentes en su próximo turno, aunque no sea con mucho detalle\""
+
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Con el paso de los días, ya has aprendido la técnica de previsión de movimientos. \nDebes ser talentoso para haber aprendido la técnica de previsión de movimientos en tan poco tiempo.\nAyudas a tu padre a hacer una hoguera para pasar la noche y los dos os sentáis alrededor de esta.\""
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"Jojojo, qué rápido aprendes. Yo tardé 2 meses en dominar la técnica de previsión de movimientos\""
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"Entonces ya solo queda una cosa por enseñarte, que es la clave de todo.\nLo más importante para tí debe ser tu supervivencia. A veces tendrás que dejar de lado tu orgullo y huir de una batalla perdida, o arrastrarte por el suelo para poder sobrevivir.\nEso importa más que el amor, las amistades o lo material\""
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Padre: \"Este es un mundo cruel. Camina siempre con cuaidado, y recuerda que es mejor salvarse uno mismo para poder ver un mañana mejor que tener una muerte horrible por intentar coger más de lo que te cabe en las manos\"",
+                "continue": "\"Vale, lo tendré en cuenta de ahora en adelante\""
+            },
+            {
+
+                "type": "dialogue",
+                "text": "Dos días más tarde, mientras viajais por el desierto, un gran grupo de bandidos os embosca a tí y a tu padre.\nPadre: \"¡HIJO, CORRE, CORRE POR TU VIDA, CORRE POR TUS DESCENDIENTES, YO ME ENCARGARÉ DE RETRASARLOS UN TIEMPO!\"\nPadre: \"¡Y NO TE OLVIDES DE ENSEÑARLE LA TÉCNICA DE PREVISIÓN DE MOVIMIENTOS A MIS FUTUROS NIETOS!\""
+            },
+            {
+                "type": "dialogue",
+                "text": "Sin más remedio que correr, ignorando todo lo demás, te das la vuelta y empiezas a correr.",
+                "continue": "Seguir corriendo"
+            },
+            {
+                "type": "dialogue",
+                "text": "Nada más darte la vuelta, ves a dos bandidos enfrente, presumiblemente del mismo grupo que el os ha atacado a tí y a tu padre.",
+                "continue": "Hacer uso de lo aprendido estas semanas y enfrentarte a los bandidos"
+            },
+            {
+                "type": "combat",
+                "combat": {
+                    "enemies": [ "BANDIDO_COMUN", "BANDIDO_COMUN" ],
+                    "ambush": false,
+                    "canFlee": true
+                },
+                "flee": "huida"
+            },
+            {
+                "type": "dialogue",
+                "text": "Derrotas a estos bandidos, pero eso no importa.",
+                "permanentOptions": [
+                    {
+                        "text": "Seguir corriendo",
+                        "j": "escapado"
+                    }
+                ]
+            },
+            {
+                "tag": "huida",
+                "type": "dialogue",
+                "text": "Decides que la mejor opción para tu supervivencia es huir de los bandidos.",
+                "continue": "Seguir corriendo"
+            },
+            {
+                "tag": "escapado",
+                "type": "dialogue",
+                "text": "Corres hasta que tus músculos gritan de dolor. Encuentras una formación rocosa en la que te puedes esconder.\nAunque parece que les has perdido, como solía decir tu padre, mejor prevenir que lamentar, así que te escondes en esta formación para pasar la noche.",
+                "continue": "Intentar dormir"
+            },
+            {
+                "type": "dialogue",
+                "text": "Intentas dormir un poco, pero no puedes parar de pensar en tu padre, en su forma de hablar, en su personalidad, en los buenos momentos, en los malos momentos, en lo que sufrísteis cuando murió tu madre, en su calor cuando le abrazabas de en una noche fría...\nPero él ya no está. Sabes que es imposible que haya sobrevivido a eso, aunque te encantaría creer que no es así. ",
+                "permanentOptions": [
+                    {
+                        "text": "Deprimirte más"
+                    },
+                    {
+                        "text": "Dejar de pensar en ello"
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Deseas con fuerza que no haya enfrentado su final en aquel camino. Todo es tu culpa. Si no hubieras estado con él, él habría podido huir.\nEste viejo... Qué hipócrita, diciendo que hay que vivir poniéndose a uno mismo por encima de todo. Ya no está aquí para protegerte. Estás solo de ahora en adelante. Todo es tu culpa.\nSerías tan feliz si tu padre hubiera vivido para contarlo... Pero sabes que es imposible. Él está muerto.",
+                "permanentOptions": [
+                    {
+                        "text": "Deprimirte más"
+                    },
+                    {
+                        "text": "Dejar de pensar en ello"
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "No puedes dormir. Piensas en los últimos días que estuviste con él, en las conversaciones que tuviste, en tu entrenamiento, en las espectativas que tenías para esta caza y para el futuro. Pero ya no es. Él no está. Está muerto, y de no ser por tí... Si no hubieras huido en cuanto te avisó tu padre, si le hubieras apoyado quizá las cosas hubieran sido distintas. Sabes que no es así.",
+                "permanentOptions": [
+                    {
+                        "text": "Deprimirte más"
+                    },
+                    {
+                        "text": "Dejar de pensar en ello"
+                    }
+                ]
+            },
+            {
+                "type": "dialogue",
+                "text": "Este es un mundo realmente cruel. Papa tenía razón. Por qué el mundo se ha tenido que llevar a Padre y no a mí. Viejo egoísta... Ya no estarás más con tu padre, ya no le volverás a ver. Eligió aquellos objetivos más débiles por tí, para que aprendieras, y por eso está muerto, y tú lo has matado...",
+                "continue": "continuar"
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras una depresiva noche en la que no has dormido nada, te planteas volver al lugar de los hechos para ver si en verdad está muerto tu padre, pero sabes que es una idea estúpida. Desearías volver a comprobarlo, pero los bandidos podrían seguir buscándote o rondando por la zona, y no encontrar el cuerpo de tu padre no te daría certezas de nada.\nA pesar del dolor de la decisión, decides viajar a un pueblo cercano a descansar."
+            },
+            {
+                "type": "dialogue",
+                "text": "Tras otro día sin dormir, consigues llegar al pueblo, exhausto, y lo primero que haces es ir a una posada y caer rendido. \nSolo consigues dormirte porque tu cuerpo no da a más"
+            },
+            {
+                "type": "dialogue",
+                "text": "Has estado un mes y algo lamentándote en aquel pueblo, las primeras semanas viviendo muerto, aunque ya has mejorado bastante. Como padre decía, hay que seguir caminando, para ver un mañana mejor. Por él y por mis descendientes. Él habría querido que te recupararas, eso no es vida. Se te acabó el dinero para la posada, así que has estado sobreviviendo tomando pequeños trabajos, ayudando a gente, etc."
+            },
+            {
+                "type": "dialogue",
+                "text": "3 semanas después, llega el representante del Estado con los nuevos pósteres de \"se busca\".\nTe das cuenta de que hay una recompensa por tu cabeza por haber matado a un hombre importante. No has hecho nada, pero nunca podrás escapar del Estado. Prefieres huir del país que vivir escondido toda la vida, intranquilo por si alguien vendrá un día a atraparte.",
+                "continue": "Ir a comprarle información a una conocida del pueblo que trabaja con información."
+            },
+            {
+                "type": "dialogue",
+                "text": "Vas al callejón donde suele trabajar aquella ávara anciana. Le das todo el dinero que te queda a la anciana, que te ha hecho un descuento de amigo, dice.\nTe explica que el único lugar por el que puedes huir del país actualmente es un punto de la frontera sur custodiado por uno de los militares más fuertes del mundo: El Gran Bloqueo, y te lo marca en el mapa en color morado."
+            },
+            {
+                "type": "dialogue",
+                "text": "También te exploca cómo funcionan las zonas de búsqueda del ejército, que decides pintar en estos colores: \nEn naranja, las zonas con poca presencia militar; en rojo las zonas con bastante presencia militar, y en morado, las zonas tan controladas por el estado, que deberías evitar en cualquier circunstancia.\nTambién decides pintar de color claro los lugares del mapa que ya has visitado."
+            },
+            {
+                "type": "dialogue",
+                "text": "Te despides de la anciana, y te vas del pueblo con prisas, sabiendo que le venderá tu información a la siguiente persona que la pague lo suficiente."
+            }
+
+        ]
+
+    },
 
     "BANDIT_CANNON_OR_MOUNTAINS": {
         "params": {
@@ -2780,15 +3042,17 @@
                 "flee": "huyes"
 
             },
-            
+
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": [{
-                    "text": "continuar",
-                    "j": null
-                }]
+                "options": [
+                    {
+                        "text": "continuar",
+                        "j": null
+                    }
+                ]
             },
             {
                 "tag": "no_huyes",
@@ -2855,24 +3119,28 @@
                 "flee": "huyes"
 
             },
-           
+
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": [{
-                    "text": "continuar",
-                    "j": null
-                }]
+                "options": [
+                    {
+                        "text": "continuar",
+                        "j": null
+                    }
+                ]
             },
-             {
+            {
                 "tag": "no_huyes",
                 "type": "dialogue",
                 "text": "Los soldados te alcanzan",
-                "options": [{
-                    "text": "continuar",
-                    "j": "batalla"
-                }]
+                "options": [
+                    {
+                        "text": "continuar",
+                        "j": "batalla"
+                    }
+                ]
             }
 
 
@@ -2912,10 +3180,15 @@
                 "tag": "batalla",
                 "type": "combat",
                 "combat": {
-                    "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO", "SOLDADO_ESTADO","SOLDADO_ESTADO" ],
+                    "enemies": [ "SOLDADO_ESTADO", "SOLDADO_ESTADO", "SOLDADO_ESTADO", "SOLDADO_ESTADO" ],
                     "rewards": {
                         "dinero": 50,
-                        "items": [ {"item":"POTI_HP_GRANDE","count": 1} ]
+                        "items": [
+                            {
+                                "item": "POTI_HP_GRANDE",
+                                "count": 1
+                            }
+                        ]
                     },
                     "ambush": false,
                     "canFlee": true
@@ -2923,24 +3196,28 @@
                 "flee": "huyes"
 
             },
-            
+
             {
                 "tag": "huyes",
                 "type": "dialogue",
                 "text": "Consigue huir del estado, pero _consec_huir.",
-                "options": [{
-                    "text": "continuar",
-                    "j": null
-                }]
+                "options": [
+                    {
+                        "text": "continuar",
+                        "j": null
+                    }
+                ]
             },
             {
                 "tag": "no_huyes",
                 "type": "dialogue",
                 "text": "Los soldados te alcanzan",
-                "options": [{
-                    "text": "continuar",
-                    "j": "batalla"
-                }]
+                "options": [
+                    {
+                        "text": "continuar",
+                        "j": "batalla"
+                    }
+                ]
             }
 
 
