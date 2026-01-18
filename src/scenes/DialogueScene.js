@@ -62,17 +62,9 @@ export default class DialogueScene extends Phaser.Scene {
     }
     create() {
         this.add.image(0, 0, 'fondo').setOrigin(0, 0);
-        //Boton de desplegar opciones
-        this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, () => {
-            this.mainMenuButton.visible = !this.mainMenuButton.visible;
-            this.inventoryButton.visible = !this.inventoryButton.visible;
-        }, 20, 0, "#828181", false).setOrigin(1);
         //boton de ir al inventario
-        this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null,
-            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0, "#828181", false).setVisible(false).setOrigin(1);
-        //boton de ir al menu principal
-        this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null,
-            () => { this.scene.start('MainMenu') }, 20, 0, "#828181", false).setVisible(false).setOrigin(1);
+        this.inventoryButton = new MenuButton(this, 50, 30, "Ir al inventario", null,
+            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0,"#707070", false).setOrigin(0, 0);
 
 
         //Se carga el evento del json

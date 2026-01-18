@@ -55,18 +55,10 @@ export default class Map extends Phaser.Scene {
 
         this.areaGraphics = this.add.graphics({ lineStyle: { width: 1, color: 0xff0000 }, fillStyle: { color: 0xff0000 } }).setDepth(1);
 
-        //Boton de desplegar opciones
-        this.desplegableButton = new MenuButton(this, 750, 50, "Opciones", null, ()=>{ 
-            this.mainMenuButton.visible = !this.mainMenuButton.visible;
-            this.inventoryButton.visible = !this.inventoryButton.visible;
-        }, 20, 0, "#e08b1cff", false).setOrigin(1).setDepth(4);
         //boton de ir al inventario
-        this.inventoryButton = new MenuButton(this, this.desplegableButton.x, this.desplegableButton.y + 30, "Ir al inventario", null, 
-            ()=>{ this.scene.start('MenuTest', {playerData: this.playerData, oldScene: this.scene.key})}, 20, 0, "#e08b1cff", false).setVisible(false).setOrigin(1).setDepth(4);
-        //boton de ir al menu principal
-        this.mainMenuButton = new MenuButton(this, this.desplegableButton.x, this.inventoryButton.y + 30, "Volver al menu principal", null, 
-            ()=>{ this.scene.start('MainMenu')}, 20, 0, "#e08b1cff", false).setVisible(false).setOrigin(1).setDepth(4);
-        //console.log(this.registry.get("nodes"));
+        this.inventoryButton = new MenuButton(this, 50, 30, "Ir al inventario", null, 
+            ()=>{ this.scene.start('MenuTest', {playerData: this.playerData, oldScene: this.scene.key})}, 20, 0,"#707070", false).setOrigin(0,0).setDepth(4);
+        this.GoBackToMenu();
         if (!this.registry.get("nodes")) {
             this.nodes = []
 
@@ -248,6 +240,33 @@ export default class Map extends Phaser.Scene {
         else if (diff < DifficultyLimits.HARD) return DifficultyLimits.MEDIUM;
         else if (diff < DifficultyLimits.FUCKED) return DifficultyLimits.HARD+20;
         else return DifficultyLimits.FUCKED+30;
+    }
+
+    //Botones de volver al menu con texto y botones para confirmar volver al menu
+    GoBackToMenu(){
+
+        //boton desplegable
+        this.mainMenuButton = new MenuButton(this, this.scene.scene.sys.game.config.width - 50, 30, "Volver a la pantalla de inicio", null, 
+            ()=>{ 
+                    this.goToMenuText.visible = !this.goToMenuText.visible; 
+                    this.menuYesButton.visible = !this.menuYesButton.visible; 
+                    this.menuNoButton.visible = !this.menuNoButton.visible}
+            , 20, 0,"#707070", false).setOrigin(1,0).setDepth(4);
+
+        //texto de alerta de volver al menu
+        this.goToMenuText = this.add.text(this.scene.scene.sys.game.config.width - 50, 60, "Perderás todo tu progreso, \n¿estás seguro de continuar?", 
+            {fontFamily: "Arial", fontSize: 15, color: "#000000", align: "center", fixedWidth: 0, backgroundColor: "#707070", padding: { x: 5 }
+        }).setOrigin(1,0).setVisible(false).setDepth(4);
+
+        //botn de si que vuelve al menu
+        this.menuYesButton = new MenuButton(this, this.scene.scene.sys.game.config.width - 150, this.goToMenuText.height + 70, "Si", null, 
+            ()=>{this.scene.start('MainMenu')}, 15, 0,"#707070", false).setVisible(false).setOrigin(1,0).setDepth(4);
+            
+        //boton de no
+        this.menuNoButton = new MenuButton(this, this.scene.scene.sys.game.config.width - 100, this.goToMenuText.height + 70, "No", null, 
+            ()=>{this.goToMenuText.setVisible(false); this.menuYesButton.setVisible(false); this.menuNoButton.setVisible(false)},
+             15, 0,"#707070", false).setVisible(false).setOrigin(1,0).setDepth(4);
+
     }
 }
 
