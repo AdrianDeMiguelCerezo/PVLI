@@ -1,7 +1,7 @@
 {
     "MOLOTOV": {
         "name": "Molotov",
-        "description": "Aplica quemado.",
+        "description": "Aplica quemado. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": false,
         "habilidades": [
@@ -17,7 +17,7 @@
     },
     "DARDO_ENVENENADO": {
         "name": "Dardo envenenado",
-        "description": "Aplica veneno.",
+        "description": "Aplica veneno. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": false,
         "habilidades": [
@@ -33,7 +33,7 @@
     },
     "FLASHBANG": {
         "name": "Flashbang",
-        "description": "Paraliza a un enemigo.",
+        "description": "Paraliza a un enemigo. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": false,
         "habilidades": [
@@ -49,7 +49,7 @@
     },
     "POTI_HP_MINI": {
         "name": "Poción de salud (mini)",
-        "description": "Cura poca HP.",
+        "description": "Cura poca HP. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -64,7 +64,7 @@
     },
     "POTI_SP_MINI": {
         "name": "Poción de SP (pequeña)",
-        "description": "Restaura SP media.",
+        "description": "Restaura SP media. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -79,7 +79,7 @@
     },
     "NABO": {
         "name": "Nabo",
-        "description": "Restaura HP y mata el hambre.",
+        "description": "Restaura HP y mata el hambre. \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -94,7 +94,7 @@
     },
      "NABO_POCHO": {
         "name": "Nabo pocho",
-        "description": "Debería restaurar HP y matar el hambre, pero está pocho. Quizá no sea buena idea comerlo.",
+        "description": "Debería restaurar HP y matar el hambre, pero está pocho. Quizá no sea buena idea comerlo. \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -109,7 +109,7 @@
     },
     "POTI_HP_GRANDE": {
         "name": "Poción de HP(Grande)",
-        "description": "Restaura mucho HP.",
+        "description": "Restaura mucho HP. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -124,7 +124,7 @@
     },
     "MEJUNJE_EXTRAÑO":{
         "name":"Mejunje extraño",
-        "description":"Restaura muy poco hambre hambre",
+        "description":"Restaura muy poco hambre \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades":[
@@ -139,7 +139,7 @@
     },
     "RACION_SECA":{
         "name":"Ración seca",
-        "description":"Restaura muy poco hambre y SP",
+        "description":"Restaura muy poco hambre y SP \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades":[
@@ -154,7 +154,7 @@
     },
     "RACION_CALIDAD":{
         "name":"Ración de calidad",
-        "description":"Restaura poco hambre y SP",
+        "description":"Restaura poco hambre y SP \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades":[
@@ -169,7 +169,7 @@
     },
     "RACION_GOURMET":{
         "name":"Ración gourmet",
-        "description":"Restaura medio hambre y SP",
+        "description":"Restaura medio hambre y SP \n Acc: 1",
         "usedInCombat": false,
         "usedOutOfCombat": true,
         "habilidades":[
@@ -184,7 +184,7 @@
     },
     "ANTIDOTO": {
         "name": "Antídoto",
-        "description": "Cura el envenenamiento.",
+        "description": "Cura el envenenamiento. \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -200,7 +200,7 @@
     },
     "SETA": {
         "name": "Hongo mágico",
-        "description": "Debería darme un subidón que pa qué",
+        "description": "Debería darme un subidón que pa qué \n Acc: 1",
         "usedInCombat": true,
         "usedOutOfCombat": true,
         "habilidades": [
@@ -209,7 +209,7 @@
                 "description": "Ñam!",
                 "actions": 1,
                 "effect": "ENVENENADO", 
-                "effectDuration": -1,
+                "effectDuration": 3,
                 "type": "ACTIVE",
                 "target": "SELF"
             }
