@@ -36,8 +36,6 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
         console.log("[CM] CombatManager inicializado");
 
-        this.addStatusToPlayer("ENVENENADO", 5); // para probar efecto envenamiento
-
         // primer turno del jugador
         this.startPlayerTurn();
     }
