@@ -179,7 +179,10 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
         if (!skill) return;
 
         const actionsCost = this.getActionsCostForSkill(skill);
-
+        if(this.actionsLeft < actionsCost){
+            console.log("[CM] No tienes suficientes acciones, no hace nada");
+            return;
+        }
         // check de SP antes de nada
         if (!this.hasEnoughSP(skill)) {
             console.log("[CM] No hay SP suficiente para", skill.name);
