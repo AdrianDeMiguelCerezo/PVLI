@@ -81,10 +81,10 @@ export default class DialogueScene extends Phaser.Scene {
             borderAlpha: 1,
             windowAlpha: 0.6,
             windowColor: 0x828181,
-            windowHeight: 200,
+            windowHeight: 210,
             padding: 32,
             closeBtnColor: 'darkgoldenrod',
-            dialogSpeed: 4.25,
+            dialogSpeed: 4.5,
             fontSize: 24,
             fontFamily: "Arial",
             posY: 175

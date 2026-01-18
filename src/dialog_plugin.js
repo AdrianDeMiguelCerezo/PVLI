@@ -220,7 +220,7 @@ export default class DialogText{
 			this.text.destroy();
 
 		var x = this.padding + 10;
-		var y = this._getGameHeight() - this.windowHeight - this.padding + 30;
+		var y = this._getGameHeight() - this.windowHeight - this.padding + 10;
 
 		//Crea un game object que sea texto
 		this.text = this.scene.make.text({

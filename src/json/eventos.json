@@ -78,7 +78,7 @@
             },
             {
                 "type": "dialogue",
-                "text": "Varios días después, tu padre te dice que ha encontrado un trabajo sencillo persiguiendo a un dúo de criminales que haa sido visto a tres semanas de distancia desde aquí. Emprendeis la marcha."
+                "text": "Varios días después, tu padre te dice que ha encontrado un trabajo sencillo persiguiendo a un dúo de criminales que ha sido visto a tres semanas de distancia desde aquí. Emprendeis la marcha."
             },
             {
                 "type": "dialogue",
@@ -87,7 +87,7 @@
             {
                 "tag": "explicacionAcciones",
                 "type": "dialogue",
-                "text": "Padre: \"La lucha se basa en acciones y reacciones. ¿A qué me refiero con esto?\nSería una tontería que tú y tu contrincante atacarais a la vez, acabaríais muertos los dos.\""
+                "text": "Padre: \"La lucha se basa en acciones y reacciones.\n¿A qué me refiero con esto?\nSería una tontería que tú y tu contrincante atacarais a la vez, acabaríais muertos los dos.\""
             },
             {
                 "type": "dialogue",
@@ -95,15 +95,11 @@
             },
             {
                 "type": "dialogue",
-                "text": "Padre: \"En tu turno, no puedes hacer todo lo que quieras, no hay tiempo. \nPara organizarnos bien, dividimos lo que podemos hacer antes de que el enemigo nos ataque en acciones(Acc.). Generalmente tienes 2 por turno.\nCuando hayas usado todas tus acciones pasará a ser el turno del/os contrincante.\""
+                "text": "Padre: \"En tu turno, no puedes hacer todo lo que quieras, no hay tiempo. \nPara organizarnos bien, dividimos mentalmente lo que podemos hacer antes de que el enemigo nos ataque en acciones(Acc.). Generalmente tienes 2 por turno.\nCuando hayas usado todas tus acciones pasará a ser el turno del/os contrincante.\""
             },
             {
                 "type": "dialogue",
-                "text": "Padre: \"Estas acciones las puedes usar de muchas maneras.\nPuedes usarlas atacar a un enemigo con el ataque báscico del arma que estás utilizando, \npuedes usarlas para defenderte y que te hagan menos daño durante su siguiente turno, \npuedes usar algunas habilidades especiales,\no puedes usar items de un solo uso.\""
-            },
-            {
-                "type": "dialogue",
-                "text": "Padre: \"Estas acciones las puedes usar de muchas maneras.\nPuedes usarlas atacar a un enemigo con el ataque báscico del arma que estás utilizando, \npuedes usarlas para defenderte y que te hagan menos daño durante su siguiente turno, \npuedes usar algunas habilidades especiales,\no puedes usar objetos de un solo uso.\""
+                "text": "Padre: \"Estas acciones las puedes usar de muchas maneras.\nPuedes usarlas atacar a un enemigo con el ataque báscico del arma que estás utilizando, puedes usarlas para defenderte y que te hagan menos daño durante su siguiente turno, puedes usar algunas habilidades especiales,o puedes usar items de un solo uso.\""
             },
             {
                 "type": "dialogue",
@@ -113,7 +109,7 @@
 
                 "type": "dialogue",
                 "text": "Padre: \"¿Lo vas pillando?\"",
-                "permanentOptions": [
+                "options": [
                     {
                         "text": "\"Sí\""
                     },
@@ -126,7 +122,7 @@
             {
                 "tag": "explicacionExtra",
                 "type": "dialogue",
-                "text": "Padre: \"También deberías saber cuenta que muchas habilidades gastan maná, energía, puntos de habilidad... en cada sitio lo llaman distinto, pero se suele abreviar como SP.\nTen cuidado porque si no te quedan los necesarios para usar una habilidad, se te hará imposible usarla.\n Los SP se recuperan con el tiempo, comiendo, descansando, etc; y también hay algunos brebajes que ayudan con ello.\" "
+                "text": "Padre: \"También deberías saber que muchas habilidades gastan maná, energía, puntos de habilidad... en cada sitio lo llaman distinto, pero se suele abreviar como SP.\nTen cuidado porque si no te quedan los necesarios para usar una habilidad, se te hará imposible usarla.\n Los SP se recuperan con el tiempo, comiendo, descansando, etc; y también hay algunos brebajes que ayudan con ello.\""
 
             },
             {
