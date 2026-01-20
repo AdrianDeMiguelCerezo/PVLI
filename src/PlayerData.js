@@ -41,7 +41,7 @@ export default class PlayerData
         this.critRate=critRate;
         this.dinero=dinero;
         this.hambre=hambre;
-        this.hambreMax = this.hambreMax;
+        this.hambreMax = hambreMax;
         this.skins=skins;
         this.skinIndex=skinIndex;
 

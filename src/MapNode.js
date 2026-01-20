@@ -124,8 +124,9 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
 
                 this.scene.UpdateFociDifficulties(10);
 
+                this.scene.GainHunger();
 
-                if (this.visited == false) {
+                if (this.visited == false && this.scene.playerData.hambre<this.scene.playerData.hambreMax) {
                     this.visited = true;
 
                     let nodeData = this.scene.nodes.map(n => ({
@@ -151,6 +152,8 @@ export default class MapNode extends Phaser.GameObjects.Sprite {
                     this.scene.scene.start('DialogueScene', {fragmentoEvento: eventoParseado, playerData: this.playerData});
 
                 }
+
+                
                 
             }
         });
