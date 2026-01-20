@@ -64,7 +64,7 @@ export default class DialogueScene extends Phaser.Scene {
         this.add.image(0, 0, 'fondo').setOrigin(0, 0);
         //boton de ir al inventario
         this.inventoryButton = new MenuButton(this, 50, 30, "Ir al inventario", null,
-            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0,"#707070", false).setOrigin(0, 0);
+            () => { this.scene.start('MenuTest', { playerData: this.playerData, oldScene: this.scene.key }) }, 20, 0, "#707070", false).setOrigin(0, 0);
 
 
         //Se carga el evento del json
@@ -104,6 +104,7 @@ export default class DialogueScene extends Phaser.Scene {
             this.rewardsGiven = true;
             this.handleConsecuencias(evento.consecuencias);
         }
+        console.log(evento.texto);
         this.dialog.setText(evento.texto, true);
         this.createOptions(evento.opciones);
 
@@ -157,23 +158,25 @@ export default class DialogueScene extends Phaser.Scene {
                         break;
                     }
                     case "HP": {
-                        if(this.playerData.HP < 0)
-                            this.scene.start('GameOver');
-                        else{
-                            if(value >= this.playerData.HPMax){
-                                this.playerData.HP = this.playerData.HPMax;
-                            }
-                            else{
-                                this.playerData.HP += value;
-                            }
+
+
+                        if (value >= this.playerData.HPMax) {
+                            this.playerData.HP = this.playerData.HPMax;
                         }
+                        else {
+                            this.playerData.HP += value;
+                        }
+
+                        if (this.playerData.HP < 0)
+                            this.scene.start('GameOver');
+
                         break;
                     }
 
                     case "SP": {
-                        if(value >= this.playerData.SPMax)
+                        if (value >= this.playerData.SPMax)
                             this.playerData.SP = this.playerData.SPMax;
-                        else if(value < 0)
+                        else if (value < 0)
                             this.playerData.SP = 0;
                         else
                             this.playerData.SP += value;
@@ -182,9 +185,9 @@ export default class DialogueScene extends Phaser.Scene {
 
                     case "hambre": {
                         this.playerData.hambre += value;
-                        if(this.playerData.hambre >= this.playerData.hambreMax)
+                        if (this.playerData.hambre >= this.playerData.hambreMax)
                             this.playerData.hambre = this.playerData.hambreMax;
-                        if(this.playerData.hambre < 0)
+                        if (this.playerData.hambre < 0)
                             this.scene.start('GameOver');
                         break;
                     }
@@ -298,7 +301,7 @@ export default class DialogueScene extends Phaser.Scene {
                                 const d = Math.hypot(mapNodes[i].x - currentNode.x, mapNodes[i].y - currentNode.y);
                                 if (mapNodes[i].isFocus && !mapNodes[i].isAwake && d < smallestDistance) { smallestDistance = d; closestIndex = i; }
                             }
-                            if (smallestDistance<=value.r && closestIndex!=-1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty += value.diff; }
+                            if (smallestDistance <= value.r && closestIndex != -1) { mapNodes[closestIndex].isAwake = true; mapNodes[closestIndex].difficulty += value.diff; }
 
                             break;
                         }
@@ -314,7 +317,8 @@ export default class DialogueScene extends Phaser.Scene {
                         else {
                             currentNode.isFocus = true; currentNode.isAwake = true; currentNode.difficulty += value.diff;
                         }
-                        break; }
+                        break;
+                    }
 
                     case "despertarRadio": {
                         for (let i = 0; i < mapNodes.length; i++) {
@@ -322,12 +326,12 @@ export default class DialogueScene extends Phaser.Scene {
                             if (mapNodes[i].isFocus && !mapNodes[i].isAwake && d < value.r) { mapNodes[i].isAwake = true; mapNodes[i].difficulty += value.diff }
                         }
                         break;
-}
+                    }
                 }
 
 
             }
-            console.log(this.playerData);
+           
             this.registry.set("nodes", mapNodes);
         }
 
@@ -366,7 +370,7 @@ export default class DialogueScene extends Phaser.Scene {
                     this.scene.start('Map');
                 }
                 else if (opt.salto.tipo == "dialogue") {
-                    this.scene.start(this.scene.key, {fragmentoEvento: opt.salto, playerData: this.playerData})
+                    this.scene.start(this.scene.key, { fragmentoEvento: opt.salto, playerData: this.playerData })
                 }
                 //si el tipo es combate comienza combate con los atributos
                 else if (opt.salto.tipo == "combat") {

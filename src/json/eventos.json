@@ -2951,7 +2951,7 @@
                 "optionsAmmount": 2
             },
             {
-                "tag": "poti",
+                "tag": "precio_poti",
                 "type": "dialogue",
                 "text": "Has pagado __precio_poti",
                 "rewards": "precio_poti",
