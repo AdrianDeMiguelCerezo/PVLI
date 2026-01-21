@@ -77,9 +77,6 @@ export default class DialogText{
 		var tempText = animate ? '' : text;
 
 		//llama al metodo que calcula la pos del texto y lo crea
-		if(tempText != ''){
-			//this._setText(tempText);
-		}
 		this._setText(tempText); 
 		if (animate) {
 			//se crea un evento temporizado
