@@ -273,7 +273,7 @@ export default class Map extends Phaser.Scene {
     GainHunger(){
         this.playerData.hambre+=20;
         if(this.playerData.hambre>=this.playerData.hambreMax){
-            this.scene.start('GameOver');
+            this.scene.start('GameOver','Muerto por hambre');
         }
     }
 }

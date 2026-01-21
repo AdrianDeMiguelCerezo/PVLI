@@ -3,12 +3,22 @@ export default class GameOver extends Phaser.Scene{
         super({key:'GameOver'});
     }
 
+
+    init(GameOverText){
+        if(GameOverText==null){
+            this.gameOverText='Game Over';
+        }
+        else{
+            this.gameOverText=GameOverText;
+        }
+    }
+
     create(){
         const { width, height } = this.scale;
 
         this.add.rectangle(0, 0, width * 2, height * 2, 0x202040).setOrigin(0);
 
-        this.add.text(width / 2, height / 3 - 50, 'Game Over', {
+        this.add.text(width / 2, height / 3 - 50, this.gameOverText, {
             fontFamily: 'Arial',
             fontSize: '48px',
             color: '#ffffff',

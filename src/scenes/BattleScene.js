@@ -111,7 +111,7 @@ export default class BattleScene extends Phaser.Scene {
             }
             // LOSE: derrota
             else {
-                this.scene.start("GameOver");
+                this.scene.start("GameOver",'Game Over');
             }
         });
 
