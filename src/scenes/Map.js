@@ -59,11 +59,11 @@ export default class Map extends Phaser.Scene {
         this.inventoryButton = new MenuButton(this, 50, 30, "Ir al inventario", null, 
             ()=>{ this.scene.start('MenuTest', {playerData: this.playerData, oldScene: this.scene.key})}, 20, 0,"#707070", false).setOrigin(0,0).setDepth(4);
         this.GoBackToMenu();
-        if (!this.registry.get("nodes")) {
+        if (!this.registry.get("nodes") || this.registry.get("nodes").length == 0 ) {
             this.nodes = []
 
             this.nodes.push(new MapNode(this, 100, 100, 'node', { easyEvent: "BANDIT_CANNON_OR_MOUNTAINS", midEvent: "FABRICA", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.CURRENT, false,false));   // CURRENT
-            this.nodes.push(new MapNode(this, 200, 120, 'node', { easyEvent: "TUTORIAL", midEvent: "FABRICA", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "GERALT"}, this.playerData, NodeType.COMMON, State.LOCKED, false,false));
+            this.nodes.push(new MapNode(this, 200, 120, 'node', { easyEvent: "FABRICA", midEvent: "FABRICA", hardEvent: "BANDIT_CANNON_OR_MOUNTAINS", fkcedEvent: "GERALT"}, this.playerData, NodeType.COMMON, State.LOCKED, false,false));
             this.nodes.push(new MapNode(this, 150, 200, 'node', {easyEvent: "EVENTO_ESTADO_1", midEvent: "EVENTO_ESTADO_2", hardEvent: "EVENTO_ESTADO_3", fkcedEvent: "EVENTO_ESTADO_3"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
             this.nodes.push(new MapNode(this, 80, 250, 'node', { easyEvent: "BANDIT_CANNON_OR_MOUNTAINS", midEvent: "PUEBLO_MEDIANO", hardEvent: "PUEBLO_MEDIANO", fkcedEvent: "BANDIT_CANNON_OR_MOUNTAINS"}, this.playerData, NodeType.COMMON, State.LOCKED, true,true,250));
             this.nodes.push(new MapNode(this, 250, 250, 'node', { easyEvent: "BANDIT_CANNON_OR_MOUNTAINS", midEvent: "EVENTO_MERCADERES_DESIERTO", hardEvent: "EVENTO_MERCADERES_DESIERTO", fkcedEvent: "EVENTO_MERCADERES_DESIERTO"}, this.playerData, NodeType.COMMON, State.LOCKED, false, false));
@@ -130,9 +130,9 @@ export default class Map extends Phaser.Scene {
         
         // Si no hay nodo Current (bug de registro), forzamos el primero o el último visitado
         if (!nodoActual) {
-            console.warn("¡ALERTA! No se encontró nodo CURRENT en el Registry. Restaurando nodo por defecto");
+            console.warn("¡ALERTA! No se encontró nodo CURRENT en el Registry. Restaurando nodo por defecto",this);
             // Intentamos buscar uno visitado, si no, el primero (Home)
-            nodoActual = this.nodes.find(n => n.visited) || this.nodes[0];
+            nodoActual = this.nodes[0];
             nodoActual.state = State.CURRENT; // lo forzamos a CURRENT
         }
 
@@ -271,7 +271,7 @@ export default class Map extends Phaser.Scene {
 
     //Da una cantidad fija de hambre al jugador cuando viaja a otro nodo
     GainHunger(){
-        this.playerData.hambre+=20;
+        this.playerData.hambre+=10;
         if(this.playerData.hambre>=this.playerData.hambreMax){
             this.scene.start('GameOver','Muerto por hambre');
         }

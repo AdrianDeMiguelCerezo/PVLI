@@ -104,7 +104,6 @@ export default class DialogueScene extends Phaser.Scene {
             this.rewardsGiven = true;
             this.handleConsecuencias(evento.consecuencias);
         }
-        console.log(evento.texto);
         this.dialog.setText(evento.texto, true);
         this.createOptions(evento.opciones);
 
@@ -367,7 +366,7 @@ export default class DialogueScene extends Phaser.Scene {
                 this.rewardsGiven = false;
 
                 if (opt.salto === null) {
-                    this.scene.start('Map');
+                    this.scene.start('Map', this.playerData);
                 }
                 else if (opt.salto.tipo == "dialogue") {
                     this.scene.start(this.scene.key, { fragmentoEvento: opt.salto, playerData: this.playerData })

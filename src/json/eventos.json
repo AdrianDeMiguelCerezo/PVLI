@@ -1675,7 +1675,8 @@
                     {
                         "text": "\"Te sigo\""
                     }
-                ]
+                ],
+                "optionsAmmount": 1
             },
             {
                 "type": "dialogue",
@@ -3697,7 +3698,7 @@
             },
             {
                 "type": "dialogue",
-                "text": "Al liberarlo, descubres que estaba guardando _recompensas_perro_libre. Te lo da y te despides de él con caricias.",
+                "text": "Al liberarlo, descubres que estaba guardando __recompensas_perro_libre. Te lo da y te despides de él con caricias.",
                 "rewards": "recompensas_perro_libre",
                 "options": [
                     {
@@ -3710,7 +3711,7 @@
             {
                 "tag": "LOOT_CASA",
                 "type": "dialogue",
-                "text": "Pasas del perro para saquear la casa, y encuentras _recompensas_perro_atrapado. Te vas antes de que te vean los otros.",
+                "text": "Pasas del perro para saquear la casa, y encuentras __recompensas_perro_atrapado. Te vas antes de que te vean los otros.",
                 "rewards": "recompensas_perro_atrapado"
             },
             {

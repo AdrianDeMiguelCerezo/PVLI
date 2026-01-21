@@ -1,9 +1,17 @@
+import EventParser from "../EventParser.js";
 import PlayerData from "../PlayerData.js";
+
 export default class MainMenu extends Phaser.Scene{
     constructor(){
         super({key:'MainMenu'});
     }
-
+    init() {
+        this.jsonEventos = this.cache.json.get("eventos");
+        this.jsonHabilidades = this.cache.json.get('habilidades');
+        this.jsonEquipamiento = this.cache.json.get('equipamiento');
+        this.jsonItems = this.cache.json.get('items');
+        this.jsonEfectos = this.cache.json.get('efectos');
+    }
     create(){
         const { width, height } = this.scale;
 
@@ -38,9 +46,10 @@ export default class MainMenu extends Phaser.Scene{
         /*makeButton(height / 2, 'Play', () => {
             this.scene.start('Map',new PlayerData());
         });*/
+        let eventoParserer = new EventParser(this.jsonEventos, this.jsonHabilidades, this.jsonEquipamiento, this.jsonItems, this.jsonEfectos);
 
         this.playerData=new PlayerData();
-        this.uiButton(width/2,height/2,'Play','Map',this.playerData);
+        this.uiButton(width / 2, height / 2, 'Play', 'DialogueScene', { fragmentoEvento: eventoParserer.generateEvent("TUTORIAL"), playerData: new PlayerData() });
     }
 
     /**
@@ -63,9 +72,7 @@ export default class MainMenu extends Phaser.Scene{
             this.registry.reset();
             this.scene.stop('Map');
 
-            this.scene.start(sceneKey, {
-                playerData: new PlayerData()
-            });
+            this.scene.start(sceneKey,paramsInit);
         })
     }
 }

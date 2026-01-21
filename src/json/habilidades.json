@@ -25,7 +25,6 @@
         "actionCost": 1,
         "spCost": 0,
         "damage": 40,
-        "effect": "ATT+",
         "effectDuration": 2,
         "type": "ACTIVE",
         "target": "RNDENEMY"

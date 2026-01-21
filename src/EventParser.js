@@ -223,7 +223,7 @@ export default class EventParser {
                         eventFragmentNode.nodoNoPay = this.GenerateEventFragment(this.tags[thisFragment_json.noPayFragment], eventFragmentNode);
                     }
                     else {
-                        if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.",thisFragment_json) }
+                        if (!(thisFragment_json.tag === "undefined" || thisFragment_json.tag === undefined)) { console.warn("Los eventos de pago con mensaje de \"no hay dinero\" default (noPayFragment es undefined) con tag son exclusivos para un único fragmento de evento. Sino, generan comportamiento indefinido.", thisFragment_json) }
                         //genera el fragment oal que se va si no dinero suficiente
                         //console.log("callerEventFragment:", callerEventFragment)
                         eventFragmentNode.nodoNoPay = new SubStateNode("dialogue", null, "Cuando miras tu bolsa, te das cuenta de que no tienes dinero suficiente.")
@@ -291,14 +291,14 @@ export default class EventParser {
                     //generar nodo de di�logo al que se va al ganar
                     if (Object.keys(consecuencias).length != 0) {
                         eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas: " + this.WriteRewards(consecuencias),
-                            [{ texto: "Continuar", salto: this.GenerateEventFragment(++index, eventFragmentNode) }],
-                            consecuencias, undefined);
+                            new SubStateNode("dialogue", undefined, "Has ganado el combate. \nRecompensas: " + this.WriteRewards(consecuencias),
+                                [{ texto: "Continuar", salto: this.GenerateEventFragment(++index, eventFragmentNode) }],
+                                consecuencias, undefined);
                     } else {
                         eventFragmentNode.opciones[0].salto =
-                        new SubStateNode("dialogue", undefined, "Has ganado el combate.",
-                            [{ texto: "Continuar", salto: this.GenerateEventFragment(++index, eventFragmentNode) }],
-                            consecuencias, undefined);
+                            new SubStateNode("dialogue", undefined, "Has ganado el combate.",
+                                [{ texto: "Continuar", salto: this.GenerateEventFragment(++index, eventFragmentNode) }],
+                                consecuencias, undefined);
                     }
 
                     break;
@@ -570,9 +570,11 @@ export default class EventParser {
 
         if (!hayRecompensa) {
             returnString = primaryReturnString;
-        } else {
+        } else if (rewards.hasOwnProperty("pago")) {
             returnString = primaryReturnString + " a cambio de " + returnString;
         }
+
+
 
         return returnString;
 
