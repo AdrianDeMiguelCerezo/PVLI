@@ -2,6 +2,7 @@ import SubStateNode from "../SubStateNode.js"
 import PlayerData from "../PlayerData.js"
 import EventParser from "../EventParser.js"
 
+//esta escena es xd. Hay pocas cosas más xd. Has vivido la experiencia xd. Este archivo ha cumplido su objetivo. Equis the.
 export default class xd extends Phaser.Scene {
 
     constructor() {
