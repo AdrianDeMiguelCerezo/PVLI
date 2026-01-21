@@ -68,16 +68,19 @@ export default class DialogText{
 		//se crea un array con cada caracter en la cadena de texto y se 
 		// guarda en la propiedad diálogo
 		this.dialog = text.split('');
-
+		
 		//se mira si hay otro evento de tiempo corriendo y lo elimina
 		if (this.timedEvent) {
 			this.timedEvent.remove();
 		}
 		//esta variable es un string vacio si animate es true, de otra manera es la variable text
 		var tempText = animate ? '' : text;
-		//llama al metodo que calcula la pos del texto y lo crea
-		this._setText(tempText); 
 
+		//llama al metodo que calcula la pos del texto y lo crea
+		if(tempText != ''){
+			//this._setText(tempText);
+		}
+		this._setText(tempText); 
 		if (animate) {
 			//se crea un evento temporizado
 			this.timedEvent = this.scene.time.addEvent({
@@ -203,10 +206,10 @@ export default class DialogText{
 	// Hace aparecer al texto lentamente en pantalla
 	_animateText() {
 		this.eventCounter++;
-		
-		//se va actualizando el texto de nuestro game object llamando a setText
-		this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
-		
+		if(this.dialog[this.eventCounter - 1] != undefined){
+			//se va actualizando el texto de nuestro game object llamando a setText
+			this.text.setText(this.text.text + this.dialog[this.eventCounter - 1]);
+		}
 		//Cuando eventCounter sea igual a la longitud del texto, se detiene el evento
 		if (this.eventCounter === this.dialog.length) {
 			this.timedEvent.remove();
@@ -229,7 +232,7 @@ export default class DialogText{
 			text,
 			style: {
 				//se obliga al texto a permanecer dentro de unos limites determinados
-				wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 25 },
+				wordWrap: { width: this._getGameWidth() - (this.padding * 2) - 15},
 				fontSize: this.fontSize,
 				fontFamily: this.fontFamily
 			}
