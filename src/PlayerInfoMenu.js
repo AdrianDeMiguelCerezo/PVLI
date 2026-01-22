@@ -625,6 +625,24 @@ export default class PlayerInfoMenu extends Phaser.GameObjects.Container
                         console.log(`[MENU] Efecto ${effectToRemove} curado.`);
                     }
                 }
+
+                // C) Efecto que da efecto de estado
+                const effectToAdd = skill.effect;
+                if(effectToAdd){
+                    let i = 0;
+                    let effectFound = false;
+                    while(i < this.playerData.efectos.length && !effectFound){
+                        effectFound = this.playerData.efectos[i].key == effectToAdd;
+                        i++;
+                    }
+                    if(effectFound){
+                        this.playerData.efectos[i-1].duration += skill.effectDuration;
+                    }else{
+                        this.playerData.efectos.push({key: effectToAdd, duration: skill.effectDuration});
+                        console.log(effectToAdd + " " + skill.effectDuration);
+                    }
+
+                }
             }
 
             // Consumir el ítem (lógica original)
