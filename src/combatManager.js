@@ -38,6 +38,7 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
 
         // primer turno del jugador
         this.startPlayerTurn();
+
     }
 
     // =================== Helpers ===================
@@ -126,6 +127,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
             // Habilitiar input
             this.scene.events.emit("select_skill");
         }
+
+        this.turn++;
     }
 
     /**
@@ -198,7 +201,6 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
             spCost: skill.spCost || 0,
             actionsLeftAntes: this.actionsLeft
         });
-
         switch (skill.target) {
             case Target.SELF: {
                 this.resolvePlayerSkill(skill, null);
@@ -484,7 +486,8 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
                 ? skill.effectDuration
                 : 0;
 
-            if (duration <= 0) {
+                
+            if (duration == 0) {
                 // efecto instantáneo definido en efectos.json (HP+, SP+, etc.)
                 const def = (this.scene.jsonEfectos || {})[key];
                 if (!def) return;
@@ -500,7 +503,9 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
                 }
                 return;
             }
-
+            else if(duration < 0){
+                this.addStatusToPlayer(key, duration);
+            }
             // efecto persistente por turnos
             if (skill.target === Target.SELF) {
                 this.addStatusToPlayer(key, duration);
@@ -521,14 +526,12 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
             this.applyInstantEffectToPlayer(skill.effect);
             return;
         }
-
         if (typeof skill.effect === "string") {
             const key = skill.effect;
             const duration = Number.isFinite(skill.effectDuration)
                 ? skill.effectDuration
                 : 0;
-
-            if (duration <= 0) {
+            if (duration == 0) {
                 const def = (this.scene.jsonEfectos || {})[key];
                 if (def) this.applyEffectDefToPlayer(def);
             } else {
@@ -714,8 +717,10 @@ export default class CombatManager extends Phaser.Events.EventEmitter {
                     this.applyEffectDefToPlayer(def);
                 }
 
-                duration--;
-                if (duration > 0) {
+                if(duration > 0 && this.turn > 0){
+                    duration--;
+                }
+                if (duration > 0 || duration < 0) {
                     nuevos.push({ key: eff.key, duration });
                 }
             }
